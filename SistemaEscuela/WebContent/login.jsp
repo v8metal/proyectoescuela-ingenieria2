@@ -15,7 +15,7 @@
 		//hola
 	} 
  %>
-<form action="login" method="post">
+<form action="login" method="post">				<!-- PROBANDO  -->
 <table>
 	<tr>
 		<td>Usuario: </td>
