@@ -15,7 +15,7 @@
 		//hola
 	} 
  %>
-	<form action="login" method="post">					<!-- PROBANDOOOOOOO2222222  -->
+	<form action="login" method="post">					<!-- ppppppp  -->
 		<table>
 			<tr>
 				<td>Usuario:</td>
