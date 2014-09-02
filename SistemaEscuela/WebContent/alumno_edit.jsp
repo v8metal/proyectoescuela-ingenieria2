@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="style/style.css" />
 <title>Editar Alumno</title>
 </head>
 <body>
@@ -70,7 +71,7 @@
 	int dia_sys = Integer.parseInt((String)session.getAttribute("dia_sys"));
 	
   %>
-<form action="alumnoEdit" method="post">
+<form action="alumnoEdit" method="post" class="alumno-alta">
 <h2>DATOS PERSONALES:</h2>
 <table>
 	<tr>
