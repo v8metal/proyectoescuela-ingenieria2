@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="style/style.css" />
 <title>Login</title>
 </head>
 <body>
@@ -15,7 +16,7 @@
 		//hola
 	} 
  %>
-	<form action="login" method="post">					<!-- ppppppp  -->
+	<form action="login" method="post" class="elegant-aero">				
 		<table>
 			<tr>
 				<td>Usuario:</td>
