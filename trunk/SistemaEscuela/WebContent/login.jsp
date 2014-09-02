@@ -8,7 +8,7 @@
 <title>Login</title>
 </head>
 <body>
-	<h1>Login</h1>
+	<h1>Login</h1>									<!-- PROBANDO -->
 	<%	String error = "";
 	if (session.getAttribute("error") != null) {
 		error = (String)session.getAttribute("error");
