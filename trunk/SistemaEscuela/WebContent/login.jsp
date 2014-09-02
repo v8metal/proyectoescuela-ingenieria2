@@ -9,14 +9,17 @@
 </head>
 <body>
 	<h1>Login</h1>									<!-- PROBANDO -->
+	<hr>
 	<%	String error = "";
 	if (session.getAttribute("error") != null) {
 		error = (String)session.getAttribute("error");
-		session.setAttribute("error", "");
-		//hola
+		session.setAttribute("error", "");		
 	} 
  %>
-	<form action="login" method="post" class="elegant-aero">				
+	<form action="login" method="post" class="elegant-aero">		
+	<span>Por favor, ingrese la información requerida</span>
+	<br>
+	<br>		
 		<table>
 			<tr>
 				<td>Usuario:</td>
