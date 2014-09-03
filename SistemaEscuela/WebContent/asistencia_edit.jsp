@@ -14,6 +14,9 @@
 <title>Sistema Alumnado</title>
 </head>
 <body>
+<%
+	if (session.getAttribute("login") != null) {
+%>
 <center>
 <% 
 				Tardanza t = (Tardanza)session.getAttribute("asistencia");
@@ -212,6 +215,11 @@
 						 return true;
 					 }
 				}
-			</script> 
+	</script>
+<%
+	} else {
+		response.sendRedirect("login.jsp");
+	}
+%>	 
 </body>
 </html>

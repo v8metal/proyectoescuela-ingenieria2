@@ -16,6 +16,9 @@
 <title>Listado de Asistencias</title>
 </head>
 <body>
+<%
+	if (session.getAttribute("login") != null) {
+%>
 	<center>
 	<h1>Listado de Asistencias</h1>
 	<form action="AsistenciaList" method="post" id="formGrado" onsubmit="return validarGrado()">
@@ -150,6 +153,10 @@
 	 }
  }
 	</script> 
-
+<%
+	} else {
+		response.sendRedirect("login.jsp");
+	}
+%>
 </body>
 </html>
