@@ -3,7 +3,6 @@
 	<name>10-03-SistemaEscuela</name>
 	<comment></comment>
 	<projects>
-		<project>mysql-connector-java-5.1.7-bin</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
