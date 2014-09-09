@@ -18,22 +18,21 @@ body {						/* expande la imagen de fondo para todas las resoluciones */
 }
 		
 h1 {		
-	margin-left:150px;
+	margin-left:130px;
 	color: #FFFFFF;		
 	font-family:calibri;
-	font-size:30px;
+	font-size:60px;
     font-style:italic;
-    font-weight:bold;
+    font-weight:bold; 
 }
-    
+
 hr {  
   	background-color: white;
   	color: white;  
   	height: 5px;
   	width: 100%; 
 }
-    
-    
+       
 /* Elegant aero */
 .elegant-aero {
     margin-left:auto;
@@ -89,16 +88,17 @@ hr {
     font-size: 50px;
 }
 
-
 .alumno-alta label>span {
     float: left;
     margin-top: 10px;
     color: #5E5E5E;
 }
+
 .alumno-alta label {
     display: block;
     margin: 0px 0px 5px;
 }
+
 .alumno-alta label>span {
     float: left;
     width: 40%;
@@ -107,6 +107,7 @@ hr {
     margin-top: 10px;
     font-weight: bold;
 }
+
 .alumno-alta input[type="text"], .alumno-alta input[type="password"], .alumno-alta textarea, .alumno-alta select {
     color: #888;
     width: 70%;
@@ -121,11 +122,13 @@ hr {
     line-height:15px;
     margin: 2px 6px 16px 0px;
 }
+
 .alumno-alta textarea{
     height:100px;
     padding: 5px 0px 0px 5px;
     width: 70%;
 }
+
 .alumno-alta select {
     background: #fbfbfb url('down-arrow.png') no-repeat right;
     background: #fbfbfb url('down-arrow.png') no-repeat right;
@@ -136,6 +139,7 @@ hr {
     text-overflow: '';
     width: 70%;
 }
+
 .alumno-alta .button{
     /*padding: 10px 30px 10px 30px;*/    
     background: #66C1E4;
@@ -147,6 +151,22 @@ hr {
     text-shadow: 1px 1px 1px #5079A3;
    
 }
+
 .alumno-alta .button:hover{
     background: #3EB1DD;
+}
+
+/* MENU ADMIN */
+a {
+	text-decoration:none;	/* quita el subrayado de los enlaces */
+	font-size:20px;
+	color: blue
+}
+
+a:hover {
+	color: white;
+	font-style: italic;
+	letter-spacing: 10px;
+	font-weight:bold;
+/*	color:red;	*/
 }
