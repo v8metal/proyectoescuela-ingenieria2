@@ -5,10 +5,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style/style.css" />
-<title>Login</title>
+<title>¡Bienvenido!</title>
 </head>
 <body>
-	<h1>Login</h1>									<!-- PROBANDOOOOO -->
+	<h1>Login</h1>						
 	<hr>
 	<%	String error = "";
 	if (session.getAttribute("error") != null) {
