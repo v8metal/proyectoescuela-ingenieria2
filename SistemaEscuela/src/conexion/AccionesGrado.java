@@ -214,8 +214,8 @@ public class AccionesGrado {
 	
 	public static void insertAlumnoEnGrado(String grado, String turno, int dni, int año) throws SQLException, Exception {
 		
-		Statement stmt = Conexion.conectar().createStatement();
-		stmt.executeUpdate("INSERT INTO ALUMNOS_GRADO VALUES ('" + grado + "','" + turno + "','" + dni + "','" + año + "')");
+		Statement stmt = Conexion.conectar().createStatement();		
+		stmt.executeUpdate("INSERT INTO ALUMNOS_GRADO VALUES ('" + grado + "','" + turno + "'," + año + "," + dni + ")");
 			
 		stmt.close();
 		Conexion.desconectar();	
