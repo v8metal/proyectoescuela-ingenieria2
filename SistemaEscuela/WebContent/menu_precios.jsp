@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="style/style.css" />
 <title>Sistema Alumnado</title>
 </head>
 <body>
@@ -12,14 +13,14 @@
   <br>
   <br>
   <h1>Precios</h1>
-  <a href="precio_edit.jsp">Ingreso de Precios</a><br>
-  <a href="precio_list.jsp">Listado de Precios</a>
+  <strong><a href="precio_edit.jsp">Ingreso de Precios</a><br></strong>
+  <strong><a href="precio_list.jsp">Listado de Precios</a></strong>
   <br>
   <br>
-  <a href="menu_admin.jsp">Volver al Menú Principal</a>
+  <strong><a href="menu_admin.jsp">Volver al Menú Principal</a></strong>
   <br>
   <br>
-  <a href="CerrarSesion">Cerrar Sesión</a>
+  <strong><a href="CerrarSesion">Cerrar Sesión</a></strong>
   </center>
 </body>
 </html>

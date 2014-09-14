@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="style/style.css" />
 <title>Sistema Alumnado</title>
 </head>
 <body>
@@ -15,14 +16,14 @@
   <br>
   <br>
   <h1>Cuotas</h1>
-  <a href="cuota_edit.jsp">Alta Cuota</a><br>
-  <a href="cuota_list.jsp">Listar Cuotas</a>
+  <strong><a href="cuota_edit.jsp">Alta Cuota</a><br></strong>
+  <strong><a href="cuota_list.jsp">Listar Cuotas</a></strong>
   <br>
   <br>
-  <a href="menu_admin.jsp">Volver al Menú Principal</a>
+  <strong><a href="menu_admin.jsp">Volver al Menú Principal</a></strong>
   <br>
   <br>
-  <a href="CerrarSesion">Cerrar Sesión</a>
+  <strong><a href="CerrarSesion">Cerrar Sesión</a></strong>
   </center>
 </body>
 </html>

@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="style/style.css" />
 <title>Sistema Alumnado</title>
 </head>
 <body>
@@ -12,14 +13,14 @@
 <br>
 <br>
 <h1>Asistencias</h1>
-<a href="AsistenciaListEdit">Alta Asistencia</a><br>
-<a href="AsistenciaList">Listar Asistencias</a>
+<strong><a href="AsistenciaListEdit">Alta Asistencia</a><br></strong>
+<strong><a href="AsistenciaList">Listar Asistencias</a></strong>
 <br>
 <br>
-<a href="menu_user.jsp">Volver al Menú Principal</a>
+<strong><a href="menu_user.jsp">Volver al Menú Principal</a></strong>
 <br>
 <br>
-<a href="CerrarSesion">Cerrar Sesión</a>
+<strong><a href="CerrarSesion">Cerrar Sesión</a></strong>
 </center>
 </body>
 </html>
