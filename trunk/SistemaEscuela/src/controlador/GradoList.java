@@ -1,12 +1,14 @@
 package controlador;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesGrado;
+import datos.Grado;
 import datos.Grados;
 
 /**
@@ -28,14 +30,20 @@ import datos.Grados;
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		
-		
+			
 		HttpSession sesion = request.getSession();
 		
-		sesion.removeAttribute("grado_edit");
-			
-		Grados grado_list = AccionesGrado.getAll();
+		if ((Grado) sesion.getAttribute("grado_edit") != null){		
+			sesion.removeAttribute("grado_edit");
+		}
+		
+		Grados grados = AccionesGrado.getAll();
 					
-		sesion.setAttribute("grados",  grado_list);	
+		sesion.setAttribute("grados_alta",  grados);
+		
+		grados = AccionesGrado.getPendingAll();
+		
+		sesion.setAttribute("grados_pendientes",  grados);
 		
 		response.sendRedirect("grado_list.jsp");
 	}

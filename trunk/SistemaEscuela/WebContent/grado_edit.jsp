@@ -1,6 +1,7 @@
 <%@page import="datos.Maestro"%>
 <%@page import="datos.Maestros"%>
 <%@page import="datos.Grado"%>
+<%@page import="datos.Grados"%>
 <%@page import="conexion.AccionesGrado"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -15,7 +16,8 @@
 <%
 	if (session.getAttribute("login") != null) { 
   
-  	Grado grado = (Grado)session.getAttribute("grado_edit");
+  	Grado grado = (Grado) session.getAttribute("grado_edit");
+  	Grados grados = (Grados) request.getAttribute("grados_alta"); //agregado
     Maestros maestros = (Maestros) request.getAttribute("maestros_list");
   	Maestro titular = (Maestro)request.getAttribute("maestro_tit");
   	Maestro paralelo = (Maestro)request.getAttribute("maestro_par");
@@ -52,31 +54,20 @@ if (grado != null){
 	if (grado == null){
 %>
 	<tr>
-		<td>Grado: </td>
+		<td>Grado/Turno: </td>
 		<td>
-			<select name="anio_grado">
-			 <option value="Sala 4">Sala 4</option>
-    		 <option value="Sala 5">Sala 5</option> 
-  			 <option value="1ro">1º Grado</option>
-    		 <option value="2do">2º Grado</option>
-   			 <option value="3ro">3º Grado</option>
-    		 <option value="4to">4º Grado</option>
-    		 <option value="5to">5º Grado</option>
-  			 <option value="6to">6º Grado</option>
-    		 <option value="7mo">7º Grado</option>    		 	   		 
+			<select name=anio_grado_turno>
+<% 			
+			
+			for (Grado g : grados.getLista()){ %>
+
+			 <option value="<%=g.getGrado() + "-" + g.getTurno()%>"><%=g.getGrado() + "-" + g.getTurno()%></option>
+			   
+<%          } %>		 	   		 
  			 </select> 
  		</td>
 	</tr>
-	<tr>
-		<td>Turno: </td>
-		<td>
-			<select name="turno_grado">
-			 <option value="MAÑANA">Mañana</option> 
-     		 <option value="TARDE">Tarde</option>
- 			</select> 
- 		</td>
-	</tr>
-<%}%>	
+<%}%>
 	<tr>
 		<td>Tipo de Calificación: </td>
 		<td>
@@ -93,6 +84,35 @@ if (grado != null){
 			 %>
 			<input type="radio" name="bimestral" value="si" <%=ck_bim%> /> Bimestral
 			<input type="radio" name="bimestral" value="no" <%=ck_tri%>/> Trimestral
+		</td>
+	</tr>
+		<tr>
+		<td>Tipo de Evaluación: </td>
+		<td>
+			<% 
+			   String ck_informe = "";
+			   String ck_cualitaviva = "";
+			   String ck_numerica = "";
+			   
+			   //System.out.println(grado.getEvaluacion());
+			   
+			   if (grado != null && grado.getEvaluacion() == 0) {
+				   ck_informe = "checked";
+			   }
+			   
+			   if (grado != null && grado.getEvaluacion() == 1) {
+				   ck_cualitaviva = "checked";
+			   }
+			   
+			   if (grado != null && grado.getEvaluacion() == 2) {
+				   ck_numerica = "checked"; 
+	
+			   }			           
+			 	
+			 %>
+			<input type="radio" name="evaluacion" value=0 <%=ck_informe%> /> Informe
+			<input type="radio" name="evaluacion" value=1 <%=ck_cualitaviva%>/> Cualitativa
+			<input type="radio" name="evaluacion" value=2 <%=ck_numerica%>/> Numérica
 		</td>
 	</tr>
 	<tr>
@@ -179,4 +199,10 @@ if (grado != null){
 	}
 %>
 </body>
+<script language = "JavaScript">
+function pru(){
+p=document.anio_grado.selectedIndex;
+alert(p);
+}
+</script>
 </html>

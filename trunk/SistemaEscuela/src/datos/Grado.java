@@ -4,7 +4,8 @@ public class Grado {
 
 	private String grado;
 	private String turno;
-	private boolean bimestre;
+	private Integer evaluacion;
+	private boolean bimestre;	
 	private String salon;
 	private Integer año;
 	private Integer maestrotit;
@@ -14,21 +15,37 @@ public class Grado {
 		
 	}
 	
-	public Grado(String grado,String turno,boolean bimestre, String salon, int año, int maestrotit,int maestropar) {
+	public Grado(String grado,String turno,int evaluacion,boolean bimestre, String salon, int año, int maestrotit,int maestropar) {
 		this.grado = grado;
 		this.turno = turno;
-		this.bimestre = bimestre;
+		this.evaluacion = evaluacion;
+		this.bimestre = bimestre;		
 		this.salon = salon;
 		this.año = año;
 		this.maestrotit = maestrotit;
 		this.maestropar = maestropar;
 	}	
 	
-	public Grado(String grado,String turno,boolean bimestre, String salon) {
+	public Grado(String grado,String turno, int evaluacion, boolean bimestre, String salon) {
 		this.grado = grado;
 		this.turno = turno;
+		this.evaluacion = evaluacion;
 		this.bimestre = bimestre;
 		this.salon = salon;
+		this.año = 0;
+		this.maestrotit = 0;
+		this.maestropar = 0;
+	}
+	
+	public Grado(String grado,String turno) {
+		this.grado = grado;
+		this.turno = turno;
+		this.evaluacion = null;
+		this.bimestre = false;
+		this.salon = null;
+		this.año = null;
+		this.maestrotit = null;
+		this.maestropar = null;
 	}
 	
 	public String getGrado() {
@@ -58,8 +75,31 @@ public class Grado {
 	public int getMaestropar() {
 		return maestropar;
 	}
+	
+	public Integer getEvaluacion() {
+		return evaluacion;
+	}
+	
+	public String getEvaluacionNombre(){
 		
-	public String getEvaluacion(){
+		   String evaluacionNombre = "";
+		   
+		   if (evaluacion == 0 )
+
+			   evaluacionNombre = "Informe";
+		   	   
+		   if (evaluacion == 1 )
+	   		   
+	   		   evaluacionNombre = "Cualitativa";
+		   	   
+		   if (evaluacion == 2 )
+	  		   
+	  		   evaluacionNombre = "Numérica";		   
+		   
+		   return evaluacionNombre;		    
+	}
+	
+	public String getPeriodo(){
 		
 		if(bimestre){
 			return "Bimestral";
@@ -68,7 +108,7 @@ public class Grado {
 	}
 	
 	public String toString() {
-		return grado + "|"  + turno + "|" + bimestre + "|" + salon + "|" + año + "|" + maestrotit + "|" + maestropar;
+		return grado + "|"  + turno + "|" + "|" + evaluacion + "|" + bimestre + "|" + salon + "|" + año + "|" + maestrotit + "|" + maestropar;
 	}
 
 }

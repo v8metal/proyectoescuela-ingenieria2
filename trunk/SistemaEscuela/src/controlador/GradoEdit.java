@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import datos.Grado;
+import datos.Grados; //alta de grados
 import conexion.AccionesGrado;
 import datos.Maestro;
 import datos.Maestros;
@@ -48,9 +49,11 @@ import conexion.AccionesMaestro;
 			//add / edit						
 			if(accion.equals("alta")){
 								
-				Maestros maestros = AccionesMaestro.getAll();		
-												
+				Maestros maestros = AccionesMaestro.getAll();												
 				request.setAttribute("maestros_list",  maestros);
+				
+				Grados grados = AccionesGrado.getPendingAll();												
+				request.setAttribute("grados_alta",  grados);				
 
 				//get the request dispatcher
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/grado_edit.jsp");
@@ -194,17 +197,21 @@ import conexion.AccionesMaestro;
 			
 			action = (String) request.getParameter("action");
 			
+			int evaluacion = Integer.parseInt(request.getParameter("evaluacion"));
 			String bimestral = request.getParameter("bimestral");
 			String salon = request.getParameter("salon_grado");
 			int maestro_tit = 0;
 			int maestro_par = 0;
-			
+						
 			if (action.equals("insert")){
 								
-				String grado = request.getParameter("anio_grado");
-				String turno = request.getParameter("turno_grado");				
+				String string = request.getParameter("anio_grado_turno");				
+				String[] parts = string.split("-");
+				
+				String grado = parts[0];
+				String turno = parts[1];			
 								
-				Grado g = new Grado(grado, turno, bimestral.equals("si"), salon);
+				Grado g = new Grado(grado, turno, evaluacion, bimestral.equals("si"), salon);
 				AccionesGrado.insertOne(g);
 			
 			
@@ -221,24 +228,25 @@ import conexion.AccionesMaestro;
 					
 					if (request.getParameter("maestro_par_grado") != null) { 
 						maestro_par = Integer.parseInt(request.getParameter("maestro_par_grado"));
-					}					
+					}
 					
-					AccionesGrado.updateOne(g.getGrado(), g.getTurno(), bimestral.equals("si"), salon);
+					
+					AccionesGrado.updateOne(g.getGrado(), g.getTurno(), evaluacion ,bimestral.equals("si"), salon);
 						
 					if (g.getAño() != 0){
 							
-						if (g.getMaestrotit() == 0 && g.getMaestropar() == 0){												
-						
+						if (g.getMaestrotit() == 0 && g.getMaestropar() == 0){
+							
 							AccionesGrado.insertMaestroGrado(g.getGrado(), g.getTurno(), g.getAño(), maestro_tit, maestro_par);
 							
-						}else{							
+						}else{
 							
-							AccionesGrado.UpdateMaestroGrado(g.getGrado(), g.getTurno(), g.getAño(), maestro_tit, maestro_par);
+							AccionesGrado.UpdateMaestroGrado(g.getGrado(), g.getTurno(), g.getAño(), maestro_tit, maestro_par);							
 						}
 					}										
 					
-			}
-
+			}			
+			
 			response.sendRedirect(request.getContextPath() + "/GradoList");			
 	
 		} catch (Exception e) {
