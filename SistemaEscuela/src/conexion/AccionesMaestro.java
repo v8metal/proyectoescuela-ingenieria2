@@ -101,11 +101,11 @@ public class AccionesMaestro {
 		
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT MG.GRADO, MG.TURNO, G.IND_BIM, G.SALON, MG.AÑO, MG.COD_MAESTRO_TIT, MG.COD_MAESTRO_PAR FROM MAESTROS_GRADO MG INNER JOIN GRADOS G ON(MG.GRADO = G.GRADO AND MG.TURNO = G.TURNO) WHERE COD_MAESTRO_TIT = " + cod_maestro + " AND AÑO = " + año);
+			ResultSet rs = stmt.executeQuery("SELECT MG.GRADO, MG.TURNO, G.IND_EVALUACION, G.IND_BIM, G.SALON, MG.AÑO, MG.COD_MAESTRO_TIT, MG.COD_MAESTRO_PAR FROM MAESTROS_GRADO MG INNER JOIN GRADOS G ON(MG.GRADO = G.GRADO AND MG.TURNO = G.TURNO) WHERE COD_MAESTRO_TIT = " + cod_maestro + " AND AÑO = " + año);
 			Grado tmp;
 			
 			while (rs.next()) {
-				tmp = new Grado(rs.getString("GRADO"), rs.getString("TURNO"), rs.getBoolean("IND_BIM"), rs.getString("SALON"), rs.getInt("AÑO"), rs.getInt("COD_MAESTRO_TIT"),rs.getInt("COD_MAESTRO_PAR"));
+				tmp = new Grado(rs.getString("GRADO"), rs.getString("TURNO"), rs.getInt("IND_EVALUACION"), rs.getBoolean("IND_BIM"), rs.getString("SALON"), rs.getInt("AÑO"), rs.getInt("COD_MAESTRO_TIT"),rs.getInt("COD_MAESTRO_PAR"));
 				lista.agregarGrado(tmp);
 			}
 			stmt.close();

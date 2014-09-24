@@ -22,12 +22,12 @@ public class AccionesGrado {
 		
 		try {
 			
-			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT G.GRADO, G.TURNO, G.IND_BIM, G.SALON, IFNULL(MG2.AÑO, 0) AS AÑO, IFNULL(MG2.COD_MAESTRO_TIT, 0) AS COD_MAESTRO_TIT, IFNULL(MG2.COD_MAESTRO_PAR, 0) AS COD_MAESTRO_PAR FROM GRADOS G LEFT JOIN (SELECT MG.GRADO, MG.TURNO, MG.AÑO, MG.COD_MAESTRO_TIT, MG.COD_MAESTRO_PAR FROM MAESTROS_GRADO AS MG INNER JOIN (SELECT GRADO, TURNO, MAX(AÑO) AS AÑO FROM MAESTROS_GRADO GROUP BY GRADO, TURNO) AS MG1 ON (MG1.GRADO = MG.GRADO AND MG1.TURNO = MG.TURNO AND MG1.AÑO = MG.AÑO)) AS MG2 ON (MG2.grado = G.GRADO AND MG2.TURNO = G.TURNO)");
+			Statement stmt = Conexion.conectar().createStatement();			
+			ResultSet rs = stmt.executeQuery("SELECT G.GRADO, G.TURNO, G.IND_EVALUACION, G.IND_BIM, G.SALON, IFNULL(MG2.AÑO, 0) AS AÑO, IFNULL(MG2.COD_MAESTRO_TIT, 0) AS COD_MAESTRO_TIT, IFNULL(MG2.COD_MAESTRO_PAR, 0) AS COD_MAESTRO_PAR FROM GRADOS G LEFT JOIN (SELECT MG.GRADO, MG.TURNO, MG.AÑO, MG.COD_MAESTRO_TIT, MG.COD_MAESTRO_PAR FROM MAESTROS_GRADO AS MG INNER JOIN (SELECT GRADO, TURNO, MAX(AÑO) AS AÑO FROM MAESTROS_GRADO GROUP BY GRADO, TURNO) AS MG1 ON (MG1.GRADO = MG.GRADO AND MG1.TURNO = MG.TURNO AND MG1.AÑO = MG.AÑO)) AS MG2 ON (MG2.grado = G.GRADO AND MG2.TURNO = G.TURNO) INNER JOIN GRADOS_BASE GB ON GB.GRADO = G.GRADO AND GB.TURNO = G.TURNO ORDER BY GB.ORDEN");
 			Grado tmp;
 			
 			while (rs.next()) {
-				tmp = new Grado(rs.getString("GRADO"), rs.getString("TURNO"), rs.getBoolean("IND_BIM"), rs.getString("SALON"), rs.getInt("AÑO"), rs.getInt("COD_MAESTRO_TIT"),rs.getInt("COD_MAESTRO_PAR"));
+				tmp = new Grado(rs.getString("GRADO"), rs.getString("TURNO"), rs.getInt("IND_EVALUACION"), rs.getBoolean("IND_BIM"), rs.getString("SALON"), rs.getInt("AÑO"), rs.getInt("COD_MAESTRO_TIT"),rs.getInt("COD_MAESTRO_PAR"));
 				lista.agregarGrado(tmp);
 			}
 			stmt.close();
@@ -37,6 +37,30 @@ public class AccionesGrado {
 		}
 		return lista;
 	}
+	
+	//nuevo devuelve la lista de grados que no han sido dados de alta
+	public static Grados getPendingAll() {
+		
+		Grados lista = new Grados();
+		
+		try {
+			
+			Statement stmt = Conexion.conectar().createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT GB.GRADO, GB.turno FROM GRADOS_BASE GB LEFT JOIN GRADOS G ON GB.GRADO = G.GRADO AND GB.Turno = G.TURNO WHERE G.TURNO IS NULL ORDER BY GB.ORDEN");
+			Grado tmp;
+			
+			while (rs.next()) {
+				tmp = new Grado(rs.getString("GRADO"), rs.getString("TURNO"));
+				lista.agregarGrado(tmp);
+			}
+			stmt.close();
+			Conexion.desconectar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lista;
+	}
+	//nuevo devuelve la lista de grados que no han sido dados de alta
 	
 	public static Grado getOne(String grado, String turno) {
 		
@@ -49,8 +73,7 @@ public class AccionesGrado {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM GRADOS  WHERE GRADO = '" + grado + "' AND TURNO = '" + turno + "'");	
 			
 			while (rs.next()) {
-				//g = new Grado(rs.getString("GRADO"), rs.getString("TURNO"), rs.getBoolean("IND_BIM"), rs.getString("SALON"), rs.getInt("AÑO"), rs.getInt("COD_MAESTRO_TIT"),rs.getInt("COD_MAESTRO_PAR"));
-				g = new Grado(rs.getString("GRADO"), rs.getString("TURNO"), rs.getBoolean("IND_BIM"), rs.getString("SALON"), 0, 0, 0);
+				g = new Grado(rs.getString("GRADO"), rs.getString("TURNO"), rs.getInt("IND_EVALUACION"), rs.getBoolean("IND_BIM"), rs.getString("SALON"));
 				
 			}
 			stmt.close();
@@ -73,7 +96,7 @@ public class AccionesGrado {
 			ResultSet rs = stmt.executeQuery("SELECT G.GRADO, G.TURNO, G.IND_BIM, G.SALON, IFNULL(MG2.AÑO, 0) AS AÑO, IFNULL(MG2.COD_MAESTRO_TIT, 0) AS COD_MAESTRO_TIT, IFNULL(MG2.COD_MAESTRO_PAR, 0) AS COD_MAESTRO_PAR FROM GRADOS G LEFT JOIN (SELECT MG.GRADO, MG.TURNO, MG.AÑO, MG.COD_MAESTRO_TIT, MG.COD_MAESTRO_PAR FROM MAESTROS_GRADO AS MG INNER JOIN (SELECT GRADO, TURNO, MAX(AÑO) AS AÑO FROM MAESTROS_GRADO GROUP BY GRADO, TURNO) AS MG1 ON (MG1.GRADO = MG.GRADO AND MG1.TURNO = MG.TURNO AND MG1.AÑO = MG.AÑO)) AS MG2 ON (MG2.grado = G.GRADO AND MG2.TURNO = G.TURNO) WHERE G.GRADO = '" + grado + "'");	
 			
 			while (rs.next()) {
-				g = new Grado(rs.getString("GRADO"), rs.getString("TURNO"), rs.getBoolean("IND_BIM"), rs.getString("SALON"), rs.getInt("AÑO"), rs.getInt("COD_MAESTRO_TIT"),rs.getInt("COD_MAESTRO_PAR"));				
+				g = new Grado(rs.getString("GRADO"), rs.getString("TURNO"), rs.getInt("IND_EVALUACION"), rs.getBoolean("IND_BIM"), rs.getString("SALON"), rs.getInt("AÑO"), rs.getInt("COD_MAESTRO_TIT"),rs.getInt("COD_MAESTRO_PAR"));				
 			}
 			stmt.close();
 			Conexion.desconectar();
@@ -193,12 +216,12 @@ public class AccionesGrado {
 		Conexion.desconectar();		
 	}
 	
-	public static void updateOne(String grado, String turno, boolean bimestre, String salon) throws SQLException, Exception {
+	public static void updateOne(String grado, String turno, int evaluacion, boolean bimestre, String salon) throws SQLException, Exception {
 		
 		Statement stmt = Conexion.conectar().createStatement();
-	
-		stmt.executeUpdate("UPDATE GRADOS SET IND_BIM = '" + boolToByte(bimestre) + "', SALON = '" + salon + "' WHERE GRADO = '" + grado + "' AND TURNO = '" + turno + "'");
-					
+		
+		stmt.executeUpdate("UPDATE GRADOS SET IND_EVALUACION =" + evaluacion + ", IND_BIM = '" + boolToByte(bimestre) + "', SALON = '" + salon + "' WHERE GRADO = '" + grado + "' AND TURNO = '" + turno + "'");
+						
 		stmt.close();
 		Conexion.desconectar();		
 	}
@@ -206,7 +229,7 @@ public class AccionesGrado {
 	public static void insertOne(Grado g) throws SQLException, Exception {
 		
 		Statement stmt = Conexion.conectar().createStatement();		
-		stmt.executeUpdate("INSERT INTO GRADOS VALUES ('" + g.getGrado() + "', '" + g.getTurno()+"', '" + boolToByte(g.getBimestre()) + "', '" + g.getSalon() + "')");
+		stmt.executeUpdate("INSERT INTO GRADOS VALUES ('" + g.getGrado() + "', '" + g.getTurno()+ "', " + g.getEvaluacion() + ", '" + boolToByte(g.getBimestre()) + "', '" + g.getSalon() + "')");
 					
 		stmt.close();
 		Conexion.desconectar();		
@@ -277,10 +300,10 @@ public static int getCurrentYear(Grado g) {
 			
 			Statement stmt = Conexion.conectar().createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT DISTINCT G.GRADO, G.TURNO, G.IND_BIM, G.SALON, IFNULL(AG2.AÑO, 0) AS AÑO, IFNULL(MG2.COD_MAESTRO_TIT, 0) AS COD_MAESTRO_TIT, IFNULL(MG2.COD_MAESTRO_PAR, 0) AS COD_MAESTRO_PAR FROM GRADOS G LEFT JOIN (SELECT AG.GRADO, AG.TURNO, AG.AÑO FROM ALUMNOS_GRADO AS AG INNER JOIN (SELECT GRADO, TURNO, MAX(AÑO) AS AÑO FROM ALUMNOS_GRADO GROUP BY GRADO, TURNO) AS AG1 ON (AG1.GRADO = AG.GRADO AND AG1.TURNO = AG.TURNO AND AG1.AÑO = AG.AÑO)) AS AG2 ON (AG2.grado = G.GRADO AND AG2.TURNO = G.TURNO) LEFT JOIN (SELECT MG.GRADO, MG.TURNO, MG.AÑO, MG.COD_MAESTRO_TIT, MG.COD_MAESTRO_PAR FROM MAESTROS_GRADO AS MG INNER JOIN (SELECT GRADO, TURNO, MAX(AÑO) AS AÑO FROM MAESTROS_GRADO GROUP BY GRADO, TURNO) AS MG1 ON (MG1.GRADO = MG.GRADO AND MG1.TURNO = MG.TURNO AND MG1.AÑO = MG.AÑO)) AS MG2 ON (MG2.grado = G.GRADO AND MG2.TURNO = G.TURNO) WHERE G.GRADO = '" + grado + "' AND G.TURNO = '" + turno +"' AND AG2.AÑO = "+ año);			
+			ResultSet rs = stmt.executeQuery("SELECT DISTINCT G.GRADO, G.TURNO, G.IND_EVALUACION, G.IND_BIM, G.SALON, IFNULL(AG2.AÑO, 0) AS AÑO, IFNULL(MG2.COD_MAESTRO_TIT, 0) AS COD_MAESTRO_TIT, IFNULL(MG2.COD_MAESTRO_PAR, 0) AS COD_MAESTRO_PAR FROM GRADOS G LEFT JOIN (SELECT AG.GRADO, AG.TURNO, AG.AÑO FROM ALUMNOS_GRADO AS AG INNER JOIN (SELECT GRADO, TURNO, MAX(AÑO) AS AÑO FROM ALUMNOS_GRADO GROUP BY GRADO, TURNO) AS AG1 ON (AG1.GRADO = AG.GRADO AND AG1.TURNO = AG.TURNO AND AG1.AÑO = AG.AÑO)) AS AG2 ON (AG2.grado = G.GRADO AND AG2.TURNO = G.TURNO) LEFT JOIN (SELECT MG.GRADO, MG.TURNO, MG.AÑO, MG.COD_MAESTRO_TIT, MG.COD_MAESTRO_PAR FROM MAESTROS_GRADO AS MG INNER JOIN (SELECT GRADO, TURNO, MAX(AÑO) AS AÑO FROM MAESTROS_GRADO GROUP BY GRADO, TURNO) AS MG1 ON (MG1.GRADO = MG.GRADO AND MG1.TURNO = MG.TURNO AND MG1.AÑO = MG.AÑO)) AS MG2 ON (MG2.grado = G.GRADO AND MG2.TURNO = G.TURNO) WHERE G.GRADO = '" + grado + "' AND G.TURNO = '" + turno +"' AND AG2.AÑO = "+ año);			
 			
 			while (rs.next()) {
-				g = new Grado(rs.getString("GRADO"), rs.getString("TURNO"), rs.getBoolean("IND_BIM"), rs.getString("SALON"), rs.getInt("AÑO"), rs.getInt("COD_MAESTRO_TIT"),rs.getInt("COD_MAESTRO_PAR"));				
+				g = new Grado(rs.getString("GRADO"), rs.getString("TURNO"), rs.getInt("IND_EVALUACION"), rs.getBoolean("IND_BIM"), rs.getString("SALON"), rs.getInt("AÑO"), rs.getInt("COD_MAESTRO_TIT"),rs.getInt("COD_MAESTRO_PAR"));				
 			}
 			stmt.close();
 			Conexion.desconectar();
