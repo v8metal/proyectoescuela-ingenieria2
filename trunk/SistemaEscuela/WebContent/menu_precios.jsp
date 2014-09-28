@@ -7,14 +7,31 @@
 <link rel="stylesheet" type="text/css" href="style/style.css" />
 <title>Sistema Alumnado</title>
 </head>
-<body>
+<body>  
 <center>
+  <h1>Precios de Cuotas/Inscripciones</h1>
+    <form action="PrecioList" method="post">
+      <table>
+        <tr>
+          <th>Seleccionar año:</th>
+          <td>
+            <select name="año"><%
+            	int año = (Integer)session.getAttribute("año");
+                                        for(int i=año;i>año-20;i--){
+            %>
+              <option value="<%=i%>"><%=i%></option>
+                <%
+                	}
+                %>
+            </select>
+          </td>
+        </tr>   
+      </table>
+   <br>
   <br>
-  <br>
-  <br>
-  <h1>Precios</h1>
-  <strong><a href="precio_edit.jsp">Ingreso de Precios</a><br></strong>
-  <strong><a href="precio_list.jsp">Listado de Precios</a></strong>
+	<input type="submit" value="Aceptar">
+	<input type="reset" value="Cancelar">
+    </form>     
   <br>
   <br>
   <strong><a href="menu_admin.jsp">Volver al Menú Principal</a></strong>

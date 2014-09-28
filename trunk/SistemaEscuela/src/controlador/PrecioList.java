@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesPrecio;
-import datos.Precios;
+import datos.PreciosInscrip;
+import datos.PreciosMes;
 
 /**
  * Servlet implementation class PrecioList
@@ -37,22 +38,36 @@ public class PrecioList extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sesion = request.getSession();
+		
+		//sesion.removeAttribute("añoPrecios");
+		
 		if(sesion.getAttribute("login")!=null){
+			
 			int año=0;
-			if(request.getParameter("año")==null){
-				año = (Integer)sesion.getAttribute("year");
+			
+			if(request.getParameter("año") == null){				
+				año = (Integer)sesion.getAttribute("añoPrecios");
 			}else{
+				sesion.removeAttribute("añoPrecios");
 				año = Integer.parseInt(request.getParameter("año"));
 			}
 			
-			Precios precios;
+			sesion.setAttribute("añoPrecios", año);
+									
+			PreciosMes preciosMes;
+			PreciosInscrip preciosInscrip;
+			
 			try {
-				precios = AccionesPrecio.getAllPrecios(año);
-				sesion.setAttribute("precios", precios);
-				sesion.setAttribute("list", "list");
+				preciosMes = AccionesPrecio.getAllMes(año);
+				preciosInscrip = AccionesPrecio.getAllInscrip(año);
+				
+				sesion.setAttribute("preciosMes", preciosMes);				
+				sesion.setAttribute("preciosInscrip", preciosInscrip);
+				
 				response.sendRedirect("precio_list.jsp");
+				
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 			

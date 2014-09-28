@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesPrecio;
-import datos.Precio;
+import datos.PrecioInscrip;
+import datos.PrecioMes;
 
 /**
  * Servlet implementation class PrecioEdit
@@ -31,37 +32,144 @@ public class PrecioEdit extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		HttpSession sesion = request.getSession();
-		if(sesion.getAttribute("login")!=null){
-			String accion = request.getParameter("do");
-			int año = Integer.parseInt(request.getParameter("año"));
-			int mes = Integer.parseInt(request.getParameter("mes"));
-			String modificar = request.getParameter("modificar");
+		
+		if(sesion.getAttribute("login")!= null){
 			
-			sesion.setAttribute("modificar", modificar);
-			if(accion.equals("modificar")){
-				datos.Precio precio;
-				try {
-					precio = conexion.AccionesPrecio.getOnePrecio(año, mes);
-					sesion.setAttribute("precio", precio);
-					request.setAttribute("precio", precio);
+			String accion = request.getParameter("accion");
+			int año = 0;
+			
+			System.out.println("accion = " + accion);
+			
+			switch (accion){
+			
+				case ("altaMes"):				
+												
+				año =  (Integer) sesion.getAttribute("añoPrecios");
+										
+				sesion.setAttribute("control", "altaMes");
+				
+				try {					
+					
+					sesion.setAttribute("ultimoMes", AccionesPrecio.getUltimoMes(año));			
+					
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/precioMes_edit.jsp");
+					dispatcher.forward(request, response);
+								
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				
+					e.printStackTrace();
+				}
+			
+				break;
+			
+				case ("modificarMes"):				
+			
+				sesion.setAttribute("control", "modificarMes");
+				
+				año = Integer.parseInt(request.getParameter("año"));			
+				int mes = Integer.parseInt(request.getParameter("mes"));
+				
+				try {
+					
+					sesion.setAttribute("añoModific", año);
+					sesion.setAttribute("mesModific", AccionesPrecio.getOneMes(año, mes));
+					
+					
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/precioMes_edit.jsp");
+					dispatcher.forward(request, response);
+								
+				} catch (Exception e) {
+				
 					e.printStackTrace();
 				}
 				
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/precio_edit.jsp");
-				dispatcher.forward(request, response);
-			}else{
+				break;
+			
+				case ("bajaMes"):							
+				
+				año = Integer.parseInt(request.getParameter("año"));			
+				mes = Integer.parseInt(request.getParameter("mes"));
+				
 				try {
-					conexion.AccionesPrecio.borrarPrecio(año, mes);
+				
+					AccionesPrecio.borrarMes(año, mes);
+					
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/PrecioList");
+					dispatcher.forward(request, response);
+								
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+				
 					e.printStackTrace();
 				}
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/PrecioList");
-				dispatcher.forward(request, response);
-			}
+			
+				break;
+				
+				case ("altaInscrip"):				
+					
+				año =  (Integer) sesion.getAttribute("añoPrecios");
+				
+				sesion.setAttribute("control", "altaInscrip");
+				
+				try {					
+					
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/precioInscrip_edit.jsp");
+					dispatcher.forward(request, response);
+								
+				} catch (Exception e) {
+				
+					e.printStackTrace();
+				}
+			
+				break;
+			
+				case ("modificarInscrip"):
+					
+				sesion.setAttribute("control", "modificarInscrip");
+				
+				año = Integer.parseInt(request.getParameter("año"));				
+				
+				try {
+					
+					sesion.setAttribute("añoModific", año);
+					
+					PrecioInscrip precioI = AccionesPrecio.getOneInscrip(año);
+					
+					sesion.setAttribute("precioInscrip", precioI);					
+					
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/precioInscrip_edit.jsp");
+					dispatcher.forward(request, response);
+								
+				} catch (Exception e) {
+				
+					e.printStackTrace();
+				}
+				
+				break;
+			
+				case ("bajaInscrip"):							
+				
+				//sesion.setAttribute("control", "modificarInscrip");
+				
+				año = Integer.parseInt(request.getParameter("año"));			
+			
+				try {
+				
+					AccionesPrecio.borrarInscrip(año);
+					
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/PrecioList");
+					dispatcher.forward(request, response);
+								
+				} catch (Exception e) {
+				
+					e.printStackTrace();
+				}
+			
+				break;				
+				
+			}			
+
 		}else{
 			response.sendRedirect("login.jsp");
 		}
@@ -71,163 +179,182 @@ public class PrecioEdit extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		HttpSession sesion = request.getSession();
+		
 		if(sesion.getAttribute("login")!=null){
-			int prec_reg=Integer.parseInt(request.getParameter("prec_reg"));
-			int prec_grupo = Integer.parseInt(request.getParameter("prec_grupo"));
-			int reinsc_ant = Integer.parseInt(request.getParameter("reinsc_ant"));
-			int reinsc = Integer.parseInt(request.getParameter("reinsc"));
-			String modificar =(String)sesion.getAttribute("modificar");
 			
-			int año=0;
-			if(modificar==null){
-				año = Integer.parseInt(request.getParameter("año"));
+			String control =(String)sesion.getAttribute("control");
+			sesion.removeAttribute("control");
+			sesion.removeAttribute("ultimoMes");
+			
+			String dia = (String) request.getParameter("dia_inscrip");			
+			
+			String mes;
+			
+			if (request.getParameter("mes") !=  null){
+				mes = request.getParameter("mes");			
+			}else{
+				mes = request.getParameter("mes_inscrip");
+			}
+						
+			int grupo = 0, hijos = 0;
+		
+			if (request.getParameter("grupo") != null){			
+				grupo = Integer.parseInt(request.getParameter("grupo"));
+				hijos = Integer.parseInt(request.getParameter("hijos"));
+			}
+			
+			//compartidas por mes e inscripciones
+			int regular =Integer.parseInt(request.getParameter("regular"));
+			int recargo  = Integer.parseInt(request.getParameter("recargo"));
+						
+					
+			int año = 0;
+			int i = 0;
+			
+			switch (mes){
+			
+			case "Enero":
+				i = 1;
+				break;
+				
+			case "Febrero":
+				i = 2;
+				break;
+				
+			case "Marzo":
+				i = 3;
+				break;
+			case "Abril":
+				i = 4;
+				break;
+				
+			case "Mayo":
+				i = 5;
+				break;
+				
+			case "Junio":
+				i = 6;
+				break;
+				
+			case "Julio":
+				i = 7;
+				break;
+				
+			case "Agosto":
+				i = 8;
+				break;
+				
+			case "Septiembre":
+				i = 9;
+				break;
+				
+			case "Octubre":
+				i = 10;
+				break;
+				
+			case "Noviembre":
+				i = 11;
+				break;
+				
+			case "Diciembre":
+				i = 12;
+				break;
+			
+			case "otro":
+				i = 13;
+				break;
+			}
+			
+			switch (control){
+			
+			
+			case "altaMes":			
+								
+				año =  (Integer) sesion.getAttribute("añoPrecios");
+				
 				try {
-					for(int i=1;i<13;i++){
-						Precio precio =new Precio(año,i,prec_reg,prec_grupo,reinsc_ant,reinsc);
-						AccionesPrecio.altaPrecio(precio);
+					
+					for(;i<13;i++){						
+						PrecioMes precio =new PrecioMes(año,i,regular,grupo,hijos,recargo);
+						AccionesPrecio.altaPrecioMes(precio);
 					}
-					sesion.setAttribute("year", año);
-					response.sendRedirect("PrecioList");
+															
 				} catch (SQLException e) {
+					
 					String error = request.getParameter("error");
 					sesion.setAttribute("error", error);
-					response.sendRedirect("precio_edit.jsp");
+					
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}else{
-				año = (Integer)sesion.getAttribute("año");
-				Precio p = (Precio)sesion.getAttribute("precio");
-				String mes = request.getParameter("mes");
-				if(mes.equals("Enero")){
-					for(int i=2;i<13;i++){
-						Precio precio = new Precio(año,i,prec_reg,prec_grupo,reinsc_ant,reinsc);
-						try {
-							AccionesPrecio.modificarPrecio(precio,i);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-				if(mes.equals("Febrero")){
-					for(int i=3;i<13;i++){
-						Precio precio = new Precio(año,i,prec_reg,prec_grupo,reinsc_ant,reinsc);
-						try {
-							AccionesPrecio.modificarPrecio(precio,i);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-				if(mes.equals("Marzo")){
-					for(int i=4;i<13;i++){
-						Precio precio = new Precio(año,i,prec_reg,prec_grupo,reinsc_ant,reinsc);
-						try {
-							AccionesPrecio.modificarPrecio(precio,i);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-				if(mes.equals("Abril")){
-					for(int i=5;i<13;i++){
-						Precio precio = new Precio(año,i,prec_reg,prec_grupo,reinsc_ant,reinsc);
-						try {
-							AccionesPrecio.modificarPrecio(precio,i);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-				if(mes.equals("Mayo")){
-					for(int i=6;i<13;i++){
-						Precio precio = new Precio(año,i,prec_reg,prec_grupo,reinsc_ant,reinsc);
-						try {
-							AccionesPrecio.modificarPrecio(precio,i);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-				if(mes.equals("Junio")){
-					for(int i=7;i<13;i++){
-						Precio precio = new Precio(año,i,prec_reg,prec_grupo,reinsc_ant,reinsc);
-						try {
-							AccionesPrecio.modificarPrecio(precio,i);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-				if(mes.equals("Julio")){
-					for(int i=8;i<13;i++){
-						Precio precio = new Precio(año,i,prec_reg,prec_grupo,reinsc_ant,reinsc);
-						try {
-							AccionesPrecio.modificarPrecio(precio,i);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-				if(mes.equals("Agosto")){
-					for(int i=9;i<13;i++){
-						Precio precio = new Precio(año,i,prec_reg,prec_grupo,reinsc_ant,reinsc);
-						try {
-							AccionesPrecio.modificarPrecio(precio,i);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-				if(mes.equals("Septiembre")){
-					for(int i=10;i<13;i++){
-						Precio precio = new Precio(año,i,prec_reg,prec_grupo,reinsc_ant,reinsc);
-						try {
-							AccionesPrecio.modificarPrecio(precio,i);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-				if(mes.equals("Octubre")){
-					for(int i=11;i<13;i++){
-						Precio precio = new Precio(año,i,prec_reg,prec_grupo,reinsc_ant,reinsc);
-						try {
-							AccionesPrecio.modificarPrecio(precio,i);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-				if(mes.equals("Noviembre")){
-					for(int i=12;i<13;i++){
-						Precio precio = new Precio(año,i,prec_reg,prec_grupo,reinsc_ant,reinsc);
-						try {
-							AccionesPrecio.modificarPrecio(precio,i);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
+											
+				break;
+				
+			case "modificarMes":
+				
+				año = (Integer) sesion.getAttribute("añoModific");				
+				sesion.removeAttribute("añoModific");
+				sesion.removeAttribute("mesModific");
+				
+				PrecioMes precio = new PrecioMes(año, i,regular,grupo,hijos,recargo);
+				
+				try {
+					
+					AccionesPrecio.modificarMes(precio,i);
+					
+				} catch (Exception e) {				
+					e.printStackTrace();
 				}
 				
+				break;
+					
+						
+			case "altaInscrip":			
+			
+			año =  (Integer) sesion.getAttribute("añoPrecios");
+			
+			try {
 				
-				sesion.setAttribute("modificar", null);
-				sesion.setAttribute("year", año);
-				response.sendRedirect("PrecioList");
+				PrecioInscrip precioI =new PrecioInscrip(año, año + "-" + mes + "-" + dia, regular, recargo);
+				AccionesPrecio.altaPrecioInscrip(precioI);				
+														
+			} catch (SQLException e) {
+				
+				String error = request.getParameter("error");
+				sesion.setAttribute("error", error);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
+										
+			break;
+			
+			case "modificarInscrip":
+			
+			año = (Integer) sesion.getAttribute("añoModific");			
+			sesion.removeAttribute("inscripModif");
+			
+			try {
+				
+				PrecioInscrip precioI =new PrecioInscrip(año, año + "-" + mes + "-" + dia, regular, recargo);
+				AccionesPrecio.modificarInscrip(precioI);
+				
+				sesion.removeAttribute("inscripModif");
+				
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}
+			
+			break;
+				
+		}			
+				
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/PrecioList");
+			dispatcher.forward(request, response);
+		
+			
 		}else{
 			response.sendRedirect("login.jsp");
 		}
