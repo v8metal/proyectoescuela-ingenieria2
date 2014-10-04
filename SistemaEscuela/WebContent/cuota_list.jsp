@@ -4,10 +4,22 @@
 <%@page import="datos.Cuotas"%>
 <%@page import="datos.Alumno_Grado"%>
 <%@page import="datos.Alumnos_Grados"%>
+<%@page import="datos.Grado"%>
+<%@page import="datos.Grados"%>
+<%@page import="datos.Alumno"%>
+<%@page import="datos.Alumnos"%>
+<%@page import="conexion.AccionesGrado"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<% 
+     Alumnos alumnos = (Alumnos) session.getAttribute("alumnos_cuota");
+     String grado = (String) session.getAttribute("gradoCuota");
+     String turno = (String) session.getAttribute("turnoCuota");	
+     int año = (Integer) session.getAttribute("añoCuota");
+   
+   %>			
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style/style.css" />
@@ -15,140 +27,208 @@
 </head>
 <body>
 	<center>
-	<h1>Alumnos</h1>
-	<form action="CuotaList" method="get" id="formGrado" onsubmit="return validarGrado()">
-	  <table>
-	  <tr>
-	    <th>Seleccionar año:</th>
-	    <td><select name="año">
-	      		<%
-	      		    int año = (Integer)session.getAttribute("año");
-	      			for(int i=año; i>año-20;i--){
-	      		%>	
-	      	  <option value="<%=i %>"><%=i %></option>
-	      		<%
-	      			}
-	      		%>
-	        </select>
+	<h1>Cuotas <%= grado + " - " + turno + " - " + año%> </h1>	
+	  <table border= 1>
+	  <tr>	  	    
+	    <th> NOMBRE <th>
+	    <th> TIPO DE COBRO<th>
+	    <th> INSCRIPCION - <%= año%> <th>	    
+	    <th> MARZO <th>
+	    <th> ABRIL <th>
+	    <th> MAYO  <th>
+	    <th> JUNIO <th>
+	    <th> JULIO <th>
+	    <th> AGOSTO <th>
+	    <th> SEPTIEMBRE <th>
+	    <th> OCTUBRE <th>
+	    <th> NOVIEMBRE <th>
+	    <th> DICIEMBRE <th>
+	    <th> INSCRIPCION - <%= año+1%> <th>
+	    	    
 	  </tr>
-	    <tr>
-	      <th>Seleccionar grado:</th>
-	      <td><select name="grado">
-	            <option value=""></option>
-	            <option value="Sala 4">Sala de 4</option>
-	            <option value="Sala 5">Sala de 5</option>
-	            <option value="1ro">1º</option>
-	            <option value="2do">2º</option>
-	            <option value="3ro">3º</option>
-	            <option value="4to">4º</option>
-	            <option value="5to">5º</option>
-	            <option value="6to">6º</option>
-	            <option value="7mo">7º</option>
-	          </select>
-	      </td>
-	    </tr>
-	    <tr>
-	      <th>Seleccionar turno</th>
-	      <td><select name="turno">
-	            <option value=""></option>
-	            <option value="mañana">mañana</option>
-	            <option value="tarde">tarde</option>
-	      </select>
-	      </td>
-	    </tr>
-	    <tr>
-	      <td></td>
-	      <td><input type="submit" value="Aceptar">
-	          <input type="reset" value="Cancelar">
-	      </td>
-	    </tr>
-	  </table>
-	</form>
-	<br>
-	<br>
-	<%
-		String activador = (String)session.getAttribute("activador");
-		if(activador!=null){
-			%>
+	  <% int cod_plan = 0;
+	  
+	  	for (Alumno a : alumnos.getLista()) { %>
+	  <tr>	    
+	  <% String tipoCobro = AccionesAlumno.getTipoCobro(a.getDni(), año); %>
+	  
+	    <td> <%=a.getNombre() + " " + a.getApellido() %><td>
+	    	    
+	    <td> <%= tipoCobro %> <td>
+	    <td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año-1%>&&dni=<%=a.getDni()%>&&mes=13"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año-1, 13)%></a><td>
 
-    <table border="2">
-      <tr>
-        <th><%=session.getAttribute("grado") %></th>
-        <th><%
-        if(session.getAttribute("turno").equals("MAÑANA") || session.getAttribute("turno").equals("mañana")){
-	%>
-    	TM
-    	<%
-		}else if(session.getAttribute("turno").equals("tarde") || session.getAttribute("turno").equals("TARDE")){
-	%>
-    		 TT
-    		 <%
-		}
-	%>
-		</th>
-	</tr>	
-      <tr>
-        <th>AÑO</th>
-        <th>DNI</th>
-        <th>NOMBRE</th>
-        <th>APELLIDO</th>
-        <th>REINSCRIPCIÓN</th>
-        <th>PERIODO</th>
-        <th>REINSCRIPCIÓN ANTICIPADA</th>
-      </tr>
-      <%
-      	Alumnos_Grados alumnos = (Alumnos_Grados)session.getAttribute("alumnos_grado");
-            	for(Alumno_Grado alumno:alumnos.getAlumnos_Grados()){
-            		Cuotas c = AccionesCuota.getAll(alumno.getDni());
-            		for(Cuota cuota:c.getCuotas()){
-      %>
-      	<tr>
-      	  <td><%=cuota.getAño()%></td>
-      	  <td><%=cuota.getDni()%></td>
-      	  <td><%=AccionesAlumno.getOneAlumno(cuota.getDni()).getNombre()%></td>
-      	  <td><%=AccionesAlumno.getOneAlumno(cuota.getDni()).getApellido()%></td>
-      	  <td><%
-      	  	if(cuota.getReinscripcion()==1){
-      	  		%>
-      	  		<input type="checkbox" checked="checked" disabled>
-     			<% 
-      	  	}else{
-      	  		%>
-      	  		<input type="checkbox" disabled>
-      	  		<% 
-      	  	}
-      	  	%>
-         </td>
-      	  <td><%=cuota.getPeriodo() %></td>
-      	  <td><%
-      	  	if(cuota.getReinscripcion_ant()==1){
-      	  		%>
-      	  		<input type="checkbox" checked="checked" disabled>
-      	  	<% 
-      	  	}else{
-      	  	%>
-     			<input type="checkbox" disabled>
-     			<%
-      	  	}
-      		
-      	
-      	  	%>
-      	  </td>
-      	  <td><a href="CuotaEdit?dni=<%=cuota.getDni() %>&&año=<%=cuota.getAño() %>&&periodo=<%=cuota.getPeriodo() %>">Editar</a></td>
-      	  <% 
-      	 }
-      }
-      	%>
-      	</tr>
-    </table>
-			<% 
-			session.setAttribute("activador", null);
-		}
-	%>
+	    <%if(!tipoCobro.equals("SUBSIDIO")){
+	    	
+	    	if ((cod_plan = AccionesCuota.checkPlanPagosMes(a.getDni(), año, 3)) == 0){ %>
+	    		    		    	
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=3"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 3) %> </a><td>
+	    		 
+	    	<%}else{%>
+	    	
+	    		<td> <a href="CuotaList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    	
+	    	<%}%>
+	    	    	
+	    <%}else{%>
+	    	<td> SUBSIDIO<td>
+	    <%}%>
+	    
+	    <%if(!tipoCobro.equals("SUBSIDIO")){
+	    	
+	    	if ((cod_plan = AccionesCuota.checkPlanPagosMes(a.getDni(), año, 4)) == 0){ %>
+	    		    		    	
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=4"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 4) %> </a><td>
+	    		 
+	    	<%}else{%>
+	    	
+	    		<td> <a href="CuotaList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    	
+	    	<%}%>
+	    	    	
+	    <%}else{%>
+	    	<td> SUBSIDIO<td>
+	    <%}%>
+
+	    
+   	    <%if(!tipoCobro.equals("SUBSIDIO")){
+	    	
+	    	if ((cod_plan = AccionesCuota.checkPlanPagosMes(a.getDni(), año, 5)) == 0){ %>
+	    		    		    	
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=5"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 5) %> </a><td>
+	    		 
+	    	<%}else{%>
+	    	
+	    		<td> <a href="CuotaList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    	
+	    	<%}%>
+	    	    	
+	    <%}else{%>
+	    	<td> SUBSIDIO<td>
+	    <%}%>
+
+	    
+   	    <%if(!tipoCobro.equals("SUBSIDIO")){
+	    	
+	    	if ((cod_plan = AccionesCuota.checkPlanPagosMes(a.getDni(), año, 6)) == 0){ %>
+	    		    		    	
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=6"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 6) %> </a><td>
+	    		 
+	    	<%}else{%>
+	    	
+	    		<td> <a href="CuotaList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    	
+	    	<%}%>
+	    	    	
+	    <%}else{%>
+	    	<td> SUBSIDIO<td>
+	    <%}%>
+	    
+   	    <%if(!tipoCobro.equals("SUBSIDIO")){
+	    	
+	    	if ((cod_plan = AccionesCuota.checkPlanPagosMes(a.getDni(), año, 7)) == 0){ %>
+	    		    		    	
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=7"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 7) %> </a><td>
+	    		 
+	    	<%}else{%>
+	    	
+	    		<td> <a href="CuotaList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    	
+	    	<%}%>
+	    	    	
+	    <%}else{%>
+	    	<td> SUBSIDIO<td>
+	    <%}%>
+	    	    
+	    	    
+	    <%if(!tipoCobro.equals("SUBSIDIO")){
+	    	
+	    	if ((cod_plan = AccionesCuota.checkPlanPagosMes(a.getDni(), año, 8)) == 0){ %>
+	    		    		    	
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=8"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 8) %> </a><td>
+	    		 
+	    	<%}else{%>
+	    	
+	    		<td> <a href="CuotaList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    	
+	    	<%}%>
+	    	    	
+	    <%}else{%>
+	    	<td> SUBSIDIO<td>
+	    <%}%>
+	    	    
+	    <%if(!tipoCobro.equals("SUBSIDIO")){
+	    	
+	    	if ((cod_plan = AccionesCuota.checkPlanPagosMes(a.getDni(), año, 9)) == 0){ %>
+	    		    		    	
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=9"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 9) %> </a><td>
+	    		 
+	    	<%}else{%>
+	    	
+	    		<td> <a href="CuotaList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    	
+	    	<%}%>
+	    	    	
+	    <%}else{%>
+	    	<td> SUBSIDIO<td>
+	    <%}%>
+	    
+   	    <%if(!tipoCobro.equals("SUBSIDIO")){
+	    	
+	    	if ((cod_plan = AccionesCuota.checkPlanPagosMes(a.getDni(), año, 10)) == 0){ %>
+	    		    		    	
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=10"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 10) %> </a><td>
+	    		 
+	    	<%}else{%>
+	    	
+	    		<td> <a href="CuotaList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    	
+	    	<%}%>
+	    	    	
+	    <%}else{%>
+	    	<td> SUBSIDIO<td>
+	    <%}%>
+
+   	    <%if(!tipoCobro.equals("SUBSIDIO")){
+	    	
+	    	if ((cod_plan = AccionesCuota.checkPlanPagosMes(a.getDni(), año, 11)) == 0){ %>
+	    		    		    	
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=11"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 11) %> </a><td>
+	    		 
+	    	<%}else{%>
+	    	
+	    		<td> <a href="CuotaList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    	
+	    	<%}%>
+	    	    	
+	    <%}else{%>
+	    	<td> SUBSIDIO<td>
+	    <%}%>
+	    
+   	    <%if(!tipoCobro.equals("SUBSIDIO")){
+	    	
+	    	if ((cod_plan = AccionesCuota.checkPlanPagosMes(a.getDni(), año, 12)) == 0){ %>
+	    		    		    	
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=12"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 12) %> </a><td>
+	    		 
+	    	<%}else{%>
+	    	
+	    		<td> <a href="CuotaList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    	
+	    	<%}%>
+	    	    	
+	    <%}else{%>
+	    	<td> SUBSIDIO<td>
+	    <%}%>
+	    	  
+	  	<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=13"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 13)%></a><td>
+	  	
+	  <%}%>
+	  </tr>
+	  </table>
 	<br>
 	<br>
 	<form action="menu_cuotas.jsp">
-	  <input type="submit" value="Vovler al Menú de Cuotas">
+	  <input type="submit" value="Volver al Menú de Cuotas">
 	</form>
 	<br>
 	<br>
@@ -156,21 +236,5 @@
 	  <input type="submit" value="Cerrar Sesión">
 	</form>
 	</center>
-	
-	  <script type="text/javascript">
- var form = document.getElementById("formGrado");
- function validarGrado(){
-	 var año = form.año.value;
-	 var grado = form.grado.value;
-	 var turno = form.turno.value;
-	 
-	 if(grado=='' || turno=='' || año==''){
-		 alert("Debe completar todos los campos");
-		 return false;
-	 }else{
-		 return true;
-	 }
- }
-	</script> 
 </body>
 </html>

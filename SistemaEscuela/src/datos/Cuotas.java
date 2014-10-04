@@ -1,21 +1,27 @@
 package datos;
 
-import java.util.ArrayList;
-
-import datos.Cuota;
+import java.util.*;
 
 public class Cuotas {
-private ArrayList<Cuota>cuotas;
+
+	ArrayList<Cuota> lista;
 	
-	public Cuotas(){
-		cuotas = new ArrayList<Cuota>();
+	public Cuotas() {
+		lista = new ArrayList<Cuota>();
 	}
 	
-	public ArrayList<Cuota>getCuotas(){
-		return cuotas;
+	public ArrayList<Cuota> getLista() {
+		return lista;
 	}
 	
-	public void agregarCuota(Cuota c){
-		cuotas.add(c);
+	public void agregarCuota(Cuota p) {
+		lista.add(p);
 	}
+	
+	public void listar() {
+		for (Cuota p : lista) {
+			System.out.println(p);
+		}
+	}
+	
 }

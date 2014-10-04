@@ -45,6 +45,7 @@ public class Login extends HttpServlet {
 		try {
 			
 			sesion.setAttribute("año", año);
+			sesion.setAttribute("añoc", año);
 			sesion.setAttribute("mes", mes);
 			//recupero la fecha del sistema
 			Calendar c = Calendar.getInstance();

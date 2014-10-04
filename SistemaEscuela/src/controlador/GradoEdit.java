@@ -125,24 +125,25 @@ import conexion.AccionesMaestro;
 				String turno = request.getParameter("grado_turno");
 				int año = Integer.parseInt(request.getParameter("año"));
 				
+				
 				String grado_prom = null;
 				
 				if (grado.equals("Sala 4")){					
 					grado_prom ="Sala 5";
 				}else if(grado.equals("Sala 5")){
-					grado_prom ="1ro";				
-				}else if(grado.equals("1ro")){
-					grado_prom ="2do";
-				}else if(grado.equals("2do")){
-					grado_prom ="3ro";
-				}else if(grado.equals("3ro")){
-					grado_prom ="4to";
-				}else if(grado.equals("4to")){
-					grado_prom ="5to";
-				}else if(grado.equals("5to")){
-					grado_prom ="6to";
-				}else if(grado.equals("6to")){
-					grado_prom ="7mo";
+					grado_prom ="1º Grado";				
+				}else if(grado.equals("1º Grado")){
+					grado_prom ="2º Grado";
+				}else if(grado.equals("2º Grado")){
+					grado_prom ="3º Grado";
+				}else if(grado.equals("3º Grado")){
+					grado_prom ="4º Grado";
+				}else if(grado.equals("4º Grado")){
+					grado_prom ="5º Grado";
+				}else if(grado.equals("5º Grado")){
+					grado_prom ="6º Grado";
+				}else if(grado.equals("6º Grado")){
+					grado_prom ="7º Grado";
 				}
 				
 				Integer titular = null;

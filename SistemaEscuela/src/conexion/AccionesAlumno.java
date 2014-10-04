@@ -80,6 +80,40 @@ public class AccionesAlumno {
 		return a;
 	}
 	
+	//PARA EL COBRO DE CUOTAS - DETERMINA EL TIPO DE COBRO DEL ALUMNO EN EL AÑO
+	public static String getTipoCobro(int dni, int año) throws Exception{
+		
+		String tipo = "REGULAR";
+		
+		try{
+			Statement stm = Conexion.conectar().createStatement();
+									
+			ResultSet rs = stm.executeQuery("SELECT A1.IND_GRUPO, A1.IND_SUBSIDIO, IFNULL(M.DNI,0) as MAESTRODNI FROM ALUMNOS A INNER JOIN ALUMNOS_SUBSIDIO A1 ON A.DNI = A1.DNI LEFT JOIN MAESTROS M on (M.DNI = A.DNI_TUTOR or M.DNI = DNI_MADRE) WHERE A.DNI = " + dni + " AND AÑO = " + año);
+			
+			int grupo = 0;
+			int subsidio = 0;
+			int maestroDni = 0;
+			
+			while(rs.next()){
+				grupo = rs.getInt("IND_GRUPO");
+				subsidio = rs.getInt("IND_SUBSIDIO");
+				maestroDni = rs.getInt("MAESTRODNI");				
+			}
+			
+			if (grupo == 1) tipo = "GRUPO";
+			if (subsidio == 1) tipo = "SUBSIDIO";
+			if (maestroDni != 0) tipo = "HIJO MAESTRO";
+			
+			stm.close();
+			rs.close();
+			Conexion.desconectar();
+		}catch(SQLException sqle){
+			System.out.println("ERROR SQL!!!");
+		}	
+		return tipo;
+	}	
+	//PARA EL COBRO DE CUOTAS - DETERMINA EL TIPO DE COBRO DEL ALUMNO
+	
 	public static Alumnos getAll() {
 		Alumnos lista = new Alumnos();
 		try {
@@ -140,8 +174,9 @@ public class AccionesAlumno {
 	public static Alumnos getAllByGradoTurnoYAño(String grado, String turno, int año) {
 		Alumnos lista = new Alumnos();
 		try {
-			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT A.DNI, A.NOMBRE, A.APELLIDO, A.DOMICILIO, A.TELEFONO, A.FECHA_NAC, A.LUGAR_NAC, A.DNI_TUTOR, A.DNI_MADRE, A.CANT_HER_MAY, A.CANT_HER_MEN, A.IGLESIA, A.ESC, A.IND_GRUPO, A.IND_SUBSIDIO FROM sistema_alumnado.ALUMNOS A, sistema_alumnado.ALUMNOS_GRADO AG WHERE A.DNI = AG.DNI AND AG.GRADO = '" + grado + "' AND AG.TURNO = '" + turno + "' AND AG.AÑO = '" + año + "' ORDER BY APELLIDO");
+			Statement stmt = Conexion.conectar().createStatement();			
+			
+			ResultSet rs = stmt.executeQuery("SELECT A.DNI, A.NOMBRE, A.APELLIDO, A.DOMICILIO, A.TELEFONO, A.FECHA_NAC, A.LUGAR_NAC, A.DNI_TUTOR, A.DNI_MADRE, A.CANT_HER_MAY, A.CANT_HER_MEN, A.IGLESIA, A.ESC, A.IND_GRUPO, A.IND_SUBSIDIO FROM sistema_alumnado.ALUMNOS A, sistema_alumnado.ALUMNOS_GRADO AG WHERE A.DNI = AG.DNI AND AG.GRADO = '" + grado + "' AND AG.TURNO = '" + turno + "' AND AG.AÑO = '" + año + "' ORDER BY APELLIDO, NOMBRE");
 			Alumno tmp;
 			while (rs.next()) {
 				tmp = new Alumno(rs.getInt("dni"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("domicilio"), rs.getString("telefono"), rs.getString("fecha_nac"), rs.getString("lugar_nac"), rs.getInt("dni_tutor"), rs.getInt("dni_madre"), rs.getInt("cant_her_may"), rs.getInt("cant_her_men"), rs.getString("iglesia"), rs.getString("esc"), rs.getBoolean("ind_grupo"), rs.getBoolean("ind_subsidio"));
@@ -276,7 +311,7 @@ public class AccionesAlumno {
 	
 		try {
 
-			Alumno a = getOne(38545642);
+		//	Alumno a = getOne(38545642);
 		//	System.out.println(a.toString());
 		//	boolean b = esAlumno(3704173);
 		//	System.out.println(b);
