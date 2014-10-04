@@ -73,33 +73,6 @@ public class AlumnoList extends HttpServlet {
 				
 				sesion.setAttribute("alumnos", alumno_list);
 				
-				if (grado.equals("1ro")) {
-					grado = "Primer Grado";
-				}
-				if (grado.equals("2do")) {
-					grado = "Segundo Grado";
-				}
-				if (grado.equals("3ro")) {
-					grado = "Tercer Grado";
-				}
-				if (grado.equals("4to")) {
-					grado = "Cuarto Grado";
-				}
-				if (grado.equals("5to")) {
-					grado = "Quinto Grado";
-				}
-				if (grado.equals("6to")) {
-					grado = "Sexto Grado";
-				}
-				if (grado.equals("7mo")) {
-					grado = "Séptimo Grado";
-				}
-				if (grado.equals("Sala 4")) {
-					grado = "Sala 4";
-				}
-				if (grado.equals("Sala 5")) {
-					grado = "Sala 5";
-				}
 				if (turno.equals("MAÑANA")) {
 					turno = "TM";
 				} else {

@@ -48,6 +48,19 @@ public class Grado {
 		this.maestropar = null;
 	}
 	
+	//para el cobro de cuotas
+	public Grado(String grado,String turno, int año) {
+		this.grado = grado;
+		this.turno = turno;
+		this.evaluacion = null;
+		this.bimestre = false;
+		this.salon = null;
+		this.año = año;
+		this.maestrotit = null;
+		this.maestropar = null;
+	}
+	//para el cobro de cuotas
+	
 	public String getGrado() {
 		return grado;
 	}

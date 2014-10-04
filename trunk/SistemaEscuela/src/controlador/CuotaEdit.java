@@ -1,16 +1,14 @@
 package controlador;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import conexion.AccionesAlumno;
-import datos.Alumno_Grado;
 import conexion.AccionesCuota;
 import datos.Cuota;
 
@@ -33,21 +31,115 @@ public class CuotaEdit extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sesion = request.getSession();
+		
 		if(sesion.getAttribute("login")!=null){
-			int dni = Integer.parseInt(request.getParameter("dni"));
-			int año = Integer.parseInt(request.getParameter("año"));
-			String periodo = request.getParameter("periodo");
-			Cuota c;
+
+			//System.out.println("CuotaEdit doGet");
+			
+			String accion = (String) request.getParameter("accion");
+			
+			
+			int cod_pago = 0;
+			
+			
+			switch(accion){			
+			
+			case "altaPago":
+				
+				sesion.removeAttribute("pagoEdit");		
+				
+				double pago = Integer.parseInt(request.getParameter("pago"));
+				
+				int dia = Integer.parseInt(request.getParameter("dia_pago")); //fecha				
+				int mes = Integer.parseInt(request.getParameter("mes_pago")); //fecha
+				int año = Integer.parseInt(request.getParameter("año_pago")); //fecha
+				
+			 	int periodo = (Integer) sesion.getAttribute("mes");
+				
+				String relleno1 = "";
+				String relleno2 = "";
+				
+				if (mes < 10){
+					relleno1 = "0";
+				}
+				
+				if (dia < 10){
+					relleno2 = "0";
+				}
+				
+				
+				//int año = (Integer) sesion.getAttribute("año");	 //fecha
+				int añoc = (Integer) sesion.getAttribute("añoCuota");
+			    int dni = (Integer) sesion.getAttribute("dni");
+			    
+			    //System.out.println(dia);
+			    //System.out.println(mes);
+			    //System.out.println(año);
+			    //System.out.println(añoc);
+			    //System.out.println(dni);
+			    
+			    Cuota cuota = new Cuota(1,dni, año, periodo,"" + añoc + "-" + relleno1 + mes + "-" + relleno2 + dia, pago);
+										
+				try {
+					
+					//inserta un pago para la cuota seleccionada
+					AccionesCuota.insertOnePago(cuota);
+					
+					//request.setAttribute("pagoEdit", cuota);				
+					
+					request.setAttribute("accion", "visualizarPagos");
+					
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CuotaList");
+					dispatcher.forward(request, response);				
+					
+				} catch (Exception e) {				
+					e.printStackTrace();
+				}
+				
+				break;
+				
+			case "modificarPago":
+			
+			cod_pago = Integer.parseInt(request.getParameter("cod_pago"));			
+									
 			try {
-				c = AccionesCuota.getOneCuota(dni, año, periodo);
-				sesion.setAttribute("cuota", c);
-				sesion.setAttribute("modificar", "modificar");
-				sesion.setAttribute("activador", "activador");
-				response.sendRedirect("cuota_edit.jsp");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				
+				//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado
+				cuota = AccionesCuota.getOnePago(cod_pago);
+				
+				sesion.setAttribute("pagoEdit", cuota);				
+				
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/pago_edit.jsp");
+				dispatcher.forward(request, response);				
+				
+			} catch (Exception e) {				
 				e.printStackTrace();
 			}
+			
+			break;
+			
+			case "borrarPago":
+				
+			cod_pago = Integer.parseInt(request.getParameter("cod_pago"));			
+									
+			try {
+				
+				//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado
+				AccionesCuota.deleteOnePago(cod_pago);
+				
+							
+				request.setAttribute("accion", "visualizarPagos");
+				
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CuotaList");
+				dispatcher.forward(request, response);			
+						
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}
+			
+			break;
+			
+			}// fin del case
 			
 		}else{
 			response.sendRedirect("login.jsp");
@@ -58,54 +150,122 @@ public class CuotaEdit extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		HttpSession sesion = request.getSession();
+		
 		if(sesion.getAttribute("login")!=null){
-			String modificar=(String)sesion.getAttribute("modificar");
-			int dni = Integer.parseInt(request.getParameter("dni"));
-			int año = Integer.parseInt(request.getParameter("año"));
-			String periodo = request.getParameter("periodo");
-			int reinsc=0;
-			if(request.getParameter("reinsc")!=null){
-				reinsc=1;
-			}
-			int reinsc_ant=0;
-			if(request.getParameter("reinsc_ant")!=null){
-				reinsc_ant=1;
-			}
-			if(modificar==null){
-				Cuota cuota = new Cuota(dni,año,periodo,reinsc,reinsc_ant);
-				try {	
-					AccionesCuota.altaCuota(cuota);
-					Alumno_Grado alumno=AccionesAlumno.getOneAlumno_Grado(dni);
-					sesion.setAttribute("grado", alumno.getGrado());
-					sesion.setAttribute("turno", alumno.getTurno());
-					sesion.setAttribute("modificar", "modificar");
-					response.sendRedirect("CuotaList");
-				} catch (SQLException e) {
-					System.out.println(e);
-					String error = request.getParameter("error");
-					sesion.setAttribute("error", error);
-					response.sendRedirect("cuota_edit.jsp");
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}else{
-				Cuota c = new Cuota(dni,año,periodo,reinsc,reinsc_ant);
-				Cuota x = (Cuota)sesion.getAttribute("cuota");
-
-				try {
-					AccionesCuota.modificar(c, x.getDni(),x.getAño(),x.getPeriodo());
-					response.sendRedirect("CuotaList");
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				
-			}
 	
+			String accion = (String) request.getParameter("accion");
 			
+			//System.out.println("accion = " + accion);
+			
+			switch(accion){			
+						
+			case "altaPago":
+				
+				sesion.removeAttribute("pagoEdit");
+				
+				double pago = Integer.parseInt(request.getParameter("pago"));
+				
+				int dia = Integer.parseInt(request.getParameter("dia_pago")); //fecha				
+				int mes = Integer.parseInt(request.getParameter("mes_pago")); //fecha
+				
+			 	int periodo = (Integer) sesion.getAttribute("mes");
+				
+				String relleno1 = "";
+				String relleno2 = "";
+				
+				if (mes < 10){
+					relleno1 = "0";
+				}
+				
+				if (dia < 10){
+					relleno2 = "0";
+				}
+				
+				
+				//int año = (Integer) sesion.getAttribute("año");	 //fecha
+				int año = (Integer) sesion.getAttribute("añoCuota");
+			    int dni = (Integer) sesion.getAttribute("dni");
+			    
+			    //System.out.println(dia);
+			    //System.out.println(mes);
+			    //System.out.println(año);
+			    //System.out.println(dni);
+			    
+			    Cuota cuota = new Cuota(1,dni, año, periodo,""+año + "-"+ relleno1 + mes + "-" + relleno2 + dia, pago);			 
+										
+				try {
+					
+					//inserta un pago para la cuota seleccionada
+					AccionesCuota.insertOnePago(cuota);
+					
+					//request.setAttribute("pagoEdit", cuota);				
+					
+					request.setAttribute("accion", "visualizarPagos");
+					
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CuotaList");
+					dispatcher.forward(request, response);				
+					
+				} catch (Exception e) {				
+					e.printStackTrace();
+				}
+				
+				break;
+				
+			case "modificarPago":
+			
+			//System.out.println("modificar pago doGet");
+				
+			cuota = (Cuota) sesion.getAttribute("pagoEdit");
+			
+			//System.out.println("cod_pago = " +cuota.getCod_pago());
+			//pago edit
+			//sesion.removeAttribute("pagoEdit");
+			//pago edit
+									
+			try {
+				
+				//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado
+				cuota = AccionesCuota.getOnePago(cuota.getCod_pago());
+				dia = Integer.parseInt(request.getParameter("dia_pago")); //fecha				
+				mes = Integer.parseInt(request.getParameter("mes_pago")); //fecha
+				año = (Integer) sesion.getAttribute("añoCuota"); //año fecha
+				
+				pago = Integer.parseInt(request.getParameter("pago")); //pago
+				
+				
+				
+				relleno1 = "";
+				relleno2 = "";
+				
+				if (mes < 10){
+					relleno1 = "0";
+				}
+				
+				if (dia < 10){
+					relleno2 = "0";
+				}
+				
+				Cuota c = new Cuota(cuota.getCod_pago(), cuota.getDni(),cuota.getAño(),cuota.getPeriodo(), año + "-" + relleno1 + mes + "-" + relleno2 + dia, pago);
+				
+				AccionesCuota.updateOnePago(c);
+				
+				//System.out.println("accion visualizarPagos");
+				
+				request.setAttribute("accion", "visualizarPagos");
+				
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CuotaList");
+				dispatcher.forward(request, response);				
+								
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}
+			
+			break;
+			
+			}// fin del case
+	
 		}else{
 			response.sendRedirect("login.jsp");
 		}

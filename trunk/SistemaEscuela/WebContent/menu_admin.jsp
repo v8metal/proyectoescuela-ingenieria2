@@ -20,7 +20,7 @@
 <strong><a href="menu_tardanzas.jsp">Tardanzas</a><br></strong>
 <strong><a href="EntrevistaList">Entrevistas</a><br></strong>
 <strong><a href="menu_precios.jsp">Menú de Precios</a><br></strong>
-<strong><a href="cuota_list.jsp">Cobro de Cuotas</a><br></strong>
+<strong><a href="menu_cuotas.jsp">Cobro de Cuotas</a><br></strong>
 <strong><a href="menu_admin.jsp">Informes</a><br></strong>
 <strong><a href="UsuarioList">Gestionar Usuarios</a><br></strong>
 <br>

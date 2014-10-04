@@ -61,6 +61,33 @@ public class AccionesGrado {
 		return lista;
 	}
 	//nuevo devuelve la lista de grados que no han sido dados de alta
+
+	//nuevo devuelve la lista de año y grados que tienen alumnos cargados para el cobro de cuotas
+	public static Grados getAñoGradosCuota(int año) {
+		
+		Grados lista = new Grados();
+					
+		try {
+			
+			Statement stmt = Conexion.conectar().createStatement();
+			
+			//System.out.println("SELECT DISTINCT AG.GRADO, AG.TURNO, AG.AÑO FROM ALUMNOS_GRADO AG INNER JOIN GRADOS_BASE GB ON AG.GRADO = GB.GRADO AND AG.TURNO = GB.TURNO WHERE AG.AÑO = "+ año + " ORDER BY GB.ORDEN");
+			
+			ResultSet rs = stmt.executeQuery("SELECT DISTINCT AG.GRADO, AG.TURNO, AG.AÑO FROM ALUMNOS_GRADO AG INNER JOIN GRADOS_BASE GB ON AG.GRADO = GB.GRADO AND AG.TURNO = GB.TURNO WHERE AG.AÑO = "+ año + " ORDER BY GB.ORDEN");
+			Grado tmp;
+			
+			while (rs.next()) {
+				tmp = new Grado(rs.getString("GRADO"), rs.getString("TURNO"),rs.getInt("AÑO"));
+				lista.agregarGrado(tmp);
+			}
+			stmt.close();
+			Conexion.desconectar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lista;
+	}
+	//nuevo devuelve la lista de grados que tienen alumnos cargados para el año seleccionado - cobro de cuotas
 	
 	public static Grado getOne(String grado, String turno) {
 		
