@@ -48,7 +48,9 @@ public class CuotaEdit extends HttpServlet {
 				
 				sesion.removeAttribute("pagoEdit");		
 				
-				double pago = Integer.parseInt(request.getParameter("pago"));
+				double pago = Double.parseDouble(request.getParameter("pago"));
+				
+				String obs = (String) request.getParameter("obs"); //observaciones
 				
 				int dia = Integer.parseInt(request.getParameter("dia_pago")); //fecha				
 				int mes = Integer.parseInt(request.getParameter("mes_pago")); //fecha
@@ -72,17 +74,20 @@ public class CuotaEdit extends HttpServlet {
 				int añoc = (Integer) sesion.getAttribute("añoCuota");
 			    int dni = (Integer) sesion.getAttribute("dni");
 			    
-			    //System.out.println(dia);
-			    //System.out.println(mes);
-			    //System.out.println(año);
-			    //System.out.println(añoc);
-			    //System.out.println(dni);
+			    /*
+			    System.out.println(dia);
+			    System.out.println(mes);
+			    System.out.println(año);
+			    System.out.println(añoc);
+			    System.out.println(dni);
+			    System.out.println(obs);
+			    */
 			    
-			    Cuota cuota = new Cuota(1,dni, año, periodo,"" + añoc + "-" + relleno1 + mes + "-" + relleno2 + dia, pago);
+			    Cuota cuota = new Cuota(1,dni, año, periodo,"" + añoc + "-" + relleno1 + mes + "-" + relleno2 + dia, pago, obs);
 										
 				try {
 					
-					//inserta un pago para la cuota seleccionada
+					//inserta un pago para la cuota seleccionada					
 					AccionesCuota.insertOnePago(cuota);
 					
 					//request.setAttribute("pagoEdit", cuota);				
@@ -105,6 +110,7 @@ public class CuotaEdit extends HttpServlet {
 			try {
 				
 				//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado
+								
 				cuota = AccionesCuota.getOnePago(cod_pago);
 				
 				sesion.setAttribute("pagoEdit", cuota);				
@@ -166,6 +172,7 @@ public class CuotaEdit extends HttpServlet {
 				sesion.removeAttribute("pagoEdit");
 				
 				double pago = Integer.parseInt(request.getParameter("pago"));
+				String obs = (String) request.getParameter("obs"); //observaciones
 				
 				int dia = Integer.parseInt(request.getParameter("dia_pago")); //fecha				
 				int mes = Integer.parseInt(request.getParameter("mes_pago")); //fecha
@@ -193,7 +200,7 @@ public class CuotaEdit extends HttpServlet {
 			    //System.out.println(año);
 			    //System.out.println(dni);
 			    
-			    Cuota cuota = new Cuota(1,dni, año, periodo,""+año + "-"+ relleno1 + mes + "-" + relleno2 + dia, pago);			 
+			    Cuota cuota = new Cuota(1,dni, año, periodo,""+año + "-"+ relleno1 + mes + "-" + relleno2 + dia, pago, obs);			 
 										
 				try {
 					
@@ -227,15 +234,23 @@ public class CuotaEdit extends HttpServlet {
 			try {
 				
 				//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado
+				
 				cuota = AccionesCuota.getOnePago(cuota.getCod_pago());
+				
 				dia = Integer.parseInt(request.getParameter("dia_pago")); //fecha				
 				mes = Integer.parseInt(request.getParameter("mes_pago")); //fecha
 				año = (Integer) sesion.getAttribute("añoCuota"); //año fecha
 				
-				pago = Integer.parseInt(request.getParameter("pago")); //pago
+				pago = Double.parseDouble(request.getParameter("pago")); //pago
+				obs = (String) request.getParameter("obs"); //observaciones
 				
-				
-				
+				/*
+			    System.out.println(dia);
+			    System.out.println(mes);
+			    System.out.println(año);		    
+			    System.out.println(obs);
+			    */
+							
 				relleno1 = "";
 				relleno2 = "";
 				
@@ -247,7 +262,7 @@ public class CuotaEdit extends HttpServlet {
 					relleno2 = "0";
 				}
 				
-				Cuota c = new Cuota(cuota.getCod_pago(), cuota.getDni(),cuota.getAño(),cuota.getPeriodo(), año + "-" + relleno1 + mes + "-" + relleno2 + dia, pago);
+				Cuota c = new Cuota(cuota.getCod_pago(), cuota.getDni(),cuota.getAño(),cuota.getPeriodo(), año + "-" + relleno1 + mes + "-" + relleno2 + dia, pago, obs);
 				
 				AccionesCuota.updateOnePago(c);
 				
