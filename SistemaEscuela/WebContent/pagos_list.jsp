@@ -28,10 +28,11 @@
 	<%}else{%>	
 	  <table border= 1>
 	  <tr>	  	    
-	    <th> FECHA <th>
-	    <th> PAGO  <th>
-	    <th> MODIFICAR <th>	    
-	    <th> BORRAR <th>	    	    
+	    <th> FECHA </th>
+	    <th> PAGO  </th>
+	    <th> OBSERVACIONES </th>
+	    <th> MODIFICAR </th>	    
+	    <th> BORRAR </th>	    	    
 	  </tr>	  
 	  <% for (Cuota c : cuotas.getLista()) {
 		  
@@ -44,10 +45,11 @@
 		%>
 	  <tr>    
 	  
-	    <td><%= dia_pago + "/" + mes_pago + "/" + año_pago %><td>
-	    <td><%="$" + c.getPago()%><td>
-	    <td><a href="CuotaEdit?accion=modificarPago&&cod_pago=<%=c.getCod_pago()%>"> Modificar pago </a><td>	  
-	    <td><a href="CuotaEdit?accion=borrarPago&&cod_pago=<%=c.getCod_pago()%>"> Borrar pago </a><td>	    
+	    <td><%= dia_pago + "/" + mes_pago + "/" + año_pago %></td>
+	    <td><%="$" + c.getPago()%></td>
+	    <td><%= c.getObservaciones() %></td>
+	    <td><a href="CuotaEdit?accion=modificarPago&&cod_pago=<%=c.getCod_pago()%>"> Modificar pago </a></td>	  
+	    <td><a href="CuotaEdit?accion=borrarPago&&cod_pago=<%=c.getCod_pago()%>"> Borrar pago </a></td>	    
 	  </tr>  
 	  <%}%>
 	  </table>

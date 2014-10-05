@@ -55,14 +55,14 @@ public class AccionesCuota {
 				
 		Statement stm = Conexion.conectar().createStatement();	
 		
-		//System.out.println("SELECT COD_PAGO, DNI, AÑO, PERIODO, FECHA, PAGO FROM PAGOS_CUOTA WHERE DNI = " + dni + " AND AÑO = " + año + " AND PERIODO = " + mes);
+		//System.out.println("SELECT COD_PAGO, DNI, AÑO, PERIODO, FECHA, PAGO, IFNULL(OBSERVACIONES, '') AS OBSERVACIONES FROM PAGOS_CUOTA WHERE DNI = " + dni + " AND AÑO = " + año + " AND PERIODO = " + mes);
 		
-		ResultSet rs = stm.executeQuery("SELECT COD_PAGO, DNI, AÑO, PERIODO, FECHA, PAGO FROM PAGOS_CUOTA WHERE DNI = " + dni + " AND AÑO = " + año + " AND PERIODO = " + mes);
+		ResultSet rs = stm.executeQuery("SELECT COD_PAGO, DNI, AÑO, PERIODO, FECHA, PAGO, IFNULL(OBSERVACIONES, '') AS OBSERVACIONES FROM PAGOS_CUOTA WHERE DNI = " + dni + " AND AÑO = " + año + " AND PERIODO = " + mes);
 		
 		Cuota p;
 		
 		while(rs.next()){
-			p = new Cuota(rs.getInt("COD_PAGO"),rs.getInt("DNI"), rs.getInt("AÑO"), rs.getInt("PERIODO"),rs.getString("FECHA"), rs.getInt("PAGO")) ;
+			p = new Cuota(rs.getInt("COD_PAGO"),rs.getInt("DNI"), rs.getInt("AÑO"), rs.getInt("PERIODO"),rs.getString("FECHA"), rs.getDouble("PAGO"),rs.getString("OBSERVACIONES")) ;
 			cuotas.agregarCuota(p);
 		}
 			
@@ -78,12 +78,12 @@ public class AccionesCuota {
 				
 		Statement stm = Conexion.conectar().createStatement();	
 		
-		//System.out.println("SELECT COD_PAGO, DNI, AÑO, PERIODO, FECHA, PAGO FROM PAGOS_CUOTA WHERE COD_PAGO = " + cod_pago );
+		//System.out.println("SELECT COD_PAGO, DNI, AÑO, PERIODO, FECHA, PAGO, IFNULL(OBSERVACIONES, '') AS OBSERVACIONES FROM PAGOS_CUOTA WHERE COD_PAGO = " + cod_pago );
 		
-		ResultSet rs = stm.executeQuery("SELECT COD_PAGO, DNI, AÑO, PERIODO, FECHA, PAGO FROM PAGOS_CUOTA WHERE COD_PAGO = " + cod_pago );
+		ResultSet rs = stm.executeQuery("SELECT COD_PAGO, DNI, AÑO, PERIODO, FECHA, PAGO, IFNULL(OBSERVACIONES, '') AS OBSERVACIONES FROM PAGOS_CUOTA WHERE COD_PAGO = " + cod_pago );
 						
 		while(rs.next()){
-			c = new Cuota(rs.getInt("COD_PAGO"),rs.getInt("DNI"), rs.getInt("AÑO"), rs.getInt("PERIODO"),rs.getString("FECHA"), rs.getInt("PAGO")) ;		
+			c = new Cuota(rs.getInt("COD_PAGO"),rs.getInt("DNI"), rs.getInt("AÑO"), rs.getInt("PERIODO"),rs.getString("FECHA"), rs.getDouble("PAGO"),rs.getString("OBSERVACIONES")) ;		
 		}
 			
 		stm.close();
@@ -100,7 +100,7 @@ public class AccionesCuota {
 		
 		//System.out.println("INSERT INTO PAGOS_CUOTA VALUES (" + 0 + " , " + c.getDni() + " , " + c.getAño() + ", " + c.getPeriodo() + " , '" + c.getFecha() + "' , " + c.getPago() +")");
 		
-		stmt.executeUpdate("INSERT INTO PAGOS_CUOTA VALUES (" + 0 + " , " + c.getDni() + " , " + c.getAño() + ", " + c.getPeriodo() + " , '" + c.getFecha() + "' , " + c.getPago() +")");
+		stmt.executeUpdate("INSERT INTO PAGOS_CUOTA VALUES (" + 0 + " , " + c.getDni() + " , " + c.getAño() + ", " + c.getPeriodo() + " , '" + c.getFecha() + "' , " + c.getPago() +", '" + c.getObservaciones() + "')");
 		
 		stmt.close();
 		Conexion.desconectar();
@@ -116,7 +116,7 @@ public class AccionesCuota {
 		
 		//System.out.println("UPDATE PAGOS_CUOTA SET FECHA = '" + c.getFecha() + "' , PAGO = " + c.getPago() + " WHERE COD_PAGO = " + c.getCod_pago());
 		
-		stmt.executeUpdate("UPDATE PAGOS_CUOTA SET FECHA = '" + c.getFecha() + "' , PAGO = " + c.getPago() + " WHERE COD_PAGO = " + c.getCod_pago());
+		stmt.executeUpdate("UPDATE PAGOS_CUOTA SET FECHA = '" + c.getFecha() + "' , PAGO = " + c.getPago() + ", OBSERVACIONES = '"+ c.getObservaciones() + "' WHERE COD_PAGO = " + c.getCod_pago());
 		
 		stmt.close();
 		Conexion.desconectar();

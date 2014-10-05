@@ -120,6 +120,11 @@
 			<td><input type="text" name="pago" value="<%=cuota!=null?cuota.getPago(): ""%>"></td>
 		</tr>
 		
+		<tr>
+			<td>OBSERVACIONES</td>
+			<td><textarea name="obs" cols="40" rows="1"><%=cuota!=null?cuota.getObservaciones(): ""%></textarea></td>			
+		</tr>
+		
 	</table> 
 	<br>
 	<br>

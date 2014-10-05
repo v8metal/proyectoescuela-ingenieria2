@@ -8,11 +8,12 @@ public class Cuota {
 	private int periodo;
 	String fecha;
 	double pago;
+	String observaciones;
 	
 	public Cuota() {	
 	}
 	
-	public Cuota(int cod_pago, int dni, int año, int periodo, String fecha, double pago) {	
+	public Cuota(int cod_pago, int dni, int año, int periodo, String fecha, double pago, String observaciones) {	
 		
 		this.cod_pago = cod_pago;
 		this.dni = dni;
@@ -20,6 +21,7 @@ public class Cuota {
 		this.periodo = periodo;
 		this.fecha = fecha;
 		this.pago = pago; 
+		this.observaciones = observaciones;
 	}
 	
 	public int getCod_pago() {
@@ -44,6 +46,10 @@ public class Cuota {
 	
 	public double getPago() {
 		return pago;
+	}
+	
+	public String getObservaciones() {
+		return observaciones;
 	}
 	
 }

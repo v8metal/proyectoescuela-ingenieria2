@@ -227,6 +227,9 @@
 	  </table>
 	<br>
 	<br>
+	<a href="pago_edit.jsp"> Armar plan de pago </a>
+	<br>
+	<br>
 	<form action="menu_cuotas.jsp">
 	  <input type="submit" value="Volver al Menú de Cuotas">
 	</form>
