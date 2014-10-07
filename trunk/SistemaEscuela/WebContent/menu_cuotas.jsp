@@ -11,6 +11,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style/style.css" />
 <% 
+if (session.getAttribute("login") != null) {
+	
 	Integer añoCuota = null;
 	Grados grados = null;
 	
@@ -106,5 +108,10 @@
 	  <input type="submit" value="Cerrar Sesión">
 	</form>
 	</center>
+	<%
+	} else {
+		response.sendRedirect("login.jsp");
+	}
+%>
 </body>
 </html>

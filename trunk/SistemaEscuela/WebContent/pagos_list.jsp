@@ -9,7 +9,10 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<% Cuotas cuotas = (Cuotas) session.getAttribute("pagosMes");//lo dejamos como session para poder utilizarlo
+<% 
+if (session.getAttribute("login") != null) {
+
+   Cuotas cuotas = (Cuotas) session.getAttribute("pagosMes");//lo dejamos como session para poder utilizarlo
    int año = (Integer) session.getAttribute("año");
    int dni = (Integer) session.getAttribute("dni");
    int mes = (Integer) session.getAttribute("mes");   
@@ -69,5 +72,10 @@
 	  <input type="submit" value="Cerrar Sesión">
 	</form>
 	</center>
+ <%
+	} else {
+		response.sendRedirect("login.jsp");
+	}
+%>
 </body>
 </html>

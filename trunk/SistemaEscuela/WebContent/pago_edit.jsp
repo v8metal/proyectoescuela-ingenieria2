@@ -14,6 +14,8 @@
 <body>
 <center>
  <% 
+ if (session.getAttribute("login") != null) {
+	 
  	Cuota cuota = (Cuota) session.getAttribute("pagoEdit");
     int dni = (Integer) session.getAttribute("dni");
  	int año = (Integer) session.getAttribute("año");
@@ -26,9 +28,7 @@
  <h1>Alta de Pago</h1>
  <%}%>
 <%
-	if (session.getAttribute("login") != null) {
-
-		Alumno a = null;
+	Alumno a = null;
 		
 	if (cuota != null){
 	

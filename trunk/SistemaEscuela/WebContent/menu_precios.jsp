@@ -8,6 +8,7 @@
 <title>Sistema Alumnado</title>
 </head>
 <body>  
+<%if (session.getAttribute("login") != null) { %>
 <center>
   <h1>Precios de Cuotas/Inscripciones</h1>
     <form action="PrecioList" method="post">
@@ -40,4 +41,9 @@
   <strong><a href="CerrarSesion">Cerrar Sesión</a></strong>
   </center>
 </body>
+   <%
+	} else {
+		response.sendRedirect("login.jsp");
+	}
+%>
 </html>

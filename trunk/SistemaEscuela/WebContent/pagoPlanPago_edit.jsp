@@ -17,19 +17,19 @@
 <body>
 <center>
  <% 
- 	PlanPago plan = (PlanPago) session.getAttribute("planPagos");	
- 	PagoPlanPago ppp = (PagoPlanPago) request.getAttribute("pagopp");
+ 	if (session.getAttribute("login") != null) {
+ 
+ 	 	PlanPago plan = (PlanPago) session.getAttribute("planPagos");	
+ 	 	PagoPlanPago ppp = (PagoPlanPago) request.getAttribute("pagopp");
  	
- 	if (plan != null){
+ 		if (plan != null){
  %>  		
  <h1>Modificar Pago</h1>
  <%}else{%> 
  <h1>Alta de Pago</h1>
  <%}%>
 <%
-	if (session.getAttribute("login") != null) {
-
-		Alumno a =  AccionesAlumno.getOne(plan.getDni());
+	Alumno a =  AccionesAlumno.getOne(plan.getDni());
 		
 	//if (plan != null){
 		

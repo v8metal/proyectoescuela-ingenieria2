@@ -10,6 +10,8 @@
 </head>
 <body>
 <%
+if (session.getAttribute("login") != null) {
+	
 	int dia = 0;
 	String mes = "";
 	int año = 0;
@@ -133,7 +135,11 @@
 	 
 }
  
-	</script> 
-	
+</script> 
+   <%
+	} else {
+		response.sendRedirect("login.jsp");
+	}
+%>
 </body>
 </html>

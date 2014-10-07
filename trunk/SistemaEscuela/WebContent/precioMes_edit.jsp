@@ -10,6 +10,9 @@
 </head>
 <body>
 <%
+if (session.getAttribute("login") != null) {
+
+
 	PrecioMes precio = null;
 	int ind = 0;
 	int año =  (Integer) session.getAttribute("añoPrecios");
@@ -133,6 +136,10 @@
 	 }
  
 	</script> 
-	
+   <%
+	} else {
+		response.sendRedirect("login.jsp");
+	}
+%>	
 </body>
 </html>
