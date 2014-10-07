@@ -10,6 +10,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style/style.css" />
 <%
+if (session.getAttribute("login") != null) {
+	
 	PreciosMes preciosMes = (PreciosMes) session.getAttribute("preciosMes");
  	PreciosInscrip preciosInscrip = (PreciosInscrip) session.getAttribute("preciosInscrip"); 
  	int año = (Integer) session.getAttribute("añoPrecios");
@@ -116,5 +118,10 @@
     <input type="submit" value="Cerrar Sesión">
   </form>
   </center>
+   <%
+	} else {
+		response.sendRedirect("login.jsp");
+	}
+%>
 </body>
 </html>

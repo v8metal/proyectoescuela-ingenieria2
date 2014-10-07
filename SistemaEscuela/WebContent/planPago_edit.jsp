@@ -16,6 +16,8 @@
 <body>
 <center>
  <% 
+ if (session.getAttribute("login") != null) {
+	 
  	PlanPago plan = (PlanPago) request.getAttribute("PlanPago"); 	
  	Alumnos alumnos = (Alumnos) session.getAttribute("alumnos_cuota");
  	int año = (Integer) session.getAttribute("añoPlan");
@@ -37,10 +39,7 @@
  <h1>Alta Plan Pago</h1>
  
  <%}
- 	
-	if (session.getAttribute("login") != null) {
-
-		int dia_plan = 0;
+ 		int dia_plan = 0;
 		String mes_plan = "";
 		int año_plan = 0;
 		int inicio = 0;

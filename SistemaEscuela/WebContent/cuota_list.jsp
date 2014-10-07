@@ -8,6 +8,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <% 
+if (session.getAttribute("login") != null) {	
+
      Alumnos alumnos = (Alumnos) session.getAttribute("alumnos_cuota");
      String grado = (String) session.getAttribute("gradoCuota");
      String turno = (String) session.getAttribute("turnoCuota");	
@@ -253,5 +255,10 @@
 	  <input type="submit" value="Cerrar Sesión">
 	</form>
 	</center>
+ <%
+	} else {
+		response.sendRedirect("login.jsp");
+	}
+%>
 </body>
 </html>
