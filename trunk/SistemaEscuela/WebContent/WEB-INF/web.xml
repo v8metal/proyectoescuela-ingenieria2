@@ -353,4 +353,24 @@
     <servlet-name>PrecioList</servlet-name>
     <url-pattern>/PrecioList</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <description></description>
+    <display-name>PlanPagoEdit</display-name>
+    <servlet-name>PlanPagoEdit</servlet-name>
+    <servlet-class>controlador.PlanPagoEdit</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PlanPagoEdit</servlet-name>
+    <url-pattern>/PlanPagoEdit</url-pattern>
+  </servlet-mapping>  
+      <servlet>
+    <description></description>
+    <display-name>PlanPagoList</display-name>
+    <servlet-name>PlanPagoList</servlet-name>
+    <servlet-class>controlador.PlanPagoList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PlanPagoList</servlet-name>
+    <url-pattern>/PlanPagoList</url-pattern>
+  </servlet-mapping>
 </web-app>

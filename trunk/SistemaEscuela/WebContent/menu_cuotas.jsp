@@ -15,7 +15,8 @@
 	Grados grados = null;
 	
 	if (request.getAttribute("añoCuota") != null){		
-		añoCuota = (Integer) request.getAttribute("añoCuota");	
+		añoCuota = (Integer) request.getAttribute("añoCuota");
+		session.setAttribute("añoPlan", añoCuota);
 	}
 	 
 	if (request.getAttribute("gradosCuota") != null){		

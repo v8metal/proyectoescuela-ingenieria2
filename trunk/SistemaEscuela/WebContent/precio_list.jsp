@@ -106,8 +106,9 @@
   <%}%>  
   <br>
   <br>
-  <form action="menu_precios.jsp" method="get">
-    <input type="submit" value="Volver al Menú de Precios">
+  <form action="CuotaList" method="get">
+    <input name="accion" type="hidden" value="listarGrado">
+    <input type="submit" value="Volver atrás">    
   </form>
   <br>
   <br>

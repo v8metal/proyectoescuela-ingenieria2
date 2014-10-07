@@ -1,14 +1,8 @@
-<%@page import="conexion.AccionesAlumno"%>
-<%@page import="datos.Cuota"%>
-<%@page import="conexion.AccionesCuota"%>
-<%@page import="datos.Cuotas"%>
-<%@page import="datos.Alumno_Grado"%>
-<%@page import="datos.Alumnos_Grados"%>
-<%@page import="datos.Grado"%>
-<%@page import="datos.Grados"%>
 <%@page import="datos.Alumno"%>
 <%@page import="datos.Alumnos"%>
-<%@page import="conexion.AccionesGrado"%>
+<%@page import="conexion.AccionesAlumno"%>
+<%@page import="conexion.AccionesCuota"%>
+<%@page import="conexion.AccionesPlanPago"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -55,17 +49,27 @@
 	    <td> <%=a.getNombre() + " " + a.getApellido() %><td>
 	    	    
 	    <td> <%= tipoCobro %> <td>
-	    <td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año-1%>&&dni=<%=a.getDni()%>&&mes=13"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año-1, 13)%></a><td>
+	    
+	    	    
+	    <%if ((cod_plan = AccionesPlanPago.checkPlanPagosMes(a.getDni(), año-1, 13)) == 0){ %>
+	    		    		    	
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año-1%>&&dni=<%=a.getDni()%>&&mes=13"> <%= "$"+ AccionesCuota.getPagosDoublelMes(a.getDni(), año-1, 13)%></a><td>
+	    		 
+	    	<%}else{%>
+	    	
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    	
+	    <%}%>    
 
 	    <%if(!tipoCobro.equals("SUBSIDIO")){
 	    	
-	    	if ((cod_plan = AccionesCuota.checkPlanPagosMes(a.getDni(), año, 3)) == 0){ %>
+	    	if ((cod_plan = AccionesPlanPago.checkPlanPagosMes(a.getDni(), año, 3)) == 0){ %>
 	    		    		    	
-	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=3"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 3) %> </a><td>
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=3"> <%= "$"+AccionesCuota.getPagosDoublelMes(a.getDni(), año, 3) %> </a><td>
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="CuotaList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
 	    	
 	    	<%}%>
 	    	    	
@@ -75,13 +79,13 @@
 	    
 	    <%if(!tipoCobro.equals("SUBSIDIO")){
 	    	
-	    	if ((cod_plan = AccionesCuota.checkPlanPagosMes(a.getDni(), año, 4)) == 0){ %>
+	    	if ((cod_plan = AccionesPlanPago.checkPlanPagosMes(a.getDni(), año, 4)) == 0){ %>
 	    		    		    	
-	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=4"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 4) %> </a><td>
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=4"> <%= "$"+AccionesCuota.getPagosDoublelMes(a.getDni(), año, 4) %> </a><td>
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="CuotaList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
 	    	
 	    	<%}%>
 	    	    	
@@ -92,13 +96,13 @@
 	    
    	    <%if(!tipoCobro.equals("SUBSIDIO")){
 	    	
-	    	if ((cod_plan = AccionesCuota.checkPlanPagosMes(a.getDni(), año, 5)) == 0){ %>
+	    	if ((cod_plan = AccionesPlanPago.checkPlanPagosMes(a.getDni(), año, 5)) == 0){ %>
 	    		    		    	
-	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=5"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 5) %> </a><td>
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=5"> <%= "$"+AccionesCuota.getPagosDoublelMes(a.getDni(), año, 5) %> </a><td>
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="CuotaList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
 	    	
 	    	<%}%>
 	    	    	
@@ -109,13 +113,13 @@
 	    
    	    <%if(!tipoCobro.equals("SUBSIDIO")){
 	    	
-	    	if ((cod_plan = AccionesCuota.checkPlanPagosMes(a.getDni(), año, 6)) == 0){ %>
+	    	if ((cod_plan = AccionesPlanPago.checkPlanPagosMes(a.getDni(), año, 6)) == 0){ %>
 	    		    		    	
-	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=6"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 6) %> </a><td>
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=6"> <%= "$"+AccionesCuota.getPagosDoublelMes(a.getDni(), año, 6) %> </a><td>
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="CuotaList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
 	    	
 	    	<%}%>
 	    	    	
@@ -125,13 +129,13 @@
 	    
    	    <%if(!tipoCobro.equals("SUBSIDIO")){
 	    	
-	    	if ((cod_plan = AccionesCuota.checkPlanPagosMes(a.getDni(), año, 7)) == 0){ %>
+	    	if ((cod_plan = AccionesPlanPago.checkPlanPagosMes(a.getDni(), año, 7)) == 0){ %>
 	    		    		    	
-	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=7"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 7) %> </a><td>
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=7"> <%= "$"+AccionesCuota.getPagosDoublelMes(a.getDni(), año, 7) %> </a><td>
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="CuotaList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
 	    	
 	    	<%}%>
 	    	    	
@@ -142,13 +146,13 @@
 	    	    
 	    <%if(!tipoCobro.equals("SUBSIDIO")){
 	    	
-	    	if ((cod_plan = AccionesCuota.checkPlanPagosMes(a.getDni(), año, 8)) == 0){ %>
+	    	if ((cod_plan = AccionesPlanPago.checkPlanPagosMes(a.getDni(), año, 8)) == 0){ %>
 	    		    		    	
-	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=8"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 8) %> </a><td>
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=8"> <%= "$"+AccionesCuota.getPagosDoublelMes(a.getDni(), año, 8) %> </a><td>
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="CuotaList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
 	    	
 	    	<%}%>
 	    	    	
@@ -158,13 +162,13 @@
 	    	    
 	    <%if(!tipoCobro.equals("SUBSIDIO")){
 	    	
-	    	if ((cod_plan = AccionesCuota.checkPlanPagosMes(a.getDni(), año, 9)) == 0){ %>
+	    	if ((cod_plan = AccionesPlanPago.checkPlanPagosMes(a.getDni(), año, 9)) == 0){ %>
 	    		    		    	
-	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=9"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 9) %> </a><td>
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=9"> <%= "$"+AccionesCuota.getPagosDoublelMes(a.getDni(), año, 9) %> </a><td>
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="CuotaList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
 	    	
 	    	<%}%>
 	    	    	
@@ -174,13 +178,13 @@
 	    
    	    <%if(!tipoCobro.equals("SUBSIDIO")){
 	    	
-	    	if ((cod_plan = AccionesCuota.checkPlanPagosMes(a.getDni(), año, 10)) == 0){ %>
+	    	if ((cod_plan = AccionesPlanPago.checkPlanPagosMes(a.getDni(), año, 10)) == 0){ %>
 	    		    		    	
-	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=10"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 10) %> </a><td>
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=10"> <%= "$"+AccionesCuota.getPagosDoublelMes(a.getDni(), año, 10) %> </a><td>
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="CuotaList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
 	    	
 	    	<%}%>
 	    	    	
@@ -190,13 +194,13 @@
 
    	    <%if(!tipoCobro.equals("SUBSIDIO")){
 	    	
-	    	if ((cod_plan = AccionesCuota.checkPlanPagosMes(a.getDni(), año, 11)) == 0){ %>
+	    	if ((cod_plan = AccionesPlanPago.checkPlanPagosMes(a.getDni(), año, 11)) == 0){ %>
 	    		    		    	
-	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=11"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 11) %> </a><td>
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=11"> <%= "$"+AccionesCuota.getPagosDoublelMes(a.getDni(), año, 11) %> </a><td>
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="CuotaList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
 	    	
 	    	<%}%>
 	    	    	
@@ -206,28 +210,38 @@
 	    
    	    <%if(!tipoCobro.equals("SUBSIDIO")){
 	    	
-	    	if ((cod_plan = AccionesCuota.checkPlanPagosMes(a.getDni(), año, 12)) == 0){ %>
+	    	if ((cod_plan = AccionesPlanPago.checkPlanPagosMes(a.getDni(), año, 12)) == 0){ %>
 	    		    		    	
-	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=12"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 12) %> </a><td>
+	    		<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=12"> <%= "$"+AccionesCuota.getPagosDoublelMes(a.getDni(), año, 12) %> </a><td>
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="CuotaList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
 	    	
 	    	<%}%>
 	    	    	
 	    <%}else{%>
 	    	<td> SUBSIDIO<td>
 	    <%}%>
-	    	  
-	  	<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=13"> <%= "$"+AccionesCuota.getPagosTotalMes(a.getDni(), año, 13)%></a><td>
+	   
+		<%if ((cod_plan = AccionesPlanPago.checkPlanPagosMes(a.getDni(), año, 13)) == 0){ %>
+	    		    		    	
+	    	<td> <a href="CuotaList?accion=visualizarPagos&&año=<%=año%>&&dni=<%=a.getDni()%>&&mes=13"> <%= "$"+AccionesCuota.getPagosDoublelMes(a.getDni(), año, 13)%></a><td>
+	    		 
+	    <%}else{%>
+	    	
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>	    	
+	    <%}%>	  	
 	  	
 	  <%}%>
 	  </tr>
 	  </table>
 	<br>
 	<br>
-	<a href="pago_edit.jsp"> Armar plan de pago </a>
+	<a href="planPago_edit.jsp"> Armar plan de pagos</a>
+	<br>
+	<br>
+		<a href="PrecioList?año=<%=año%>">Ver Precios <%=año%></a>
 	<br>
 	<br>
 	<form action="menu_cuotas.jsp">
