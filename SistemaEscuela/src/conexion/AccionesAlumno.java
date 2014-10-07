@@ -211,22 +211,19 @@ public class AccionesAlumno {
 	
 	//modificado Ale
 	public static Alumno getOne(int dni) throws SQLException, Exception {
+			
 		Alumno a = new Alumno();
-		int i = 0;
 		
-			Statement stmt = Conexion.conectar().createStatement();
+		Statement stmt = Conexion.conectar().createStatement();
+					
+		ResultSet rs = stmt.executeQuery("SELECT * FROM ALUMNOS WHERE DNI="+dni);
 			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM ALUMNOS WHERE DNI="+dni);
-			
-			while(rs.next()){
+		while(rs.next()){
 				a = new Alumno(rs.getInt("DNI"),rs.getString("NOMBRE"),rs.getString("APELLIDO"),rs.getString("DOMICILIO"),rs.getString("TELEFONO"),rs.getString("FECHA_NAC"),rs.getString("LUGAR_NAC"),rs.getInt("DNI_TUTOR"),rs.getInt("DNI_MADRE"),rs.getInt("CANT_HER_MAY"),rs.getInt("CANT_HER_MEN"),rs.getString("IGLESIA"),rs.getString("ESC"), false , false); //modificado Ale
-			}
-			
-			if (i == 0) {
-				throw new SQLException();
-			}
-			stmt.close();
-			Conexion.desconectar();
+		}
+
+		stmt.close();
+		Conexion.desconectar();
 	
 		return a;
 	}

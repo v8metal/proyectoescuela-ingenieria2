@@ -19,7 +19,7 @@ public class AccionesPlanPago {
 		
 		Statement stm = Conexion.conectar().createStatement();	
 		
-		System.out.println("SELECT COD_PLAN, AÑOINI, AÑOFIN FROM PLAN_CUOTAS WHERE " + año + " BETWEEN AÑOINI AND AÑOFIN AND DNI = " + dni);
+		//System.out.println("SELECT COD_PLAN, AÑOINI, AÑOFIN FROM PLAN_CUOTAS WHERE " + año + " BETWEEN AÑOINI AND AÑOFIN AND DNI = " + dni);
 		
 		ResultSet rs = stm.executeQuery("SELECT COD_PLAN, AÑOINI, AÑOFIN FROM PLAN_CUOTAS WHERE " + año + " BETWEEN AÑOINI AND AÑOFIN AND DNI = " + dni);
 		
@@ -32,14 +32,14 @@ public class AccionesPlanPago {
 				
 		if(cod_plan != 0) {
 			
-			System.out.println("añoini= " + añoini);
-			System.out.println("añofin= " + añofin);
+			//System.out.println("añoini= " + añoini);
+			//System.out.println("añofin= " + añofin);
 			
 			if(añoini == añofin){ //si el plan de pagos abarca un mismo año
 				
 				rs.close();
 				
-				System.out.println("SELECT COD_PLAN FROM PLAN_CUOTAS WHERE "+ mes + " BETWEEN PERIODOINI AND PERIODOFIN " +" AND AÑOFIN = "+ año + " AND COD_PLAN = " + cod_plan);
+				//System.out.println("SELECT COD_PLAN FROM PLAN_CUOTAS WHERE "+ mes + " BETWEEN PERIODOINI AND PERIODOFIN " +" AND AÑOFIN = "+ año + " AND COD_PLAN = " + cod_plan);
 				
 				rs = stm.executeQuery("SELECT COD_PLAN FROM PLAN_CUOTAS WHERE "+ mes + " BETWEEN PERIODOINI AND PERIODOFIN " +" AND AÑOFIN = "+ año + " AND COD_PLAN = " + cod_plan);
 				
@@ -71,7 +71,7 @@ public class AccionesPlanPago {
 			}
 	
 			
-			System.out.println("cod_plan= "+ cod_plan);
+			//System.out.println("cod_plan= "+ cod_plan);
 		}
 		
 		rs.close();
@@ -86,7 +86,7 @@ public class AccionesPlanPago {
 		
 		Statement stmt = Conexion.conectar().createStatement();	
 		
-		System.out.println("INSERT INTO PLAN_CUOTAS VALUES (" + 0 + " , " + p.getDni() + " , " + p.getAñoini() + " , " + p.getAñofin() + ", " + ", " + p.getPeriodoini() + " , " + p.getPeriodofin()+" , '" + p.getFecha() + "' , '" + p.getObservaciones() + "')");
+		//System.out.println("INSERT INTO PLAN_CUOTAS VALUES (" + 0 + " , " + p.getDni() + " , " + p.getAñoini() + " , " + p.getAñofin() + ", " + ", " + p.getPeriodoini() + " , " + p.getPeriodofin()+" , '" + p.getFecha() + "' , '" + p.getObservaciones() + "')");
 		
 		stmt.executeUpdate("INSERT INTO PLAN_CUOTAS VALUES (" + 0 + " , " + p.getDni() + " , " + p.getAñoini() + ", " + p.getAñofin() + ", " + p.getPeriodoini() + " , " + p.getPeriodofin()+" , '" + p.getFecha() + "' , '" + p.getObservaciones() + "')");
 		
@@ -102,7 +102,7 @@ public class AccionesPlanPago {
 				
 		Statement stm = Conexion.conectar().createStatement();	
 		
-		System.out.println("SELECT COD_PLAN, DNI, AÑOINI, AÑOFIN, PERIODOINI, PERIODOFIN, FECHA_ALTA , IFNULL(OBSERVACIONES, '') AS OBSERVACIONES FROM PLAN_CUOTAS WHERE COD_PLAN = " + cod_plan );
+		//System.out.println("SELECT COD_PLAN, DNI, AÑOINI, AÑOFIN, PERIODOINI, PERIODOFIN, FECHA_ALTA , IFNULL(OBSERVACIONES, '') AS OBSERVACIONES FROM PLAN_CUOTAS WHERE COD_PLAN = " + cod_plan );
 		
 		ResultSet rs = stm.executeQuery("SELECT COD_PLAN, DNI, AÑOINI, AÑOFIN, PERIODOINI, PERIODOFIN, FECHA_ALTA , IFNULL(OBSERVACIONES, '') AS OBSERVACIONES FROM PLAN_CUOTAS WHERE COD_PLAN = " + cod_plan );
 						
@@ -122,7 +122,7 @@ public class AccionesPlanPago {
 		
 		Statement stmt = Conexion.conectar().createStatement();	
 		
-		System.out.println("UPDATE PLAN_CUOTAS SET AÑOINI= "+ p.getAñoini() + ", AÑOFIN= " + p.getAñofin() +", PERIODOINI = " + p.getPeriodoini() + " , PERIODOFIN	 = " + p.getPeriodofin() + ", OBSERVACIONES = '"+ p.getObservaciones() + "' WHERE COD_PLAN = " + p.getCod_plan());
+		//System.out.println("UPDATE PLAN_CUOTAS SET AÑOINI= "+ p.getAñoini() + ", AÑOFIN= " + p.getAñofin() +", PERIODOINI = " + p.getPeriodoini() + " , PERIODOFIN	 = " + p.getPeriodofin() + ", OBSERVACIONES = '"+ p.getObservaciones() + "' WHERE COD_PLAN = " + p.getCod_plan());
 		
 		stmt.executeUpdate("UPDATE PLAN_CUOTAS SET AÑOINI= "+ p.getAñoini() + ", AÑOFIN= " + p.getAñofin() +", PERIODOINI = " + p.getPeriodoini() + " , PERIODOFIN	 = " + p.getPeriodofin() + ", OBSERVACIONES = '"+ p.getObservaciones() + "' WHERE COD_PLAN = " + p.getCod_plan());
 		
@@ -212,7 +212,7 @@ public class AccionesPlanPago {
 				
 		Statement stm = Conexion.conectar().createStatement();	
 		
-		System.out.println("SELECT COD_PLAN, COD_PAGO, DNI, FECHA_PAGO, PAGO, IFNULL(OBSERVACIONES, '') AS OBSERVACIONES FROM PLAN_PAGOS WHERE COD_PLAN = " + cod_plan  + " AND COD_PAGO = " + cod_pago);
+		//System.out.println("SELECT COD_PLAN, COD_PAGO, DNI, FECHA_PAGO, PAGO, IFNULL(OBSERVACIONES, '') AS OBSERVACIONES FROM PLAN_PAGOS WHERE COD_PLAN = " + cod_plan  + " AND COD_PAGO = " + cod_pago);
 		
 		ResultSet rs = stm.executeQuery("SELECT COD_PLAN, COD_PAGO, DNI, FECHA_PAGO, PAGO, IFNULL(OBSERVACIONES, '') AS OBSERVACIONES FROM PLAN_PAGOS WHERE COD_PLAN = " + cod_plan  + " AND COD_PAGO = " + cod_pago);
 						
@@ -232,7 +232,7 @@ public class AccionesPlanPago {
 		
 		Statement stmt = Conexion.conectar().createStatement();	
 		
-		System.out.println("INSERT INTO PLAN_PAGOS VALUES ( " + pagopp.getCod_plan() + " , " + pagopp.getCod_pago() + " , " + pagopp.getDni() + " , '" + pagopp.getFecha() + "' , " + pagopp.getPago() + ", '" + pagopp.getObservaciones() + "' )");
+		//System.out.println("INSERT INTO PLAN_PAGOS VALUES ( " + pagopp.getCod_plan() + " , " + pagopp.getCod_pago() + " , " + pagopp.getDni() + " , '" + pagopp.getFecha() + "' , " + pagopp.getPago() + ", '" + pagopp.getObservaciones() + "' )");
 		
 		stmt.executeUpdate("INSERT INTO PLAN_PAGOS VALUES ( " + pagopp.getCod_plan() + " , " + pagopp.getCod_pago() + " , " + pagopp.getDni() + " , '" + pagopp.getFecha() + "' , " + pagopp.getPago() + ", '" + pagopp.getObservaciones() + "' )"); 
 		
@@ -248,7 +248,7 @@ public class AccionesPlanPago {
 		
 		Statement stmt = Conexion.conectar().createStatement();	
 		
-		System.out.println("UPDATE PLAN_PAGOS SET FECHA_PAGO = '"+ Pagopp.getFecha() + "' , PAGO = " + Pagopp.getPago() +", OBSERVACIONES = '" + Pagopp.getObservaciones() + "' WHERE COD_PLAN = " + Pagopp.getCod_plan() + " AND COD_PAGO = " + Pagopp.getCod_pago());
+		//System.out.println("UPDATE PLAN_PAGOS SET FECHA_PAGO = '"+ Pagopp.getFecha() + "' , PAGO = " + Pagopp.getPago() +", OBSERVACIONES = '" + Pagopp.getObservaciones() + "' WHERE COD_PLAN = " + Pagopp.getCod_plan() + " AND COD_PAGO = " + Pagopp.getCod_pago());
 		
 		stmt.executeUpdate("UPDATE PLAN_PAGOS SET FECHA_PAGO = '"+ Pagopp.getFecha() + "' , PAGO = " + Pagopp.getPago() +", OBSERVACIONES = '" + Pagopp.getObservaciones() + "' WHERE COD_PLAN = " + Pagopp.getCod_plan() + " AND COD_PAGO = " + Pagopp.getCod_pago());
 		
@@ -264,7 +264,7 @@ public class AccionesPlanPago {
 		
 		Statement stmt = Conexion.conectar().createStatement();	
 		
-		System.out.println("DELETE FROM PLAN_PAGOS WHERE COD_PLAN = " + cod_plan + " AND COD_PAGO= " + cod_pago);
+		//System.out.println("DELETE FROM PLAN_PAGOS WHERE COD_PLAN = " + cod_plan + " AND COD_PAGO= " + cod_pago);
 		
 		stmt.executeUpdate("DELETE FROM PLAN_PAGOS WHERE COD_PLAN = " + cod_plan + " AND COD_PAGO= " + cod_pago);
 		
