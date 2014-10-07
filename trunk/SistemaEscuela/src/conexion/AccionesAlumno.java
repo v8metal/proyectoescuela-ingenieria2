@@ -69,7 +69,7 @@ public class AccionesAlumno {
 			Statement stm = Conexion.conectar().createStatement();
 			ResultSet rs = stm.executeQuery("SELECT * FROM ALUMNOS WHERE DNI="+dni);
 			while(rs.next()){
-				a = new Alumno(rs.getInt("DNI"),rs.getString("NOMBRE"),rs.getString("APELLIDO"),rs.getString("DOMICILIO"),rs.getString("TELEFONO"),rs.getString("FECHA_NAC"),rs.getString("LUGAR_NAC"),rs.getInt("DNI_TUTOR"),rs.getInt("DNI_MADRE"),rs.getInt("CANT_HER_MAY"),rs.getInt("CANT_HER_MEN"),rs.getString("IGLESIA"),rs.getString("ESC"),rs.getBoolean("IND_GRUPO"),rs.getBoolean("IND_SUBSIDIO"));
+				a = new Alumno(rs.getInt("DNI"),rs.getString("NOMBRE"),rs.getString("APELLIDO"),rs.getString("DOMICILIO"),rs.getString("TELEFONO"),rs.getString("FECHA_NAC"),rs.getString("LUGAR_NAC"),rs.getInt("DNI_TUTOR"),rs.getInt("DNI_MADRE"),rs.getInt("CANT_HER_MAY"),rs.getInt("CANT_HER_MEN"),rs.getString("IGLESIA"),rs.getString("ESC"), false , false); //modificado Ale
 			}
 			stm.close();
 			rs.close();
@@ -137,7 +137,10 @@ public class AccionesAlumno {
 		Alumnos lista = new Alumnos();
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT A.DNI, A.NOMBRE, A.APELLIDO, A.DOMICILIO, A.TELEFONO, A.FECHA_NAC, A.LUGAR_NAC, A.DNI_TUTOR, A.DNI_MADRE, A.CANT_HER_MAY, A.CANT_HER_MEN, A.IGLESIA, A.ESC, A.IND_GRUPO, A.IND_SUBSIDIO FROM sistema_alumnado.ALUMNOS A, sistema_alumnado.ALUMNOS_GRADO AG WHERE A.DNI = AG.DNI AND AG.TURNO = '" + turno + "' AND AG.AÑO = '" + año + "' ORDER BY APELLIDO");
+			
+			System.out.println("SELECT A.DNI, A.NOMBRE, A.APELLIDO, A.DOMICILIO, A.TELEFONO, A.FECHA_NAC, A.LUGAR_NAC, A.DNI_TUTOR, A.DNI_MADRE, A.CANT_HER_MAY, A.CANT_HER_MEN, A.IGLESIA, A.ESC, ASUB.IND_GRUPO, ASUB.IND_SUBSIDIO FROM ALUMNOS A INNER JOIN ALUMNOS_GRADO AG ON AG.DNI = A.DNI AND AG.AÑO = " + año + " AND AG.TURNO = '" + turno + "' INNER JOIN ALUMNOS_SUBSIDIO ASUB ON ASUB.DNI = AG.DNI AND ASUB.AÑO = AG.AÑO ORDER BY A.APELLIDO");
+			
+			ResultSet rs = stmt.executeQuery("SELECT A.DNI, A.NOMBRE, A.APELLIDO, A.DOMICILIO, A.TELEFONO, A.FECHA_NAC, A.LUGAR_NAC, A.DNI_TUTOR, A.DNI_MADRE, A.CANT_HER_MAY, A.CANT_HER_MEN, A.IGLESIA, A.ESC, ASUB.IND_GRUPO, ASUB.IND_SUBSIDIO FROM ALUMNOS A INNER JOIN ALUMNOS_GRADO AG ON AG.DNI = A.DNI AND AG.AÑO = " + año + " AND AG.TURNO = " +  "'" + turno + "' INNER JOIN ALUMNOS_SUBSIDIO ASUB ON ASUB.DNI = AG.DNI AND ASUB.AÑO = AG.AÑO ORDER BY A.APELLIDO");
 			Alumno tmp;
 			
 			while (rs.next()) {
@@ -176,7 +179,7 @@ public class AccionesAlumno {
 		try {
 			Statement stmt = Conexion.conectar().createStatement();			
 			
-			ResultSet rs = stmt.executeQuery("SELECT A.DNI, A.NOMBRE, A.APELLIDO, A.DOMICILIO, A.TELEFONO, A.FECHA_NAC, A.LUGAR_NAC, A.DNI_TUTOR, A.DNI_MADRE, A.CANT_HER_MAY, A.CANT_HER_MEN, A.IGLESIA, A.ESC, A.IND_GRUPO, A.IND_SUBSIDIO FROM sistema_alumnado.ALUMNOS A, sistema_alumnado.ALUMNOS_GRADO AG WHERE A.DNI = AG.DNI AND AG.GRADO = '" + grado + "' AND AG.TURNO = '" + turno + "' AND AG.AÑO = '" + año + "' ORDER BY APELLIDO, NOMBRE");
+			ResultSet rs = stmt.executeQuery("SELECT A.DNI, A.NOMBRE, A.APELLIDO, A.DOMICILIO, A.TELEFONO, A.FECHA_NAC, A.LUGAR_NAC, A.DNI_TUTOR, A.DNI_MADRE, A.CANT_HER_MAY, A.CANT_HER_MEN, A.IGLESIA, A.ESC, ASUB.IND_GRUPO, ASUB.IND_SUBSIDIO FROM ALUMNOS A INNER JOIN ALUMNOS_GRADO AG ON AG.DNI = A.DNI AND AG.GRADO = '" + grado + "' AND AG.AÑO = " + año + " AND AG.TURNO = '" + turno + "' INNER JOIN ALUMNOS_SUBSIDIO ASUB ON ASUB.DNI = AG.DNI AND ASUB.AÑO = AG.AÑO ORDER BY A.APELLIDO");
 			Alumno tmp;
 			while (rs.next()) {
 				tmp = new Alumno(rs.getInt("dni"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("domicilio"), rs.getString("telefono"), rs.getString("fecha_nac"), rs.getString("lugar_nac"), rs.getInt("dni_tutor"), rs.getInt("dni_madre"), rs.getInt("cant_her_may"), rs.getInt("cant_her_men"), rs.getString("iglesia"), rs.getString("esc"), rs.getBoolean("ind_grupo"), rs.getBoolean("ind_subsidio"));
@@ -206,12 +209,38 @@ public class AccionesAlumno {
 	
 	}
 	
+	//modificado Ale
 	public static Alumno getOne(int dni) throws SQLException, Exception {
 		Alumno a = new Alumno();
 		int i = 0;
 		
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM ALUMNOS WHERE DNI = '" + dni + "'");
+			
+			ResultSet rs = stmt.executeQuery("SELECT * FROM ALUMNOS WHERE DNI="+dni);
+			
+			while(rs.next()){
+				a = new Alumno(rs.getInt("DNI"),rs.getString("NOMBRE"),rs.getString("APELLIDO"),rs.getString("DOMICILIO"),rs.getString("TELEFONO"),rs.getString("FECHA_NAC"),rs.getString("LUGAR_NAC"),rs.getInt("DNI_TUTOR"),rs.getInt("DNI_MADRE"),rs.getInt("CANT_HER_MAY"),rs.getInt("CANT_HER_MEN"),rs.getString("IGLESIA"),rs.getString("ESC"), false , false); //modificado Ale
+			}
+			
+			if (i == 0) {
+				throw new SQLException();
+			}
+			stmt.close();
+			Conexion.desconectar();
+	
+		return a;
+	}
+	//modificado Ale
+	
+	public static Alumno getOne(int dni, int año) throws SQLException, Exception {
+		Alumno a = new Alumno();
+		int i = 0;
+		
+			Statement stmt = Conexion.conectar().createStatement();
+			
+			System.out.println("SELECT A.DNI, A.NOMBRE, A.APELLIDO, A.DOMICILIO, A.TELEFONO, A.FECHA_NAC, A.LUGAR_NAC, A.DNI_TUTOR, A.DNI_MADRE, A.CANT_HER_MAY, A.CANT_HER_MEN, A.IGLESIA, A.ESC, ASUB.IND_GRUPO, ASUB.IND_SUBSIDIO FROM ALUMNOS A INNER JOIN ALUMNOS_SUBSIDIO ASUB ON ASUB.DNI = A.DNI AND ASUB.AÑO = " + año + " WHERE A.DNI = " + dni );
+			
+			ResultSet rs = stmt.executeQuery("SELECT A.DNI, A.NOMBRE, A.APELLIDO, A.DOMICILIO, A.TELEFONO, A.FECHA_NAC, A.LUGAR_NAC, A.DNI_TUTOR, A.DNI_MADRE, A.CANT_HER_MAY, A.CANT_HER_MEN, A.IGLESIA, A.ESC, ASUB.IND_GRUPO, ASUB.IND_SUBSIDIO FROM ALUMNOS A INNER JOIN ALUMNOS_SUBSIDIO ASUB ON ASUB.DNI = A.DNI AND ASUB.AÑO = " + año + " WHERE A.DNI = " + dni );
 			
 			while (rs.next()) {
 				a = new Alumno(rs.getInt("dni"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("domicilio"), rs.getString("telefono"), rs.getString("fecha_nac"), rs.getString("lugar_nac"), rs.getInt("dni_tutor"), rs.getInt("dni_madre"), rs.getInt("cant_her_may"), rs.getInt("cant_her_men"), rs.getString("iglesia"), rs.getString("esc"), rs.getBoolean("ind_grupo"), rs.getBoolean("ind_subsidio"));
@@ -277,10 +306,13 @@ public class AccionesAlumno {
 		return r;
 	}
 	
-	public static void insertOne(Alumno a) throws SQLException, Exception {
+	public static void insertOne(Alumno a, int año) throws SQLException, Exception {
 			Statement stmt = Conexion.conectar().createStatement();
-			stmt.executeUpdate("INSERT INTO ALUMNOS VALUES ('" + a.getDni() + "','" + a.getNombre() + "','" + a.getApellido() + "','" + a.getDomicilio() + "','" + a.getTelefono() + "','" + a.getFecha_nac() + "','" + a.getLugar_nac() + "','" + a.getDni_tutor() + "','" + a.getDni_madre() + "','" + a.getCant_her_may() + "','" + a.getCant_her_men() + "','" + a.getIglesia() + "','" + a.getEsc() + "','" + boolToByte(a.isInd_grupo()) + "','" + boolToByte(a.isInd_subsidio()) + "')");
 			
+			stmt.executeUpdate("INSERT INTO ALUMNOS VALUES ('" + a.getDni() + "','" + a.getNombre() + "','" + a.getApellido() + "','" + a.getDomicilio() + "','" + a.getTelefono() + "','" + a.getFecha_nac() + "','" + a.getLugar_nac() + "','" + a.getDni_tutor() + "','" + a.getDni_madre() + "','" + a.getCant_her_may() + "','" + a.getCant_her_men() + "','" + a.getIglesia() + "','" + a.getEsc() + "')"); //modificado Ale
+			
+			stmt.executeUpdate("INSERT INTO ALUMNOS_SUBSIDIO VALUES (" + a.getDni() + ", " + año + " , " + boolToByte(a.isInd_grupo()) + " , " + boolToByte(a.isInd_subsidio()) + ")"); //modificado Ale	
+									
 			stmt.close();
 			Conexion.desconectar();
 	}
@@ -299,9 +331,13 @@ public class AccionesAlumno {
 	public static void updateOne(int dni, String nombre, String apellido, String domicilio, String telefono,
 			String fecha_nac, String lugar_nac, int dni_tutor, int dni_madre,
 			int cant_her_may, int cant_her_men, String iglesia,
-			String esc, boolean ind_grupo, boolean ind_subsidio) throws SQLException, Exception {
+			String esc, int año, boolean ind_grupo, boolean ind_subsidio) throws SQLException, Exception {
 			Statement stmt = Conexion.conectar().createStatement();
-			stmt.executeUpdate("UPDATE ALUMNOS SET NOMBRE = '" + nombre + "', APELLIDO = '" + apellido + "', DOMICILIO = '" + domicilio + "', TELEFONO = '" + telefono + "', FECHA_NAC = '" + fecha_nac + "', LUGAR_NAC = '" + lugar_nac + "', DNI_TUTOR = '" + dni_tutor + "', DNI_MADRE = '" + dni_madre + "', CANT_HER_MAY = '" + cant_her_may + "', CANT_HER_MEN = '" + cant_her_men + "', IGLESIA = '" + iglesia + "', ESC = '" + esc + "', IND_GRUPO = '" + boolToByte(ind_grupo) + "', IND_SUBSIDIO = '" + boolToByte(ind_subsidio) + "' WHERE DNI = '" + dni + "'");
+			
+			stmt.executeUpdate("UPDATE ALUMNOS SET NOMBRE = '" + nombre + "', APELLIDO = '" + apellido + "', DOMICILIO = '" + domicilio + "', TELEFONO = '" + telefono + "', FECHA_NAC = '" + fecha_nac + "', LUGAR_NAC = '" + lugar_nac + "', DNI_TUTOR = '" + dni_tutor + "', DNI_MADRE = '" + dni_madre + "', CANT_HER_MAY = '" + cant_her_may + "', CANT_HER_MEN = '" + cant_her_men + "', IGLESIA = '" + iglesia + "', ESC = '" + esc + "' WHERE DNI = '" + dni + "'"); //Modificado Ale
+			
+			stmt.executeUpdate("UPDATE ALUMNOS_SUBSIDIO SET IND_GRUPO = " + boolToByte(ind_grupo) + ", IND_SUBSIDIO = " + boolToByte(ind_subsidio) + " WHERE DNI = " + dni + " AND AÑO = " + año); //Modificado Ale	
+			
 			
 			stmt.close();
 			Conexion.desconectar();

@@ -30,13 +30,13 @@
 			<option value="todos">TODOS</option>
 			<option value="Sala 4">Sala 4</option>
 			<option value="Sala 5">Sala 5</option>
-			<option value="1ro">1º Grado</option>
-			<option value="2do">2º Grado</option>
-			<option value="3ro">3º Grado</option>
-			<option value="4to">4º Grado</option>
-			<option value="5to">5º Grado</option>
-			<option value="6to">6º Grado</option>
-			<option value="7mo">7º Grado</option>
+			<option value="1° Grado">1° Grado</option>
+			<option value="2° Grado">2° Grado</option>
+			<option value="3° Grado">3° Grado</option>
+			<option value="4° Grado">4° Grado</option>
+			<option value="5° Grado">5° Grado</option>
+			<option value="6° Grado">6° Grado</option>
+			<option value="7° Grado">7° Grado</option>
 			</select>
 		</td>
 	</tr>

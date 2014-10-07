@@ -81,7 +81,8 @@ public class AlumnoEdit extends HttpServlet {
 				//get the alumno from simulated DB
 				Alumno alumno = new Alumno();
 				if(dni_alum != null){
-					alumno = AccionesAlumno.getOne(dni_alum.intValue());
+					int año = Integer.parseInt((String) sesion.getAttribute("año")); //modificado Ale
+					alumno = AccionesAlumno.getOne(dni_alum.intValue(),año);//modificado Ale
 				}
 
 				//set the tutor object in the request
@@ -145,6 +146,7 @@ public class AlumnoEdit extends HttpServlet {
 			
 		try {
 			
+			int año = Integer.parseInt((String) sesion.getAttribute("año")); //modificado Ale
 			//get dni_alum properties from the request
 			int dni_alum = Integer.parseInt(request.getParameter("dni_alum"));
 						
@@ -256,8 +258,8 @@ public class AlumnoEdit extends HttpServlet {
 				if (!AccionesPadre.esPadre(dni_madre)) {	//Lo mismo con la madre.
 					AccionesPadre.insertOne(madre);
 				}
-				//insert alumno	 
-				AccionesAlumno.insertOne(alumno);
+				//insert alumno				
+				AccionesAlumno.insertOne(alumno, año);
 				//lo activo
 				AccionesEstado.activarAlumno(dni_alum, fecha_insc);
 				//creo su lista de certificados (todos como false como valor por defecto)
@@ -280,7 +282,7 @@ public class AlumnoEdit extends HttpServlet {
 				//update alumno
 				AccionesAlumno.updateOne(dni_alum, nombre_alum, apellido_alum, domicilio_alum, telefono_alum,
 						fecha_nac_alum, lugar_nac_alum, dni_tutor, dni_madre, cant_her_may, cant_her_men,
-						iglesia, esc, ind_grupo.equals("si"), ind_subsidio.equals("si"));
+						iglesia, esc, año, ind_grupo.equals("si"), ind_subsidio.equals("si"));
 			}   
 			
 			//redirect to the alumno list servlet
