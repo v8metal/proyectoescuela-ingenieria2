@@ -1,8 +1,6 @@
 package controlador;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +48,7 @@ public class CertificadoEdit extends HttpServlet {
 				int dni = Integer.parseInt(request.getParameter("dni"));
 				
 				// recuperando el dni obtengo el alumno y su lista de certificados con las observaciones correspondiente
-				Alumno alumno = AccionesAlumno.getOne(dni);
+				Alumno alumno = AccionesAlumno.getOne(dni, año); //modificado Ale
 				Certificado certificado = AccionesCertificado.getOneByDniYAño(dni, año);
 				Observaciones observaciones = AccionesCertificado.getObservacionesByDniYAño(dni, año);
 		

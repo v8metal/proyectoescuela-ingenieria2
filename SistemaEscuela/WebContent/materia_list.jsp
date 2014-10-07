@@ -18,6 +18,8 @@
 			error = (String)session.getAttribute("error");
 			session.setAttribute("error", "");
 		}
+		
+		Materias materias = (Materias)session.getAttribute("materias");
 %>
 <center>
 <h1>Listado de Materias</h1>
@@ -29,7 +31,12 @@
 <br>
 <%
 			}
-%>
+
+if (materias.getLista().isEmpty()){ %>
+
+<a href="materiaEdit?do=alta">No hay materias asignadas, agregar materias</a>
+	
+<%}else{%>
 <table border="2" bordercolor="666">
 	<tr>
 		<th>Código</th>
@@ -37,8 +44,7 @@
 		<th>&nbsp;</th>
 		<th>&nbsp;</th>
 	</tr>
-<% 
-	Materias materias = (Materias)session.getAttribute("materias");
+<% 	
 	for (Materia m : materias.getLista()) {
 %>
 	<tr>
@@ -53,6 +59,9 @@
 </table>
 <br>
   	<a href="materiaEdit?do=alta">Agregar materia</a>
+<br>
+<br>
+<%}%>
 <br>
 <br>
 <form action="menu_admin.jsp" method="post">

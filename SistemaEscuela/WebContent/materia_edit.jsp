@@ -12,18 +12,21 @@
 <body>
 <%
 	if (session.getAttribute("login") != null) {
+		
+		Materia materia = (Materia)request.getAttribute("materia");
+		
+	if(materia != null){
 %>
 <h1>Editar Materia</h1>
-<%	String error = "";
+<%}else{%>
+<h1>Alta de Materia</h1>
+<%	
+	String error = "";
 	if (session.getAttribute("error") != null) {
 		error = (String)session.getAttribute("error");
 		session.setAttribute("error", "");
 	}
- %>
-  <%
-  	//get the maestro object from the request
-	Materia materia = (Materia)request.getAttribute("materia");
-  %>
+ %> 
   <body>
     <% 
 			if (!error.equals("")) {
@@ -46,8 +49,10 @@
 			</tbody>
 		</table>
 		<input type="hidden" name="codigo" value="<%=materia != null ? materia.getCod_materia() : ""%>">
-	</form> 
- <br>
+	</form>
+<%}%> 
+<br>
+<br> 
 <form action="menu_admin.jsp" method="post">
 <input type="submit" value="Volver al menú">
 </form>
