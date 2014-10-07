@@ -126,7 +126,7 @@ import conexion.AccionesMaestro;
 			if(!sesion.getAttribute("login").equals("admin")){
 				String nombre_alum = request.getParameter("nombre_alum");
 				String desc = request.getParameter("desc");
-				String accion = (String)sesion.getAttribute("accion");
+				//String accion = (String)sesion.getAttribute("accion");
 				int cod_maest=(int)sesion.getAttribute("cod_maest");
 				Entrevista x = (Entrevista)sesion.getAttribute("entrevista");
 				Entrevista e = new Entrevista("","",cod_maest,nombre_alum,desc);
