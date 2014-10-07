@@ -3,11 +3,8 @@ package conexion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Calendar;
-
 import datos.EstadoAlumno;
 import datos.EstadoAlumnos;
-import datos.Materia;
 
 public class AccionesEstado {
 	

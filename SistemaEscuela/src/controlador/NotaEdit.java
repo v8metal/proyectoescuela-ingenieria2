@@ -1,8 +1,6 @@
 package controlador;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,10 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesNota;
-import conexion.AccionesUsuario;
-
-import datos.Materia;
-import datos.Materias;
 import datos.Nota;
 
 /**

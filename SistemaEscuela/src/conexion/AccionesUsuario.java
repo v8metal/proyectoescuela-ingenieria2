@@ -5,9 +5,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import conexion.Conexion;
-import datos.Maestros;
-import datos.Materia;
-import datos.Materias;
 import datos.Usuario;
 import datos.Usuarios;
 
