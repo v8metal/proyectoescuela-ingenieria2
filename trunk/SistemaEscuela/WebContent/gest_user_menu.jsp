@@ -54,7 +54,13 @@
 		}
 %>
 <br>
+<%if(usuarios.getLista().size() != AccionesMaestro.getAll().getLista().size()){ //aca agregar a futuro los maestros activos%> 
+
   	<a href="registro_user.jsp?">Registrar nuevo usuario</a>
+<%}else{%>
+
+	<a>Todos los maestros están registrados</a>
+<%}%>
 <br>
 <br>
 <form action="menu_admin.jsp" method="post">
