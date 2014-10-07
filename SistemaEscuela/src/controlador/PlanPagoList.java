@@ -51,7 +51,7 @@ public class PlanPagoList extends HttpServlet {
 				 accion = (String) request.getParameter("accion");
 			}
 			
-			System.out.println("accion= " + accion);
+			//System.out.println("accion= " + accion);
 			
 			int cod_plan = 0 ;
 			
@@ -251,7 +251,7 @@ public class PlanPagoList extends HttpServlet {
 					
 				    int cod_pago = Integer.parseInt(request.getParameter("cod_pago"));
 				    
-				    System.out.println("cod_pago" + cod_pago);
+				    //System.out.println("cod_pago" + cod_pago);
 				    
 				    plan = (PlanPago) sesion.getAttribute("planPagos");
 				    							

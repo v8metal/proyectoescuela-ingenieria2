@@ -270,14 +270,20 @@ if (plan != null){
 	<input type="submit" value="Realizar alta">
 	<%}%>	
 	</form>
-<br>
 <%if (plan != null) { %>
+<form action="PlanPagoList" method="get">
+	<input type="submit" value="Borrar Plan de Pagos">
+	<input name="accion" type="hidden" value="borrarPlanPago">
+	<input name="codplan" type="hidden" value="<%=plan.getCod_plan()%>">	
+</form>
+<br>
+<br>
 <form action="PlanPagoList" method="get">
 	<input type="submit" value="Listar Pagos realizados">
 	<input name="accion" type="hidden" value="listarPagosPlan">
 	<input name="codplan" type="hidden" value="<%=plan.getCod_plan()%>">	
-<%}%>	
 </form>
+<%}%>
 <br>
 <form action="CuotaList">
   <input name="accion" type="hidden" value="listarGrado">

@@ -59,7 +59,7 @@ if (session.getAttribute("login") != null) {
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> <%= "PLAN DE PAGOS= $" + AccionesPlanPago.getTotalPlanPago(cod_plan) %></a><td>
 	    	
 	    <%}%>    
 
@@ -71,7 +71,7 @@ if (session.getAttribute("login") != null) {
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> <%= "PLAN DE PAGOS= $" + AccionesPlanPago.getTotalPlanPago(cod_plan) %></a><td>
 	    	
 	    	<%}%>
 	    	    	
@@ -87,7 +87,7 @@ if (session.getAttribute("login") != null) {
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> <%= "PLAN DE PAGOS= $" + AccionesPlanPago.getTotalPlanPago(cod_plan) %></a><td>
 	    	
 	    	<%}%>
 	    	    	
@@ -104,7 +104,7 @@ if (session.getAttribute("login") != null) {
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> <%= "PLAN DE PAGOS= $" + AccionesPlanPago.getTotalPlanPago(cod_plan) %></a><td>
 	    	
 	    	<%}%>
 	    	    	
@@ -121,7 +121,7 @@ if (session.getAttribute("login") != null) {
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> <%= "PLAN DE PAGOS= $" + AccionesPlanPago.getTotalPlanPago(cod_plan) %></a><td>
 	    	
 	    	<%}%>
 	    	    	
@@ -137,7 +137,7 @@ if (session.getAttribute("login") != null) {
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> <%= "PLAN DE PAGOS= $" + AccionesPlanPago.getTotalPlanPago(cod_plan) %></a><td>
 	    	
 	    	<%}%>
 	    	    	
@@ -154,7 +154,7 @@ if (session.getAttribute("login") != null) {
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> <%= "PLAN DE PAGOS= $" + AccionesPlanPago.getTotalPlanPago(cod_plan) %></a><td>
 	    	
 	    	<%}%>
 	    	    	
@@ -170,7 +170,7 @@ if (session.getAttribute("login") != null) {
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> <%= "PLAN DE PAGOS= $" + AccionesPlanPago.getTotalPlanPago(cod_plan) %></a><td>
 	    	
 	    	<%}%>
 	    	    	
@@ -186,7 +186,7 @@ if (session.getAttribute("login") != null) {
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> <%= "PLAN DE PAGOS= $" + AccionesPlanPago.getTotalPlanPago(cod_plan) %></a><td>
 	    	
 	    	<%}%>
 	    	    	
@@ -202,7 +202,7 @@ if (session.getAttribute("login") != null) {
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> <%= "PLAN DE PAGOS= $" + AccionesPlanPago.getTotalPlanPago(cod_plan) %></a><td>
 	    	
 	    	<%}%>
 	    	    	
@@ -218,7 +218,7 @@ if (session.getAttribute("login") != null) {
 	    		 
 	    	<%}else{%>
 	    	
-	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> <%= "PLAN DE PAGOS= $" + AccionesPlanPago.getTotalPlanPago(cod_plan) %></a><td>
 	    	
 	    	<%}%>
 	    	    	
@@ -232,7 +232,7 @@ if (session.getAttribute("login") != null) {
 	    		 
 	    <%}else{%>
 	    	
-	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> PLAN DE PAGOS</a><td>	    	
+	    		<td> <a href="PlanPagoList?accion=visualizarPlan&&codplan=<%=cod_plan%>"> <%= "PLAN DE PAGOS= $" + AccionesPlanPago.getTotalPlanPago(cod_plan) %></a><td>	    	
 	    <%}%>	  	
 	  	
 	  <%}%>
