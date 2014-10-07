@@ -44,7 +44,7 @@ public class PrecioList extends HttpServlet {
 		if(sesion.getAttribute("login")!=null){
 			
 			int año=0;
-			
+						
 			if(request.getParameter("año") == null){				
 				año = (Integer)sesion.getAttribute("añoPrecios");
 			}else{

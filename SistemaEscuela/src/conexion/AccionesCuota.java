@@ -10,6 +10,25 @@ import datos.Cuotas;
 
 public class AccionesCuota {
 	
+	public static double getPagosDoublelMes(int dni, int año, int mes) throws Exception{
+		
+		double i = 0;
+				
+		Statement stm = Conexion.conectar().createStatement();	
+			
+		ResultSet rs = stm.executeQuery("SELECT " + dni +" , PERIODO, IFNULL(SUM(PAGO),0) AS PAGOS FROM PAGOS_CUOTA WHERE AÑO = " + año + " AND periodo = " + mes + " AND DNI = " + dni + " GROUP BY DNI, PERIODO");
+		
+		while(rs.next()){
+			i = rs.getDouble("PAGOS");
+		}
+			
+		stm.close();			
+		Conexion.desconectar();		
+			
+		
+		return i;
+	}
+	
 	public static int getPagosTotalMes(int dni, int año, int mes) throws Exception{
 		
 		int i = 0;
@@ -25,26 +44,6 @@ public class AccionesCuota {
 		stm.close();			
 		Conexion.desconectar();		
 			
-		
-		return i;
-	}
-	
-	public static int checkPlanPagosMes(int dni, int año, int mes) throws Exception{
-		
-		int i = 0;
-				
-		Statement stm = Conexion.conectar().createStatement();	
-		
-		////System.out.println("SELECT COD_PLAN AS COUNT FROM PLAN_CUOTAS WHERE DNI= " + dni + " AND AÑO = " + año + " AND " + mes + " BETWEEN PERIODOINI AND PERIODOFIN");
-		
-		ResultSet rs = stm.executeQuery("SELECT COD_PLAN FROM PLAN_CUOTAS WHERE DNI= " + dni + " AND AÑO = " + año + " AND " + mes + " BETWEEN PERIODOINI AND PERIODOFIN");
-		
-		while(rs.next()){
-			i = rs.getInt("COD_PLAN");
-		}
-			
-		stm.close();
-		Conexion.desconectar();
 		
 		return i;
 	}
@@ -139,5 +138,5 @@ public class AccionesCuota {
 		
 		return i;
 	}
-	
+			
 }
