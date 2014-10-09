@@ -131,19 +131,19 @@ import conexion.AccionesMaestro;
 				if (grado.equals("Sala 4")){					
 					grado_prom ="Sala 5";
 				}else if(grado.equals("Sala 5")){
-					grado_prom ="1º Grado";				
-				}else if(grado.equals("1º Grado")){
-					grado_prom ="2º Grado";
-				}else if(grado.equals("2º Grado")){
-					grado_prom ="3º Grado";
-				}else if(grado.equals("3º Grado")){
-					grado_prom ="4º Grado";
-				}else if(grado.equals("4º Grado")){
-					grado_prom ="5º Grado";
-				}else if(grado.equals("5º Grado")){
-					grado_prom ="6º Grado";
-				}else if(grado.equals("6º Grado")){
-					grado_prom ="7º Grado";
+					grado_prom ="1° Grado";				
+				}else if(grado.equals("1° Grado")){
+					grado_prom ="2° Grado";
+				}else if(grado.equals("2° Grado")){
+					grado_prom ="3° Grado";
+				}else if(grado.equals("3° Grado")){
+					grado_prom ="4° Grado";
+				}else if(grado.equals("4° Grado")){
+					grado_prom ="5° Grado";
+				}else if(grado.equals("5° Grado")){
+					grado_prom ="6° Grado";
+				}else if(grado.equals("6° Grado")){
+					grado_prom ="7° Grado";
 				}
 				
 				Integer titular = null;

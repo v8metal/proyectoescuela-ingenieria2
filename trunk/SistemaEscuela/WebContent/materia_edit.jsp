@@ -42,13 +42,13 @@
 			<tbody>
 				<tr>		
 					<td>Nombre:</td>	
-					<td class="form-input-field"><input id="nombre" type="text" name="nombre" value="<%=materia!=null ? materia.getNombre() : ""%>"></td>
+					<td class="form-input-field"><input id="nombre" type="text" name="materia" value="<%=materia!=null ? materia.getMateria() : ""%>"></td>
 					</tr><tr>
 					<td colspan="2"><input type="submit" name="btnSave" value="Guardar"></td>
 				</tr>
 			</tbody>
-		</table>
-		<input type="hidden" name="codigo" value="<%=materia != null ? materia.getCod_materia() : ""%>">
+		</table>		
+		<input type="hidden" name="accion" value="alta">
 	</form>
 <%}%> 
 <br>

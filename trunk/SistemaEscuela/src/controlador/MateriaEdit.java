@@ -37,50 +37,65 @@ public class MateriaEdit extends HttpServlet {
 			
 			//get parameter do of the request
 			String accion = request.getParameter("do");
+			
+			//System.out.println("doGet accion = " + accion);
 			    
 			
 			//get the cod of the request
-			Integer codigo = null;
-			if(request.getParameter("codigo") != null)
-				codigo = Integer.valueOf(request.getParameter("codigo"));
+			String mat = null;
+			if(request.getParameter("materia") != null)
+				mat = (String) request.getParameter("materia");
 			
 			//add / edit
-			if(accion.equals("alta")){
+			//switch (accion){
+			
+			switch (accion){
+			
+			case "alta":
 				
 				//get the request dispatcher
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/materia_edit.jsp");
 				
 				//forward to the jsp file to display the materia list
 				dispatcher.forward(request, response);	
-			
-			}  else if(accion.equals("modificar")){
 				
-				//get the materia from simulated DB
-				Materia materia = new Materia();
-				if(codigo != null){
-					materia = AccionesMateria.getOne(codigo.intValue());
-				}
+				break;
+			
+			case "baja":
+				
 								
-				//set the materia object in the request
-				request.setAttribute("materia", materia);
+				//int i = AccionesMateria.bajaLogicaMateria(mat); 
 				
-				//get the request dispatcher
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/materia_edit.jsp?");
+				AccionesMateria.bajaLogicaMateria(mat);
 				
-				//forward to the jsp file to display the maestro list
-				dispatcher.forward(request, response);	
+				//i != 0 --agregar captura de excepcion cuando hay notas cargadas
 				
-			
-			//delete
-			} else if(accion.equals("baja")){
+				response.sendRedirect(request.getContextPath() + "/materiaList?from=materiaEdit");
 				
-				//delete materia by cod
-				AccionesMateria.deleteOne(codigo.intValue());
+				break;
 				
+			case "activar":
+				
+				
+				AccionesMateria.activarMateria(mat); //agregar captura de excepcion cuando hay notas cargadas
+				
+				//request.setAttribute("from", "materia_list");
+				
+				response.sendRedirect(request.getContextPath() + "/materiaList?from=materia_list");
+				
+				break;
+				
+				
+			case "borrar":
+				
+				AccionesMateria.deleteOne(mat);				
 				//redirect to the materia list servlet 
 				response.sendRedirect(request.getContextPath() + "/materiaList?from=materiaEdit");
-
-			} 
+				break;
+				
+			}			
+	
+		
 		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
 			e.printStackTrace();
 			sesion.setAttribute("error", "Error al intentar borrar materia. Ya esta asignada a un curso");
@@ -89,7 +104,9 @@ public class MateriaEdit extends HttpServlet {
 			e.printStackTrace();
 			sesion.setAttribute("error", e);
 			response.sendRedirect("materia_edit.jsp");
-		}  
+		
+		}	
+    	
 	}
 
 	/**
@@ -101,30 +118,32 @@ public class MateriaEdit extends HttpServlet {
 		
 		try {
 			
-			//get materia properties from the request
-			int codigo = 0;
+			String accion = "";
+			String materia = "";
+			//int estado;
 			
-			try {
-				
-				codigo = Integer.parseInt(request.getParameter("codigo"));
-				
-				} catch(NumberFormatException e){
-					e.printStackTrace();
-				}
+			accion = (String) request.getParameter("accion");
 			
-			String nombre = request.getParameter("nombre");
-					
+			materia = request.getParameter("materia");
+			
+			//System.out.println("materia= " + materia);
+			//System.out.println("accion Do Post= " + accion);
+			
+			//if (request.getParameter("estado") != null){
+			//	int estado = Integer.parseInt(request.getParameter("estado"));
+			
 			//create a new materia object
-			Materia materia = new Materia(codigo, nombre);
+			Materia m = new Materia(materia, 1);	
 						
 			//save the materia to DB
-			if (codigo == 0){
+			if (accion.equals("alta")){
 				//insert
-				AccionesMateria.insertOne(materia);
-			} else {
+				AccionesMateria.insertOne(m);
+			} 
+			//else {
 				//update
-				AccionesMateria.updateOne(codigo, nombre);
-			}
+			//	AccionesMateria.updateOne(materia, estado);
+			//}
 			
 			//redirect to the materia list servlet 
 			response.sendRedirect(request.getContextPath() + "/materiaList?from=materiaEdit");	

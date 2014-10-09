@@ -262,32 +262,37 @@ if (plan != null){
 			<td><input readonly type=text name="total" value= <%=AccionesPlanPago.getTotalPlanPago(plan.getCod_plan())%>></td>			
 		</tr>
 		<%}%>
+		<tr>
+		<td></td>
+		<%if (plan != null) { %>
+			<td><input type="submit" value="Realizar modificación"></td>	
+		<%}else{%>
+			<td><input type="submit" value="Realizar alta"></td>
+		<%}%>
+		</tr>	
 	</table> 
 	<br>	
-	<%if (plan != null) { %>
-	<input type="submit" value="Realizar modificación">	
-	<%}else{%>
-	<input type="submit" value="Realizar alta">
-	<%}%>	
+
 	</form>
 <%if (plan != null) { %>
 <form action="PlanPagoList" method="get">
-	<input type="submit" value="Borrar Plan de Pagos">
-	<input name="accion" type="hidden" value="borrarPlanPago">
-	<input name="codplan" type="hidden" value="<%=plan.getCod_plan()%>">	
-</form>
-<br>
-<br>
-<form action="PlanPagoList" method="get">
-	<input type="submit" value="Listar Pagos realizados">
-	<input name="accion" type="hidden" value="listarPagosPlan">
-	<input name="codplan" type="hidden" value="<%=plan.getCod_plan()%>">	
+<input name="codplan" type="hidden" value="<%=plan.getCod_plan()%>">
+<input id="accion" name="accion" type="hidden">	
+<table>
+<tr>
+<td>
+	<input id="listar" type="submit" value="Listar Pagos realizados" onClick="accion1()">	
+<td>
+	<input id="borrar" type="submit" value="Borrar Plan de Pagos" onClick="accion2()">	
+</td>
+</tr>
+</table>	
 </form>
 <%}%>
 <br>
 <form action="CuotaList">
   <input name="accion" type="hidden" value="listarGrado">
-  <input type="submit" value="Volver al listado">
+  <input type="submit" value="Volver al listado de Cuotas">
 </form>
 </center>
  <%
@@ -295,5 +300,22 @@ if (plan != null){
 		response.sendRedirect("login.jsp");
 	}
 %>
+<script type="text/javascript">
+
+function accion1() {
+	var accion = document.getElementById('accion');	
+	accion.value = "listarPagosPlan"; 
+	
+}
+
+function accion2() {
+	var accion = document.getElementById('accion');	
+	accion.value = "borrarPlanPago"; 
+	
+}
+
+
+</script>
+
 </body>
 </html>
