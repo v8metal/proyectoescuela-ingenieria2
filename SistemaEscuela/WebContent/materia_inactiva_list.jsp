@@ -19,10 +19,10 @@
 			session.setAttribute("error", "");
 		}
 		
-		Materias materias = (Materias)session.getAttribute("materias");
+		Materias materias = (Materias)session.getAttribute("materiasbaja");
 %>
 <center>
-<h1>Listado de Materias</h1>
+<h1>Listado de Materias en inactivas</h1>
 <% 
 			if (!error.equals("")) {
 %>
@@ -34,9 +34,8 @@
 
 if (materias.getLista().isEmpty()){ %>
 
-<a href="materiaEdit?do=alta">No hay materias asignadas, agregar materias</a>
-<br>
-<br>
+<a> No hay materias en estado de baja</a>
+	
 <%}else{%>
 <table border="2" bordercolor="666">
 	<tr>
@@ -49,26 +48,17 @@ if (materias.getLista().isEmpty()){ %>
 %>
 	<tr>
 		<td><%= m.getMateria() %></td>
-		<td><a href="materiaEdit?do=baja&materia=<%= m.getMateria() %>">Baja de Materia</a></td>
-		<td><a name="delete-link" href="materiaEdit?do=borrar&materia=<%= m.getMateria() %>" >Borrar Materia</a></td>
+		<td><a href="materiaEdit?do=activar&materia=<%= m.getMateria() %>">Activar Materia</a></td>	
 	</tr>
 <%
 	}
  %>
 </table>
-<br>
-  	<a href="materiaEdit?do=alta">Agregar materia</a>
-<br>
-<br>
-<br>
 <%}%>
-  	<a href="materiaList?from=materia_list">Listado de materias inactivas</a>
 <br>
 <br>
-<br>
-<br>
-<form action="menu_admin.jsp" method="post">
-<input type="submit" value="Volver al menú">
+<form action="materiaList?from=menu_admin" method="post">
+<input type="submit" value="Volver al atrás">
 </form>
 </center>
 <%

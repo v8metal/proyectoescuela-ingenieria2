@@ -55,8 +55,8 @@ if(mat_grado.getLista().isEmpty()){
 	for (Materia m : mat_grado.getLista()) {	
 %>
 	<tr>
-		<td><%= m.getNombre() %></td>	
-		<td><a href="MateriaGradoList?do=desasignar&cod_materia=<%=m.getCod_materia()%>"> Desasignar</a></td>
+		<td><%= m.getMateria() %></td>	
+		<td><a href="MateriaGradoList?do=desasignar&materia=<%=m.getMateria()%>"> Desasignar</a></td>
 	</tr>
 	
 <%
@@ -81,7 +81,7 @@ if ((materias.getLista().size() - mat_grado.getLista().size()) == 0){
 				if(!mat_grado.getLista().contains(m)){ //evita que se muestren las materias ya asignadas
 					
 			%>	 			  
-		   		<option value="<%= m.getCod_materia() %>"><%= m.getNombre() %> </option>   			  
+		   		<option value="<%= m.getMateria()%>"><%= m.getMateria() %> </option>   			  
 		   	<%				
 				}
 			 				    			

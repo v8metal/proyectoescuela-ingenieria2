@@ -66,7 +66,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 					
 					materias = new Materias();
 					
-					for (Integer m : mat_grado.getLista()) {
+					for (String m : mat_grado.getLista()) {
 						materias.agregarMateria(AccionesMateria.getOne(m));													
 					}
 										
@@ -76,7 +76,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 				
 				sesion.setAttribute("materias_grado", materias);		
 			
-				sesion.setAttribute("materias", AccionesMateria.getAll());
+				sesion.setAttribute("materias", AccionesMateria.getAllActivas());
 								
 				//get the request dispatcher
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/materias_list.jsp");
@@ -88,7 +88,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 				
 				Grado g = (Grado) sesion.getAttribute("grado_materias");
 				
-				int materia = Integer.valueOf(request.getParameter("cod_materia"));
+				String materia = (String) request.getParameter("materia");
 				
 				AccionesGrado.deleteMateria(g.getGrado(), g.getTurno(), g.getAño(), materia);
 				
@@ -97,7 +97,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 				
 				Materias materias = new Materias();
 				
-				for (Integer m : mat_grado.getLista()) {
+				for (String m : mat_grado.getLista()) {
 					
 					materias.agregarMateria(AccionesMateria.getOne(m));
 						
@@ -105,7 +105,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 				
 				sesion.setAttribute("materias_grado", materias);		
 				
-				sesion.setAttribute("materias", AccionesMateria.getAll());
+				sesion.setAttribute("materias", AccionesMateria.getAllActivas());
 				
 				//get the request dispatcher
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/materias_list.jsp");
@@ -137,7 +137,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 
 		Grado g = (Grado) sesion.getAttribute("grado_materias");
 		
-		int materia = Integer.valueOf(request.getParameter("materia_asignar"));
+		String materia = (String) request.getParameter("materia_asignar");
 		
 		
 		try {
@@ -148,7 +148,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 			
 			Materias materias = new Materias();
 			
-			for (Integer m : mat_grado.getLista()) {
+			for (String m : mat_grado.getLista()) {
 				
 				materias.agregarMateria(AccionesMateria.getOne(m));
 					
@@ -156,7 +156,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 			
 			sesion.setAttribute("materias_grado", materias);		
 			
-			sesion.setAttribute("materias", AccionesMateria.getAll());			
+			sesion.setAttribute("materias", AccionesMateria.getAllActivas());			
 			
 			response.sendRedirect("materias_list.jsp");
 			

@@ -164,14 +164,14 @@ public class AccionesGrado {
 		try {
 			
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM MAT_GRADO WHERE GRADO = '" + grado + "'" );
+			ResultSet rs = stmt.executeQuery("SELECT * FROM MATERIAS_GRADO WHERE GRADO = '" + grado + "'" );
 			
-			int cod_mat;
+			String materia;
 			
 			while (rs.next()) {
 					
-				cod_mat = rs.getInt("COD_MATERIA");
-				materias.agregarMateria(cod_mat);			
+				materia = rs.getString("MATERIA");
+				materias.agregarMateria(materia);			
 							
 			}
 			
@@ -191,14 +191,14 @@ public class AccionesGrado {
 			try {
 				
 				Statement stmt = Conexion.conectar().createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT * FROM MAT_GRADO WHERE GRADO = '" + grado + "' AND TURNO = '" + turno + "' AND AÑO = '" + año + "'");
+				ResultSet rs = stmt.executeQuery("SELECT * FROM MATERIAS_GRADO WHERE GRADO = '" + grado + "' AND TURNO = '" + turno + "' AND AÑO = '" + año + "'");
 				
-				int cod_mat;
+				String materia;
 				
 				while (rs.next()) {
 						
-					cod_mat = rs.getInt("COD_MATERIA");
-					materias.agregarMateria(cod_mat);			
+					materia = rs.getString("MATERIA");
+					materias.agregarMateria(materia);			
 								
 				}
 				
@@ -222,11 +222,11 @@ public class AccionesGrado {
 		return i;
 	}
 	
-	public static int deleteMateria(String grado, String turno, int año, int materia) throws SQLException, Exception  {     //lanzo la excepcion asi puedo mostrar el error
+	public static int deleteMateria(String grado, String turno, int año, String materia) throws SQLException, Exception  {     //lanzo la excepcion asi puedo mostrar el error
 		int i = 0;
 //		try {
 			Statement stmt = Conexion.conectar().createStatement();			
-			i = stmt.executeUpdate("DELETE FROM MAT_GRADO WHERE GRADO = '"+ grado + "' AND TURNO = '"+ turno + "' AND AÑO = " + año + " AND COD_MATERIA = " + materia );
+			i = stmt.executeUpdate("DELETE FROM MATERIAS_GRADO WHERE GRADO = '"+ grado + "' AND TURNO = '"+ turno + "' AND AÑO = " + año + " AND MATERIA = '" + materia + "'");
 			
 //		} catch (Exception e) {
 //			e.printStackTrace();
@@ -237,7 +237,7 @@ public class AccionesGrado {
 	public static void asignarMateria(String grado, int materia) throws SQLException, Exception {
 		
 		Statement stmt = Conexion.conectar().createStatement();
-		stmt.executeUpdate("INSERT INTO MAT_GRADO VALUES ('" + grado + "'," + materia + ")");
+		stmt.executeUpdate("INSERT INTO MATERIAS_GRADO VALUES ('" + grado + "'," + materia + ")");
 			
 		stmt.close();
 		Conexion.desconectar();		
@@ -440,7 +440,7 @@ public static int getCurrentYear(Grado g) {
 		
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			i = stmt.executeUpdate("DELETE FROM MAT_GRADO WHERE GRADO = '"+ grado + "' AND TURNO = '" + turno + "' AND COD_MATERIA = " + materia );
+			i = stmt.executeUpdate("DELETE FROM MATERIAS_GRADO WHERE GRADO = '"+ grado + "' AND TURNO = '" + turno + "' AND COD_MATERIA = " + materia );
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -455,14 +455,14 @@ public static int getCurrentYear(Grado g) {
 		try {
 			
 			Statement stmt = Conexion.conectar().createStatement();			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM MAT_GRADO WHERE GRADO = '" + grado + "' AND TURNO = '" + turno + "' AND AÑO = " + año );
+			ResultSet rs = stmt.executeQuery("SELECT * FROM MATERIAS_GRADO WHERE GRADO = '" + grado + "' AND TURNO = '" + turno + "' AND AÑO = " + año );
 			
-			int cod_mat;
+			String materia;
 			
 			while (rs.next()) {
 					
-				cod_mat = rs.getInt("COD_MATERIA");
-				materias.agregarMateria(cod_mat);			
+				materia = rs.getString("MATERIA");
+				materias.agregarMateria(materia);				
 							
 			}
 			
@@ -475,10 +475,10 @@ public static int getCurrentYear(Grado g) {
 		return materias;
 	}
 	
-	public static void asignarMateria(String grado, String turno, int año, int materia) throws SQLException, Exception {
+	public static void asignarMateria(String grado, String turno, int año, String materia) throws SQLException, Exception {
 	
 		Statement stmt = Conexion.conectar().createStatement();
-		stmt.executeUpdate("INSERT INTO MAT_GRADO VALUES ('" + grado + "','"+ turno + "'," + año + "," + materia + ")");
+		stmt.executeUpdate("INSERT INTO MATERIAS_GRADO VALUES ('" + grado + "','"+ turno + "'," + año + ", '" + materia + "')");
 		
 		stmt.close();
 		Conexion.desconectar();		

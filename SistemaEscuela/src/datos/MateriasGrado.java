@@ -4,22 +4,22 @@ import java.util.ArrayList;
 
 public class MateriasGrado {
 
-	ArrayList <Integer> lista;
+	ArrayList <String> lista;
 	
 	public MateriasGrado() {
-		lista = new ArrayList<Integer>();
+		lista = new ArrayList<String>();
 	}
 	
-	public ArrayList<Integer> getLista() {
+	public ArrayList<String> getLista() {
 		return lista;
 	}
 		
-	public void agregarMateria(Integer m) {
+	public void agregarMateria(String m) {
 		lista.add(m);
 	}
 	
 	public void listar() {
-		for (Integer m : lista) {
+		for (String m : lista) {
 			System.out.println(m);
 		}
 	}
