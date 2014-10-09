@@ -46,7 +46,7 @@ import datos.Sancion;
 			
 			int año = Integer.valueOf((String) sesion.getAttribute("año_sys"));
 								
-			sesion.setAttribute("alumnos_sancion", AccionesSancion.getAlumnos(año, maestro.getCod_maest()));			
+			sesion.setAttribute("alumnos_sancion", AccionesSancion.getAlumnos(año, maestro.getDni()));			
 			
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/sancion_edit.jsp");
 			

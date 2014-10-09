@@ -11,11 +11,11 @@ import datos.Alumnos;
 
 public class AccionesSancion {
 
-	public static Sanciones getAll(int año, int cod_maestro) {
+	public static Sanciones getAll(int año, int DNI_MAESTRO) {
 		Sanciones lista = new Sanciones();
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT S.DNI, AG.GRADO, AG.TURNO, S.FECHA, S.HORA, S.MOTIVO FROM SANCIONES AS S INNER JOIN ALUMNOS_GRADO AS AG ON (AG.DNI = S.DNI AND AG.AÑO = "+ año + ") INNER JOIN MAESTROS_GRADO AS MG ON (MG.GRADO = AG.GRADO AND MG.TURNO = AG.TURNO) WHERE S.FECHA BETWEEN '"+ año +"-01-01' AND '" + año + "-12-31' AND (MG.COD_MAESTRO_TIT = " + cod_maestro + " OR MG.COD_MAESTRO_PAR = " + cod_maestro + ")" );			
+			ResultSet rs = stmt.executeQuery("SELECT S.DNI, AG.GRADO, AG.TURNO, S.FECHA, S.HORA, S.MOTIVO FROM SANCIONES AS S INNER JOIN ALUMNOS_GRADO AS AG ON (AG.DNI = S.DNI AND AG.AÑO = "+ año + ") INNER JOIN MAESTROS_GRADO AS MG ON (MG.GRADO = AG.GRADO AND MG.TURNO = AG.TURNO) WHERE S.FECHA BETWEEN '"+ año +"-01-01' AND '" + año + "-12-31' AND (MG.DNI_MAESTRO_TIT = " + DNI_MAESTRO + " OR MG.DNI_MAESTRO_PAR = " + DNI_MAESTRO + ")" );			
 			Sancion tmp;
 			
 			while (rs.next()) {
@@ -47,15 +47,15 @@ public class AccionesSancion {
 		return sancion;
 	}
 	
-	public static Alumnos getAlumnos(int año, int cod_maestro) {
+	public static Alumnos getAlumnos(int año, int DNI_MAESTRO) {
 		Alumnos lista = new Alumnos();
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT A.* FROM MAESTROS_GRADO MG INNER JOIN ALUMNOS_GRADO AG ON(AG.GRADO = MG.GRADO AND AG.TURNO = MG.TURNO) INNER JOIN ALUMNOS A ON (A.DNI = AG.DNI) WHERE AG.AÑO = " + año + " AND (MG.COD_MAESTRO_TIT = " + cod_maestro + " OR MG.COD_MAESTRO_PAR = " + cod_maestro+ ")");
+			ResultSet rs = stmt.executeQuery("SELECT A.* FROM MAESTROS_GRADO MG INNER JOIN ALUMNOS_GRADO AG ON(AG.GRADO = MG.GRADO AND AG.TURNO = MG.TURNO) INNER JOIN ALUMNOS A ON (A.DNI = AG.DNI) WHERE AG.AÑO = " + año + " AND (MG.DNI_MAESTRO_TIT = " + DNI_MAESTRO + " OR MG.DNI_MAESTRO_PAR = " + DNI_MAESTRO+ ")");
 			Alumno tmp;
 			
 			while (rs.next()) {
-				tmp = new Alumno(rs.getInt("dni"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("domicilio"), rs.getString("telefono"), rs.getString("fecha_nac"), rs.getString("lugar_nac"), rs.getInt("dni_tutor"), rs.getInt("dni_madre"), rs.getInt("cant_her_may"), rs.getInt("cant_her_men"), rs.getString("iglesia"), rs.getString("esc"), rs.getBoolean("ind_grupo"), rs.getBoolean("ind_subsidio"));
+				tmp = new Alumno(rs.getInt("dni"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("domicilio"), rs.getString("telefono"), rs.getString("fecha_nac"), rs.getString("lugar_nac"), rs.getInt("dni_tutor"), rs.getInt("dni_madre"), rs.getInt("cant_her_may"), rs.getInt("cant_her_men"), rs.getString("iglesia"), rs.getString("esc"), false, false);
 				lista.agregarAlumno(tmp);
 			}
 			stmt.close();

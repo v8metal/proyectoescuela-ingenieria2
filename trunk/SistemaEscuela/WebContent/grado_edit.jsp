@@ -124,15 +124,15 @@ if (grado != null){
 <% if (año > 0){%>
 		<td><select name="maestro_tit_grado">
 		<% if (grado != null && titular != null){ %>
-			<option value="<%= titular.getCod_maest()%>"><%=titular.getNombre()+ " " + titular.getApellido()%> </option>
+			<option value="<%= titular.getDni()%>"><%=titular.getNombre()+ " " + titular.getApellido()%> </option>
 			<%
 			for (Maestro m : maestros.getLista()){
 				
-				if (m.getCod_maest() != titular.getCod_maest()){ //elimina el maestro titular duplicado de la lista
+				if (m.getDni() != titular.getDni()){ //elimina el maestro titular duplicado de la lista
 			 		
  			 %>   
  			  
-   			   <option value="<%=m.getCod_maest()%>"><%=m.getNombre()+ " " + m.getApellido()%> </option>   			  
+   			   <option value="<%=m.getDni()%>"><%=m.getNombre()+ " " + m.getApellido()%> </option>   			  
    			  <%   			
 			 	}
 			}
@@ -142,7 +142,7 @@ if (grado != null){
 			for (Maestro m : maestros.getLista()){			 		
  			%>   
  			  
-   			   <option value="<%=m.getCod_maest()%>"><%=m.getNombre()+ " " + m.getApellido()%> </option>   			  
+   			   <option value="<%=m.getDni()%>"><%=m.getNombre()+ " " + m.getApellido()%> </option>   			  
    			 <%
 			}
 		}	
@@ -157,19 +157,19 @@ if (grado != null){
 <% if (año > 0){%>
 		<td><select name="maestro_par_grado">
 		<% if (grado != null && paralelo != null){ %>
-			<option value="<%= paralelo.getCod_maest()%>"><%=paralelo.getNombre()+ " " + paralelo.getApellido()%> </option>						
+			<option value="<%= paralelo.getDni()%>"><%=paralelo.getNombre()+ " " + paralelo.getApellido()%> </option>						
 			<%
 			for (Maestro m : maestros.getLista()){			 	
-				if (m.getCod_maest() != paralelo.getCod_maest()){	//elimina el maestro titular suplente de la lista
+				if (m.getDni() != paralelo.getDni()){	//elimina el maestro titular suplente de la lista
  			 %>
-   			   <option value="<%=m.getCod_maest()%>"><%=m.getNombre()+ " " + m.getApellido() %></option>
+   			   <option value="<%=m.getDni()%>"><%=m.getNombre()+ " " + m.getApellido() %></option>
    			 <%
 			 	}
 			}
 		}else{			
 			for (Maestro m : maestros.getLista()){		
  			 %>
-   			   <option value="<%=m.getCod_maest()%>"><%=m.getNombre()+ " " + m.getApellido() %></option>
+   			   <option value="<%=m.getDni()%>"><%=m.getNombre()+ " " + m.getApellido() %></option>
    			 <%			 
 			}
 		}

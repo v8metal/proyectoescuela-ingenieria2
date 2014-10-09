@@ -43,9 +43,13 @@
 					</tr><tr>		
 					<td>Nombre:</td>	
 					<td class="form-input-field"><input id="nombre" type="text" name="nombre" value="<%=maestro!=null ? maestro.getNombre() : ""%>"></td>
-					</tr><tr>
+					</tr><tr>					
+					<% if(maestro != null){%>
+					<td class="form-input-field"><input id="dni" type="hidden" name="dni" value="<%=maestro.getDni()%>"></td>
+					<%}else{%>
 					<td>D.N.I.:</td>	
-					<td class="form-input-field"><input id="dni" type="text" name="dni" value="<%=maestro!=null ? maestro.getDni() : ""%>"></td>
+					<td class="form-input-field"><input id="dni" type="text" name="dni" value=""></td>
+					<%}%>
 					</tr><tr>
 					<td>Domicilio:</td>	
 					<td class="form-input-field"><input id="domicilio" type="text" name="domicilio" value="<%=maestro!=null ? maestro.getDomicilio() : ""%>"></td>
@@ -56,8 +60,7 @@
 					<td colspan="2"><input type="submit" name="btnSave" value="Guardar"></td>
 				</tr>
 			</tbody>
-		</table>
-		<input type="hidden" name="codigo" value="<%=maestro != null ? maestro.getCod_maest() : ""%>">
+		</table>		
 	</form> 
  <br>
 <form action="menu_admin.jsp" method="post">

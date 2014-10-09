@@ -63,20 +63,20 @@ public class Login extends HttpServlet {
 			
 			if (!usuario.equals("") && !contraseña.equals("")) {
 				
-				Integer cod_maest = AccionesUsuario.validarUsuario(usuario, contraseña);
+				Integer dni = AccionesUsuario.validarUsuario(usuario, contraseña);
 							
-				if (cod_maest == 0) {
+				if (dni == 0) {
 					
 					sesion.setAttribute("login", usuario);
 					response.sendRedirect("menu_admin.jsp");
 					
-				} else if (cod_maest > 0){
+				} else if (dni > 0){
 					
 					sesion.setAttribute("login", usuario);			
 		//			sesion.setAttribute("cod_maest", cod_maest);
-					Maestro maestro = AccionesMaestro.getOne(cod_maest);
+					Maestro maestro = AccionesMaestro.getOne(dni);
 					sesion.setAttribute("maestro", maestro);
-					sesion.setAttribute("cod_maest", cod_maest);
+					sesion.setAttribute("dni_maestro", dni);
 					response.sendRedirect("menu_user.jsp");
 					
 				} else {

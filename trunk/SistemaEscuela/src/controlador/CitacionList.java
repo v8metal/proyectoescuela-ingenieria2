@@ -56,7 +56,7 @@ import datos.Maestro;
 				
 		Maestro maestro = (Maestro) sesion.getAttribute("maestro");
 		
-		sesion.setAttribute("citaciones_list", AccionesCitacion.getAll(año, maestro.getCod_maest()));		
+		sesion.setAttribute("citaciones_list", AccionesCitacion.getAll(año, maestro.getDni()));		
 						
 		response.sendRedirect("citaciones_list.jsp");
 		

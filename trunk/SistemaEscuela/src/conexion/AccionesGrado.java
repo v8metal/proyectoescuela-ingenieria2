@@ -23,11 +23,11 @@ public class AccionesGrado {
 		try {
 			
 			Statement stmt = Conexion.conectar().createStatement();			
-			ResultSet rs = stmt.executeQuery("SELECT G.GRADO, G.TURNO, G.IND_EVALUACION, G.IND_BIM, G.SALON, IFNULL(MG2.AÑO, 0) AS AÑO, IFNULL(MG2.COD_MAESTRO_TIT, 0) AS COD_MAESTRO_TIT, IFNULL(MG2.COD_MAESTRO_PAR, 0) AS COD_MAESTRO_PAR FROM GRADOS G LEFT JOIN (SELECT MG.GRADO, MG.TURNO, MG.AÑO, MG.COD_MAESTRO_TIT, MG.COD_MAESTRO_PAR FROM MAESTROS_GRADO AS MG INNER JOIN (SELECT GRADO, TURNO, MAX(AÑO) AS AÑO FROM MAESTROS_GRADO GROUP BY GRADO, TURNO) AS MG1 ON (MG1.GRADO = MG.GRADO AND MG1.TURNO = MG.TURNO AND MG1.AÑO = MG.AÑO)) AS MG2 ON (MG2.grado = G.GRADO AND MG2.TURNO = G.TURNO) INNER JOIN GRADOS_BASE GB ON GB.GRADO = G.GRADO AND GB.TURNO = G.TURNO ORDER BY GB.ORDEN");
+			ResultSet rs = stmt.executeQuery("SELECT G.GRADO, G.TURNO, G.IND_EVALUACION, G.IND_BIM, G.SALON, IFNULL(MG2.AÑO, 0) AS AÑO, IFNULL(MG2.DNI_MAESTRO_TIT, 0) AS DNI_MAESTRO_TIT, IFNULL(MG2.DNI_MAESTRO_PAR, 0) AS DNI_MAESTRO_PAR FROM GRADOS G LEFT JOIN (SELECT MG.GRADO, MG.TURNO, MG.AÑO, MG.DNI_MAESTRO_TIT, MG.DNI_MAESTRO_PAR FROM MAESTROS_GRADO AS MG INNER JOIN (SELECT GRADO, TURNO, MAX(AÑO) AS AÑO FROM MAESTROS_GRADO GROUP BY GRADO, TURNO) AS MG1 ON (MG1.GRADO = MG.GRADO AND MG1.TURNO = MG.TURNO AND MG1.AÑO = MG.AÑO)) AS MG2 ON (MG2.grado = G.GRADO AND MG2.TURNO = G.TURNO) INNER JOIN GRADOS_BASE GB ON GB.GRADO = G.GRADO AND GB.TURNO = G.TURNO ORDER BY GB.ORDEN");
 			Grado tmp;
 			
 			while (rs.next()) {
-				tmp = new Grado(rs.getString("GRADO"), rs.getString("TURNO"), rs.getInt("IND_EVALUACION"), rs.getBoolean("IND_BIM"), rs.getString("SALON"), rs.getInt("AÑO"), rs.getInt("COD_MAESTRO_TIT"),rs.getInt("COD_MAESTRO_PAR"));
+				tmp = new Grado(rs.getString("GRADO"), rs.getString("TURNO"), rs.getInt("IND_EVALUACION"), rs.getBoolean("IND_BIM"), rs.getString("SALON"), rs.getInt("AÑO"), rs.getInt("DNI_MAESTRO_TIT"),rs.getInt("DNI_MAESTRO_PAR"));
 				lista.agregarGrado(tmp);
 			}
 			stmt.close();
@@ -120,10 +120,10 @@ public class AccionesGrado {
 			
 			Statement stmt = Conexion.conectar().createStatement();
 					
-			ResultSet rs = stmt.executeQuery("SELECT G.GRADO, G.TURNO, G.IND_BIM, G.SALON, IFNULL(MG2.AÑO, 0) AS AÑO, IFNULL(MG2.COD_MAESTRO_TIT, 0) AS COD_MAESTRO_TIT, IFNULL(MG2.COD_MAESTRO_PAR, 0) AS COD_MAESTRO_PAR FROM GRADOS G LEFT JOIN (SELECT MG.GRADO, MG.TURNO, MG.AÑO, MG.COD_MAESTRO_TIT, MG.COD_MAESTRO_PAR FROM MAESTROS_GRADO AS MG INNER JOIN (SELECT GRADO, TURNO, MAX(AÑO) AS AÑO FROM MAESTROS_GRADO GROUP BY GRADO, TURNO) AS MG1 ON (MG1.GRADO = MG.GRADO AND MG1.TURNO = MG.TURNO AND MG1.AÑO = MG.AÑO)) AS MG2 ON (MG2.grado = G.GRADO AND MG2.TURNO = G.TURNO) WHERE G.GRADO = '" + grado + "'");	
+			ResultSet rs = stmt.executeQuery("SELECT G.GRADO, G.TURNO, G.IND_BIM, G.SALON, IFNULL(MG2.AÑO, 0) AS AÑO, IFNULL(MG2.DNI_MAESTRO_TIT, 0) AS DNI_MAESTRO_TIT, IFNULL(MG2.DNI_MAESTRO_PAR, 0) AS DNI_MAESTRO_PAR FROM GRADOS G LEFT JOIN (SELECT MG.GRADO, MG.TURNO, MG.AÑO, MG.DNI_MAESTRO_TIT, MG.DNI_MAESTRO_PAR FROM MAESTROS_GRADO AS MG INNER JOIN (SELECT GRADO, TURNO, MAX(AÑO) AS AÑO FROM MAESTROS_GRADO GROUP BY GRADO, TURNO) AS MG1 ON (MG1.GRADO = MG.GRADO AND MG1.TURNO = MG.TURNO AND MG1.AÑO = MG.AÑO)) AS MG2 ON (MG2.grado = G.GRADO AND MG2.TURNO = G.TURNO) WHERE G.GRADO = '" + grado + "'");	
 			
 			while (rs.next()) {
-				g = new Grado(rs.getString("GRADO"), rs.getString("TURNO"), rs.getInt("IND_EVALUACION"), rs.getBoolean("IND_BIM"), rs.getString("SALON"), rs.getInt("AÑO"), rs.getInt("COD_MAESTRO_TIT"),rs.getInt("COD_MAESTRO_PAR"));				
+				g = new Grado(rs.getString("GRADO"), rs.getString("TURNO"), rs.getInt("IND_EVALUACION"), rs.getBoolean("IND_BIM"), rs.getString("SALON"), rs.getInt("AÑO"), rs.getInt("DNI_MAESTRO_TIT"),rs.getInt("DNI_MAESTRO_PAR"));				
 			}
 			stmt.close();
 			Conexion.desconectar();
@@ -327,10 +327,10 @@ public static int getCurrentYear(Grado g) {
 			
 			Statement stmt = Conexion.conectar().createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT DISTINCT G.GRADO, G.TURNO, G.IND_EVALUACION, G.IND_BIM, G.SALON, IFNULL(AG2.AÑO, 0) AS AÑO, IFNULL(MG2.COD_MAESTRO_TIT, 0) AS COD_MAESTRO_TIT, IFNULL(MG2.COD_MAESTRO_PAR, 0) AS COD_MAESTRO_PAR FROM GRADOS G LEFT JOIN (SELECT AG.GRADO, AG.TURNO, AG.AÑO FROM ALUMNOS_GRADO AS AG INNER JOIN (SELECT GRADO, TURNO, MAX(AÑO) AS AÑO FROM ALUMNOS_GRADO GROUP BY GRADO, TURNO) AS AG1 ON (AG1.GRADO = AG.GRADO AND AG1.TURNO = AG.TURNO AND AG1.AÑO = AG.AÑO)) AS AG2 ON (AG2.grado = G.GRADO AND AG2.TURNO = G.TURNO) LEFT JOIN (SELECT MG.GRADO, MG.TURNO, MG.AÑO, MG.COD_MAESTRO_TIT, MG.COD_MAESTRO_PAR FROM MAESTROS_GRADO AS MG INNER JOIN (SELECT GRADO, TURNO, MAX(AÑO) AS AÑO FROM MAESTROS_GRADO GROUP BY GRADO, TURNO) AS MG1 ON (MG1.GRADO = MG.GRADO AND MG1.TURNO = MG.TURNO AND MG1.AÑO = MG.AÑO)) AS MG2 ON (MG2.grado = G.GRADO AND MG2.TURNO = G.TURNO) WHERE G.GRADO = '" + grado + "' AND G.TURNO = '" + turno +"' AND AG2.AÑO = "+ año);			
+			ResultSet rs = stmt.executeQuery("SELECT DISTINCT G.GRADO, G.TURNO, G.IND_EVALUACION, G.IND_BIM, G.SALON, IFNULL(AG2.AÑO, 0) AS AÑO, IFNULL(MG2.DNI_MAESTRO_TIT, 0) AS DNI_MAESTRO_TIT, IFNULL(MG2.DNI_MAESTRO_PAR, 0) AS DNI_MAESTRO_PAR FROM GRADOS G LEFT JOIN (SELECT AG.GRADO, AG.TURNO, AG.AÑO FROM ALUMNOS_GRADO AS AG INNER JOIN (SELECT GRADO, TURNO, MAX(AÑO) AS AÑO FROM ALUMNOS_GRADO GROUP BY GRADO, TURNO) AS AG1 ON (AG1.GRADO = AG.GRADO AND AG1.TURNO = AG.TURNO AND AG1.AÑO = AG.AÑO)) AS AG2 ON (AG2.grado = G.GRADO AND AG2.TURNO = G.TURNO) LEFT JOIN (SELECT MG.GRADO, MG.TURNO, MG.AÑO, MG.DNI_MAESTRO_TIT, MG.DNI_MAESTRO_PAR FROM MAESTROS_GRADO AS MG INNER JOIN (SELECT GRADO, TURNO, MAX(AÑO) AS AÑO FROM MAESTROS_GRADO GROUP BY GRADO, TURNO) AS MG1 ON (MG1.GRADO = MG.GRADO AND MG1.TURNO = MG.TURNO AND MG1.AÑO = MG.AÑO)) AS MG2 ON (MG2.grado = G.GRADO AND MG2.TURNO = G.TURNO) WHERE G.GRADO = '" + grado + "' AND G.TURNO = '" + turno +"' AND AG2.AÑO = "+ año);			
 			
 			while (rs.next()) {
-				g = new Grado(rs.getString("GRADO"), rs.getString("TURNO"), rs.getInt("IND_EVALUACION"), rs.getBoolean("IND_BIM"), rs.getString("SALON"), rs.getInt("AÑO"), rs.getInt("COD_MAESTRO_TIT"),rs.getInt("COD_MAESTRO_PAR"));				
+				g = new Grado(rs.getString("GRADO"), rs.getString("TURNO"), rs.getInt("IND_EVALUACION"), rs.getBoolean("IND_BIM"), rs.getString("SALON"), rs.getInt("AÑO"), rs.getInt("DNI_MAESTRO_TIT"),rs.getInt("DNI_MAESTRO_PAR"));				
 			}
 			stmt.close();
 			Conexion.desconectar();
@@ -384,7 +384,7 @@ public static int getCurrentYear(Grado g) {
 	public static void UpdateMaestroGrado(String grado, String turno, int año, int titular, int paralelo) throws SQLException, Exception {
 		
 		Statement stmt = Conexion.conectar().createStatement();
-		stmt.executeUpdate("UPDATE MAESTROS_GRADO SET COD_MAESTRO_TIT = " + titular + ", COD_MAESTRO_PAR = " + paralelo + " WHERE GRADO = '" + grado + "' AND TURNO = '" + turno + "' AND AÑO =" + año);
+		stmt.executeUpdate("UPDATE MAESTROS_GRADO SET DNI_MAESTRO_TIT = " + titular + ", DNI_MAESTRO_PAR = " + paralelo + " WHERE GRADO = '" + grado + "' AND TURNO = '" + turno + "' AND AÑO =" + año);
 					
 		stmt.close();
 		Conexion.desconectar();		
@@ -398,10 +398,10 @@ public static int getCurrentYear(Grado g) {
 			
 			Statement stmt = Conexion.conectar().createStatement();
 					
-			ResultSet rs = stmt.executeQuery("SELECT COD_MAESTRO_TIT FROM MAESTROS_GRADO WHERE GRADO = '" + grado + "' AND TURNO = '" + turno + "' AND AÑO = " + año);	
+			ResultSet rs = stmt.executeQuery("SELECT DNI_MAESTRO_TIT FROM MAESTROS_GRADO WHERE GRADO = '" + grado + "' AND TURNO = '" + turno + "' AND AÑO = " + año);	
 			
 			while (rs.next()) {
-				maestro  = rs.getInt("COD_MAESTRO_TIT");				
+				maestro  = rs.getInt("DNI_MAESTRO_TIT");				
 			}
 			
 			stmt.close();
@@ -421,10 +421,10 @@ public static int getCurrentYear(Grado g) {
 			
 			Statement stmt = Conexion.conectar().createStatement();
 					
-			ResultSet rs = stmt.executeQuery("SELECT COD_MAESTRO_PAR FROM MAESTROS_GRADO WHERE GRADO = '" + grado + "' AND TURNO = '" + turno + "' AND AÑO = " + año);	
+			ResultSet rs = stmt.executeQuery("SELECT DNI_MAESTRO_PAR FROM MAESTROS_GRADO WHERE GRADO = '" + grado + "' AND TURNO = '" + turno + "' AND AÑO = " + año);	
 			
 			while (rs.next()) {
-				maestro  = rs.getInt("COD_MAESTRO_PAR");				
+				maestro  = rs.getInt("DNI_MAESTRO_PAR");				
 			}
 			stmt.close();
 			Conexion.desconectar();

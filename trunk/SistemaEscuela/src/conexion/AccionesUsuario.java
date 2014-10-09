@@ -16,10 +16,10 @@ public class AccionesUsuario {
 		
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT COD_MAEST FROM USUARIOS WHERE USUARIO = '" + usuario + "' AND CONTRASEÑA = '" + contraseña + "'");
+			ResultSet rs = stmt.executeQuery("SELECT DNI_MAESTRO FROM USUARIOS WHERE USUARIO = '" + usuario + "' AND CONTRASEÑA = '" + contraseña + "'");
 			
 			while (rs.next()) {
-				code = rs.getInt("COD_MAEST");
+				code = rs.getInt("DNI_MAESTRO");
 				if (code.equals(null)){
 					code = 0;
 				}
@@ -33,13 +33,13 @@ public class AccionesUsuario {
 		return code;
 	}
 	
-	public static boolean validarCuentaMaestro(int cod_maest) {
+	public static boolean validarCuentaMaestro(int dni) {
 		boolean b = false;
 		
 		try {
 			
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM SISTEMA_ALUMNADO.USUARIOS WHERE COD_MAEST = '" + cod_maest + "'");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM SISTEMA_ALUMNADO.USUARIOS WHERE DNI_MAESTRO = '" + dni + "'");
 			
 			while (rs.next()) {
 				b = true;
@@ -58,7 +58,7 @@ public class AccionesUsuario {
 		try {
 			
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM SISTEMA_ALUMNADO.USUARIOS WHERE COD_MAEST > 0");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM SISTEMA_ALUMNADO.USUARIOS WHERE DNI_MAESTRO > 0");
 			
 			while (rs.next()) {
 				i++;
@@ -93,11 +93,11 @@ public class AccionesUsuario {
 		Usuarios lista = new Usuarios();
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM USUARIOS WHERE COD_MAEST > 0");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM USUARIOS WHERE DNI_MAESTRO > 0");
 			Usuario tmp;
 			
 			while (rs.next()) {
-				tmp = new Usuario(rs.getString("usuario"), rs.getString("contraseña"), rs.getInt("cod_maest"));
+				tmp = new Usuario(rs.getString("usuario"), rs.getString("contraseña"), rs.getInt("DNI_MAESTRO"));
 				lista.agregarUsuario(tmp);
 			}
 			stmt.close();

@@ -57,7 +57,7 @@ import datos.Maestro;
 		
 		Maestro maestro = (Maestro) sesion.getAttribute("maestro");	
 		
-		sesion.setAttribute("sanciones_list", AccionesSancion.getAll(año, maestro.getCod_maest()));		
+		sesion.setAttribute("sanciones_list", AccionesSancion.getAll(año, maestro.getDni()));		
 						
 		response.sendRedirect("sanciones_list.jsp");
 		
