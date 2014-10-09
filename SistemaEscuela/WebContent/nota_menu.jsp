@@ -19,7 +19,7 @@
 		Maestro maestro = (Maestro)session.getAttribute("maestro");
 		String titulo = "Grados de " + maestro.getNombre() + " como titular";
 		
-		Grados grados = AccionesMaestro.getGradosTitular(maestro.getCod_maest());
+		Grados grados = AccionesMaestro.getGradosTitular(maestro.getDni());
 %>
 <center>
 <h1><%= titulo %></h1>	

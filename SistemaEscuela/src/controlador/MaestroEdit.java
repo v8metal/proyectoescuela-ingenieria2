@@ -40,9 +40,9 @@ public class MaestroEdit extends HttpServlet {
 			    
 			
 			//get the cod of the request
-			Integer codigo = null;
-			if(request.getParameter("codigo") != null)
-				codigo = Integer.valueOf(request.getParameter("codigo"));
+			Integer dni = null;
+			if(request.getParameter("dni") != null)
+				dni = Integer.valueOf(request.getParameter("dni"));
 			
 			//add / edit
 			if(accion.equals("alta")){
@@ -57,8 +57,8 @@ public class MaestroEdit extends HttpServlet {
 				
 				//get the maestro from simulated DB
 				Maestro maestro = new Maestro();
-				if(codigo != null){
-					maestro = AccionesMaestro.getOne(codigo.intValue());
+				if(dni != null){
+					maestro = AccionesMaestro.getOne(dni.intValue());
 				}
 								
 				//set the maestro object in the request
@@ -75,7 +75,7 @@ public class MaestroEdit extends HttpServlet {
 			} else if(accion.equals("baja")){
 				
 				//delete maestro by cod
-				AccionesMaestro.deleteOne(codigo.intValue());
+				AccionesMaestro.deleteOne(dni.intValue());
 				
 				//redirect to the maestro list servlet 
 				response.sendRedirect(request.getContextPath() + "/maestroList");
@@ -104,32 +104,34 @@ public class MaestroEdit extends HttpServlet {
 		try {
 			
 			//get maestro properties from the request
-			int codigo = 0;
+			
+			int dni = 0;
 			
 			try {
 				
-				codigo = Integer.parseInt(request.getParameter("codigo"));
+				dni = Integer.parseInt(request.getParameter("dni"));
 				
 				} catch(NumberFormatException e){
 					e.printStackTrace();
 				}
 			
+			
 			String apellido = request.getParameter("apellido");
 			String nombre = request.getParameter("nombre");
-			int dni = Integer.parseInt(request.getParameter("dni"));
+			//int dni = Integer.parseInt(request.getParameter("dni"));
 			String domicilio = request.getParameter("domicilio");
 			String telefono = request.getParameter("telefono");
 					
 			//create a new maestro object
-			Maestro maestro = new Maestro(codigo, apellido, nombre, dni, domicilio, telefono);
+			Maestro maestro = new Maestro(dni, apellido, nombre, dni, domicilio, telefono);
 						
 			//save the maestro to DB
-			if (codigo == 0){
+			if (dni == 0){
 				//insert
 				AccionesMaestro.insertOne(maestro);
 			} else {
 				//update
-				AccionesMaestro.updateOne(codigo, apellido, nombre, dni, domicilio, telefono);
+				AccionesMaestro.updateOne(dni, apellido, nombre, domicilio, telefono);
 			}
 			
 			//redirect to the maestro list servlet 

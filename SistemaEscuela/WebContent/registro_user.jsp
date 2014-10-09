@@ -36,9 +36,9 @@
 		<td><select name="maestro">
 			<%
 			for (Maestro m : maestros.getLista()){
-				if (!AccionesUsuario.validarCuentaMaestro(m.getCod_maest())) {
+				if (!AccionesUsuario.validarCuentaMaestro(m.getDni())) {
 			%>	 			  
-		   		<option value="<%=m.getCod_maest()%>"><%= m.getApellido() + ", "  + m.getNombre() %> </option>   			  
+		   		<option value="<%=m.getDni()%>"><%= m.getApellido() + ", "  + m.getNombre() %> </option>   			  
 		   	<%
 				}
 			}			

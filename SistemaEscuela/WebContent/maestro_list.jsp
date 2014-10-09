@@ -31,8 +31,7 @@
 			}
 %>
 <table border="2" bordercolor="666">
-	<tr>
-		<th>Código</th>
+	<tr>		
 		<th>Apellido y Nombres</th>
 		<th>D.N.I.</th>
 		<th>Domicilio</th>
@@ -44,14 +43,13 @@
 	Maestros maestros = (Maestros)session.getAttribute("maestros");
 	for (Maestro m : maestros.getLista()) {
 %>
-	<tr>
-		<td><center><%= m.getCod_maest() %></center></td>
+	<tr>		
 		<td><%= m.getApellido() + ", " + m.getNombre() %></td>
 		<td><%= m.getDni() %></td>
 		<td><%= m.getDomicilio() %></td>
 		<td><%= m.getTelefono() %></td>
-		<td><a href="maestroEdit?do=modificar&codigo=<%= m.getCod_maest() %>">Modificar</a></td>
-		<td><a name="delete-link" href="maestroEdit?do=baja&codigo=<%= m.getCod_maest() %>" >Borrar</a></td>
+		<td><a href="maestroEdit?do=modificar&dni=<%= m.getDni() %>">Modificar</a></td>
+		<td><a name="delete-link" href="maestroEdit?do=baja&dni=<%= m.getDni() %>" >Borrar</a></td>
 	</tr>
 <%
 	}

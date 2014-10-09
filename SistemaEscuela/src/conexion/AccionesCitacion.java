@@ -16,11 +16,11 @@ public class AccionesCitacion {
 		return r;
 	}
 	
-	public static Citaciones getAll(int año, int cod_maestro) {
+	public static Citaciones getAll(int año, int DNI_MAESTRO) {
 		Citaciones lista = new Citaciones();
 		try {
 			Statement stmt = Conexion.conectar().createStatement();			
-			ResultSet rs = stmt.executeQuery("SELECT C.DNI, AG.GRADO, AG.TURNO, C.FECHA, C.HORA, C.DESCRIP FROM CITACIONES AS C INNER JOIN ALUMNOS_GRADO AS AG ON (AG.DNI = C.DNI AND AG.AÑO = " + año + ") INNER JOIN MAESTROS_GRADO AS MG ON (MG.GRADO = AG.GRADO AND MG.TURNO = AG.TURNO) WHERE C.FECHA BETWEEN '" + año + "-01-01' AND '"+ año + "-12-31' AND (MG.COD_MAESTRO_TIT = " + cod_maestro + " OR MG.COD_MAESTRO_PAR = " + cod_maestro + ")" );			
+			ResultSet rs = stmt.executeQuery("SELECT C.DNI, AG.GRADO, AG.TURNO, C.FECHA, C.HORA, C.DESCRIP FROM CITACIONES AS C INNER JOIN ALUMNOS_GRADO AS AG ON (AG.DNI = C.DNI AND AG.AÑO = " + año + ") INNER JOIN MAESTROS_GRADO AS MG ON (MG.GRADO = AG.GRADO AND MG.TURNO = AG.TURNO) WHERE C.FECHA BETWEEN '" + año + "-01-01' AND '"+ año + "-12-31' AND (MG.DNI_MAESTRO_TIT = " + DNI_MAESTRO + " OR MG.DNI_MAESTRO_PAR = " + DNI_MAESTRO + ")" );			
 			Citacion tmp;
 			
 			while (rs.next()) {
@@ -52,15 +52,15 @@ public class AccionesCitacion {
 		return citacion;
 	}
 	
-	public static Alumnos getAlumnos(int año, int cod_maestro) {
+	public static Alumnos getAlumnos(int año, int DNI_MAESTRO) {
 		Alumnos lista = new Alumnos();
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT A.* FROM MAESTROS_GRADO MG INNER JOIN ALUMNOS_GRADO AG ON(AG.GRADO = MG.GRADO AND AG.TURNO = MG.TURNO) INNER JOIN ALUMNOS A ON (A.DNI = AG.DNI) WHERE AG.AÑO = " + año + " AND (MG.COD_MAESTRO_TIT = " + cod_maestro + " OR MG.COD_MAESTRO_PAR = " + cod_maestro+ ")");
+			ResultSet rs = stmt.executeQuery("SELECT A.* FROM MAESTROS_GRADO MG INNER JOIN ALUMNOS_GRADO AG ON(AG.GRADO = MG.GRADO AND AG.TURNO = MG.TURNO) INNER JOIN ALUMNOS A ON (A.DNI = AG.DNI) WHERE AG.AÑO = " + año + " AND (MG.DNI_MAESTRO_TIT = " + DNI_MAESTRO + " OR MG.DNI_MAESTRO_PAR = " + DNI_MAESTRO+ ")");
 			Alumno tmp;
 			
 			while (rs.next()) {
-				tmp = new Alumno(rs.getInt("dni"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("domicilio"), rs.getString("telefono"), rs.getString("fecha_nac"), rs.getString("lugar_nac"), rs.getInt("dni_tutor"), rs.getInt("dni_madre"), rs.getInt("cant_her_may"), rs.getInt("cant_her_men"), rs.getString("iglesia"), rs.getString("esc"), rs.getBoolean("ind_grupo"), rs.getBoolean("ind_subsidio"));
+				tmp = new Alumno(rs.getInt("dni"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("domicilio"), rs.getString("telefono"), rs.getString("fecha_nac"), rs.getString("lugar_nac"), rs.getInt("dni_tutor"), rs.getInt("dni_madre"), rs.getInt("cant_her_may"), rs.getInt("cant_her_men"), rs.getString("iglesia"), rs.getString("esc"), false, false);
 				lista.agregarAlumno(tmp);
 			}
 			stmt.close();
@@ -81,8 +81,8 @@ public class AccionesCitacion {
 		
 	public static void insertOne(Citacion c) throws SQLException, Exception {
 		Statement stmt = Conexion.conectar().createStatement();		
-		//System.out.println("INSERT INTO CITACIONES VALUES ("+ c.getDni()+ /*"," + c.getCod_maestro() + */ ",'" + c.getFecha() + "','" + c.getHora() + "','" + c.getDescripcion() + "'," + boolToByte(c.getAbierto()) + ")");
-		stmt.executeUpdate("INSERT INTO CITACIONES VALUES ("+ c.getDni()+ /*"," + c.getCod_maestro() + */ ",'" + c.getFecha() + "','" + c.getHora() + "','" + c.getDescripcion() + "')");
+		//System.out.println("INSERT INTO CITACIONES VALUES ("+ c.getDni()+ /*"," + c.getDNI_MAESTRO() + */ ",'" + c.getFecha() + "','" + c.getHora() + "','" + c.getDescripcion() + "'," + boolToByte(c.getAbierto()) + ")");
+		stmt.executeUpdate("INSERT INTO CITACIONES VALUES ("+ c.getDni()+ /*"," + c.getDNI_MAESTRO() + */ ",'" + c.getFecha() + "','" + c.getHora() + "','" + c.getDescripcion() + "')");
 		
 		stmt.close();
 		Conexion.desconectar();

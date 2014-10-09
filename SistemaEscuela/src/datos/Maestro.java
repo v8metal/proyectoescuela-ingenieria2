@@ -2,10 +2,9 @@ package datos;
 
 public class Maestro {
 	
-	private int cod_maest;
-	private String apellido;
-	private String nombre;
 	private int dni;
+	private String apellido;
+	private String nombre;	
 	private String domicilio;
 	private String telefono;
 	
@@ -15,29 +14,20 @@ public class Maestro {
 
 	public Maestro(int cod_maest, String apellido, String nombre, int dni,
 			String domicilio, String telefono) {
-		super();
-		this.cod_maest = cod_maest;
+		this.dni = dni;		
 		this.apellido = apellido;
-		this.nombre = nombre;
-		this.dni = dni;
+		this.nombre = nombre;		
 		this.domicilio = domicilio;
 		this.telefono = telefono;
 	}
 
-	public int getCod_maest() {
-		return cod_maest;
-	}
 
-	public void setCod_maest(int cod_maest) {
-		this.cod_maest = cod_maest;
+	public int getDni() {
+		return dni;
 	}
 
 	public String getApellido() {
 		return apellido;
-	}
-
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
 	}
 
 	public String getNombre() {
@@ -48,31 +38,15 @@ public class Maestro {
 		this.nombre = nombre;
 	}
 
-	public int getDni() {
-		return dni;
-	}
-
-	public void setDni(int dni) {
-		this.dni = dni;
-	}
-
 	public String getDomicilio() {
 		return domicilio;
 	}
 
-	public void setDomicilio(String domicilio) {
-		this.domicilio = domicilio;
-	}
 
 	public String getTelefono() {
 		return telefono;
 	}
 
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
-
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -85,9 +59,7 @@ public class Maestro {
 			if (other.apellido != null)
 				return false;
 		} else if (!apellido.equals(other.apellido))
-			return false;
-		if (cod_maest != other.cod_maest)
-			return false;
+			return false;		
 		if (dni != other.dni)
 			return false;
 		if (domicilio == null) {
@@ -110,8 +82,8 @@ public class Maestro {
 
 	@Override
 	public String toString() {
-		return "Maestro [cod_maest=" + cod_maest + ", apellido=" + apellido
-				+ ", nombre=" + nombre + ", dni=" + dni + ", domicilio="
+		return "Maestro [dni=" + dni + ", apellido=" + apellido
+				+ ", nombre=" + nombre + ", domicilio="
 				+ domicilio + ", telefono=" + telefono + "]";
 	}
 

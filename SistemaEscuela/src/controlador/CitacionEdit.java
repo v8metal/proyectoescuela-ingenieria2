@@ -46,7 +46,7 @@ import datos.Maestro;
 	    	
 			int año = Integer.valueOf((String) sesion.getAttribute("año_sys"));
 			
-			sesion.setAttribute("alumnos_citacion", AccionesCitacion.getAlumnos(año, maestro.getCod_maest()));			
+			sesion.setAttribute("alumnos_citacion", AccionesCitacion.getAlumnos(año, maestro.getDni()));			
 			
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/citacion_edit.jsp");
 			
