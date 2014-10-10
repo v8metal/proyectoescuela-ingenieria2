@@ -22,7 +22,7 @@
 %>
 <h1>Registro de nuevo usuario</h1>
 <%
-	Maestros maestros = AccionesMaestro.getAll();
+	Maestros maestros = AccionesMaestro.getAllActivos();
 	if ((maestros.getLista().size() - AccionesUsuario.maestrosConCuenta()) == 0) {
 %>
 <p>Todos los maestros están registrados</p>
