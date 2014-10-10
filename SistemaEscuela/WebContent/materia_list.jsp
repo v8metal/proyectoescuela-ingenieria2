@@ -20,6 +20,7 @@
 		}
 		
 		Materias materias = (Materias)session.getAttribute("materias");
+		Materias materiasbaja = (Materias)session.getAttribute("materiasbaja");		
 %>
 <center>
 <h1>Listado de Materias</h1>
@@ -60,13 +61,12 @@ if (materias.getLista().isEmpty()){ %>
   	<a href="materiaEdit?do=alta">Agregar materia</a>
 <br>
 <br>
+<%}
+if(materiasbaja.getLista().size() != 0){%>
+ <a href="materiaList?from=materia_inactiva_list">Listado de materias inactivas</a> 
+<br>
 <br>
 <%}%>
-  	<a href="materiaList?from=materia_list">Listado de materias inactivas</a>
-<br>
-<br>
-<br>
-<br>
 <form action="menu_admin.jsp" method="post">
 <input type="submit" value="Volver al menú">
 </form>

@@ -49,7 +49,7 @@ import conexion.AccionesMaestro;
 			//add / edit						
 			if(accion.equals("alta")){
 								
-				Maestros maestros = AccionesMaestro.getAll();												
+				Maestros maestros = AccionesMaestro.getAllActivos();												
 				request.setAttribute("maestros_list",  maestros);
 				
 				Grados grados = AccionesGrado.getPendingAll();												

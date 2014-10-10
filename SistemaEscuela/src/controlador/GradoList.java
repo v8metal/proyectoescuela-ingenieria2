@@ -37,10 +37,12 @@ import datos.Grados;
 			sesion.removeAttribute("grado_edit");
 		}
 		
-		Grados grados = AccionesGrado.getAll();
+		Grados grados = new Grados();
+		grados= AccionesGrado.getAll();
 					
 		sesion.setAttribute("grados_alta",  grados);
 		
+		grados = new Grados();		
 		grados = AccionesGrado.getPendingAll();
 		
 		sesion.setAttribute("grados_pendientes",  grados);

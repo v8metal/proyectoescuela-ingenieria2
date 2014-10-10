@@ -13,6 +13,9 @@
 <%
 	if (session.getAttribute("login") != null) {
 		
+		Maestros maestros = (Maestros)session.getAttribute("maestros");
+		Maestros maestros_inac = (Maestros)session.getAttribute("maestros_inac");
+		
 		String error = "";
 		if (session.getAttribute("error") != null) {
 			error = (String)session.getAttribute("error");
@@ -20,7 +23,7 @@
 		}
 %>
 <center>
-<h1>Listado de Maestros</h1>
+<h1>Listado de Maestros Activos</h1>
 <% 
 			if (!error.equals("")) {
 %>
@@ -29,7 +32,13 @@
 <br>
 <%
 			}
+
+if (maestros.getLista().size() == 0){
 %>
+	<a href="maestroEdit?accion=alta">No hay maestros activos, agregar maestro</a>
+	
+<%}else{%>
+
 <table border="2" bordercolor="666">
 	<tr>		
 		<th>Apellido y Nombres</th>
@@ -38,9 +47,9 @@
 		<th>Teléfono</th>
 		<th>&nbsp;</th>
 		<th>&nbsp;</th>
+		<th>&nbsp;</th>
 	</tr>
-<% 
-	Maestros maestros = (Maestros)session.getAttribute("maestros");
+<%
 	for (Maestro m : maestros.getLista()) {
 %>
 	<tr>		
@@ -48,16 +57,23 @@
 		<td><%= m.getDni() %></td>
 		<td><%= m.getDomicilio() %></td>
 		<td><%= m.getTelefono() %></td>
-		<td><a href="maestroEdit?do=modificar&dni=<%= m.getDni() %>">Modificar</a></td>
-		<td><a name="delete-link" href="maestroEdit?do=baja&dni=<%= m.getDni() %>" >Borrar</a></td>
+		<td><a href="maestroEdit?accion=modificar&dni=<%= m.getDni() %>">Modificar</a></td>
+		<td><a href="maestroEdit?accion=baja&dni=<%= m.getDni() %>">Baja de Maestro</a></td>
+		<td><a name="delete-link" href="maestroEdit?accion=borrar&dni=<%= m.getDni() %>" >Borrar</a></td>
 	</tr>
 <%
 	}
  %>
 </table>
 <br>
-  	<a href="maestroEdit?do=alta">Agregar maestro</a>
+  	<a href="maestroEdit?accion=alta">Agregar maestro</a>
+ <%}%>
 <br>
+<%if(maestros_inac.getLista().size() != 0){%>
+<br>
+  	<a href="MaestroList?tipo=inactivos">Listado de maestros inactivos</a>
+<br>
+<%}%>
 <br>
 <form action="menu_admin.jsp" method="post">
 <input type="submit" value="Volver al menú">

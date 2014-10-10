@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesMateria;
+import datos.CustomException;
 import datos.Materia;
 
 /**
@@ -33,21 +34,17 @@ public class MateriaEdit extends HttpServlet {
 		//get session of the request
 		HttpSession sesion = request.getSession();
 		
+		String mat = "";
+		
 		try {
 			
-			//get parameter do of the request
-			String accion = request.getParameter("do");
+			String accion = request.getParameter("do");			    
 			
-			//System.out.println("doGet accion = " + accion);
-			    
+			//String mat = null;
 			
-			//get the cod of the request
-			String mat = null;
-			if(request.getParameter("materia") != null)
+			if(request.getParameter("materia") != null){
 				mat = (String) request.getParameter("materia");
-			
-			//add / edit
-			//switch (accion){
+			}	
 			
 			switch (accion){
 			
@@ -63,12 +60,7 @@ public class MateriaEdit extends HttpServlet {
 			
 			case "baja":
 				
-								
-				//int i = AccionesMateria.bajaLogicaMateria(mat); 
-				
 				AccionesMateria.bajaLogicaMateria(mat);
-				
-				//i != 0 --agregar captura de excepcion cuando hay notas cargadas
 				
 				response.sendRedirect(request.getContextPath() + "/materiaList?from=materiaEdit");
 				
@@ -77,10 +69,8 @@ public class MateriaEdit extends HttpServlet {
 			case "activar":
 				
 				
-				AccionesMateria.activarMateria(mat); //agregar captura de excepcion cuando hay notas cargadas
-				
-				//request.setAttribute("from", "materia_list");
-				
+				AccionesMateria.activarMateria(mat);
+								
 				response.sendRedirect(request.getContextPath() + "/materiaList?from=materia_list");
 				
 				break;
@@ -89,8 +79,9 @@ public class MateriaEdit extends HttpServlet {
 			case "borrar":
 				
 				AccionesMateria.deleteOne(mat);				
-				//redirect to the materia list servlet 
+				 
 				response.sendRedirect(request.getContextPath() + "/materiaList?from=materiaEdit");
+				
 				break;
 				
 			}			
@@ -98,8 +89,14 @@ public class MateriaEdit extends HttpServlet {
 		
 		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
 			e.printStackTrace();
-			sesion.setAttribute("error", "Error al intentar borrar materia. Ya esta asignada a un curso");
+			sesion.setAttribute("error", "Error al intentar borrar " + mat + ". Ya esta asignada a un curso");
 			response.sendRedirect("materiaList?from=materiaEdit");
+			
+		} catch (CustomException e) {
+			e.printStackTrace();
+			sesion.setAttribute("error", "Error en la baja " + mat + ". Ya está asignada a un grado para el año en curso");
+			response.sendRedirect("materiaList?from=materia_list"	);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			sesion.setAttribute("error", e);
@@ -118,35 +115,18 @@ public class MateriaEdit extends HttpServlet {
 		
 		try {
 			
-			String accion = "";
-			String materia = "";
-			//int estado;
+			String accion = (String) request.getParameter("accion");
 			
-			accion = (String) request.getParameter("accion");
-			
-			materia = request.getParameter("materia");
-			
-			//System.out.println("materia= " + materia);
-			//System.out.println("accion Do Post= " + accion);
-			
-			//if (request.getParameter("estado") != null){
-			//	int estado = Integer.parseInt(request.getParameter("estado"));
-			
-			//create a new materia object
-			Materia m = new Materia(materia, 1);	
+			String materia = request.getParameter("materia");
 						
-			//save the materia to DB
+			Materia m = new Materia(materia, 1);	
+
 			if (accion.equals("alta")){
-				//insert
-				AccionesMateria.insertOne(m);
+					AccionesMateria.insertOne(m);
 			} 
-			//else {
-				//update
-			//	AccionesMateria.updateOne(materia, estado);
-			//}
+				
+			response.sendRedirect(request.getContextPath() + "/materiaList?from=materiaEdit");
 			
-			//redirect to the materia list servlet 
-			response.sendRedirect(request.getContextPath() + "/materiaList?from=materiaEdit");	
 		} catch (Exception e) {
 			sesion.setAttribute("error", e);
 			response.sendRedirect("materia_edit.jsp");

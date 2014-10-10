@@ -478,6 +478,9 @@ public static int getCurrentYear(Grado g) {
 	public static void asignarMateria(String grado, String turno, int año, String materia) throws SQLException, Exception {
 	
 		Statement stmt = Conexion.conectar().createStatement();
+		
+		System.out.println("INSERT INTO MATERIAS_GRADO VALUES ('" + grado + "','"+ turno + "'," + año + ", '" + materia + "')");
+		
 		stmt.executeUpdate("INSERT INTO MATERIAS_GRADO VALUES ('" + grado + "','"+ turno + "'," + año + ", '" + materia + "')");
 		
 		stmt.close();

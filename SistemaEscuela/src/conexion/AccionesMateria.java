@@ -1,8 +1,9 @@
 package conexion;
 
 import java.sql.*;
-import datos.*;
+import java.util.Calendar;
 
+import datos.*;
 import conexion.Conexion;
 
 public class AccionesMateria {
@@ -89,18 +90,23 @@ public class AccionesMateria {
 			
 			Statement stmt = Conexion.conectar().createStatement();
 		
-			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS COUNT FROM NOTAS WHERE MATERIA = '" + materia + "'");
+			Calendar c = Calendar.getInstance();
 			
 			int i = 0;
 			
+			ResultSet rs = stmt.executeQuery("SELECT COUNT(1) AS COUNT FROM MATERIAS_GRADO WHERE MATERIA = '" + materia + "' AND AÑO = " + Integer.toString(c.get(Calendar.YEAR)) );
+			
 			while (rs.next()) {
-				i = rs.getInt("COUNT");				
+				i = rs.getInt("COUNT");					
 			}
 			
 			if (i == 0){
 			
 				stmt.executeUpdate("UPDATE MATERIAS SET IND_ESTADO = 0  WHERE MATERIA = '" + materia + "'");
 			
+			}else{
+				
+				throw new CustomException();
 			}
 			
 			stmt.close();

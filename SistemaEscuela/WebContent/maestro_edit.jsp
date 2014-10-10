@@ -7,27 +7,34 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style/style.css" />
-<title>Editar Maestro</title>
+<title>Maestro</title>
 </head>
 <body>
 <%
 	if (session.getAttribute("login") != null) {
-%>
-<h1>Editar Maestro</h1>
-<%	String error = "";
-	if (session.getAttribute("error") != null) {
-		error = (String)session.getAttribute("error");
-		session.setAttribute("error", "");
-	}
- %>
-  <%
+		
+		Maestro maestro = (Maestro)request.getAttribute("maestro");
+		
+		String error = "";
+		
+		if (session.getAttribute("error") != null) {
+			error = (String)session.getAttribute("error");
+			session.setAttribute("error", "");
+		} 
   	//get the maestro object from the request
-	Maestro maestro = (Maestro)request.getAttribute("maestro");
-  %>
+  	
+  		String accion = "alta";
+  	
+  		if (maestro != null){
+  			accion = "modificar";
+%>
+<h1>Edición de Maestro</h1>
+	   <%}else{%>
+<h1>Alta de Maestro</h1>  	 
+ 		<%}%>
   <body>
   <% 
-			if (!error.equals("")) {
-%>
+			if (!error.equals("")) { %>
 <%=error%>
 <br>
 <br>
@@ -35,6 +42,7 @@
 			}
 %> 
 	<form id="edit-form" action="maestroEdit" method="post">
+	<input type="hidden" name="accion" value="<%=accion%>">
 		<table border="1">
 			<tbody>
 				<tr>
@@ -63,8 +71,8 @@
 		</table>		
 	</form> 
  <br>
-<form action="menu_admin.jsp" method="post">
-<input type="submit" value="Volver al menú">
+<form action="maestroList" method="post">
+<input type="submit" value="Volver al Listado">
 </form>
  <%
 	} else {

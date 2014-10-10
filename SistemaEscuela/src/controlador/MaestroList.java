@@ -1,6 +1,7 @@
 package controlador;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,10 +38,31 @@ public class MaestroList extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sesion = request.getSession();
 		
-		Maestros maestro_list = AccionesMaestro.getAll();
-		sesion.setAttribute("maestros", maestro_list);
+		String tipo = "";
 		
-		response.sendRedirect("maestro_list.jsp");
+		if (request.getParameter("tipo") != null) {
+			tipo = request.getParameter("tipo");
+		}
+		
+		//System.out.println("tipo = " + tipo);
+		
+		Maestros maestro_list = null;
+		Maestros maestro_list_inac = AccionesMaestro.getAllInactivos();
+		
+		if(tipo.equals("inactivos")){			
+			maestro_list = AccionesMaestro.getAllInactivos();
+			sesion.setAttribute("maestros", maestro_list);			
+			response.sendRedirect("maestro_inactivo_list.jsp");
+		}else{
+			
+			maestro_list = AccionesMaestro.getAllActivos();
+						
+			sesion.setAttribute("maestros", maestro_list);
+			sesion.setAttribute("maestros_inac", maestro_list_inac);			
+			response.sendRedirect("maestro_list.jsp");
+		}
+		
+		
 	}
 
 }

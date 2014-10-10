@@ -65,7 +65,7 @@ import conexion.AccionesMaestro;
 				
 					if(accion.equals("alta")){
 						
-						sesion.setAttribute("maestros_ent_alta", AccionesMaestro.getAll());
+						sesion.setAttribute("maestros_ent_alta", AccionesMaestro.getAllActivos());
 						
 						//forward to the jsp file to display the grado list
 						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/entrevista_edit.jsp");
