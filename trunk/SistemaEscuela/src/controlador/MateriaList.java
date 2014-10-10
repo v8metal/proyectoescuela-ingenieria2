@@ -42,12 +42,16 @@ public class MateriaList extends HttpServlet {
 				from = 	"otro_lado";
 			}
 			
-			if (from.equals("menu_admin") || from.equals("materiaEdit") || from.equals("materia_list")){
+			if (from.equals("menu_admin") || from.equals("materiaEdit") || from.equals("materia_list") || from.equals("materia_inactiva_list")){
 				
-				if(from.equals("menu_admin") || from.equals("materiaEdit")){
+				if(from.equals("menu_admin") || from.equals("materiaEdit") || from.equals("materia_list")){
 				
 					Materias materia_list = AccionesMateria.getAllActivas();
 					sesion.setAttribute("materias", materia_list);
+					
+					materia_list = AccionesMateria.getAllInactivas();
+					sesion.setAttribute("materiasbaja", materia_list);
+					
 					response.sendRedirect("materia_list.jsp");
 					
 				}else{

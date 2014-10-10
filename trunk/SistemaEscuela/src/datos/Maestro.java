@@ -1,4 +1,4 @@
-package datos;
+	package datos;
 
 public class Maestro {
 	
@@ -7,18 +7,19 @@ public class Maestro {
 	private String nombre;	
 	private String domicilio;
 	private String telefono;
+	private int estado;
 	
 	public Maestro() {
 		
 	}
 
-	public Maestro(int cod_maest, String apellido, String nombre, int dni,
-			String domicilio, String telefono) {
+	public Maestro(int dni, String nombre, String apellido, String domicilio, String telefono, int estado) {
 		this.dni = dni;		
 		this.apellido = apellido;
 		this.nombre = nombre;		
 		this.domicilio = domicilio;
 		this.telefono = telefono;
+		this.estado = estado;
 	}
 
 
@@ -46,7 +47,15 @@ public class Maestro {
 	public String getTelefono() {
 		return telefono;
 	}
+	
+	public int getEstado() {
+		return estado;
+	}
 
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
+	
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;

@@ -32,7 +32,7 @@ import datos.MateriasGrado;
 	/* (non-Java-doc)
 	 * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession sesion = request.getSession();
 		
@@ -139,6 +139,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		
 		String materia = (String) request.getParameter("materia_asignar");
 		
+		System.out.println("materia_asignar= " + materia);		
 		
 		try {
 			

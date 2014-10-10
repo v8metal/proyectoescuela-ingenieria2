@@ -31,11 +31,49 @@ public class AccionesMaestro {
 		Maestros lista = new Maestros();
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM MAESTROS ORDER BY APELLIDO");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM MAESTROS WHERE ESTADO = 1 ORDER BY APELLIDO");
 			Maestro tmp;
 			
 			while (rs.next()) {
-				tmp = new Maestro(rs.getInt("DNI"), rs.getString("apellido"), rs.getString("nombre"), rs.getInt("dni"), rs.getString("domicilio"), rs.getString("telefono"));
+				tmp = new Maestro(rs.getInt("DNI"), rs.getString("apellido"), rs.getString("nombre"), rs.getString("domicilio"), rs.getString("telefono"),rs.getInt("ESTADO"));
+				lista.agregarMaestro(tmp);
+			}
+			stmt.close();
+			Conexion.desconectar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lista;
+	}
+	
+	public static Maestros getAllActivos() {
+		Maestros lista = new Maestros();
+		try {
+			Statement stmt = Conexion.conectar().createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM MAESTROS WHERE DNI <> 1 AND ESTADO = 1 ORDER BY APELLIDO");
+			Maestro tmp;
+			
+			while (rs.next()) {
+				tmp = new Maestro(rs.getInt("DNI"), rs.getString("apellido"), rs.getString("nombre"), rs.getString("domicilio"), rs.getString("telefono"),rs.getInt("ESTADO"));
+				lista.agregarMaestro(tmp);
+			}
+			stmt.close();
+			Conexion.desconectar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lista;
+	}
+
+	public static Maestros getAllInactivos() {
+		Maestros lista = new Maestros();
+		try {
+			Statement stmt = Conexion.conectar().createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM MAESTROS WHERE ESTADO = 0 ORDER BY APELLIDO");
+			Maestro tmp;
+			
+			while (rs.next()) {
+				tmp = new Maestro(rs.getInt("DNI"), rs.getString("apellido"), rs.getString("nombre"), rs.getString("domicilio"), rs.getString("telefono"),rs.getInt("ESTADO"));
 				lista.agregarMaestro(tmp);
 			}
 			stmt.close();
@@ -54,7 +92,7 @@ public class AccionesMaestro {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM MAESTROS WHERE DNI = '" + dni + "'");
 			
 			while (rs.next()) {
-				m = new Maestro(rs.getInt("DNI"), rs.getString("apellido"), rs.getString("nombre"), rs.getInt("dni"), rs.getString("domicilio"), rs.getString("telefono"));
+				m = new Maestro(rs.getInt("DNI"), rs.getString("apellido"), rs.getString("nombre"), rs.getString("domicilio"), rs.getString("telefono"),rs.getInt("ESTADO"));
 				//i = 1;
 			}
 			
@@ -67,11 +105,13 @@ public class AccionesMaestro {
 		return m;
 	}
 	
-	public static int deleteOne(int dni) throws SQLException, Exception {			//lanzo la excepcion asi puedo mostrar el error
+	public static int deleteOne(int dni) throws SQLException, Exception {//lanzo la excepcion asi puedo mostrar el error
 		int i = 0;
 //		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			i = stmt.executeUpdate("DELETE FROM MAESTROS WHERE DNI = '" + dni + "'");
+			i = stmt.executeUpdate("DELETE FROM USUARIOS WHERE DNI_MAESTRO = '" + dni + "'"); //borra el usuarios, si se genero alguno para acceder
+			
+			i = stmt.executeUpdate("DELETE FROM MAESTROS WHERE DNI = '" + dni + "'"); //borra el maestro
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
@@ -80,15 +120,40 @@ public class AccionesMaestro {
 	
 	public static void insertOne(Maestro m) throws SQLException, Exception {
 			Statement stmt = Conexion.conectar().createStatement();
-			stmt.executeUpdate("INSERT INTO MAESTROS VALUES ('" + m.getDni() + "','" + m.getApellido() + "','" + m.getNombre() + "','" + m.getDni() + "','" + m.getDomicilio() + "','" + m.getTelefono() + "', " + 0 + ")");
+			stmt.executeUpdate("INSERT INTO MAESTROS VALUES (" + m.getDni() + ",'" + m.getApellido() + "','" + m.getNombre() + "' , '"+ m.getDomicilio() + "','" + m.getTelefono() + "', " + 1 + ")");
 			
 			stmt.close();
 			Conexion.desconectar();
 	}
 	
-	public static void updateOne(int dni, String apellido, String nombre, String domicilio, String telefono) throws SQLException, Exception {
+	public static void updateOne(Maestro m) throws SQLException, Exception, CustomException {
+			
 			Statement stmt = Conexion.conectar().createStatement();
-			stmt.executeUpdate("UPDATE MAESTROS SET APELLIDO = '" + apellido + "', NOMBRE = '" + nombre + "', DNI = '" + dni + "', DOMICILIO = '" + domicilio + "', TELEFONO = '" + telefono + "' WHERE DNI = '" + dni + "'");
+			
+			int i = 0;
+			
+			if (m.getEstado() == 0){ //verifica si el maestro está asignado a algun grado para el año actual
+				
+				Calendar c = Calendar.getInstance();
+												
+				ResultSet rs = stmt.executeQuery("SELECT COUNT(1) AS COUNT FROM MAESTROS_GRADO WHERE DNI_MAESTRO_TIT = " + m.getDni() + " OR DNI_MAESTRO_PAR= " + m.getDni() + " AND AÑO= " + Integer.toString(c.get(Calendar.YEAR)) );
+				
+				while (rs.next()) {
+					i = rs.getInt("COUNT");					
+				}
+				
+				
+				if (i == 0 ){ //si no está asignado se puede dar de baja lógicamente
+					stmt.executeUpdate("UPDATE MAESTROS SET ESTADO = " + m.getEstado() + " WHERE DNI = '" + m.getDni() + "'");
+				}else{
+					throw new CustomException();
+				}
+					
+										
+			}else{ //acá se entra si no se le cambia el estado al maestro
+				
+				stmt.executeUpdate("UPDATE MAESTROS SET ESTADO = "+ m.getEstado() + ", APELLIDO = '" + m.getApellido() + "', NOMBRE = '" + m.getNombre() + "', DOMICILIO = '" + m.getDomicilio() + "', TELEFONO = '" + m.getTelefono() + "' WHERE DNI = '" + m.getDni() + "'");
+			}
 			
 			stmt.close();
 			Conexion.desconectar();
@@ -129,7 +194,7 @@ public class AccionesMaestro {
 		//	Maestros ma = AccionesMaestro.getAll();
 		//	ma.listar();
 			
-			Maestros maestros = AccionesMaestro.getAll();
+			Maestros maestros = AccionesMaestro.getAllActivos();
 			
 			maestros.listar();
 			

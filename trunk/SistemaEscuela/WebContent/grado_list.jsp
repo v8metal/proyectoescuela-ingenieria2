@@ -43,7 +43,11 @@ if (grados.getListaTM().isEmpty()){
 		for (Grado g : grados.getListaTM()) {
 			
 			Maestro m1 = AccionesMaestro.getOne(g.getMaestrotit());
-			Maestro m2 = AccionesMaestro.getOne(g.getMaestropar());		
+			Maestro m2 = AccionesMaestro.getOne(g.getMaestropar());
+			
+			int dni1=1;			
+			if(m1 != null) dni1=m1.getDni();
+				
 			String ciclo = "No hay alumnos cargados";
 			int año = AccionesGrado.getCurrentYear(g);
 			
@@ -71,11 +75,14 @@ if (grados.getListaTM().isEmpty()){
 		<%if(g.getGrado().equals("Sala 4") || g.getGrado().equals("Sala 5")){%>
 		<td>Grado con áreas de trabajo</td>
 		<%}else{
-		 if (año == 0 || m1 == null){%>		
-		<td>No se pueden asignar materias</td>
-		<%}else{%>
+		 if (año == 0){%>		
+		<td>Debe asignar alumnos primero</td>
+		<%}else{ 
+		if(dni1 == 1){%>
+		<td>Debe asignar Maestro titular primero</td>
+		<%}else{%>		
 		<td><a href="MateriaGradoList?do=listar&grado_list=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>&grado_año=<%=año%>" >Ver Materias</a></td>
-		<%}}%>
+		<%}}}%>
 		<% if ((g.getGrado().equals("7mo") || año == 0) || m1 == null){%>
 		<td>No se puede promocionar</td>
 		<%}else{ %>
@@ -111,7 +118,11 @@ if (grados.getListaTT().isEmpty()){
 		for (Grado g : grados.getListaTT()) {
 			
 			Maestro m1 = AccionesMaestro.getOne(g.getMaestrotit());
-			Maestro m2 = AccionesMaestro.getOne(g.getMaestropar());		
+			Maestro m2 = AccionesMaestro.getOne(g.getMaestropar());
+			
+			int dni1=1;			
+			if(m1 != null) dni1=m1.getDni();
+				
 			String ciclo = "No hay alumnos cargados";
 			int año = AccionesGrado.getCurrentYear(g);
 			
@@ -139,11 +150,14 @@ if (grados.getListaTT().isEmpty()){
 		<%if(g.getGrado().equals("Sala 4") || g.getGrado().equals("Sala 5")){%>
 		<td>Grado con áreas de trabajo</td>
 		<%}else{
-		 if (año == 0 || m1 == null){%>		
-		<td>No se pueden asignar materias</td>
-		<%}else{%>
+		 if (año == 0){%>		
+		<td>Debe asignar alumnos primero</td>
+		<%}else{ 
+		if(dni1 == 1){%>
+		<td>Debe asignar Maestro titular primero</td>
+		<%}else{%>		
 		<td><a href="MateriaGradoList?do=listar&grado_list=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>&grado_año=<%=año%>" >Ver Materias</a></td>
-		<%}}%>
+		<%}}}%>
 		<% if ((g.getGrado().equals("7mo") || año == 0) || m1 == null){%>
 		<td>No se puede promocionar</td>
 		<%}else{ %>

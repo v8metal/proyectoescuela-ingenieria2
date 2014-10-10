@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import conexion.AccionesMaestro;
 import datos.Maestro;
+import datos.CustomException;
 
 /**
  * Servlet implementation class ServletModificarMaestro
@@ -33,59 +34,78 @@ public class MaestroEdit extends HttpServlet {
 		//get session of the request
 		HttpSession sesion = request.getSession();
 		
+		Maestro maestro = new Maestro();
+		
 		try {
 			
 			//get parameter do of the request
-			String accion = request.getParameter("do");
-			    
+			String accion = request.getParameter("accion");
 			
-			//get the cod of the request
 			Integer dni = null;
-			if(request.getParameter("dni") != null)
+			
+			if(request.getParameter("dni") != null){
 				dni = Integer.valueOf(request.getParameter("dni"));
+				maestro = AccionesMaestro.getOne(dni.intValue());				
+			}
 			
-			//add / edit
-			if(accion.equals("alta")){
+			//System.out.println("accion= " + accion + "dni= " + dni);
+			
+			switch(accion){
+			
+			case "alta":	
 				
-				//get the request dispatcher
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/maestro_edit.jsp");
-				
-				//forward to the jsp file to display the maestro list
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/maestro_edit.jsp");				
 				dispatcher.forward(request, response);	
-			
-			}  else if(accion.equals("modificar")){
 				
-				//get the maestro from simulated DB
-				Maestro maestro = new Maestro();
-				if(dni != null){
-					maestro = AccionesMaestro.getOne(dni.intValue());
-				}
+				break;
+			
+			case "baja":	
+				
+				maestro.setEstado(0);
+				
+				AccionesMaestro.updateOne(maestro);				
+				
+				response.sendRedirect(request.getContextPath() + "/maestroList");				
 								
-				//set the maestro object in the request
+				break;				
+			
+			case "activar":	
+				
+				maestro.setEstado(1);
+				
+				AccionesMaestro.updateOne(maestro);				
+				
+				response.sendRedirect(request.getContextPath() + "/maestroList?tipo=inactivos");
+				
+				break;
+				
+			case "modificar":
+
 				request.setAttribute("maestro", maestro);
 				
-				//get the request dispatcher
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/maestro_edit.jsp");
-				
-				//forward to the jsp file to display the maestro list
+				dispatcher = getServletContext().getRequestDispatcher("/maestro_edit.jsp");				
 				dispatcher.forward(request, response);	
 				
-			
-			//delete
-			} else if(accion.equals("baja")){
-				
-				//delete maestro by cod
-				AccionesMaestro.deleteOne(dni.intValue());
-				
-				//redirect to the maestro list servlet 
-				response.sendRedirect(request.getContextPath() + "/maestroList");
+				break;
 
-			} 
+			case "borrar":
+				
+				AccionesMaestro.deleteOne(dni.intValue());				
+				response.sendRedirect(request.getContextPath() + "/maestroList");
+				
+				break;
+
+			}		
+
 		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
 			e.printStackTrace();
-			sesion.setAttribute("error", "Error al intentar borrar maestro. Ya esta asignado a un curso");
+			sesion.setAttribute("error", "Error al intentar borrar" + maestro.getNombre() + " " + maestro.getApellido() + ". Ya esta asignado a un curso");
 			response.sendRedirect("maestroList");
-			
+		
+		} catch (CustomException e) {
+			e.printStackTrace();
+			sesion.setAttribute("error", "Error en la baja " + maestro.getNombre() + " " + maestro.getApellido() + ". Ya está asignado a un grado para el año en curso");
+			response.sendRedirect("maestroList");
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -105,33 +125,30 @@ public class MaestroEdit extends HttpServlet {
 			
 			//get maestro properties from the request
 			
-			int dni = 0;
+			String accion = request.getParameter("accion");			
+			String apellido = request.getParameter("apellido");			
+			String nombre = request.getParameter("nombre");			
+			int dni = Integer.parseInt((String) request.getParameter("dni"));			
+			String domicilio = request.getParameter("domicilio");			
+			String telefono = request.getParameter("telefono");			
 			
-			try {
+			Maestro maestro = new Maestro(dni, apellido, nombre, domicilio, telefono, 1);
+			
+			switch(accion){
+			
+			case "alta":
 				
-				dni = Integer.parseInt(request.getParameter("dni"));
+				//System.out.println("alta de maestro");
 				
-				} catch(NumberFormatException e){
-					e.printStackTrace();
-				}
-			
-			
-			String apellido = request.getParameter("apellido");
-			String nombre = request.getParameter("nombre");
-			//int dni = Integer.parseInt(request.getParameter("dni"));
-			String domicilio = request.getParameter("domicilio");
-			String telefono = request.getParameter("telefono");
-					
-			//create a new maestro object
-			Maestro maestro = new Maestro(dni, apellido, nombre, dni, domicilio, telefono);
-						
-			//save the maestro to DB
-			if (dni == 0){
-				//insert
 				AccionesMaestro.insertOne(maestro);
-			} else {
-				//update
-				AccionesMaestro.updateOne(dni, apellido, nombre, domicilio, telefono);
+				
+				break;
+			
+			case "modificar":
+				
+				AccionesMaestro.updateOne(maestro);
+				
+				break;
 			}
 			
 			//redirect to the maestro list servlet 
