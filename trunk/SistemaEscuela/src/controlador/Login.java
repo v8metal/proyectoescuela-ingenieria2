@@ -72,12 +72,22 @@ public class Login extends HttpServlet {
 					
 				} else if (dni > 0){
 					
-					sesion.setAttribute("login", usuario);			
-		//			sesion.setAttribute("cod_maest", cod_maest);
-					Maestro maestro = AccionesMaestro.getOne(dni);
-					sesion.setAttribute("maestro", maestro);
-					sesion.setAttribute("dni_maestro", dni);
-					response.sendRedirect("menu_user.jsp");
+					Maestro m = AccionesMaestro.getOne(dni);
+					
+					if (m.getEstado() == 0){
+						
+						sesion.setAttribute("error", "Error al loguearse, el usuario está inhabilitado");
+						response.sendRedirect("login.jsp"); 
+					
+					}else{
+					
+						sesion.setAttribute("login", usuario);			
+		//				sesion.setAttribute("cod_maest", cod_maest);
+						Maestro maestro = AccionesMaestro.getOne(dni);
+						sesion.setAttribute("maestro", maestro);
+						sesion.setAttribute("dni_maestro", dni);
+						response.sendRedirect("menu_user.jsp");
+					}
 					
 				} else {
 					sesion.setAttribute("error", "Error al loguearse, usuario y contraseña inválidos");
