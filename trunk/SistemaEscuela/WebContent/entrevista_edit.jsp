@@ -8,11 +8,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style/style.css" />
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/entrevista.js"></script>
 <title>Editar Entrevista</title>
 </head>
 <body>
 <%
 	if (session.getAttribute("login") != null) {
+		
 		if(!session.getAttribute("login").equals("admin")){
 			Entrevista entrevista = (Entrevista)session.getAttribute("entrevista");
 			%>
@@ -62,12 +65,14 @@
 				</script> 
 				<% 
 		}else{
+			
 			Entrevista entrevista = (Entrevista) session.getAttribute("entrevista_edit");
 		  	
 			String error = "";
 			
 			if (session.getAttribute("error") != null) {
-				error = (String)session.getAttribute("error");
+				//System.out.println("error != null");
+				error = (String) session.getAttribute("error");
 				System.out.println(error);
 				session.setAttribute("error", "");
 			}
@@ -96,7 +101,14 @@
 				//}
 			
 		    	dia_entrevista = Integer.valueOf((String)session.getAttribute("dia_sys"));
-		    	mes_entrevista = "0" + (String) session.getAttribute("mes_sys");
+		    	int mes= Integer.parseInt((String) session.getAttribute("mes_sys"));
+		    	if (mes < 10){
+		    		mes_entrevista = "0" + mes;	
+		    	}else{
+		    		mes_entrevista = "" + mes;
+		    	}
+		    		
+		    	//mes_entrevista = "0" + (String) session.getAttribute("mes_sys");
 		    	año_entrevista = Integer.valueOf((String)session.getAttribute("año_sys"));
 		  //Alta de entrevista  
 			}	
@@ -113,19 +125,20 @@
 		<%}else{%>
 		<input type="hidden" name="action" value="alta">
 		<%}%>
-		<table>
+		<input id="mesbase" type="hidden" value="<%=mes_entrevista%>">
+		<table id="TablaEntrevistas">
 			<tr>
 				<td>Fecha </td>
 				<td><select name="dia_entrevista">   
 					<%  
-					for (int i = 1; i <= 31; i++){			  	
+					for (int i = dia_entrevista; i <= 31; i++){			  	
 		 			%>
 					 	<option <%=dia_entrevista==i ? "selected" : ""%>><%=i%></option>		 	
 		   			<%
 					}	
 					%>
 		 			 </select>
-		  			 <select name="mes_entrevista">
+		  			 <select id="mes" name="mes_entrevista">
 		  			 <option value="01" <%=mes_entrevista.equals("01") ? "selected" : ""%>>Enero</option>
 					 <option value="02" <%=mes_entrevista.equals("02") ? "selected" : ""%>>Febrero</option>
 					 <option value="03" <%=mes_entrevista.equals("03") ? "selected" : ""%>>Marzo</option>
@@ -185,7 +198,7 @@
 				<%
 				for (Maestro m : maestros.getLista()){		 		
 		 		%>  			  
-		   			<option value="<%=m.getCod_maest()%>"><%=m.getNombre()+ " " + m.getApellido()%> </option>   			  
+		   			<option value="<%=m.getDni()%>"><%=m.getNombre()+ " " + m.getApellido()%> </option>   			  
 		   		 <%   			
 				}		
 				%>

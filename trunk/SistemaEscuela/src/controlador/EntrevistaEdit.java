@@ -30,14 +30,21 @@ import conexion.AccionesMaestro;
 	 * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		HttpSession sesion = request.getSession();
+		
 		if(sesion.getAttribute("login")!=null){
+			
 			if(!sesion.getAttribute("login").equals("admin")){
+				
 				String accion = request.getParameter("do");
 				String fecha = request.getParameter("fecha");
 				String hora = request.getParameter("hora");
+				
 				int cod_maest= (int)sesion.getAttribute("cod_maest");
+				
 				sesion.setAttribute("accion", accion);
+				
 				if(accion.equals("modificar")){
 					Entrevista e=null;
 					try {
@@ -62,7 +69,7 @@ import conexion.AccionesMaestro;
 					
 					//get parameter do of the request
 					String accion = request.getParameter("do");
-				
+					
 					if(accion.equals("alta")){
 						
 						sesion.setAttribute("maestros_ent_alta", AccionesMaestro.getAllActivos());
@@ -122,25 +129,34 @@ import conexion.AccionesMaestro;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession sesion = request.getSession();
+		
 		if(sesion.getAttribute("login")!=null){
+			
 			if(!sesion.getAttribute("login").equals("admin")){
-				String nombre_alum = request.getParameter("nombre_alum");
+				
+				String nombre_alum = request.getParameter("nombre_alum");				
 				String desc = request.getParameter("desc");
 				//String accion = (String)sesion.getAttribute("accion");
 				int cod_maest=(int)sesion.getAttribute("cod_maest");
 				Entrevista x = (Entrevista)sesion.getAttribute("entrevista");
 				Entrevista e = new Entrevista("","",cod_maest,nombre_alum,desc);
+				
 				try {
-					AccionesEntrevista.modificarEntrevista(e, x.getFecha(), x.getMaestro(), x.getHora());
+					AccionesEntrevista.modificarEntrevista(e, x.getFecha(), x.getdniMaestro(), x.getHora());
 					response.sendRedirect("EntrevistaList");
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 				
 			}else{
+				
 				String accion = request.getParameter("action");
 				
+				System.out.println("accion= " + accion);
+				
 				if(accion.equals("alta")){
+					
+					System.out.println("alta");
 				
 					String dia = (String) request.getParameter("dia_entrevista");					
 					String mes = (String) request.getParameter("mes_entrevista");			
@@ -177,7 +193,7 @@ import conexion.AccionesMaestro;
 					
 					try {
 						
-						AccionesEntrevista.updateOne(año +"-"+ mes +"-"+ dia, hora, et.getFecha(), et.getHora(), et.getMaestro());
+						AccionesEntrevista.updateOne(año +"-"+ mes +"-"+ dia, hora, et.getFecha(), et.getHora(), et.getdniMaestro());
 						
 						response.sendRedirect("EntrevistaList");
 					
