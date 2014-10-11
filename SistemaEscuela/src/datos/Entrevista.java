@@ -4,7 +4,7 @@ public class Entrevista {
 
 	private String fecha;
 	private String hora;
-	private int maestro;
+	private int dniMaestro;
 	private String nombre;
 	private String descripcion;	
 	
@@ -12,10 +12,10 @@ public class Entrevista {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Entrevista(String fecha, String hora, int maestro, String nombre, String descripcion) {
+	public Entrevista(String fecha, String hora, int dniMaestro, String nombre, String descripcion) {
 		this.fecha = fecha;
 		this.hora = hora;
-		this.maestro = maestro;
+		this.dniMaestro =dniMaestro;
 		this.nombre = nombre;
 		this.descripcion = descripcion;				
 	}
@@ -28,8 +28,8 @@ public class Entrevista {
 		return hora;
 	}
 	
-	public int getMaestro() {
-		return maestro;
+	public int getdniMaestro() {
+		return dniMaestro;
 	}
 	
 	public String getNombre() {
@@ -41,7 +41,7 @@ public class Entrevista {
 	}	
 	
 	public String toString() {
-		return fecha + " " + hora + " " +maestro + " " + nombre + " " + descripcion;
+		return fecha + " " + hora + " " + dniMaestro + " " + nombre + " " + descripcion;
 	}
 
 }

@@ -40,7 +40,7 @@ if (entrevistas.getLista().isEmpty()){
 	Maestro m = new Maestro();	
 	for (Entrevista e : entrevistas.getLista()) {
 		
-		m = AccionesMaestro.getOne(e.getMaestro());
+		m = AccionesMaestro.getOne(e.getdniMaestro());
 		
 		String fecha_entrevista = e.getFecha();		
 		String[] fecha_ent = fecha_entrevista.split ("-");
