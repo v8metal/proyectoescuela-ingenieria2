@@ -138,5 +138,57 @@ public class AccionesCuota {
 		
 		return i;
 	}
+	
+	//retorna el total de pagos (cuotas y planes de pagos) realizadas en una misma fecha
+	
+	public static double getPagosDia(String fecha) throws Exception{
+		
+		double d = 0;
+		
+		//System.out.println("fecha= " + fecha);
+		
+		Statement stm = Conexion.conectar().createStatement();	
+				
+		ResultSet rs = stm.executeQuery("SELECT IFNULL(SUM(PG.PAGO), 0) AS TOTAL FROM PAGOS_CUOTA PG WHERE PG.FECHA = '" + fecha + "' AND PG.PERIODO <> 13");
+						
+		while(rs.next()){
+			d = rs.getDouble("TOTAL");		
+		}
+		
+		rs = stm.executeQuery("SELECT IFNULL(SUM(PP.PAGO), 0) AS TOTAL FROM PLAN_PAGOS PP WHERE PP.FECHA_PAGO = '" + fecha + "'");
+		
+		while(rs.next()){
+			d = d + rs.getDouble("TOTAL");		
+		}
 			
+		stm.close();
+		Conexion.desconectar();
+		
+		return d;
+	}
+	
+	//retorna el total de pagos de inscripciones realizadas en una misma fecha
+	
+	public static double getInscripcionesDia(String fecha) throws Exception{
+		
+		double d = 0;
+		
+		//System.out.println("fecha= " + fecha);
+		
+		Statement stm = Conexion.conectar().createStatement();	
+		
+		//System.out.println("SELECT IFNULL(SUM(PG.PAGO), 0) AS TOTAL FROM pagos_cuota PG WHERE PG.fecha = " + fecha + " AND PG.PERIODO = 13");
+		
+		ResultSet rs = stm.executeQuery("SELECT IFNULL(SUM(PG.PAGO), 0) AS TOTAL FROM PAGOS_CUOTA PG WHERE PG.fecha = '" + fecha + "' AND PG.PERIODO = 13");
+						
+		while(rs.next()){
+			d = rs.getDouble("TOTAL");		
+		}
+			
+		stm.close();
+		Conexion.desconectar();
+		
+		return d;
+	}
+	
 }

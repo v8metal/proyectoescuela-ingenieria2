@@ -1,5 +1,6 @@
 <%@page import="datos.Alumno"%>
 <%@page import="datos.Alumnos"%>
+<%@page import="datos.Grados"%>
 <%@page import="conexion.AccionesAlumno"%>
 <%@page import="conexion.AccionesCuota"%>
 <%@page import="conexion.AccionesPlanPago"%>
@@ -14,6 +15,12 @@ if (session.getAttribute("login") != null) {
      String grado = (String) session.getAttribute("gradoCuota");
      String turno = (String) session.getAttribute("turnoCuota");	
      int año = (Integer) session.getAttribute("añoCuota");
+     
+	 //las utilizo si ya se había seleccionado un año en el menu de cobro
+	 session.setAttribute("añoMenuCuota", (Integer) session.getAttribute("añoPlan"));
+	 session.setAttribute("gradosMenuCuota", (Grados) session.getAttribute("gradosPlan"));
+	 //las utilizo si ya se había seleccionado un año en el menu de cobro
+
    
    %>			
 <head>
