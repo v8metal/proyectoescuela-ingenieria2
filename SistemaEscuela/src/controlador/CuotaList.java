@@ -74,6 +74,10 @@ public class CuotaList extends HttpServlet {
 				request.setAttribute("gradosCuota", grados);				
 				request.setAttribute("añoCuota", año);
 				
+				//sesion.setAttribute("gradosCuota", grados);				
+				//sesion.setAttribute("añoCuota", año);
+
+				
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/menu_cuotas.jsp");
 				dispatcher.forward(request, response);				
 				
@@ -193,6 +197,46 @@ public class CuotaList extends HttpServlet {
 			
 			
 			break;
+			
+			case "pagosDia":
+				
+				double d = 0.0;
+				
+				año = (Integer) sesion.getAttribute("añoPlan");
+				grados = (Grados) sesion.getAttribute("gradosPlan");
+				
+				int dia = Integer.parseInt(request.getParameter("dia_consulta"));
+				String mes_pago = (String) request.getParameter("mes_consulta"); 
+				
+				
+				request.setAttribute(("dia_consulta"), dia);
+				
+				
+				String relleno = "";
+				
+				
+				if (dia < 10){
+					relleno = "0";
+				}
+				
+				try {
+					
+					d = AccionesCuota.getPagosDia(año + "-" + mes_pago + "-" + relleno + dia);
+					request.setAttribute("totalcuotas", ""+d);
+					
+					d = AccionesCuota.getInscripcionesDia(año + "-" + mes_pago + "-" + relleno + dia);
+					request.setAttribute("totalinscripciones", ""+d);
+					
+					dispatcher = getServletContext().getRequestDispatcher("/pagos_dia.jsp");
+					dispatcher.forward(request, response);
+					
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+					
+				break;
+				
 			} //fin del case
 			
 		}else{
@@ -235,8 +279,8 @@ public class CuotaList extends HttpServlet {
 			sesion.removeAttribute("pagoEdit");
 			//pago edit
 						
-			año = Integer.parseInt(request.getParameter("año_cuotas"));			
-									
+			año = Integer.parseInt(request.getParameter("año_cuotas"));
+												
 			try {
 				
 				//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado
@@ -244,6 +288,7 @@ public class CuotaList extends HttpServlet {
 				
 				request.setAttribute("gradosCuota", grados);				
 				request.setAttribute("añoCuota", año);
+								
 				
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/menu_cuotas.jsp");
 				dispatcher.forward(request, response);				
