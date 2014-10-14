@@ -112,9 +112,11 @@ public class CuotaList extends HttpServlet {
 				try {
 					
 					//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado
-					Alumnos alumnos = AccionesAlumno.getAllByGradoTurnoYAño(grado,turno,año);
-					
+					Alumnos alumnos = AccionesAlumno.getAllByGradoTurnoYAño(grado,turno,año);					
 					sesion.setAttribute("alumnos_cuota", alumnos);					
+					
+					alumnos = AccionesAlumno.getAlumnosPlanPago(grado,turno,año);
+					sesion.setAttribute("alumnos_PlanPagos", alumnos);
 					
 				} catch (Exception e) {				
 					e.printStackTrace();
@@ -274,6 +276,7 @@ public class CuotaList extends HttpServlet {
 			sesion.removeAttribute("turnoCuota");	
 			//sesion.removeAttribute("añoCuota");
 			sesion.removeAttribute("alumnos_cuota");
+			sesion.removeAttribute("alumnos_PlanPagos");
 			
 			//pago edit
 			sesion.removeAttribute("pagoEdit");

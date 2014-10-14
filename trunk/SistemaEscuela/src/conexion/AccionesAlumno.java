@@ -340,6 +340,33 @@ public class AccionesAlumno {
 			Conexion.desconectar();
 	}
 	
+	//devuelve solo alumnos sin subsidio, para el alta de planes de pago
+	public static Alumnos getAlumnosPlanPago(String grado, String turno, int año) {
+		Alumnos lista = new Alumnos();
+		int i = 0;
+		
+		try {
+			Statement stmt = Conexion.conectar().createStatement();			
+			
+			ResultSet rs = stmt.executeQuery("SELECT A.DNI, A.NOMBRE, A.APELLIDO, A.DOMICILIO, A.TELEFONO, A.FECHA_NAC, A.LUGAR_NAC, A.DNI_TUTOR, A.DNI_MADRE, A.CANT_HER_MAY, A.CANT_HER_MEN, A.IGLESIA, A.ESC, ASUB.IND_GRUPO, ASUB.IND_SUBSIDIO, IFNULL(M.DNI,0) as MAESTRODNI FROM ALUMNOS A INNER JOIN ALUMNOS_GRADO AG ON AG.DNI = A.DNI AND AG.GRADO = '" + grado + "' AND AG.AÑO = " + año + " AND AG.TURNO = '" + turno + "' INNER JOIN ALUMNOS_SUBSIDIO ASUB ON ASUB.DNI = AG.DNI AND ASUB.AÑO = AG.AÑO LEFT JOIN MAESTROS M ON (M.DNI = A.DNI_TUTOR OR M.DNI = A.DNI_MADRE) ORDER BY A.APELLIDO");
+			Alumno tmp;
+			while (rs.next()) {
+				tmp = new Alumno(rs.getInt("dni"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("domicilio"), rs.getString("telefono"), rs.getString("fecha_nac"), rs.getString("lugar_nac"), rs.getInt("dni_tutor"), rs.getInt("dni_madre"), rs.getInt("cant_her_may"), rs.getInt("cant_her_men"), rs.getString("iglesia"), rs.getString("esc"), rs.getBoolean("ind_grupo"), rs.getBoolean("ind_subsidio"));
+				i = rs.getInt("MAESTRODNI");
+								
+				if (!(tmp.isInd_subsidio() || i == 0)){
+					lista.agregarAlumno(tmp);
+				}
+			}
+			stmt.close();
+			Conexion.desconectar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lista;
+	}
+	//devuelve solo alumnos sin subsidio, para el alta de planes de pago
+
 	public static void main(String[] args) {	// getAll(), getOne(), insertOne(), updateOne() y deleteOne()  probadas correctamente
 	
 		try {
