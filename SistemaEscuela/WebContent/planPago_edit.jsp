@@ -19,7 +19,7 @@
  if (session.getAttribute("login") != null) {
 	 
  	PlanPago plan = (PlanPago) request.getAttribute("PlanPago"); 	
- 	Alumnos alumnos = (Alumnos) session.getAttribute("alumnos_cuota");
+ 	Alumnos alumnos = (Alumnos) session.getAttribute("alumnos_PlanPagos");
  	int año = (Integer) session.getAttribute("añoPlan");
  	int dni = (Integer) session.getAttribute("dni");
  	int mes = (Integer) session.getAttribute("mes");
@@ -104,7 +104,14 @@ if (plan != null){
 <h2><%= "Nuevo Plan Pagos"%></h2>
 
 <%} 	
-   	%>
+
+if (alumnos.getLista().size() == 0){%>
+
+<a> No hay alumnos en condiciones de planes de pago</a>
+<br>
+
+<%}else{%>
+ 
 	<form action="PlanPagoList" method="get">
 	<%if (plan != null) { %>
 	<input name=accion type=hidden value ="modificarPlanPago">
@@ -156,10 +163,14 @@ if (plan != null){
 			<td> Alumno </td>		
 			<td>			
 			<select name="dni">
-	      	<%for (Alumno a1 : alumnos.getLista()) { %>	            
+	      	<%for (Alumno a1 : alumnos.getLista()) { 
+	      		
+	      		if(!AccionesAlumno.getTipoCobro(a1.getDni(), año).equals("SUBSIDIO")){%>
+	      			            
 	            <option value="<%=a1.getDni() %>"><%= a1.getNombre() + " "+ a1.getApellido() %></option>            
 	          
-	      	<%}%>	      	
+	      	<%	}
+	      	}%>	      	
 	     	</select>
 	     	<td>
 	    </tr>
@@ -288,6 +299,7 @@ if (plan != null){
 </tr>
 </table>	
 </form>
+<%}%>
 <%}%>
 <br>
 <form action="CuotaList">
