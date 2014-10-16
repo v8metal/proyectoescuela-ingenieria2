@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
+<link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 <%
 	if (session.getAttribute("login") != null) {
 		String titulo = (String)session.getAttribute("titulo");
@@ -25,7 +25,7 @@
 <%
 		} else {
 %>
-<table border="2" bordercolor="666">
+<table class="table table-hover table-bordered">
 	<tr>
 		<th>Nº</th>
 		<th>Maestro</th>

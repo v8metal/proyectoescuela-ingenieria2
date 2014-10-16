@@ -8,11 +8,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0"> 
 <title>Listado de Grados</title>
+<link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 </head>
 <body>
+<div class="container">
+<div class="page-header">  
+	<h1>Listado de Grados Turno Mañana</h1>
+  </div>  
+  
 <%
 	if (session.getAttribute("login") != null) {	
 		 
@@ -20,13 +25,15 @@
 		Grados gradosp = (Grados)session.getAttribute("grados_pendientes");
 		session.removeAttribute("grado_edit");
 %>
-<h1>Listado de Grados Turno Mañana</h1>
 <%   
 if (grados.getListaTM().isEmpty()){
 %>
-<h2>No hay grados para el turno Mañana</h2>
+  <div class="page-header">  
+	<h2>No hay grados para el turno Mañana</h2>
+  </div>
+
 <%}else{%>
-<table border="2" bordercolor="666">
+<table class="table table-hover table-bordered">
 	<tr>
 		<th>Grado</th>				
 		<th>Tipo de evaluación</th>
@@ -95,13 +102,17 @@ if (grados.getListaTM().isEmpty()){
 %>
 </table>
 <br>
-<h1>Listado de Grados Turno Tarde</h1>
+<div class="page-header">  
+	<h1>Listado de Grados Turno Tarde</h1>
+  </div>
 <%   
 if (grados.getListaTT().isEmpty()){
 %>
-<h2>No hay grados para el turno tarde</h2>
+  <div class="page-header">  
+	<h2>No hay grados para el turno tarde</h2>
+  </div>
 <%}else{%>
-<table border="2" bordercolor="666">
+<table class="table table-hover table-bordered">
 	<tr>
 		<th>Grado</th>				
 		<th>Tipo de evaluación</th>
@@ -177,13 +188,16 @@ if (grados.getListaTT().isEmpty()){
 <%}%>
 <br>
 <br>
+<div class="form-group">
 <form action="menu_admin.jsp" method="post">
-<input type="submit" value="Volver al menú">
+<button type="submit" class="btn btn-primary"  value="Volver al menú">Volver al menú</button>
 </form>
+</div>
 <%
 	} else {
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 </html>
