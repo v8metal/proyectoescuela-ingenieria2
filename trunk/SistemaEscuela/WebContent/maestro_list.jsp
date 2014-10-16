@@ -5,11 +5,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
-<title>Listado de Maestros</title>
+<meta name="viewport" content="width=device-width; initial-scale=1.0"> 
+<title>Listado de maestros</title>
+<link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 </head>
 <body>
+
+<div class="container">
+  
+  <div class="page-header">  
+	<h1>Listado de Maestros Activos</h1>
+  </div>
 <%
 	if (session.getAttribute("login") != null) {
 		
@@ -21,10 +27,7 @@
 			error = (String)session.getAttribute("error");
 			session.setAttribute("error", "");
 		}
-%>
-<center>
-<h1>Listado de Maestros Activos</h1>
-<% 
+ 
 			if (!error.equals("")) {
 %>
 <%=error%>
@@ -39,7 +42,7 @@ if (maestros.getLista().size() == 0){
 	
 <%}else{%>
 
-<table border="2" bordercolor="666">
+<table class="table table-hover table-bordered">
 	<tr>		
 		<th>Apellido y Nombres</th>
 		<th>D.N.I.</th>
@@ -56,17 +59,18 @@ if (maestros.getLista().size() == 0){
 		<td><%= m.getApellido() + ", " + m.getNombre() %></td>
 		<td><%= m.getDni() %></td>
 		<td><%= m.getDomicilio() %></td>
-		<td><%= m.getTelefono() %></td>
-		<td><a href="maestroEdit?accion=modificar&dni=<%= m.getDni() %>">Modificar</a></td>
-		<td><a href="maestroEdit?accion=baja&dni=<%= m.getDni() %>">Baja de Maestro</a></td>
-		<td><a name="delete-link" href="maestroEdit?accion=borrar&dni=<%= m.getDni() %>" >Borrar</a></td>
+		<td><%= m.getTelefono() %></td>		
+		<td><a href="maestroEdit?accion=modificar&dni=<%= m.getDni() %>">Modificar Maestro</a></td>		
+		<td><a href="maestroEdit?accion=baja&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea dar de baja?');">Baja de Maestro</a></td>		
+		<td><a href="maestroEdit?accion=borrar&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea borrar?');">Borrar Maestro</a></td>		
 	</tr>
 <%
 	}
  %>
 </table>
 <br>
-  	<a href="maestroEdit?accion=alta">Agregar maestro</a>
+    <a href="maestroEdit?accion=alta"> Agregar Maestro</a>
+  	
  <%}%>
 <br>
 <%if(maestros_inac.getLista().size() != 0){%>
@@ -75,14 +79,16 @@ if (maestros.getLista().size() == 0){
 <br>
 <%}%>
 <br>
+<div class="form-group">
 <form action="menu_admin.jsp" method="post">
-<input type="submit" value="Volver al menú">
+<button type="submit" class="btn btn-primary"  value="Volver al menú">Volver al menú</button>
 </form>
-</center>
+</div>
 <%
 	} else {
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 </html>

@@ -39,9 +39,9 @@ import datos.Entrevistas;
 			
 		Entrevistas entrevistas=null;
 		if(!sesion.getAttribute("login").equals("admin")){
-			int cod_maest = (int)sesion.getAttribute("cod_maest");
+			int dni_maestro = (int)sesion.getAttribute("dni_maestro");
 			try {
-				entrevistas = AccionesEntrevista.getAllEntrevistas_Maestro(cod_maest);
+				entrevistas = AccionesEntrevista.getAllEntrevistas_Maestro(dni_maestro);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

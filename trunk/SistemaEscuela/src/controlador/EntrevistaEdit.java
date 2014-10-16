@@ -41,14 +41,14 @@ import conexion.AccionesMaestro;
 				String fecha = request.getParameter("fecha");
 				String hora = request.getParameter("hora");
 				
-				int cod_maest= (int)sesion.getAttribute("cod_maest");
+				int dni_maestro= (int)sesion.getAttribute("dni_maestro");
 				
 				sesion.setAttribute("accion", accion);
 				
 				if(accion.equals("modificar")){
 					Entrevista e=null;
 					try {
-						e = AccionesEntrevista.getOneEntrevista(fecha, hora, cod_maest);
+						e = AccionesEntrevista.getOneEntrevista(fecha, hora, dni_maestro);
 						sesion.setAttribute("entrevista", e);
 						response.sendRedirect("entrevista_edit.jsp");
 						
@@ -58,7 +58,7 @@ import conexion.AccionesMaestro;
 						
 				}else if(accion.equals("borrar")){
 					try {
-						AccionesEntrevista.borrarEntrevista(fecha, cod_maest, hora);
+						AccionesEntrevista.borrarEntrevista(fecha, dni_maestro, hora);
 						response.sendRedirect("EntrevistaList");
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -137,9 +137,9 @@ import conexion.AccionesMaestro;
 				String nombre_alum = request.getParameter("nombre_alum");				
 				String desc = request.getParameter("desc");
 				//String accion = (String)sesion.getAttribute("accion");
-				int cod_maest=(int)sesion.getAttribute("cod_maest");
+				int dni_maestro=(int)sesion.getAttribute("dni_maestro");
 				Entrevista x = (Entrevista)sesion.getAttribute("entrevista");
-				Entrevista e = new Entrevista("","",cod_maest,nombre_alum,desc);
+				Entrevista e = new Entrevista("","",dni_maestro,nombre_alum,desc);
 				
 				try {
 					AccionesEntrevista.modificarEntrevista(e, x.getFecha(), x.getdniMaestro(), x.getHora());

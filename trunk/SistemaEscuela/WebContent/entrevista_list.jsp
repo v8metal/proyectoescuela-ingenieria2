@@ -7,16 +7,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
-<%
-	if (session.getAttribute("login") != null) {
-		
-%>
-<title>Listado de Entrevistas</title>
+<meta name="viewport" content="width=device-width; initial-scale=1.0"> 
+<title>Listado de Entevistas</title>
+<link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 </head>
 <body>
+<div class="container">
+  
+	<div class="page-header">  
+	
+
 <%
+
+if (session.getAttribute("login") != null) {
+	
 session.removeAttribute("entrevista_edit");
 session.removeAttribute("maestros_ent_alta");
 Entrevistas entrevistas = (Entrevistas)session.getAttribute("entrevistas");
@@ -26,7 +30,7 @@ if (entrevistas.getLista().isEmpty()){
 <h1>No hay entrevistas cargadas</h1>
 <%}else{%> 
 <h1>Listado de Entrevistas</h1>
-<table border="2" bordercolor="666">
+<table class="table table-hover table-bordered">
 	<tr>
 		<th>Fecha</th>
 		<th>Hora</th>
@@ -54,31 +58,35 @@ if (entrevistas.getLista().isEmpty()){
 		<td><%= m.getNombre() + " " + m.getApellido() %></td>
 		<td><%= e.getNombre() %></td>	
 		<td><%= e.getDescripcion() %></td>		
-		<td><a href="EntrevistaEdit?do=modificar&fecha=<%=e.getFecha()%>&nombre=<%=e.getNombre()%>&hora=<%=e.getHora()%>">Modificar</a></td>
-		<td><a href="EntrevistaEdit?do=borrar&fecha=<%=e.getFecha()%>&nombre=<%=e.getNombre()%>&hora=<%=e.getHora()%>">Borrar</a></td>				
+		<td><a href="EntrevistaEdit?do=modificar&fecha=<%=e.getFecha()%>&nombre=<%=e.getNombre()%>&hora=<%=e.getHora()%>">Modificar</a></td>		
+		<td><a href="EntrevistaEdit?do=borrar&fecha=<%=e.getFecha()%>&nombre=<%=e.getNombre()%>&hora=<%=e.getHora()%>"  onclick="return confirm('Esta seguro que desea borrar la entrevista?');">Borrar</a></td>				
 	</tr>
 <%
 	}
  %>
 </table>
+</div>
 <%}
 if(session.getAttribute("login").equals("admin")){
 	%>
 	<br>
-	<a href="EntrevistaEdit?do=alta">Agregar Entrevista</a>
+	<a href="EntrevistaEdit?do=alta">Agregar Entrevista</a>	
 	<br>
 	<br>
+	<div class="form-group">
 	<form action="menu_admin.jsp" method="post">
-	<input type="submit" value="Volver al Menú Principal">
+	<button type="submit" class="btn btn-primary"  value="Volver al Menú Principal">Volver al menú</button>
 	</form>
+	</div>
 	<%
 }else{
 	%>
 	<br>
 	<br>
+	<div class="form-group">
 	<form action="menu_user.jsp" method="post">
-	<input type="submit" value="Volver al Menú Principal">
-	</form>
+	<button type="submit" class="btn btn-primary"  value="Volver al Menú Principal">Volver al menú</button>
+	</form>	
 	<%
 }
 %>
@@ -89,5 +97,6 @@ if(session.getAttribute("login").equals("admin")){
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 </html>

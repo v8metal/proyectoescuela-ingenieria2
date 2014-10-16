@@ -6,13 +6,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
-<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="js/entrevista.js"></script>
-<title>Editar Entrevista</title>
+<meta name="viewport" content="width=device-width; initial-scale=1.0"> 
+<title>Entrevistas</title>
+<link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 </head>
 <body>
+<div class="container">
 <%
 	if (session.getAttribute("login") != null) {
 		
@@ -20,35 +19,55 @@
 			Entrevista entrevista = (Entrevista)session.getAttribute("entrevista");
 			%>
 			 <center>
-			    <h1>Edición de Datos</h1>
+			  <div class="page-header">  
+				  <h1>Edición de Datos</h1>
+			  </div>
+			  
+			  <div class="form-group">
+			   			
 			  <form action="EntrevistaEdit" method="post" id="formEditar" onsubmit="return validarEditar()">
-			    <table>
-			     <tr>
-			       <th>NOMBRE DEL ALUMNO</th>
-			       <td><input type="text" name="nombre_alum" value="<%=entrevista.getNombre()%>"></td>
-			     </tr>
-			     <tr>
-			       <th>DESCRIPCIÓN</th>
-			       <td><textarea name="desc" cols="40" rows="4"><%=entrevista.getDescripcion() %></textarea></td>
-			     </tr>
-			     <tr>
-			       <td></td>
-			       <td><input type="submit" value="Cerrar Entrevista"></td>
-			     </tr>
-			    </table>
-			  </form>
-			  <br>
-			  <br>
-			  <form action="menu_admin.jsp" method="get">
-			  	<input type="submit" value="Volver al Menú Principal">
-			  </form>
-			  <br>
-			  <br>
-			  <form action="CerrarSesion" method="get">
-			  	<input type="submit" value="Cerrar Sesión">
-			  </form>
-			  </center>
 			    
+			    <table class="table table-hover table-bordered"> 
+			        
+			    <tr>
+				    <td><label for="input">Nombre del Alumno</label></td>
+         			<td><input type="text" class="form-control" name="nombre_alum" placeholder="Nombre" value="<%=entrevista.getNombre()%>"></td>
+         		</tr>
+         		
+			   	<tr>
+				    <td><label for="input">Descripción</label></td>
+         			<td><textarea class="form-control" cols="40" rows="4" name="desc" placeholder="Descripción"><%=entrevista.getDescripcion() %></textarea></td>
+         		</tr>		    
+			    			    
+			    </table>
+			    
+			    <center>
+			    <button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');">Guardar</button>
+				<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave">Cancelar</button>
+				</center>
+			  
+			  </form>
+			  
+			  </div>
+			  
+			  <br>
+			  <br>		  
+			  
+			  <div class="form-group">
+				<form action="menu_user.jsp" method="get">
+				<button type="submit" class="btn btn-primary"  value="Volver al Menú Principal">Volver al Menú Principal</button>
+				</form>
+			  </div>
+
+			  <br>
+			  <br>
+			  
+			  <div class="form-group">
+				<form action="CerrarSesion" method="get">
+				<button type="submit" class="btn btn-primary"  value="Cerrar Sesión">Cerrar Sesión</button>
+				</form>
+			  </div>			  
+			  </center>			    
 			   <script type="text/javascript">
 			 var form = document.getElementById("formEditar");
 			 function validarEditar(){
@@ -113,23 +132,32 @@
 		  //Alta de entrevista  
 			}	
 		  %>
-		<%if(entrevista != null){%>
-		<center><h1>MODIFICACION DE ENTREVISTA</h1></center>
+		<%if(entrevista != null){%>		
+		<div class="page-header">  
+			<h1>Modificación de Entrevista</h1>
+		</div>
 		<h2><%="Entrevista para " + entrevista.getNombre()%></h2>
 		<%}else{%>
-		<center><h1>ALTA DE ENTREVISTA</h1></center>
+		<div class="page-header">  
+			<h1>Alta de Entrevista</h1>
+		</div>
 		<%}%>
+		
+		<div class="form-group">
+		
 		<form action="EntrevistaEdit" method="post">
 		<%if(entrevista != null){%>
 		<input type="hidden" name="action" value="modificar">
 		<%}else{%>
 		<input type="hidden" name="action" value="alta">
 		<%}%>
+		
 		<input id="mesbase" type="hidden" value="<%=mes_entrevista%>">
-		<table id="TablaEntrevistas">
+				
+		<table id="TablaEntrevistas" class="table table-hover table-bordered">
 			<tr>
 				<td>Fecha </td>
-				<td><select name="dia_entrevista">   
+				<td><select name="dia_entrevista" class="form-control" >   
 					<%  
 					for (int i = dia_entrevista; i <= 31; i++){			  	
 		 			%>
@@ -138,7 +166,7 @@
 					}	
 					%>
 		 			 </select>
-		  			 <select id="mes" name="mes_entrevista">
+		  			 <select id="mes" name="mes_entrevista" class="form-control">
 		  			 <option value="01" <%=mes_entrevista.equals("01") ? "selected" : ""%>>Enero</option>
 					 <option value="02" <%=mes_entrevista.equals("02") ? "selected" : ""%>>Febrero</option>
 					 <option value="03" <%=mes_entrevista.equals("03") ? "selected" : ""%>>Marzo</option>
@@ -153,7 +181,7 @@
 					 <option value="12" <%=mes_entrevista.equals("12") ? "selected" : ""%>>Diciembre</option>	   			 		
 		 			 </select>
 		<%if(entrevista != null){%>
-					 <select name="año_entrevista">
+					 <select name="año_entrevista" class="form-control">
 					<%
 					for (int i = 1900; i < 2090; i++){
 		 			 %>
@@ -167,7 +195,7 @@
 		  	<tr>
 				<td>Hora</td>
 				<td>
-				<select name="hora_entrevista">
+				<select name="hora_entrevista" class="form-control">
 					 <option value="08:00:00" <%=entrevista!=null && entrevista.getHora().equals("08:00:00") ? "selected" : ""%>>08:00</option>
 		  			 <option value="08:30:00" <%=entrevista!=null && entrevista.getHora().equals("08:30:00") ? "selected" : ""%>>08:30</option>
 		  			 <option value="09:00:00" <%=entrevista!=null && entrevista.getHora().equals("09:00:00") ? "selected" : ""%>>09:00</option>
@@ -194,7 +222,7 @@
 		<%if(entrevista == null){%>
 			<tr>
 				<td>Maestro</td>
-				<td><select name="maestro_entrevista">		
+				<td><select name="maestro_entrevista" class="form-control" >		
 				<%
 				for (Maestro m : maestros.getLista()){		 		
 		 		%>  			  
@@ -206,28 +234,43 @@
 			</tr>	
 			<tr>
 				<td>Nombre</td>
-				<td><input type="text" name="nombre_entrevista" value="<%=entrevista!=null? entrevista.getNombre() : ""%>"></td>
+				<td><input class="form-control" type="text" name="nombre_entrevista" value="<%=entrevista!=null? entrevista.getNombre() : ""%>"></td>
 			</tr>
 		<%}%>
 		</table>
 		<br>
-		<input type="submit" value="Guardar">
-		<input type="reset" value="Cancelar">
+				<%
+		String mensaje= "return confirm('Esta seguro que desea realizar el alta?');"; 
+		  
+		if (entrevista != null){
+			
+			mensaje = "return confirm('Esta seguro que desea modificar?');"; 
+		}
+		 
+		%>
+		<center>
+		<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="<%=mensaje%>">Guardar</button>
+		<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave">Cancelar</button>
+		</center>		
 		</form>
+		</div>		
 		<br>
 		<%if (!error.equals("")) {%>
 		<%=error%>
 		<br>
 		<br>
-		<%}%>
-		<form action="menu_admin.jsp" method="post">
-		<input type="submit" value="Volver al Menú Principal">
+		<%}%>		
+		<div class="form-group">
+		<form action="EntrevistaList" method="post">
+		<button type="submit" class="btn btn-primary"  value="Volver al Listado">Volver al Listado</button>
 		</form>
+		</div>
 		<% 
 		}
 	} else {
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 </html>
