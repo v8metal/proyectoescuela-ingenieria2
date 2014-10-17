@@ -7,8 +7,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0">
+<link rel="stylesheet" href="style/bootstrap.min.css">
+
 <%
 if (session.getAttribute("login") != null) {
 	
@@ -19,20 +20,24 @@ if (session.getAttribute("login") != null) {
 <title>Listado de Precios - Año <%=año%></title>
 </head>
 <body>
+<div class="container">
 <center>
-  <h1>Precios de Cuotas - <%=año%></h1>  
+	<div class="page-header">  	  
+		<h1>Precios de Cuotas - <%=año%></h1>		
+    </div>    
 <% if (preciosMes == null || (preciosMes.getPrecios().size() == 0)){ %>
 <a href="PrecioEdit?accion=altaMes">No hay precios asignados, dar de alta</a>
 <%}else{%>
-  <table border="2">
+  <table class="table table-hover">
           <tr>
-            <th>AÑO</th>
-            <th>MES</th>
-            <th>PRECIO REGULAR</th>
-            <th>PRECIO DE GRUPO</th>
-            <th>PRECIO DE HIJOS</th>
-            <th>RECARGO</th>
-
+            <td>AÑO</td>
+            <td>MES</td>
+            <td>PRECIO REGULAR</td>
+            <td>PRECIO DE GRUPO</td>
+            <td>PRECIO DE HIJOS</td>
+            <td>RECARGO</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>     
           </tr>
           <%
           	for(PrecioMes precioM: preciosMes.getPrecios()){
@@ -67,7 +72,7 @@ if (session.getAttribute("login") != null) {
             	  <td><%=precioM.getHijos() %></td>
             	  <td><%=precioM.getRecargo() %></td>
             	  <td><a href="PrecioEdit?accion=modificarMes&&año=<%=precioM.getAño()%>&&mes=<%=precioM.getMes()%>">Modificar</a></td>
-            	  <td><a href="PrecioEdit?accion=bajaMes&&año=<%=precioM.getAño() %>&&mes=<%=precioM.getMes() %>">Borrar</a>
+            	  <td><a href="PrecioEdit?accion=bajaMes&&año=<%=precioM.getAño() %>&&mes=<%=precioM.getMes() %>" onclick="return confirm('Esta seguro que desea borrar?');">Borrar</a>
             	</tr>
             	<% 
             }
@@ -80,17 +85,20 @@ if (session.getAttribute("login") != null) {
  	<%}%> 	
  
 <%}%> 
-
-	<h1>Precios de Inscripciones - <%=año%></h1>
+	<div class="page-header">  	  
+		<h1>Precios de Inscripciones - <%=año%></h1>		
+    </div>   	
 <% if (preciosInscrip == null || (preciosInscrip.getPrecios().size() == 0)){ %>
 	<a href="PrecioEdit?accion=altaInscrip">No hay precios asignados, dar de alta</a>
 <%}else{%>  
-  <table border="2">
+  <table class="table table-hover">
           <tr>
-            <th>AÑO</th>
-            <th>FECHA MAXIMA</th>
-            <th>PRECIO</th>
-            <th>RECARGO</th>            
+            <td>AÑO</td>
+            <td>FECHA MAXIMA</td>
+            <td>PRECIO</td>
+            <td>RECARGO</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>            
           </tr>
           <%
           	for(PrecioInscrip precioI: preciosInscrip.getPrecios()){
@@ -101,27 +109,33 @@ if (session.getAttribute("login") != null) {
             	  <td><%=precioI.getPrecio() %></td>
             	  <td><%=precioI.getRecargo() %></td>            	  
             	  <td><a href="PrecioEdit?accion=modificarInscrip&&año=<%=precioI.getAño()%>">Modificar</a></td>
-            	  <td><a href="PrecioEdit?accion=bajaInscrip&&año=<%=precioI.getAño() %>">Borrar</a>
+            	  <td><a href="PrecioEdit?accion=bajaInscrip&&año=<%=precioI.getAño() %>" onclick="return confirm('Esta seguro que desea borrar?');">Borrar</a>
             	</tr>
            <%}%>            	         
         </table>   
   <%}%>  
   <br>
-  <br>
-  <form action="CuotaList" method="get">
-    <input name="accion" type="hidden" value="listarGrado">
-    <input type="submit" value="Volver atrás">    
-  </form>
-  <br>
-  <br>
-  <form action="CerrarSesion" method="get">
-    <input type="submit" value="Cerrar Sesión">
-  </form>
+  <br>  
+  <div class="form-group">
+	<form action="CuotaList" method="get">
+	<input name="accion" type="hidden" value="listarGrado">
+	<button type="submit" class="btn btn-primary"  value="Volver atrás">Volver atrás</button>
+	</form>
+  </div>
   </center>
+  <br>
+  <br>  
+  <div class="form-group">
+	<form action="CerrarSesion" method="get">
+	<button type="submit" class="btn btn-primary"  value="Cerrar Sesión">Cerrar Sesión</button>
+	</form>
+  </div>
+  
    <%
 	} else {
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 </html>

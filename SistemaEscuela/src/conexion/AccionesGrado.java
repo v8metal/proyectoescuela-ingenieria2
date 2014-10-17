@@ -7,6 +7,7 @@ import datos.Alumno;
 import datos.Alumnos;
 import datos.Grado;
 import datos.Grados;
+import datos.Materia;
 import datos.MateriasGrado;
 
 public class AccionesGrado {
@@ -166,11 +167,11 @@ public class AccionesGrado {
 			Statement stmt = Conexion.conectar().createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM MATERIAS_GRADO WHERE GRADO = '" + grado + "'" );
 			
-			String materia;
+			Materia materia;
 			
 			while (rs.next()) {
 					
-				materia = rs.getString("MATERIA");
+				materia = new Materia(rs.getString("MATERIA"), rs.getInt("IND_ESTADO"));
 				materias.agregarMateria(materia);			
 							
 			}
@@ -191,14 +192,14 @@ public class AccionesGrado {
 			try {
 				
 				Statement stmt = Conexion.conectar().createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT * FROM MATERIAS_GRADO WHERE GRADO = '" + grado + "' AND TURNO = '" + turno + "' AND AÑO = '" + año + "'");
+				ResultSet rs = stmt.executeQuery("SELECT M.MATERIA, M.IND_ESTADO FROM MATERIAS_GRADO MG INNER JOIN MATERIAS M ON M.MATERIA = MG.MATERIA WHERE MG.GRADO = '" + grado + "' AND MG.TURNO = '" + turno + "' AND MG.AÑO = '" + año + "'");
 				
-				String materia;
+				Materia materia;
 				
 				while (rs.next()) {
 						
-					materia = rs.getString("MATERIA");
-					materias.agregarMateria(materia);			
+					materia = new Materia(rs.getString("MATERIA"), rs.getInt("IND_ESTADO"));
+					materias.agregarMateria(materia);		
 								
 				}
 				
@@ -455,13 +456,13 @@ public static int getCurrentYear(Grado g) {
 		try {
 			
 			Statement stmt = Conexion.conectar().createStatement();			
-			ResultSet rs = stmt.executeQuery("SELECT * FROM MATERIAS_GRADO WHERE GRADO = '" + grado + "' AND TURNO = '" + turno + "' AND AÑO = " + año );
+			ResultSet rs = stmt.executeQuery("SELECT M.MATERIA, M.IND_ESTADO FROM MATERIAS_GRADO MG INNER JOIN MATERIAS M ON M.MATERIA = MG.MATERIA WHERE MG.GRADO = '" + grado + "' AND MG.TURNO = '" + turno + "' AND MG.AÑO = '" + año + "'");
 			
-			String materia;
+			Materia materia;
 			
 			while (rs.next()) {
 					
-				materia = rs.getString("MATERIA");
+				materia = new Materia(rs.getString("MATERIA"), rs.getInt("IND_ESTADO"));
 				materias.agregarMateria(materia);				
 							
 			}

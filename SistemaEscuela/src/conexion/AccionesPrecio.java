@@ -168,7 +168,7 @@ public class AccionesPrecio {
 		try{
 			Statement stm = Conexion.conectar().createStatement();
 			
-			System.out.println("UPDATE PRECIOS_INSCRIPCION SET FECHA_MAX= '"+p.getFecha_max()+"' ,PRECIO= " + p.getPrecio() +", RECARGO= "+ p.getRecargo() + " WHERE AÑO = "+ p.getAño());
+			//System.out.println("UPDATE PRECIOS_INSCRIPCION SET FECHA_MAX= '"+p.getFecha_max()+"' ,PRECIO= " + p.getPrecio() +", RECARGO= "+ p.getRecargo() + " WHERE AÑO = "+ p.getAño());
 			
 			i = stm.executeUpdate("UPDATE PRECIOS_INSCRIPCION SET FECHA_MAX= '"+p.getFecha_max()+"' ,PRECIO= " + p.getPrecio() +", RECARGO= "+ p.getRecargo() + " WHERE AÑO = "+ p.getAño());
 			stm.close();

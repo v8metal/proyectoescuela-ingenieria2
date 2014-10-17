@@ -7,11 +7,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>PAgos</title>
+<meta name="viewport" content="width=device-width; initial-scale=1.0"> 
+<title>Listado de pagos por dia</title>
+<link rel="stylesheet" href="style/bootstrap.min.css">
 </head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
 <body>
+<div class="container">
 <center>
  <% 
  if (session.getAttribute("login") != null) {
@@ -23,9 +24,13 @@
  	
  	if (cuota != null){
  %>  		
- <h1>Modificar Pago</h1>
- <%}else{%> 
- <h1>Alta de Pago</h1>
+ <div class="page-header">  	  
+	<h1>Modificar Pago</h1>		
+ </div>
+ <%}else{%>
+  <div class="page-header">  	  
+	<h1>Alta de Pago</h1>		
+ </div> 
  <%}%>
 <%
 	Alumno a = null;
@@ -34,7 +39,7 @@
 	
 		a = AccionesAlumno.getOne(cuota.getDni());
 	%>	
-<h2><%=a.getNombre() + " " + a.getApellido() + " - Año " + cuota.getAño() + " - Mes= " + cuota.getPeriodo() %></h2>
+<h2><%=a.getNombre() + " " + a.getApellido() + " - Año " + cuota.getAño() + " - Mes = " + cuota.getPeriodo() %></h2>
    <%}else{ 
    		
    		a = AccionesAlumno.getOne(dni);
@@ -74,16 +79,16 @@
 	   	año_pago = Integer.valueOf((String)session.getAttribute("año_sys"));
 	 //Alta de pago  
 	}
-	
-	//System.out.println("mes= " + mes_pago);
+		
    	%>
+   	<div class="form-group">   	
 	<form action="CuotaEdit" method="<%=cuota!= null?"post":"get"%>">
 	<%if (cuota != null) { %>
 	<input name=accion type=hidden value ="modificarPago">
 	<%}else{%>
 	<input name=accion type=hidden value ="altaPago">
 	<%}%>	
-	<table>		
+	<table class="table table-hover table-bordered">
 				<tr>
 				<td>Fecha </td>
 				<td><select name="dia_pago">   
@@ -117,34 +122,38 @@
 		  	<tr>	
 		<tr>
 			<td>PAGO</td>
-			<td><input type="text" name="pago" value="<%=cuota!=null?cuota.getPago(): ""%>"></td>
+			<td><input type="text" class="form-control" placeholder="importe" name="pago" value="<%=cuota!=null?cuota.getPago(): ""%>"></td>
 		</tr>
 		
 		<tr>
 			<td>OBSERVACIONES</td>
-			<td><textarea name="obs" cols="40" rows="1"><%=cuota!=null?cuota.getObservaciones(): ""%></textarea></td>			
+			<td><textarea class="form-control" placeholder="Observaciones" name="obs" cols="40" rows="1"><%=cuota!=null?cuota.getObservaciones(): ""%></textarea></td>			
 		</tr>
 		
 	</table> 
 	<br>
 	<br>
-	<%if (cuota != null) { %>
-	<input type="submit" value="Realizar modificación">	
-	<%}else{%>
-	<input type="submit" value="Realizar alta">
+	<%if (cuota != null) { %>	
+	<button type="submit" class="btn btn-primary"  value="Realizar modificación">Realizar modificación</button>	
+	<%}else{%>	
+	<button type="submit" class="btn btn-primary"  value="Realizar alta">Realizar alta</button>
 	<%}%>	
 	</form>
-<br>
-<br>
-<form action="CuotaList" method="get">
-<input name="accion" type="hidden" value="visualizarPagos">
-<input type="submit" value="Volver atrás">
-</form>
+</div>
 </center>
+<br>
+<br>
+<div class="form-group">
+	<form action="CuotaList" method="get">
+	<input name="accion" type="hidden" value="visualizarPagos">
+	<button type="submit" class="btn btn-primary"  value="Volver atrás">Volver atrás</button>
+</form>
+</div>
  <%
 	} else {
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 </html>

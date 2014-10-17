@@ -8,8 +8,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>			
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0"> 
+<title>Listado de pagos por dia</title>
+<link rel="stylesheet" href="style/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
 <% 
 	if (session.getAttribute("login") != null) {
 	
@@ -70,17 +74,20 @@
 
 	}
 %>
-<title>Listado de pagos por dia</title>
-</head>
-<body>
 	<center>
-	<h1>Listado de pagos por dia - año <%=año_pago%></h1>	
+	<div class="page-header">  	  
+		<h1>Listado de pagos por dia - año <%=año_pago%></h1>		
+    </div>
+    
+    <div class="form-group">
+    		
 	<form action="CuotaList" method="get">
-	<table>	
+	
+	<table class="table table-hover table-bordered">	
 	<%if(pagos.equals("-1")){%>      
 		<tr>
 				<td>Fecha </td>
-				<td><select <%=type%> name="dia_consulta">   
+				<td><select <%=type%> class="form-control" name="dia_consulta">   
 					<%  
 					for (int i = 1; i <= 31; i++){			  	
 		 			%>
@@ -89,7 +96,7 @@
 					}	
 					%>
 		 			 </select>
-		  			 <select <%=type%> name="mes_consulta">
+		  			 <select class="form-control" <%=type%> name="mes_consulta">
 		  			 <option value="01" <%=mes_pago.equals("01") ? "selected" : ""%>>Enero</option>
 					 <option value="02" <%=mes_pago.equals("02") ? "selected" : ""%>>Febrero</option>
 					 <option value="03" <%=mes_pago.equals("03") ? "selected" : ""%>>Marzo</option>
@@ -109,8 +116,8 @@
 		<tr>
 			<td>Fecha </td>			
 			<td>
-				<input readonly size= 2 name="dia_plan" type="text" value="<%=dia_pago %>"> 				 		
-  			 	<input readonly size= 10 name="mes_plan" type="text" value="<%=mespago%>">		  	      
+				<input class="form-control" readonly size= 2 name="dia_plan" type="text" value="<%=dia_pago %>"> 				 		
+  			 	<input class="form-control" readonly size= 10 name="mes_plan" type="text" value="<%=mespago%>">		  	      
 		  	</td>
 		</tr>
 		<%}%>
@@ -128,35 +135,53 @@
 	if(pagos.equals("-1")){ %>
 		<tr>
 			<td></td>
-			<td>				
-				<input type="submit" value="Aceptar">
-	            <input type="reset" value="Cancelar">
+			<td>		
+			    <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnSave">Aceptar</button>
+				<button type="reset" class="btn btn-primary"  value="Reset" name="btnSave">Cancelar</button>		
 	            <input type="hidden" name="accion" value="pagosDia">
 	        </td>	        
 	    </tr>	
 	<%}%>        
-	  </table>
+	  </table>	  
 	</form>	
 	<br>
 	<br>
 <table>
 <tr>
-	<td> <form action="menu_cuotas.jsp"> <input type="submit" value="Volver al Menú anterior"> </form></td>
+	<td> 
+		<div class="form-group"> 
+		   <form action="menu_cuotas.jsp">		   
+		   <button type="submit" class="btn btn-primary"  value="Volver al Menú anterior">Volver al Menú anterior</button> 
+		   </form>
+		</div>
+	</td>	
 	
 <%if(!pagos.equals("-1")){%>
-	<td> <form action="pagos_dia.jsp"> <input type="submit" value="Seleccionar otro dia" > </form></td>
+	
+	<td> 
+		<div class="form-group"> 
+		   <form action="pagos_dia.jsp">		   
+		   <button type="submit" class="btn btn-primary"  value="Seleccionar otro dia">Seleccionar otro dia</button> 
+		   </form>
+		</div>
+	</td>
+	
 <%}%>
 </tr>
 </table>
-<br>	
+<br>
+	
+<div class="form-group">
 <form action="CerrarSesion">
-  <input type="submit" value="Cerrar Sesión">
+	<button type="submit" class="btn btn-primary"  value="Cerrar Sesión">Cerrar Sesión</button>
 </form>
+</div>
 </center>
 	<%
 	} else {
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 </html>

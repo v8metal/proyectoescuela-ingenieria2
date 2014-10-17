@@ -8,11 +8,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
-<title>Grado</title>
+<meta name="viewport" content="width=device-width; initial-scale=1.0"> 
+<title>Grados</title>
+<link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 </head>
 <body>
+<div class="container">
 <%
 	if (session.getAttribute("login") != null) { 
   
@@ -33,11 +34,16 @@
 
 if (grado != null){
 %>
-<center><h1>MODIFICACION DE GRADO</h1></center>
+<div class="page-header">  
+	<h1>Edición de grado</h1>
+</div> 
 <h2><%= grado.getGrado() + " - Turno " + grado.getTurno() %></h2>
 <%}else{%>
-<center><h1>ALTA DE GRADO</h1></center>
+<div class="page-header">  
+	<h1>Alta de grado</h1>
+</div> 
 <%}%>
+<div class="form-group">
  <form action="GradoEdit" method="post">
 <%if (grado != null){
    	if (maestros != null){%>
@@ -49,14 +55,14 @@ if (grado != null){
 }else{%>
 <input type="hidden" name="action" value="insert">
 <%}%>
-<table>
+<table class="table table-hover table-bordered">
 <% 
 	if (grado == null){
 %>
 	<tr>
 		<td>Grado/Turno: </td>
 		<td>
-			<select name=anio_grado_turno>
+			<select name=anio_grado_turno class="form-control">
 <% 			
 			
 			for (Grado g : grados.getLista()){ %>
@@ -82,8 +88,8 @@ if (grado != null){
 			   }			           
 			 	
 			 %>
-			<input type="radio" name="bimestral" value="si" <%=ck_bim%> /> Bimestral
-			<input type="radio" name="bimestral" value="no" <%=ck_tri%>/> Trimestral
+			<input class="form-control" type="radio" name="bimestral" value="si" <%=ck_bim%> /> Bimestral
+			<input class="form-control" type="radio" name="bimestral" value="no" <%=ck_tri%>/> Trimestral
 		</td>
 	</tr>
 		<tr>
@@ -94,35 +100,41 @@ if (grado != null){
 			   String ck_cualitaviva = "";
 			   String ck_numerica = "";
 			   
-			   //System.out.println(grado.getEvaluacion());
+			   ck_informe = "checked";
 			   
 			   if (grado != null && grado.getEvaluacion() == 0) {
 				   ck_informe = "checked";
+				   ck_cualitaviva = "";
+				   ck_numerica = "";
 			   }
 			   
 			   if (grado != null && grado.getEvaluacion() == 1) {
 				   ck_cualitaviva = "checked";
+				   ck_informe = "";
+				   ck_numerica = "";
 			   }
 			   
 			   if (grado != null && grado.getEvaluacion() == 2) {
+				   ck_informe = "";
+				   ck_cualitaviva = "";
 				   ck_numerica = "checked"; 
 	
 			   }			           
 			 	
 			 %>
-			<input type="radio" name="evaluacion" value=0 <%=ck_informe%> /> Informe
-			<input type="radio" name="evaluacion" value=1 <%=ck_cualitaviva%>/> Cualitativa
-			<input type="radio" name="evaluacion" value=2 <%=ck_numerica%>/> Numérica
+			<input class="form-control" type="radio" name="evaluacion" value=0 <%=ck_informe%> /> Informe
+			<input class="form-control" type="radio" name="evaluacion" value=1 <%=ck_cualitaviva%>/> Cualitativa
+			<input class="form-control" type="radio" name="evaluacion" value=2 <%=ck_numerica%>/> Numérica
 		</td>
 	</tr>
 	<tr>
 		<td>Salón: </td>
-		<td><input type="text" size=1 name="salon_grado" value="<%=grado!=null? grado.getSalon() : ""%>"></td>
+		<td><input class="form-control" type="text" placeholder="Salon" name="salon_grado" value="<%=grado!=null? grado.getSalon() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Maestro Titular: </td>
 <% if (año > 0){%>
-		<td><select name="maestro_tit_grado">
+		<td><select name="maestro_tit_grado" class="form-control" placeholder="Maestro Titular" >
 		<% if (grado != null && titular != null){ %>
 			<option value="<%= titular.getDni()%>"><%=titular.getNombre()+ " " + titular.getApellido()%> </option>
 			<%
@@ -155,7 +167,7 @@ if (grado != null){
 	<tr>
 		<td>Maestro Paralelo: </td>
 <% if (año > 0){%>
-		<td><select name="maestro_par_grado">
+		<td><select name="maestro_par_grado" class="form-control"  placeholder="Maestro Paralelo">
 		<% if (grado != null && paralelo != null){ %>
 			<option value="<%= paralelo.getDni()%>"><%=paralelo.getNombre()+ " " + paralelo.getApellido()%> </option>						
 			<%
@@ -181,23 +193,38 @@ if (grado != null){
 	</tr>
 </table>
 <br>
-<input type="submit" value="Guardar">
-<input type="reset" value="Cancelar">
+<center>
+<%
+	String mensaje= "return confirm('Esta seguro que desea realizar el alta?');"; 
+	  
+	if (grado != null){
+			
+		mensaje = "return confirm('Esta seguro que desea modificar?');"; 
+	}
+		 
+%>
+	<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="<%=mensaje%>">Guardar</button>
+	<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave">Cancelar</button>
+</center>		
 </form>
+</div>
 <br>
 <%if (año == 0 && grado != null){%>
 <a>No hay alumnos asignados, el grado se puede </a><a href="GradoEdit?do=baja">borrar</a>
 <br>
 <br>
 <%}%>
+<div class="form-group">
 <form action="grado_list.jsp" method="post">
-<input type="submit" value="Volver al listado">
+<button type="submit" class="btn btn-primary"  value="Volver al Listado">Volver al Listado</button>
 </form>
+</div>
 <%
 	} else {
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 <script language = "JavaScript">
 function pru(){
