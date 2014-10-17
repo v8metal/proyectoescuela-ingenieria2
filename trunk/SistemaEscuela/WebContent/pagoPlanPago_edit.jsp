@@ -10,11 +10,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>PAgos</title>
+<meta name="viewport" content="width=device-width; initial-scale=1.0"> 
+<title>Pagos</title>
+<link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 </head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
 <body>
+<div class="container">
 <center>
  <% 
  	if (session.getAttribute("login") != null) {
@@ -22,11 +23,15 @@
  	 	PlanPago plan = (PlanPago) session.getAttribute("planPagos");	
  	 	PagoPlanPago ppp = (PagoPlanPago) request.getAttribute("pagopp");
  	
- 		if (plan != null){
+ 		if (ppp != null){
  %>  		
- <h1>Modificar Pago</h1>
- <%}else{%> 
- <h1>Alta de Pago</h1>
+ <div class="page-header">  
+	<h1>Modificar Pago</h1>
+</div> 
+ <%}else{%>
+ <div class="page-header">  
+	<h1>Alta de Pago</h1>
+</div> 
  <%}%>
 <%
 	Alumno a =  AccionesAlumno.getOne(plan.getDni());
@@ -61,10 +66,9 @@
 		if(plan.getPeriodofin() == 12) mesfin="Diciembre";	
 		if(plan.getPeriodofin() == 13) mesfin="Inscripción";
 	%>
-		
-<h1><%= "Plan de pagos - "+ a.getNombre() + " " + a.getApellido() %></h1>
-<h2><%= mesini + " " + plan.getAñoini() + " - "  + mesfin + " " + plan.getAñofin() %> </h2>	
-
+<div class="page-header">  
+	<h2><%= "Plan de pagos - "+ a.getNombre() + " " + a.getApellido()  + " - De " + mesini + " " + plan.getAñoini() + " a "  + mesfin + " " + plan.getAñofin()%></h2>
+</div>
 <%
 	int dia_pp = 0;
 	String mes_pp = "";
@@ -99,13 +103,14 @@
 	
 	//System.out.println("mes= " + mes_ppp);
    	%>
+   	<div class="form-group">
 	<form action="PlanPagoList" method="get">
 	<%if (ppp != null) { %>
 	<input name=accion type=hidden value ="modificarPagopp2">
 	<%}else{%>
 	<input name=accion type=hidden value ="altaPagopp">
 	<%}%>	
-	<table>		
+	<table class="table table-hover table-bordered">
 				<tr>
 				<td>Fecha </td>
 				<td><select name="diapp">   
@@ -139,36 +144,40 @@
 		  	<tr>	
 		<tr>
 			<td>PAGO</td>
-			<td><input type="text" name="pagopp" value="<%=ppp!=null?ppp.getPago(): ""%>"></td>
+			<td><input type="text" class="form-control" placeholder="Importe" name="pagopp" value="<%=ppp!=null?ppp.getPago(): ""%>"></td>
 		</tr>
 		
 		<tr>
 			<td>OBSERVACIONES</td>
-			<td><textarea name="obspp" cols="40" rows="1"><%=ppp!=null?ppp.getObservaciones(): ""%></textarea></td>			
+			<td><textarea class="form-control" placeholder="Observaciones" name="obspp" cols="40" rows="1"><%=ppp!=null?ppp.getObservaciones(): ""%></textarea></td>			
 		</tr>
 		
 	</table> 
 	<br>
 	<br>
-	<%if (ppp != null) { %>
-	<input type="submit" value="Realizar modificación">
+	<%if (ppp != null) { %>	
+	<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea modificar?');">Realizar modificación</button>
 	<input type="hidden" name="cod_pago" value="<%= ppp.getCod_pago()%>">	
 	<%}else{%>
-	<input type="submit" value="Realizar alta">
+	<button type="submit" class="btn btn-primary"  value="Realizar Alta" name="btnSave" onclick="return confirm('Esta seguro que desea modificar?');">Realizar Alta</button>
 	<%}%>	
 	</form>
+	</div>
 <br>
 <br>
+</center>
+<div class="form-group">
 <form action="PlanPagoList" method="get">
 <input name="accion" type="hidden" value="listarPagosPlan">
 <input name="codplan" type="hidden" value="<%=plan.getCod_plan()%>">
-<input type="submit" value="Volver atrás">
+<button type="submit" class="btn btn-primary"  value="Volver atrás">Volver atrás</button>
 </form>
-</center>
+</div>
  <%
 	} else {
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 </html>

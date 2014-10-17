@@ -9,11 +9,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta name="viewport" content="width=device-width; initial-scale=1.0"> 
 <title>Plan de Pagos</title>
+<link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 </head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
 <body>
+<div class="container">
 <center>
  <% 
  if (session.getAttribute("login") != null) {
@@ -31,12 +32,15 @@
  		a = AccionesAlumno.getOne(plan.getDni());
  	
  %>
- 	  		
- <h1>Modificar Plan de Pago</h1>
- 
+ <div class="page-header">  
+	 <h1>Modificar Plan de Pago</h1>
+</div> 
  <%}else{%>
   
- <h1>Alta Plan Pago</h1>
+ 
+<div class="page-header">  
+	 <h1>Alta Plan Pago</h1>
+</div>
  
  <%}
  		int dia_plan = 0;
@@ -94,31 +98,21 @@
 		if(mes_plan.equals("11")) mesplan="Noviembre";
 		if(mes_plan.equals("12")) mesplan="Diciembre";
 		
-if (plan != null){
-		
-%>	
-<h2><%="Plan de Pagos - " + a.getNombre() + " " + a.getApellido() + " - Año " + plan.getAñoini() + " - " + plan.getAñofin() %></h2>
-
-<%}else{ %>
-
-<h2><%= "Nuevo Plan Pagos"%></h2>
-
-<%} 	
-
 if (alumnos.getLista().size() == 0){%>
 
 <a> No hay alumnos en condiciones de planes de pago</a>
 <br>
 
 <%}else{%>
- 
+ 	
+ 	<div class="form-group">
 	<form action="PlanPagoList" method="get">
 	<%if (plan != null) { %>
 	<input name=accion type=hidden value ="modificarPlanPago">
 	<%}else{%>
 	<input name=accion type=hidden value ="altaPlanPago">
 	<%}%>	
-	<table>	
+	<table class="table table-hover table-bordered">
 	<%if (plan != null){%>
 		<tr>
 			<td>Fecha Alta</td>			
@@ -276,37 +270,42 @@ if (alumnos.getLista().size() == 0){%>
 		<tr>
 		<td></td>
 		<%if (plan != null) { %>
-			<td><input type="submit" value="Realizar modificación"></td>	
+			<td><button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea modificar?');">Modificar</button></td>	
 		<%}else{%>
-			<td><input type="submit" value="Realizar alta"></td>
+			<td><button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');">Realizar alta</button></td>
 		<%}%>
 		</tr>	
 	</table> 
 	<br>	
-
 	</form>
+	</div>
 <%if (plan != null) { %>
+<div class="form-group">
 <form action="PlanPagoList" method="get">
-<input name="codplan" type="hidden" value="<%=plan.getCod_plan()%>">
-<input id="accion" name="accion" type="hidden">	
-<table>
-<tr>
-<td>
-	<input id="listar" type="submit" value="Listar Pagos realizados" onClick="accion1()">	
-<td>
-	<input id="borrar" type="submit" value="Borrar Plan de Pagos" onClick="accion2()">	
-</td>
-</tr>
-</table>	
+	<input name="codplan" type="hidden" value="<%=plan.getCod_plan()%>">
+	<input id="accion" name="accion" type="hidden">	
+	<table>
+	<tr>
+	<td>		
+		<button id="listar" type="submit" class="btn btn-primary"  value="Listar Pagos realizados" name="btnSave" onClick="accion1()">Listar Pagos realizados</button>	
+	<td>		
+		<button id="borrar" type="submit" class="btn btn-primary"  value="Borrar Plan de Pagos"  name="btnSave" onclick="accion2()">Borrar Plan de Pagos</button>	
+	</td>
+	</tr>
+	</table>	
 </form>
+</div>
 <%}%>
 <%}%>
-<br>
-<form action="CuotaList">
-  <input name="accion" type="hidden" value="listarGrado">
-  <input type="submit" value="Volver al listado de Cuotas">
-</form>
 </center>
+<br>
+<div class="form-group">
+<form action="CuotaList">
+<input name="accion" type="hidden" value="listarGrado">
+<button type="submit" class="btn btn-primary"  value="Volver al listado de Cuotas">Volver al listado de Cuotas</button>
+</form>
+</div>
+
  <%
 	} else {
 		response.sendRedirect("login.jsp");
@@ -324,10 +323,10 @@ function accion2() {
 	var accion = document.getElementById('accion');	
 	accion.value = "borrarPlanPago"; 
 	
+	return confirm("Esta seguro que desea modificar?");
+	
 }
-
-
 </script>
-
+</div>
 </body>
 </html>

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 import conexion.AccionesGrado;
 import conexion.AccionesMateria;
 import datos.Grado;
-import datos.Materias;
 import datos.MateriasGrado;
 
 /**
@@ -60,21 +59,9 @@ import datos.MateriasGrado;
 	
 				MateriasGrado mat_grado = AccionesGrado.getMaterias(grado, turno, año);		
 						
-				Materias materias = null;				
-				
-				if (mat_grado.getLista().size() != 0){					
-					
-					materias = new Materias();
-					
-					for (String m : mat_grado.getLista()) {
-						materias.agregarMateria(AccionesMateria.getOne(m));													
-					}
-										
-				}
-				
 				sesion.setAttribute("grado_materias", g);				
 				
-				sesion.setAttribute("materias_grado", materias);		
+				sesion.setAttribute("materias_grado", mat_grado);		
 			
 				sesion.setAttribute("materias", AccionesMateria.getAllActivas());
 								
@@ -91,19 +78,10 @@ import datos.MateriasGrado;
 				String materia = (String) request.getParameter("materia");
 				
 				AccionesGrado.deleteMateria(g.getGrado(), g.getTurno(), g.getAño(), materia);
-				
-				// se puede evitar esto?
+
 				MateriasGrado mat_grado = AccionesGrado.getMaterias(g.getGrado(), g.getTurno(), g.getAño());
-				
-				Materias materias = new Materias();
-				
-				for (String m : mat_grado.getLista()) {
-					
-					materias.agregarMateria(AccionesMateria.getOne(m));
-						
-				}
-				
-				sesion.setAttribute("materias_grado", materias);		
+							
+				sesion.setAttribute("materias_grado", mat_grado);		
 				
 				sesion.setAttribute("materias", AccionesMateria.getAllActivas());
 				
@@ -147,15 +125,7 @@ import datos.MateriasGrado;
 			
 			MateriasGrado mat_grado = AccionesGrado.getMaterias(g.getGrado(), g.getTurno(), g.getAño());
 			
-			Materias materias = new Materias();
-			
-			for (String m : mat_grado.getLista()) {
-				
-				materias.agregarMateria(AccionesMateria.getOne(m));
-					
-			}
-			
-			sesion.setAttribute("materias_grado", materias);		
+			sesion.setAttribute("materias_grado", mat_grado);		
 			
 			sesion.setAttribute("materias", AccionesMateria.getAllActivas());			
 			

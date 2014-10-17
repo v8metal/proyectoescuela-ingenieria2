@@ -1,13 +1,16 @@
 package controlador;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import conexion.AccionesMaestro;
 import conexion.AccionesUsuario;
+import datos.Maestros;
 import datos.Usuarios;
 
 /**
@@ -39,6 +42,10 @@ public class UsuarioList extends HttpServlet {
 		
 		Usuarios usuario_list = AccionesUsuario.getAll();
 		sesion.setAttribute("usuarios", usuario_list);
+		
+		Maestros maestros = AccionesMaestro.getAllActivos();
+		
+		sesion.setAttribute("activos", maestros);		
 		
 		response.sendRedirect("gest_user_menu.jsp");
 	}

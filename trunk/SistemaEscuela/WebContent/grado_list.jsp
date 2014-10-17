@@ -93,7 +93,7 @@ if (grados.getListaTM().isEmpty()){
 		<% if ((g.getGrado().equals("7mo") || año == 0) || m1 == null){%>
 		<td>No se puede promocionar</td>
 		<%}else{ %>
-		<td><a href="GradoEdit?do=promocion&grado_modif=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>&año=<%=año%>" >Promocionar Grado</a></td>		
+		<td><a href="GradoEdit?do=promocion&grado_modif=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>&año=<%=año%>" onclick="<%="return confirm('Esta seguro que desea promocionar "+  g.getGrado() + "-" + g.getTurno()  +"?');"%>">Promocionar Grado</a></td>		
 		<% } %>				
 	</tr>
 <%	 
@@ -171,8 +171,8 @@ if (grados.getListaTT().isEmpty()){
 		<%}}}%>
 		<% if ((g.getGrado().equals("7mo") || año == 0) || m1 == null){%>
 		<td>No se puede promocionar</td>
-		<%}else{ %>
-		<td><a href="GradoEdit?do=promocion&grado_modif=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>&año=<%=año%>" >Promocionar Grado</a></td>		
+		<%}else{ %>		
+		<td><a href="GradoEdit?do=promocion&grado_modif=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>&año=<%=año%>" onclick="<%="return confirm('Esta seguro que desea promocionar "+  g.getGrado() + "-" + g.getTurno()  +"?');"%>">Promocionar Grado</a></td>		
 		<% } %>				
 	</tr>
 <%	 

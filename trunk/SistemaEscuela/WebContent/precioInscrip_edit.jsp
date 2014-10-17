@@ -4,11 +4,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
-<title>Sistema Alumnado</title>
+<meta name="viewport" content="width=device-width; initial-scale=1.0"> 
+<title>Precios Inscripciones</title>
+<link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 </head>
 <body>
+<div class="container">
 <%
 if (session.getAttribute("login") != null) {
 	
@@ -30,17 +31,37 @@ if (session.getAttribute("login") != null) {
     }else{
     	
 		dia = Integer.valueOf((String)session.getAttribute("dia_sys"));
-    	mes = "0" + (String) session.getAttribute("mes_sys");
+		
+		int mes_sys = Integer.valueOf((String) session.getAttribute("mes_sys"));
+				
+		if (mes_sys < 10){
+			mes = "0" + mes_sys;	
+		}else{
+			mes = "" + mes_sys;
+		}
+    	
     	año = (Integer) session.getAttribute("añoPrecios");
-    }
-%>
-	<center>
-    <h1>Ingreso de Precios - Inscripción <%=año%></h1>    
+    }%>
+    
+   <div class="page-header">
+   <%if (precio == null){%>
+		
+	<h1>Ingreso de Precios - Inscripción <%=año%></h1>
+	
+<%}else{%>
+	  
+	<h1>Modificación de Precios - Inscripción <%=año%></h1>
+			
+<%}%> 
+	</div>
+	
+	<div class="form-group">
+	    
     <form action="PrecioEdit" method="post" id="formPrecio" onsubmit="return validarPrecio()">
-      <table>
-
+    
+      <table class="table table-hover table-bordered">
 			<tr>
-				<td>Fecha </td>				
+				<td>Fecha Maxima</td>				
 				<td>
 					<select name="dia_inscrip">   
 					<%  
@@ -64,40 +85,46 @@ if (session.getAttribute("login") != null) {
 					 <option value="10" <%=mes.equals("10") ? "selected" : ""%>>Octubre</option>
 					 <option value="11" <%=mes.equals("11") ? "selected" : ""%>>Noviembre</option>
 					 <option value="12" <%=mes.equals("12") ? "selected" : ""%>>Diciembre</option>	   			 		
-		 			 </select>
-		 		 </td>		 		 		 		 
-				 <td><input readonly type="text" name="año_inscrip" value="<%=año%>"></td>
+		 			 </select>		 		 		 		 		 		 
+				 <input readonly type="text" name="año_inscrip" value="<%=año%>"></td>
+			</tr>
 		<tr>
           <td>Precio:</td>
-          <td><input type="text" name="regular" value="<%=precio!=null?precio.getPrecio():"" %>"></td>
+          <td><input type="text" class="form-control" placeholder="Precio Regular" name="regular" value="<%=precio!=null?precio.getPrecio():"" %>"></td>
         </tr>
         
         <tr>
           <td>Recargo</td>
-          <td><input type="text" name="recargo" value="<%=precio!=null?precio.getRecargo():""%>"></td>
+          <td><input type="text" class="form-control" placeholder="Recargo" name="recargo" value="<%=precio!=null?precio.getRecargo():""%>"></td>
         </tr>
         <tr></tr>
         <tr>        
         <td></td>       
-         <td><input type="submit" value="Aceptar">
-             <input type="reset" value="Cancelar">
+         <td>
+         	 <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');">Aceptar</button>
+         	 <button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button>         
              <input type="hidden" name="error" value="ERROR!!!">
          </td>
        </tr>
       </table>
     </form>
+    </div>    
     <br>
     <br>
-     <form action="PrecioList" method="get">
-    <input type="submit" value="Volver al Menú de Precios">
-  </form>  
+    <center>
+  	<div class="form-group">
+		 <form action="PrecioList" method="get">
+			<button type="submit" class="btn btn-primary"  value="Volver al Menú de Precios">Volver al Menú de Precios</button>
+		</form>
+	</div>
+	</center>  
   <br>
   <br>
-  <form action="CerrarSesion" method="get">
-  <input type="submit" value="Cerrar Sesión">
-  </form>
-  </center>
-  
+   <div class="form-group">
+		<form action="CerrarSesion" method="get">
+			<button type="submit" class="btn btn-primary"  value="Cerrar Sesión">Cerrar Sesión</button>
+		</form>
+	</div>  
   <%String error = (String)session.getAttribute("error");
     if(error!=null){
     	 %>
@@ -105,7 +132,7 @@ if (session.getAttribute("login") != null) {
     	 <% 
     	 session.setAttribute("error", null);
     }
-    %>
+    %>    
  <script type="text/javascript">
  var form = document.getElementById("formPrecio");
  
@@ -141,5 +168,6 @@ if (session.getAttribute("login") != null) {
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 </html>

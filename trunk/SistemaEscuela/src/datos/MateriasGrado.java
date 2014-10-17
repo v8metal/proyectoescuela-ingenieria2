@@ -4,23 +4,39 @@ import java.util.ArrayList;
 
 public class MateriasGrado {
 
-	ArrayList <String> lista;
+	ArrayList <Materia> lista;
 	
 	public MateriasGrado() {
-		lista = new ArrayList<String>();
+		lista = new ArrayList<Materia>();
 	}
 	
-	public ArrayList<String> getLista() {
+	public ArrayList<Materia> getLista() {
 		return lista;
 	}
 		
-	public void agregarMateria(String m) {
+	public void agregarMateria(Materia m) {
 		lista.add(m);
 	}
 	
 	public void listar() {
-		for (String m : lista) {
-			System.out.println(m);
+		for (Materia m : lista) {
+			System.out.println(m.getMateria());
 		}
+	}
+	
+	public boolean contains(Materia m){
+		
+		boolean b = false;
+		
+		for (Materia m1 : lista){
+			
+			if (m1.getMateria().equals(m.getMateria())){
+				
+				b = true;
+			}
+			
+		}
+		
+		return b;
 	}
 }

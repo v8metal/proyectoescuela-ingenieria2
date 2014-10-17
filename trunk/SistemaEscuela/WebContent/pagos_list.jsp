@@ -18,18 +18,19 @@ if (session.getAttribute("login") != null) {
    int mes = (Integer) session.getAttribute("mes");   
 %>			
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0"> 
 <title>Listado de pagos</title>
+<link rel="stylesheet" href="style/bootstrap.min.css">
 </head>
 <body>
+<div class="container">
 	<center>
 	<% Alumno a = AccionesAlumno.getOne(dni); %>
 	<h1><%= a.getNombre() + " " + a.getApellido() + " - " + año + "- Mes " + mes%> </h1>
 	<% if (cuotas.getLista().isEmpty()) { %>
 	<a href="pago_edit.jsp"> No hay pagos para el mes, agregar pagos</a>
 	<%}else{%>	
-	  <table border= 1>
+	  <table class="table table-hover table-bordered">
 	  <tr>	  	    
 	    <th> FECHA </th>
 	    <th> PAGO  </th>
@@ -51,8 +52,8 @@ if (session.getAttribute("login") != null) {
 	    <td><%= dia_pago + "/" + mes_pago + "/" + año_pago %></td>
 	    <td><%="$" + c.getPago()%></td>
 	    <td><%= c.getObservaciones() %></td>
-	    <td><a href="CuotaEdit?accion=modificarPago&&cod_pago=<%=c.getCod_pago()%>"> Modificar pago </a></td>	  
-	    <td><a href="CuotaEdit?accion=borrarPago&&cod_pago=<%=c.getCod_pago()%>"> Borrar pago </a></td>	    
+	    <td><a href="CuotaEdit?accion=modificarPago&&cod_pago=<%=c.getCod_pago()%>" > Modificar pago </a></td>	  
+	    <td><a href="CuotaEdit?accion=borrarPago&&cod_pago=<%=c.getCod_pago()%>" onclick="return confirm('Esta seguro que desea borrar el pago?');"> Borrar pago </a></td>	    
 	  </tr>  
 	  <%}%>
 	  </table>
@@ -62,20 +63,25 @@ if (session.getAttribute("login") != null) {
 	 <%}%>
 	<br>
 	<br>	
-	<form action="CuotaList">
-	  <input name="accion" type="hidden" value="listarGrado">
-	  <input type="submit" value="Volver al listado de Pagos">
-	</form>
+	<div class="form-group">
+		<form action="CuotaList">
+		<input name="accion" type="hidden" value="listarGrado">
+		<button type="submit" class="btn btn-primary"  value="Volver al listado de Pagos">Volver al listado de Pagos</button>
+		</form>
+	</div>
 	<br>
 	<br>
-	<form action="CerrarSesion">
-	  <input type="submit" value="Cerrar Sesión">
-	</form>
 	</center>
+	<div class="form-group">
+		<form action="CerrarSesion">		
+		<button type="submit" class="btn btn-primary"  value="Cerrar Sesión">Cerrar Sesión</button>
+		</form>
+	</div>		
  <%
 	} else {
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 </html>

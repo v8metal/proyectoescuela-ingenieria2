@@ -87,17 +87,9 @@ public class MateriaList extends HttpServlet {
 					String turno = (String)sesion.getAttribute("turno");
 					int año = Integer.parseInt((String)sesion.getAttribute("año"));
 					MateriasGrado mat_grado = AccionesGrado.getMateriasByGradoTurnoYAño(grado, turno, año);
-					
-					Materias materias = new Materias();
-				
-					for (String m : mat_grado.getLista()) {
-					
-						materias.agregarMateria(AccionesMateria.getOne(m));
-						
-					}
-				
+									
 					sesion.setAttribute("grado", grado);			
-					sesion.setAttribute("materias_grado", materias);				
+					sesion.setAttribute("materias_grado", mat_grado);				
 					sesion.setAttribute("materias", AccionesMateria.getAllActivas());
 				
 					} 

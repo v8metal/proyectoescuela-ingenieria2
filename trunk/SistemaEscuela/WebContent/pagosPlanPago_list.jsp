@@ -20,11 +20,13 @@ PagosPlanPago pp = (PagosPlanPago) request.getAttribute("pagospp");
    Alumno a = (Alumno) request.getAttribute("alumnopp");
 %>			
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
-<title>Listado de pagos</title>
+<head>
+<meta name="viewport" content="width=device-width; initial-scale=1.0"> 
+<title>Maestros</title>
+<link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 </head>
 <body>
+<div class="container">
 	<center>
 	<%
 	String mesini = "";
@@ -55,12 +57,14 @@ PagosPlanPago pp = (PagosPlanPago) request.getAttribute("pagospp");
 	if(plan.getPeriodofin() == 12) mesfin="Diciembre";	
 	if(plan.getPeriodofin() == 13) mesfin="Inscripción";
 	%>
-	<h1><%= "Plan de pagos - "+ a.getNombre() + " " + a.getApellido() %></h1>
-	<h2><%= mesini + " " + plan.getAñoini() + " - "  + mesfin + " " + plan.getAñofin() %> </h2>
+	<div class="page-header">
+		<h1><%= "Plan de pagos - "+ a.getNombre() + " " + a.getApellido() %></h1>
+		<h2><%= mesini + " " + plan.getAñoini() + " - "  + mesfin + " " + plan.getAñofin() %> </h2>
+	</div>
 	<% if (pp.getLista().isEmpty()) { %>
 	<a href="pagoPlanPago_edit.jsp"> No hay pagos para el mes, agregar pagos</a>
 	<%}else{%>	
-	  <table border= 1>
+	  <table class="table table-hover table-bordered">
 	  <tr>	  	    
 	    <th> FECHA </th>
 	    <th> PAGO  </th>
@@ -83,7 +87,7 @@ PagosPlanPago pp = (PagosPlanPago) request.getAttribute("pagospp");
 	    <td><%="$" + p.getPago()%></td>
 	    <td><%= p.getObservaciones() %></td>
 	    <td><a href="PlanPagoList?accion=modificarPagopp&&cod_pago=<%=p.getCod_pago() %>"> Modificar pago </a></td>	  
-	    <td><a href="PlanPagoList?accion=borrarPagopp&&cod_pago=<%=p.getCod_pago()%>"> Borrar pago </a></td>	    
+	    <td><a href="PlanPagoList?accion=borrarPagopp&&cod_pago=<%=p.getCod_pago()%>" onclick="return confirm('Esta seguro que desea borrar?');"> Borrar pago </a></td>	    
 	  </tr>  
 	  <%}%>
 	  </table>
@@ -93,21 +97,26 @@ PagosPlanPago pp = (PagosPlanPago) request.getAttribute("pagospp");
 	 <%}%>
 	<br>
 	<br>	
-	<form action="PlanPagoList">
-	  <input name="accion" type="hidden" value="visualizarPlan">
-	  <input name="codplan" type="hidden" value="<%=plan.getCod_plan()%>">
-	  <input type="submit" value="Volver al Plan de Pagos">
-	</form>
-	<br>
-	<br>
-	<form action="CerrarSesion">
-	  <input type="submit" value="Cerrar Sesión">
-	</form>
+	<div class="form-group">
+		<form action="PlanPagoList">
+		<input name="accion" type="hidden" value="visualizarPlan">
+	    <input name="codplan" type="hidden" value="<%=plan.getCod_plan()%>">
+		<button type="submit" class="btn btn-primary"  value="Volver al al Plan de Pagos">Volver al Plan de Pagos</button>
+		</form>
+	</div>
 	</center>
+	<br>
+	<br>
+	<div class="form-group">
+		<form action="CerrarSesion">
+		<button type="submit" class="btn btn-primary"  value="Cerrar Sesión">Cerrar Sesión</button>
+		</form>
+	</div>	
  <%
 	} else {
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 </html>

@@ -1,13 +1,18 @@
 <%@page import="datos.Grado"%>
 <%@page import="datos.Materia"%>
 <%@page import="datos.Materias"%>
+<%@page import="datos.MateriasGrado"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0"> 
+<title>Listado de Materias</title>
+<link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
+<body>
+<div class="container">
 <%
 	if (session.getAttribute("login") != null) {
 		
@@ -17,26 +22,29 @@
 			session.setAttribute("error", "");
 		}
 		
-		Materias mat_grado = new Materias();
+		MateriasGrado mat_grado = new MateriasGrado();
 		
 		if(session.getAttribute("materias_grado") != null) {			
-			mat_grado = (Materias)session.getAttribute("materias_grado");
+			mat_grado = (MateriasGrado) session.getAttribute("materias_grado");
 		}
 		
 		Materias materias  = (Materias) session.getAttribute("materias");		
 		
 		Grado grado  = (Grado) session.getAttribute("grado_materias");
 %>
-<title>Listado de Materias</title>
-</head>
-<body>
-<h1><%= grado.getGrado() + " - Turno " + grado.getTurno() + " - AÑO " + grado.getAño() %></h1>
-<%
+<div class="page-header">  
+	<h1><%= grado.getGrado() + " - Turno " + grado.getTurno() + " - AÑO " + grado.getAño() %></h1>
+</div> 
+<%		
 if(mat_grado.getLista().isEmpty()){
 %>
-<h2>No hay materias asignadas</h2>	
+<div class="page-header">  
+	<h2>No hay materias asignadas</h2>
+</div>	
 <%}else{%>
-<h2>Listado de Materias</h2>
+<div class="page-header">
+	<h2>Listado de Materias</h2>
+</div>
 <% 
 			if (!error.equals("")) {
 %>
@@ -46,7 +54,7 @@ if(mat_grado.getLista().isEmpty()){
 <%
 			}
 %>
-<table border="2" bordercolor="666">
+<table class="table table-hover table-bordered">
 	<tr>
 		<th>Materia</th>		
 		<th>&nbsp;</th>
@@ -56,7 +64,7 @@ if(mat_grado.getLista().isEmpty()){
 %>
 	<tr>
 		<td><%= m.getMateria() %></td>	
-		<td><a href="MateriaGradoList?do=desasignar&materia=<%=m.getMateria()%>"> Desasignar</a></td>
+		<td><a href="MateriaGradoList?do=desasignar&materia=<%=m.getMateria()%>" onclick="return confirm('Esta seguro que desea desasignar?');"> Desasignar</a></td>
 	</tr>
 	
 <%
@@ -68,17 +76,19 @@ if(mat_grado.getLista().isEmpty()){
 <%
 if ((materias.getLista().size() - mat_grado.getLista().size()) == 0){
 }else{
+	
 %>
+<div class="form-group">
 <form action="MateriaGradoList" method="post">
-<table>
+<table class="table table-hover table-bordered">
 	<tr>		
 		<td>Asignar Materia</td>
 		<td>
-		<select name="materia_asignar">
+		<select name="materia_asignar" class="form-control">
 			<%
 			for (Materia m : materias.getLista()){
 				
-				if(!mat_grado.getLista().contains(m)){ //evita que se muestren las materias ya asignadas
+				if (!mat_grado.contains(m)){ //evita que se muestren las materias ya asignadas				
 					
 			%>	 			  
 		   		<option value="<%= m.getMateria()%>"><%= m.getMateria() %> </option>   			  
@@ -92,17 +102,23 @@ if ((materias.getLista().size() - mat_grado.getLista().size()) == 0){
 	</tr>
 </table>
 <br>
-<input type="submit" value="Asignar Materia">
+<center>
+<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea Asignar?');" >Asignar Materia</button>
+</center>
 </form>
+</div>
 <%}%>
 <br>
+<div class="form-group">
 <form action="grado_list.jsp" method="post">
-<input type="submit" value="Volver al menú">
+<button type="submit" class="btn btn-primary" value="Volver al menú">Volver al Listado</button>
 </form>
+</div>
 <%
 	} else {
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 </html>

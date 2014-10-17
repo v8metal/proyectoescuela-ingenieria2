@@ -40,7 +40,7 @@ public class PrecioEdit extends HttpServlet {
 			String accion = request.getParameter("accion");
 			int año = 0;
 			
-			System.out.println("accion = " + accion);
+			//System.out.println("accion = " + accion);
 			
 			switch (accion){
 			

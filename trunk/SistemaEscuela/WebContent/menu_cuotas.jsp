@@ -8,8 +8,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>			
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0"> 
+<title>Menú de Cuotas</title>
+<link rel="stylesheet" href="style/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
 <% 
 if (session.getAttribute("login") != null) {
 	
@@ -54,17 +58,21 @@ if (session.getAttribute("login") != null) {
 	
 	
 %>
-<title>Menú Cobro de Cuotas</title>
-</head>
-<body>
 	<center>
-	<h1>Menú Cobro de Cuotas</h1>	
+	
+	<div class="page-header">  	  
+		<h1>Menú Cobro de Cuotas</h1>		
+    </div>
+    
+    <div class="form-group">
 	<form action="CuotaList" method="get">
-	<table>
+	
+	<table class="table table-hover table-bordered">
+	
 	<%if(añoCuota == null){ %>
 	  <tr>
-	    <th>Seleccionar año:</th>	    
-	    <td><select name="año_cuotas">
+	    <td><label for="input">Seleccionar año:</label></td>	    
+	    <td><select class="form-control" name="año_cuotas">
 	      		<%
 	      		    int año = (Integer)session.getAttribute("añoc");
 	      			for(int i=año; i>año-20;i--){
@@ -74,28 +82,28 @@ if (session.getAttribute("login") != null) {
 	      			}
 	      		%>
 	        </select>
-	     </td>
+	     </td>         	     
 	     <td>
 	     	<input type="hidden" name="accion" value="solicitarGrados">
 	     </td> 	     
 	  </tr>
 	<%}else{ %>
 	  <tr>
-	    <th>Seleccionar año:</th>	    
+	    <td><label for="input">Seleccionar año:</label></td>	    
 	     <td>
-	     	<input type="text" size=4 readonly name="anio" value="<%=añoCuota%>">
+	     	<input class="form-control" type="text" size=4 readonly name="anio" value="<%=añoCuota%>">
 	     </td> 
 	  </tr>
 	  <%if (grados.getLista().isEmpty()) { %>
-	  <tr>
-	  	<th>Seleccionar grado-año:</th>
-	  	<td>No hay grados para el año seleccionado</td>
+	  <tr>	  	
+	  	<td><label for="input">Seleccionar grado-turno:</label></td>
+	  	<td><label for="input">No hay grados para el año seleccionado</label></td>	  	
 	  </tr>	  
 	  <%}else{%>
 	  <tr>
-	      <th>Seleccionar grado-turno:</th>
+	      <td><label for="input">Seleccionar grado-turno:</label></td>
 	      <td>
-	      	<select name="grado_anio">
+	      	<select class="form-control" name="grado_anio">
 	      	<%for (Grado g : grados.getLista()) { %>	            
 	            <option value="<%=g.getGrado() + " - " + g.getTurno()%>"><%=g.getGrado() + " - " + g.getTurno()%></option>            
 	          
@@ -108,40 +116,56 @@ if (session.getAttribute("login") != null) {
 	     <tr>
 	      <td>
 	     	<input type="hidden" name="accion" value="listarGrado">
-	      </td> 	     
-	      <td><input type="submit" value="Aceptar">
-	          <input type="reset" value="Cancelar">
-	      </td>
-	    </tr>	    
+	      </td>      
+	    </tr>	        
 	  </table>
-	</form>	
+	  
+	  <center>
+			<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave">Aceptar</button>
+			<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave">Cancelar</button>
+		</center>
+		
+	</form>
+	</div>	
 	<br>
 	<br>
 	<%if(añoCuota == null){ %>
+		
+	<div class="form-group">
 	<form action="menu_admin.jsp">
-	  <input type="submit" value="Volver al Menú Principal">
+	<button type="submit" class="btn btn-primary"  value="Volver al Menú Principal">Volver al Menú Principal</button>
 	</form>
+	</div>
+
 	<%}else{ %>	
+	
 	<a href="pagos_dia.jsp">Ver Total de Pagos por día</a>
 	<br>
-	<br>	
+	<br>
+		
 	<table>
 		<tr>
-		<td><form action="menu_cuotas.jsp"> <input type="submit" value="Seleccionar otro año"> </form></td>
-		<td><form action="menu_admin.jsp"> <input type="submit" value="Volver al Menú Principal"> </form></td>
+		<td><div class="form-group"> <form action="menu_cuotas.jsp"> <input class="btn btn-primary" type="submit" value="Seleccionar otro año"> </form></div></td>
+		<td><div class="form-group"> <form action="menu_admin.jsp"> <input class="btn btn-primary" type="submit" value="Volver al Menú Principal"> </form></div></td>
 		</tr>
 	</table>
+	
 	<%}%>
 	<br>
 	<br>
+		
+	<div class="form-group">
 	<form action="CerrarSesion">
-	  <input type="submit" value="Cerrar Sesión">
+	<button type="submit" class="btn btn-primary"  value="Cerrar Sesión">Cerrar Sesión</button>
 	</form>
+	</div>
+	
 	</center>
 	<%
 	} else {
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 </html>
