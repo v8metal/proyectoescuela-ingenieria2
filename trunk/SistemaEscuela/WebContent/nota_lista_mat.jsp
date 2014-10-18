@@ -10,7 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style/style.css" />
 <%
-	if (session.getAttribute("login") != null) {
+	if (session.getAttribute("usuario") != null) {
 		String titulo = (String)session.getAttribute("titulo");
 		
 		// recupero los atributos para seleccionar la nota
@@ -51,10 +51,10 @@
 %>
 	<tr>
 		<td><center><%=i%></center></td>
-		<td><%= m.getNombre() %></td>
+		<td><%= m.getMateria() %></td>
 			 <%
-				if (AccionesNota.estaCargada(grado, turno, año, dni, m.getCod_materia(), periodo)) {
-					Nota nota = AccionesNota.getOne(grado, turno, año, dni, m.getCod_materia(), periodo);
+				if (AccionesNota.estaCargada(grado, turno, año, dni, m.getMateria(), periodo)) {
+					Nota nota = AccionesNota.getOne(grado, turno, año, dni, m.getMateria(), periodo);
  			 %>
 		<td><center><%= nota.getCalific() == 0 ? "S/C" : nota.getCalific() %></center></td>
 			 <%

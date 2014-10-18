@@ -11,7 +11,7 @@
 </head>
 <body>
 <%
-	if (session.getAttribute("login") != null) {
+	if (session.getAttribute("usuario") != null) {
 		
 		// recupero el año_sys de la sesion y lo utilizo como año lectivo
 		int año = Integer.parseInt((String)session.getAttribute("año_sys"));

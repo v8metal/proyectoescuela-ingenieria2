@@ -15,7 +15,7 @@
 <div class="container">
 <center>
  <% 
- if (session.getAttribute("login") != null) {
+ if (session.getAttribute("admin") != null) {
 	 
  	Cuota cuota = (Cuota) session.getAttribute("pagoEdit");
     int dni = (Integer) session.getAttribute("dni");

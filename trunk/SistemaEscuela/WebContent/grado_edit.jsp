@@ -15,7 +15,7 @@
 <body>
 <div class="container">
 <%
-	if (session.getAttribute("login") != null) { 
+	if (session.getAttribute("admin") != null) { 
   
   	Grado grado = (Grado) session.getAttribute("grado_edit");
   	Grados grados = (Grados) request.getAttribute("grados_alta"); //agregado

@@ -33,15 +33,17 @@ import conexion.AccionesMaestro;
 		
 		HttpSession sesion = request.getSession();
 		
-		if(sesion.getAttribute("login")!=null){
+		if(sesion.getAttribute("admin")!=null || sesion.getAttribute("usuario")!=null){
 			
-			if(!sesion.getAttribute("login").equals("admin")){
+			if(sesion.getAttribute("usuario") != null){
 				
 				String accion = request.getParameter("do");
 				String fecha = request.getParameter("fecha");
 				String hora = request.getParameter("hora");
 				
 				int dni_maestro= (int)sesion.getAttribute("dni_maestro");
+				
+				//System.out.println("doGet accion= " + accion);
 				
 				sesion.setAttribute("accion", accion);
 				
@@ -130,13 +132,13 @@ import conexion.AccionesMaestro;
 		
 		HttpSession sesion = request.getSession();
 		
-		if(sesion.getAttribute("login")!=null){
+		if(sesion.getAttribute("admin")!= null || sesion.getAttribute("usuario") != null){
 			
-			if(!sesion.getAttribute("login").equals("admin")){
+			if(sesion.getAttribute("usuario") != null){
 				
 				String nombre_alum = request.getParameter("nombre_alum");				
 				String desc = request.getParameter("desc");
-				//String accion = (String)sesion.getAttribute("accion");
+				String accion = (String)sesion.getAttribute("accion");
 				int dni_maestro=(int)sesion.getAttribute("dni_maestro");
 				Entrevista x = (Entrevista)sesion.getAttribute("entrevista");
 				Entrevista e = new Entrevista("","",dni_maestro,nombre_alum,desc);
@@ -152,7 +154,7 @@ import conexion.AccionesMaestro;
 				
 				String accion = request.getParameter("action");
 				
-				System.out.println("accion= " + accion);
+				//System.out.println("doPost accion= " + accion);
 				
 				if(accion.equals("alta")){
 					
@@ -213,4 +215,4 @@ import conexion.AccionesMaestro;
 		}
 		
 	}   	  	    
-}
+}	

@@ -10,7 +10,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <% 
-if (session.getAttribute("login") != null) {
+if (session.getAttribute("admin") != null) {
 
    Cuotas cuotas = (Cuotas) session.getAttribute("pagosMes");//lo dejamos como session para poder utilizarlo
    int año = (Integer) session.getAttribute("año");

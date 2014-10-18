@@ -10,7 +10,7 @@
 </head>
 <body>
 <%
-	if (session.getAttribute("login") != null) {
+	if (session.getAttribute("admin") != null) {
 		
 	//	Alumno a = (Alumno)session.getAttribute("alumno");
 		Observaciones o = (Observaciones)session.getAttribute("observaciones");

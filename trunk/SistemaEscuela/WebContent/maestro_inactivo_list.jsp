@@ -11,7 +11,7 @@
 </head>
 <body>
 <%
-	if (session.getAttribute("login") != null) {
+	if (session.getAttribute("admin") != null) {
 		
 		Maestros maestros = (Maestros)session.getAttribute("maestros");
 		

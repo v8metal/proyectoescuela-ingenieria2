@@ -13,7 +13,7 @@
 </head>
 <body>
 <%
-	if (session.getAttribute("login") != null) {
+	if (session.getAttribute("usuario") != null) {
 
 		//update de sancion
 		Citacion c = (Citacion) session.getAttribute("citacion_edit");

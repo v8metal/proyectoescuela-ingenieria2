@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="style/bootstrap.min.css">
 
 <%
-if (session.getAttribute("login") != null) {
+if (session.getAttribute("admin") != null) {
 	
 	PreciosMes preciosMes = (PreciosMes) session.getAttribute("preciosMes");
  	PreciosInscrip preciosInscrip = (PreciosInscrip) session.getAttribute("preciosInscrip"); 

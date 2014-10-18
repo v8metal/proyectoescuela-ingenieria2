@@ -9,7 +9,7 @@
 </head>
 <body>
 <%
-	if (session.getAttribute("login") != null) {
+	if (session.getAttribute("admin") != null) {
 %>
 <div class="container">  
   <div class="page-header">

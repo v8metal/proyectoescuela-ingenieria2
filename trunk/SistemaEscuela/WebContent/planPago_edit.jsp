@@ -17,7 +17,7 @@
 <div class="container">
 <center>
  <% 
- if (session.getAttribute("login") != null) {
+ if (session.getAttribute("admin") != null) {
 	 
  	PlanPago plan = (PlanPago) request.getAttribute("PlanPago"); 	
  	Alumnos alumnos = (Alumnos) session.getAttribute("alumnos_PlanPagos");

@@ -17,7 +17,7 @@
 	<h1>Listado de Materias Activas</h1>
   </div>
 <%
-	if (session.getAttribute("login") != null) {
+	if (session.getAttribute("admin") != null) {
 		
 		String error = "";
 		if (session.getAttribute("error") != null) {

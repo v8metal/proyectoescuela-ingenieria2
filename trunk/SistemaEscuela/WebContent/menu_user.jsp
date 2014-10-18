@@ -10,7 +10,7 @@
 </head>
 <body>
 <%
-	if (session.getAttribute("login") != null) {
+	if (session.getAttribute("usuario") != null) {
 		
 		Maestro maestro = (Maestro)session.getAttribute("maestro");
 		String titulo = "Bienvenido/a " + maestro.getNombre();

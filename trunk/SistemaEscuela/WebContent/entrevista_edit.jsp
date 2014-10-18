@@ -13,9 +13,9 @@
 <body>
 <div class="container">
 <%
-	if (session.getAttribute("login") != null) {
-		
-		if(!session.getAttribute("login").equals("admin")){
+if(session.getAttribute("admin")!=null || session.getAttribute("usuario")!=null){
+	
+		if(session.getAttribute("usuario") != null){
 			Entrevista entrevista = (Entrevista)session.getAttribute("entrevista");
 			%>
 			 <center>

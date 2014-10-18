@@ -8,6 +8,10 @@
 <title>Login</title>
 </head>
 <body>
+<%
+	if (session.getAttribute("usuario") != null) {
+%>
+
 <h1>Administración de usuario</h1>
 <%	String error = "";
 	if (session.getAttribute("error") != null) {
@@ -36,5 +40,10 @@
 </form>
 <br>
 <strong><a href="menu_user.jsp">Volver al menú</a><br></strong>
+<%
+	} else {
+		response.sendRedirect("login.jsp");
+	}
+%>
 </body>
 </html>

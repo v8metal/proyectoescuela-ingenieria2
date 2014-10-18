@@ -19,7 +19,7 @@
   </div>  
   
 <%
-	if (session.getAttribute("login") != null) {	
+	if (session.getAttribute("admin") != null) {	
 		 
 		Grados grados = (Grados)session.getAttribute("grados_alta");
 		Grados gradosp = (Grados)session.getAttribute("grados_pendientes");
