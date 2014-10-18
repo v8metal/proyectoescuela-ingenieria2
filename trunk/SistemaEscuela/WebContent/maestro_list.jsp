@@ -68,6 +68,7 @@ if (maestros.getLista().size() == 0){
 	}
  %>
 </table>
+<center>
 <br>
     <a href="maestroEdit?accion=alta"> Agregar Maestro</a>
   	
@@ -78,6 +79,7 @@ if (maestros.getLista().size() == 0){
   	<a href="MaestroList?tipo=inactivos">Listado de maestros inactivos</a>
 <br>
 <%}%>
+</center>
 <br>
 <div class="form-group">
 <form action="menu_admin.jsp" method="post">

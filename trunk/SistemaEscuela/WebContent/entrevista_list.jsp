@@ -65,12 +65,13 @@ if (entrevistas.getLista().isEmpty()){
 	}
  %>
 </table>
-</div>
 <%}
 if(session.getAttribute("admin") != null){
 	%>
 	<br>
-	<a href="EntrevistaEdit?do=alta">Agregar Entrevista</a>	
+	<center>
+	<a href="EntrevistaEdit?do=alta">Agregar Entrevista</a>
+	</center>	
 	<br>
 	<br>
 	<div class="form-group">
