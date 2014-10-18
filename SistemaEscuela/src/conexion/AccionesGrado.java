@@ -480,7 +480,7 @@ public static int getCurrentYear(Grado g) {
 	
 		Statement stmt = Conexion.conectar().createStatement();
 		
-		System.out.println("INSERT INTO MATERIAS_GRADO VALUES ('" + grado + "','"+ turno + "'," + año + ", '" + materia + "')");
+		//System.out.println("INSERT INTO MATERIAS_GRADO VALUES ('" + grado + "','"+ turno + "'," + año + ", '" + materia + "')");
 		
 		stmt.executeUpdate("INSERT INTO MATERIAS_GRADO VALUES ('" + grado + "','"+ turno + "'," + año + ", '" + materia + "')");
 		

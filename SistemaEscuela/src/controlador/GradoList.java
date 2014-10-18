@@ -47,9 +47,17 @@ import datos.Grados;
 		
 		sesion.setAttribute("grados_pendientes",  grados);
 		
-		response.sendRedirect("grado_list.jsp");
-	}
+		String listar = request.getParameter("listar");
 		
+		if (listar.equals("mañana")){
+			response.sendRedirect("grados_mañana_list.jsp");
+		}
+		
+		if (listar.equals("tarde")){
+			response.sendRedirect("grado_tarde_list.jsp");
+		}
+		
+	}
 	
 	/* (non-Java-doc)
 	 * @see javax.servlet.http.HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

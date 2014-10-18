@@ -38,48 +38,23 @@
 
         </li>
 
-        <li> <a href="GradoList">Grados</a></li>            
-        
         <li class="dropdown">
-        <a href="#" data-toggle="dropdown" class="dropdown-toggle">Maestros <b class="caret"></b></a>
-        
-         	<ul class="dropdown-menu">
-                            
-                <li><a href="maestroList">Listado</a></li>				
-                <li><a href="maestroEdit?accion=alta">Nuevo maestro</a></li>       
+         
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Grados <b class="caret"></b></a>
+
+            <ul class="dropdown-menu">
+
+                <li> <a href="GradoList?listar=mañana">Turno Mañana</a></li>
+                <li> <a href="GradoList?listar=tarde">Turno Tarde</a></li>     
 
             </ul>
-        </li>    
+
+        </li>                    
         
+        <li> <a href="maestroList">Maestros</a></li>        
         <li> <a href="materiaList?from=menu_admin">Materias</a></li>
-        
-        <li class="dropdown">
-         
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Tardanzas <b class="caret"></b></a>
-
-            <ul class="dropdown-menu">
-
-  				<li> <a href="tardanza_list.jsp">Listado</a></li>
-                <li> <a href="tardanza_edit.jsp">Nueva tardanza</a></li>
-               				      
-
-            </ul>
-
-        </li>   
-        
-        <li class="dropdown">
-         
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Entrevistas <b class="caret"></b></a>
-
-            <ul class="dropdown-menu">
-
-                <li> <a href="EntrevistaList">Listado</a></li>
-                <li> <a href="EntrevistaEdit?do=alta">Nueva entrevista</a></li>				      
-
-            </ul>
-
-        </li>
-                    
+        <li> <a href="tardanza_list.jsp">Tardanzas</a></li>              
+        <li> <a href="EntrevistaList">Entrevistas</a></li>             
         <li> <a href="menu_cuotas.jsp">Cobro de Cuotas</a></li>        
         <li> <a href="UsuarioList">Gestionar Usuarios</a></li>       
 

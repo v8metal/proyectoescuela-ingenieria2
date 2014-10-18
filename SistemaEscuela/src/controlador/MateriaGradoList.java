@@ -117,7 +117,7 @@ import datos.MateriasGrado;
 		
 		String materia = (String) request.getParameter("materia_asignar");
 		
-		System.out.println("materia_asignar= " + materia);		
+		//System.out.println("materia_asignar= " + materia);		
 		
 		try {
 			
