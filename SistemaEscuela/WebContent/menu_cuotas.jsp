@@ -15,7 +15,7 @@
 <body>
 <div class="container">
 <% 
-if (session.getAttribute("login") != null) {
+if (session.getAttribute("admin") != null) {
 	
 	Integer añoCuota = null;
 	Grados grados = null;

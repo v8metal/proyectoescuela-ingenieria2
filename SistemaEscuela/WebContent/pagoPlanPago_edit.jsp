@@ -18,7 +18,7 @@
 <div class="container">
 <center>
  <% 
- 	if (session.getAttribute("login") != null) {
+ 	if (session.getAttribute("admin") != null) {
  
  	 	PlanPago plan = (PlanPago) session.getAttribute("planPagos");	
  	 	PagoPlanPago ppp = (PagoPlanPago) request.getAttribute("pagopp");

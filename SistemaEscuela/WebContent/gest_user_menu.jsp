@@ -16,7 +16,7 @@
 <body>
 <div class="container">
 <%
-	if (session.getAttribute("login") != null) {
+	if (session.getAttribute("admin") != null) {
 		String titulo = (String)session.getAttribute("titulo");
 		Usuarios usuarios = (Usuarios) session.getAttribute("usuarios");
 		Maestros maestros = (Maestros) session.getAttribute("activos");

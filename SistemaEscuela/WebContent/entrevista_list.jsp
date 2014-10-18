@@ -13,23 +13,23 @@
 </head>
 <body>
 <div class="container">
-  
-	<div class="page-header">  
-	
-
 <%
 
-if (session.getAttribute("login") != null) {
+if(session.getAttribute("admin")!=null || session.getAttribute("usuario")!=null){
 	
 session.removeAttribute("entrevista_edit");
 session.removeAttribute("maestros_ent_alta");
 Entrevistas entrevistas = (Entrevistas)session.getAttribute("entrevistas");
-
+%>
+<div class="page-header">
+<%  
 if (entrevistas.getLista().isEmpty()){
 %>
 <h1>No hay entrevistas cargadas</h1>
+</div>
 <%}else{%> 
 <h1>Listado de Entrevistas</h1>
+</div>
 <table class="table table-hover table-bordered">
 	<tr>
 		<th>Fecha</th>
@@ -67,7 +67,7 @@ if (entrevistas.getLista().isEmpty()){
 </table>
 </div>
 <%}
-if(session.getAttribute("login").equals("admin")){
+if(session.getAttribute("admin") != null){
 	%>
 	<br>
 	<a href="EntrevistaEdit?do=alta">Agregar Entrevista</a>	

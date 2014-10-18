@@ -8,7 +8,7 @@
 <title>Sistema Alumnado</title>
 </head>
 <body>  
-<%if (session.getAttribute("login") != null) { %>
+<%if (session.getAttribute("admin") != null) { %>
 <center>
   <h1>Precios de Cuotas/Inscripciones</h1>
     <form action="PrecioList" method="post">

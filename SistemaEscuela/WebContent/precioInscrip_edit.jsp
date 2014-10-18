@@ -11,7 +11,7 @@
 <body>
 <div class="container">
 <%
-if (session.getAttribute("login") != null) {
+if (session.getAttribute("admin") != null) {
 	
 	int dia = 0;
 	String mes = "";

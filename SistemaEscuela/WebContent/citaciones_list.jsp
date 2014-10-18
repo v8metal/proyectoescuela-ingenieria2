@@ -13,7 +13,7 @@
 </head>
 <body>
 <%
-	if (session.getAttribute("login") != null) {
+	if (session.getAttribute("usuario") != null) {
 	
 		session.removeAttribute("citacion_edit");
 		session.removeAttribute("alumnos_citacion");

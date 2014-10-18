@@ -9,7 +9,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <% 
-if (session.getAttribute("login") != null) {	
+if (session.getAttribute("admin") != null) {	
 
      Alumnos alumnos = (Alumnos) session.getAttribute("alumnos_cuota");
      String grado = (String) session.getAttribute("gradoCuota");

@@ -12,7 +12,7 @@
 <body>
 <div class="container">
 <%
-	if (session.getAttribute("login") != null) {
+	if (session.getAttribute("admin") != null) {
 		
 		Maestro maestro = (Maestro)request.getAttribute("maestro");
 		

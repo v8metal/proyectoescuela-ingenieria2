@@ -11,16 +11,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style/style.css" />
 <%
-	if (session.getAttribute("login") != null) {
+	if (session.getAttribute("usuario") != null) {
 		String titulo = (String)session.getAttribute("titulo");
 		
 		int dni = Integer.parseInt((String)session.getAttribute("dni_alum"));
-		int cod_materia = (Integer)session.getAttribute("cod_materia");
+		String materia = (String)session.getAttribute("materia");
 		String periodo = (String)session.getAttribute("periodo");
 		
 		int calific = (Integer)session.getAttribute("calific");
 		
-		Materia m = AccionesMateria.getOne(cod_materia);
+		Materia m = AccionesMateria.getOne(materia);
 		
 		// traigo el objeto alumno para usar su apellido y nombre
 		Alumno a = AccionesAlumno.getOne(dni);
@@ -44,7 +44,7 @@
 		<th>Nota</th>
 	</tr>
 	<tr>
-		<td><%= m.getNombre() %></td>
+		<td><%= m.getMateria() %></td>
 		<td>
 			<select name="calific">
 				<option value="0">S/C</option>

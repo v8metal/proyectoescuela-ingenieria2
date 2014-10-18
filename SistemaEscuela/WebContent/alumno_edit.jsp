@@ -10,7 +10,7 @@
 </head>
 <body>
 <%
-	if (session.getAttribute("login") != null) {
+	if (session.getAttribute("admin") != null) {
 %>
 <center><h1>FICHA IDENTIFICATORIA DEL ALUMNO</h1></center>
 <%	String error = "";

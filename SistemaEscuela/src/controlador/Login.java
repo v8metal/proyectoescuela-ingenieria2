@@ -67,7 +67,8 @@ public class Login extends HttpServlet {
 							
 				if (dni == 0) {
 					
-					sesion.setAttribute("login", usuario);
+					//sesion.setAttribute("login", usuario);
+					sesion.setAttribute("admin", usuario);
 					response.sendRedirect("menu_admin.jsp");
 					
 				} else if (dni > 0){
@@ -81,7 +82,8 @@ public class Login extends HttpServlet {
 					
 					}else{
 					
-						sesion.setAttribute("login", usuario);			
+						//sesion.setAttribute("login", usuario);			
+						sesion.setAttribute("usuario", usuario);
 		//				sesion.setAttribute("cod_maest", cod_maest);
 						Maestro maestro = AccionesMaestro.getOne(dni);
 						sesion.setAttribute("maestro", maestro);

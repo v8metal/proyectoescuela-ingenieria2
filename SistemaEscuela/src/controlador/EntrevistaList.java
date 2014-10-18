@@ -35,10 +35,11 @@ import datos.Entrevistas;
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sesion = request.getSession();		
-		if(sesion.getAttribute("login")!=null){
+		if(sesion.getAttribute("admin")!=null || sesion.getAttribute("usuario")!=null){
 			
 		Entrevistas entrevistas=null;
-		if(!sesion.getAttribute("login").equals("admin")){
+		
+		if(sesion.getAttribute("usuario") != null){
 			int dni_maestro = (int)sesion.getAttribute("dni_maestro");
 			try {
 				entrevistas = AccionesEntrevista.getAllEntrevistas_Maestro(dni_maestro);

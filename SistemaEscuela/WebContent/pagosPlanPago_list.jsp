@@ -13,7 +13,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <% 
-if (session.getAttribute("login") != null) {
+if (session.getAttribute("admin") != null) {
 	
 PagosPlanPago pp = (PagosPlanPago) request.getAttribute("pagospp");
    PlanPago plan = (PlanPago) session.getAttribute("planPagos");

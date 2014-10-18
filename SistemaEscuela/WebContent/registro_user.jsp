@@ -14,7 +14,7 @@
 <body>
 <div class="container">
 <%
-	if (session.getAttribute("login") != null) {
+	if (session.getAttribute("admin") != null) {
 		
 		Maestros maestros = (Maestros) session.getAttribute("activos");
 		

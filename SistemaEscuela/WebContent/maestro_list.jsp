@@ -17,7 +17,7 @@
 	<h1>Listado de Maestros Activos</h1>
   </div>
 <%
-	if (session.getAttribute("login") != null) {
+	if (session.getAttribute("admin") != null) {
 		
 		Maestros maestros = (Maestros)session.getAttribute("maestros");
 		Maestros maestros_inac = (Maestros)session.getAttribute("maestros_inac");

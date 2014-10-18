@@ -17,7 +17,7 @@
 </head>
 <body>
 <%
-	if (session.getAttribute("login") != null) {
+	if (session.getAttribute("usuario") != null) {
 %>
 	<center>
 	<h1>Listado de Asistencias</h1>

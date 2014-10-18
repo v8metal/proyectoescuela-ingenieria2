@@ -14,6 +14,9 @@
 <title>Alumnos</title>
 </head>
 <body>
+<%
+	if (session.getAttribute("admin") != null) {
+%>
 <center>
 	<h1>Listado de Tardanzas</h1>
 	<form action="TardanzaList" method="get" id="formGrado" onsubmit="return validarGrado()">
@@ -150,5 +153,10 @@
 	 }
  }
 	</script> 
+<%
+	} else {
+		response.sendRedirect("login.jsp");
+	}
+%>
 </body>
 </html>

@@ -11,7 +11,7 @@
 </head>
 <div class="container">
 <%
-	if (session.getAttribute("login") != null) {
+	if (session.getAttribute("admin") != null) {
 		
 		String error = "";
 		if (session.getAttribute("error") != null) {
