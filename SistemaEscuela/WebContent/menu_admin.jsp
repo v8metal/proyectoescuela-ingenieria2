@@ -28,20 +28,29 @@
 
             <ul class="dropdown-menu">
 
-                <li><a href="alumno_edit.jsp">Ingresar nuevo alumno</a></li>
-
-                <li><a href="menu_listado_alum.jsp">Listado de alumnos</a></li>
-
+                <li><a href="menu_listado_alum.jsp">Listado</a></li>               
+                <li><a href="alumno_edit.jsp">Nuevo alumno</a></li>
 				<li class="divider"></li>
 				
-                <li><a href="alumnoInactivo?do=listar">Alumnos dados de baja</a></li>       
+                <li><a href="alumnoInactivo?do=listar">Listado bajas</a></li>       
 
             </ul>
 
         </li>
 
         <li> <a href="GradoList">Grados</a></li>            
-        <li> <a href="maestroList">Maestros</a></li>
+        
+        <li class="dropdown">
+        <a href="#" data-toggle="dropdown" class="dropdown-toggle">Maestros <b class="caret"></b></a>
+        
+         	<ul class="dropdown-menu">
+                            
+                <li><a href="maestroList">Listado</a></li>				
+                <li><a href="maestroEdit?accion=alta">Nuevo maestro</a></li>       
+
+            </ul>
+        </li>    
+        
         <li> <a href="materiaList?from=menu_admin">Materias</a></li>
         
         <li class="dropdown">
@@ -50,15 +59,27 @@
 
             <ul class="dropdown-menu">
 
-                <li> <a href="tardanza_edit.jsp">Alta</a></li>
+  				<li> <a href="tardanza_list.jsp">Listado</a></li>
+                <li> <a href="tardanza_edit.jsp">Nueva tardanza</a></li>
+               				      
 
-                <li> <a href="tardanza_list.jsp">Listado</a></li>				      
+            </ul>
+
+        </li>   
+        
+        <li class="dropdown">
+         
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Entrevistas <b class="caret"></b></a>
+
+            <ul class="dropdown-menu">
+
+                <li> <a href="EntrevistaList">Listado</a></li>
+                <li> <a href="EntrevistaEdit?do=alta">Nueva entrevista</a></li>				      
 
             </ul>
 
         </li>
-        
-        <li> <a href="EntrevistaList">Entrevistas</a></li>                
+                    
         <li> <a href="menu_cuotas.jsp">Cobro de Cuotas</a></li>        
         <li> <a href="UsuarioList">Gestionar Usuarios</a></li>       
 
