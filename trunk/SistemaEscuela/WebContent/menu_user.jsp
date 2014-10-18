@@ -4,9 +4,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0"> 
 <title>Menú Usuario</title>
+<link rel="stylesheet" href="style/bootstrap.min.css">
 </head>
 <body>
 <%
@@ -15,23 +15,72 @@
 		Maestro maestro = (Maestro)session.getAttribute("maestro");
 		String titulo = "Bienvenido/a " + maestro.getNombre();
 %>
-<center>
+<div class="container">  
+  <div class="page-header">
+  <center> 
 <h1><%= titulo %></h1>
-<strong><a href="menu_sanciones.jsp">Sanciones</a><br></strong>
-<strong><a href="menu_asistencias.jsp">Asistencias</a><br></strong>
-<strong><a href="nota_menu.jsp">Notas</a><br></strong>
-<strong><a href="EntrevistaList">Entrevistas</a><br></strong>
-<strong><a href="menu_citaciones.jsp">Citaciones</a><br></strong>
-<strong><a href="admin_user.jsp">Administración de cuenta</a><br></strong>
+  </center>
+  </div>
+
+    <ul class="nav nav-pills">
+    
+		<li class="active"><a href="#">Inicio</a></li>		
+        <li class="dropdown">      
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Sanciones<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="sanciones_select.jsp?action=listar">Listado</a></li>               
+                <li><a href="SancionEdit?do=alta">Nueva sancion</a></li>      
+            </ul>
+        </li>
+        
+         <li class="dropdown">      
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Asistencias<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="AsistenciaList">Listado</a></li>               
+                <li><a href="AsistenciaListEdit">Nueva asistencia</a></li>      
+            </ul>
+        </li>
+        
+         <li> <a href="nota_menu.jsp">Notas</a></li>
+  			
+  		<li class="dropdown">      
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Entrevistas<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="EntrevistaList">Listado</a></li>                     
+            </ul>
+        </li>
+        
+        <li class="dropdown">      
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Citaciones<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="citaciones_select.jsp?action=listar">Listado</a></li>
+                <li><a href="CitacionEdit?do=alta">Nueva citacion</a></li>                      
+            </ul>
+        </li>
+        
+        <li> <a href="admin_user.jsp">Administración de cuenta</a></li>
+        
+  	</ul>
 <br>
+<br>
+<center>
+</center>
+<br>
+<br>
+<center>  
 <form action="cerrarSesion" method="post">
-<input type="submit" value="Cerrar sesion">
+<div class="form-group">
+<button type="submit" class="btn btn-primary" value="Cerrar sesion">Cerrar sesion</button>
+</div>
 </form>
 </center>
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <%
 	} else {
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 </html>
