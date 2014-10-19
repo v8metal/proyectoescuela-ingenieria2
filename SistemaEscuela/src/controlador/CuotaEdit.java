@@ -32,7 +32,7 @@ public class CuotaEdit extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sesion = request.getSession();
 		
-		if(sesion.getAttribute("login")!=null){
+		if(sesion.getAttribute("admin") != null){
 
 			//System.out.println("CuotaEdit doGet");
 			

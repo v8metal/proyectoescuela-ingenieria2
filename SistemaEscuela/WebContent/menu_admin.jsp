@@ -53,7 +53,7 @@
         
         <li> <a href="maestroList">Maestros</a></li>        
         <li> <a href="materiaList?from=menu_admin">Materias</a></li>
-        <li> <a href="tardanza_list.jsp">Tardanzas</a></li>              
+        <li> <a href="menu_tardanzas.jsp">Tardanzas</a></li>              
         <li> <a href="EntrevistaList">Entrevistas</a></li>             
         <li> <a href="menu_cuotas.jsp">Cobro de Cuotas</a></li>        
         <li> <a href="UsuarioList">Gestionar Usuarios</a></li>       

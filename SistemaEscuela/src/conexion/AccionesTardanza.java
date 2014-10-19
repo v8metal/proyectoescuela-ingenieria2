@@ -9,22 +9,27 @@ import datos.Tardanza;
 import datos.Tardanzas;
 
 public class AccionesTardanza {
+	
 	public static int altaTardanza(Tardanza t) throws Exception{
 		Statement stm = Conexion.conectar().createStatement();
-		int i = stm.executeUpdate("INSERT INTO TARDANZAS VALUES("+t.getDni()+",curdate(),'"+t.getObservaciones()+"','"+t.getTipo()+"','"+t.getIndicador()+"')");
+		
+		//System.out.println("INSERT INTO TARDANZAS VALUES("+ t.getDni() + ",'" + t.getFecha()+ "','"+ t.getObservaciones()+"','" + t.getTipo() + "','"+ t.getIndicador()+"')");
+		
+		int i = stm.executeUpdate("INSERT INTO TARDANZAS VALUES("+ t.getDni() + ",'" + t.getFecha()+ "','"+ t.getObservaciones()+"','" + t.getTipo() + "','"+ t.getIndicador()+"')");
 		stm.close();
 		Conexion.desconectar();
 		return i;
 	}
 	
-	public static Tardanzas getAllTardanzas(int dni) throws Exception{
+	public static Tardanzas getAllTardanzas(String grado, String turno, int año) throws Exception{
 		Tardanzas tardanzas = new Tardanzas();
 		try{
 			Statement stm = Conexion.conectar().createStatement();
-			ResultSet rs = stm.executeQuery("SELECT * FROM TARDANZAS WHERE DNI="+dni+" AND INDICADOR='T'");
+						
+			ResultSet rs = stm.executeQuery("SELECT T.DNI, T.FECHA, T.OBSERVACIONES FROM TARDANZAS T INNER JOIN ALUMNOS_GRADO AG ON AG.DNI = T.DNI AND AG.AÑO = " + año + " AND AG.GRADO = '"+ grado +"' WHERE T.TIPO = 'T' AND T.FECHA BETWEEN '" + año + "-01-01' AND '" + año + "-12-31'ORDER BY FECHA");
 			Tardanza t;
 			while(rs.next()){
-				t = new Tardanza(rs.getInt("DNI"),rs.getString("FECHA"),rs.getString("OBSERVACIONES"),rs.getString("TIPO"),rs.getString("INDICADOR"));
+				t = new Tardanza(rs.getInt("DNI"),rs.getString("FECHA"),rs.getString("OBSERVACIONES"),"T","");
 				tardanzas.agregarTardanza(t);
 			}
 			stm.close();
@@ -40,7 +45,7 @@ public class AccionesTardanza {
 		int i=0;
 		try{
 			Statement stm = Conexion.conectar().createStatement();
-			i=stm.executeUpdate("DELETE FROM TARDANZAS WHERE DNI="+dni+" AND FECHA='"+fecha+"'");
+			i=stm.executeUpdate("DELETE FROM TARDANZAS WHERE TIPO = 'T' AND DNI="+dni+" AND FECHA='"+fecha+"'");
 			stm.close();
 			Conexion.desconectar();
 		}catch(SQLException sqle){
@@ -49,11 +54,14 @@ public class AccionesTardanza {
 		return i;
 	}
 	
-	public static int modificarTardanza(Tardanza t, int dni, String fecha) throws Exception{
+	public static int modificarTardanza(Tardanza t, String fecha) throws Exception{
 		int i=0;
 		try{
 			Statement stm = Conexion.conectar().createStatement();
-			i = stm.executeUpdate("UPDATE TARDANZAS SET DNI="+t.getDni()+",FECHA='"+t.getFecha()+"',OBSERVACIONES='"+t.getObservaciones()+"',TIPO='"+t.getTipo()+"' WHERE DNI='"+dni+"' AND FECHA='"+fecha+"'");
+			
+			//System.out.println("UPDATE TARDANZAS SET FECHA='"+ t.getFecha()+ "',OBSERVACIONES='"+t.getObservaciones() +"' WHERE TIPO = 'T' AND DNI='"+ t.getDni() +"' AND FECHA='" + fecha +"'");
+			
+			i = stm.executeUpdate("UPDATE TARDANZAS SET FECHA='"+ t.getFecha()+ "',OBSERVACIONES='"+t.getObservaciones() +"' WHERE TIPO = 'T' AND DNI='"+ t.getDni() +"' AND FECHA='" + fecha +"'");
 			stm.close();
 			Conexion.desconectar();
 		}catch(SQLException sqle){
@@ -66,7 +74,7 @@ public class AccionesTardanza {
 		Tardanza t =null;
 		try{
 			Statement stm = Conexion.conectar().createStatement();
-			ResultSet rs = stm.executeQuery("SELECT * FROM TARDANZAS WHERE DNI="+dni+" AND FECHA='"+fecha+"'");
+			ResultSet rs = stm.executeQuery("SELECT * FROM TARDANZAS WHERE TIPO = 'T' AND DNI="+dni+" AND FECHA='"+fecha+"'");
 			while(rs.next()){
 				t = new Tardanza(rs.getInt("DNI"),rs.getString("FECHA"),rs.getString("OBSERVACIONES"),rs.getString("TIPO"),rs.getString("INDICADOR"));
 			}	
