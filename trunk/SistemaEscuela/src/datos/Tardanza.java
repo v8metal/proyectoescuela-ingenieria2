@@ -8,9 +8,11 @@ public class Tardanza {
 	private String observaciones;
 	private String tipo;
 	private String indicador;
+	
 	public Tardanza(){
 		
 	}
+	
 	public Tardanza(int dni, String fecha, String observaciones, String tipo,
 			String indicador) {
 		super();
