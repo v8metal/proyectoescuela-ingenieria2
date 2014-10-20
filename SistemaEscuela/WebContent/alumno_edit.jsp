@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
+<!--   <link rel="stylesheet" type="text/css" href="style/style.css" />		-->
 <title>Editar Alumno</title>
 </head>
 <body>
@@ -88,7 +88,9 @@
 	</tr>
 	<tr>
 		<td>Fecha de nacimiento: </td>
-		<td><select name="dia_nac_alum">   
+		<td><input name="form_date" id="form_date" type="date"></td>
+<!--  		
+			<td><select name="dia_nac_alum">   
 			<%  
 				for (int i = 1; i <= 31; i++){			  	
  			 %>
@@ -120,6 +122,7 @@
 			 	}
 			 %>
   			 </select>
+ -->			 
 	</tr>
 	<tr>
 		<td>D.N.I.: </td>

@@ -6,8 +6,8 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width; initial-scale=1.0"> 
-<title>Listado de maestros</title>
 <link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
+<title>Listado de maestros</title>
 </head>
 <body>
 

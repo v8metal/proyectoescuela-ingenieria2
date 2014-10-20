@@ -26,7 +26,7 @@
     
 		<li class="active"><a href="#">Inicio</a></li>		
         <li class="dropdown">      
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Sanciones<b class="caret"></b></a>
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Sanciones   <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li><a href="sanciones_select.jsp?action=listar">Listado</a></li>               
                 <li><a href="SancionEdit?do=alta">Nueva sancion</a></li>      
@@ -34,7 +34,7 @@
         </li>
         
          <li class="dropdown">      
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Asistencias<b class="caret"></b></a>
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Asistencias   <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li><a href="AsistenciaList">Listado</a></li>               
                 <li><a href="AsistenciaListEdit">Nueva asistencia</a></li>      
@@ -44,36 +44,32 @@
          <li> <a href="nota_menu.jsp">Notas</a></li>
   			
   		<li class="dropdown">      
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Entrevistas<b class="caret"></b></a>
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Entrevistas   <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li><a href="EntrevistaList">Listado</a></li>                     
             </ul>
         </li>
         
         <li class="dropdown">      
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Citaciones<b class="caret"></b></a>
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Citaciones   <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li><a href="citaciones_select.jsp?action=listar">Listado</a></li>
                 <li><a href="CitacionEdit?do=alta">Nueva citacion</a></li>                      
             </ul>
         </li>
         
-        <li> <a href="admin_user.jsp">Administración de cuenta</a></li>
+        <li> <a href="admin_user.jsp">Administración de cuenta   </a></li>
         
   	</ul>
 <br>
 <br>
-<center>
-</center>
 <br>
 <br>
-<center>  
 <form action="cerrarSesion" method="post">
 <div class="form-group">
 <button type="submit" class="btn btn-primary" value="Cerrar sesion">Cerrar sesion</button>
 </div>
 </form>
-</center>
 <script src="js/jquery-1.7.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <%

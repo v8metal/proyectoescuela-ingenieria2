@@ -97,7 +97,7 @@
 		 
 		%>
 		<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="<%=mensaje%>">Guardar</button>
-		<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave">Cancelar</button>
+		<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnCancel">Cancelar</button>
 		</center>		
 	</form> 
 	</div>

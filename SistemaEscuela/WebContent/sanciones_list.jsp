@@ -7,11 +7,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0">
 <title>Listado de Sanciones</title>
+<link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 </head>
 <body>
+<div class="container">
 <%
 	if (session.getAttribute("usuario") != null) {
 	
@@ -37,13 +38,15 @@
 <%
 if (sanciones.getLista().isEmpty()){	
 %>
+<div class="page-header">
 <h1>No hay sanciones para el año seleccionado</h1>
+</div>
 <%	
 }else{
 %>
 <h1>Listado de Sanciones</h1>
 
-<table border="2" bordercolor="666">
+<table  class="table table-hover table-bordered">
 	<tr>
 		<th>Apellido y Nombres</th>
 		<th>Grado</th>
@@ -82,17 +85,20 @@ if (sanciones.getLista().isEmpty()){
 </table>
 <%} %>
 <br>
+<div class="form-group">
 <form action="<%=volver%>" method="<%=method%>">
 <%if (b){%> 
 <input type="hidden" name="accion" value="alta">
 <%}%>
-<input type="submit" value="Volver">
+<input type="submit" class="btn btn-primary" value="Volver">
 </form>
+</div>
 </center>
 <%
 	} else {
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 </html>

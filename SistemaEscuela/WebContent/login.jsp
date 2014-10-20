@@ -4,8 +4,8 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width; initial-scale=1.0"> 
-<title>Sistema de alumnado</title>
 <link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
+<title>Sistema de alumnado</title>
 </head>
 <body>
   <div class="container">
@@ -18,6 +18,7 @@
 		session.setAttribute("error", "");		
 	} 
  %>
+ <div class="form-group">
 <form action="login" method="post">
      <div class="form-group">
          <label for="inputEmail">Usuario</label>
@@ -27,8 +28,9 @@
          <label for="inputPassword">Contraseña</label>
          <input type="password" name="contraseña" class="form-control" placeholder="Contraseña">
      </div>     
-     <button type="submit" class="btn btn-primary">Entrar</button>
+     <button type="submit" class="btn btn-primary">Ingresar</button>
 </form>
+</div>
 </div> 
 </body>
 </html>

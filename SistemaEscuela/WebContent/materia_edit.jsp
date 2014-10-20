@@ -34,7 +34,6 @@
 		session.setAttribute("error", "");
 	}
  %> 
-  <body>
     <% 
 			if (!error.equals("")) {
 %>
@@ -84,5 +83,6 @@
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 </html>

@@ -72,7 +72,8 @@ if (session.getAttribute("admin") != null) {
 	<%if(añoCuota == null){ %>
 	  <tr>
 	    <td><label for="input">Seleccionar año:</label></td>	    
-	    <td><select class="form-control" name="año_cuotas">
+	    <td>
+	    	<select class="form-control" name="año_cuotas">
 	      		<%
 	      		    int año = (Integer)session.getAttribute("añoc");
 	      			for(int i=año; i>año-20;i--){

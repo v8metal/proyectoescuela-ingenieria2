@@ -25,7 +25,7 @@ Entrevistas entrevistas = (Entrevistas)session.getAttribute("entrevistas");
 <%  
 if (entrevistas.getLista().isEmpty()){
 %>
-<h1>No hay entrevistas cargadas</h1>
+<h1><center>No hay entrevistas cargadas</center></h1>
 </div>
 <%}else{%> 
 <h1>Listado de Entrevistas</h1>

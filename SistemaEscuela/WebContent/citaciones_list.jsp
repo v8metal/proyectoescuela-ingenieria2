@@ -7,11 +7,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0"> 
+<link rel="stylesheet" href="style/bootstrap.min.css">
 <title>Listado de Citaciones</title>
 </head>
 <body>
+<div class="container">
 <%
 	if (session.getAttribute("usuario") != null) {
 	
@@ -37,13 +38,16 @@
 <%
 if (citaciones.getLista().isEmpty()){	
 %>
+<div class="page-header"> 
 <h1>No hay citaciones para el año seleccionado</h1>
+</div>
 <%	
 }else{
 %>
+<div class="page-header"> 
 <h1>Listado de Citaciones</h1>
-
-<table border="2" bordercolor="666">
+</div>
+<table class="table table-hover table-bordered">
 	<tr>
 		<th>Apellido y Nombres</th>
 		<th>Grado</th>
@@ -82,17 +86,20 @@ if (citaciones.getLista().isEmpty()){
 </table>
 <%} %>
 <br>
+<div class="form-group">
 <form action="<%=volver%>" method="<%=method%>">
 <%if (b){%> 
 <input type="hidden" name="accion" value="alta">
 <%}%>
-<input type="submit" value="Volver">
+<button type="submit" class="btn btn-primary"  value="Volver">Volver</button>
 </form>
+</div>
 </center>
 <%
 	} else {
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 </html>
