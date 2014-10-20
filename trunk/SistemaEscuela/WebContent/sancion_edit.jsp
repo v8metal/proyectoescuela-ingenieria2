@@ -7,11 +7,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0">
 <title>Editar Sanción</title>
+<link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 </head>
 <body>
+<div class="container">
 <%
 	if (session.getAttribute("usuario") != null) {
 
@@ -55,15 +56,22 @@
 %>
 <br>
 <%if (s != null){ %>
+<div class="page-header">
 <center><h1>MODIFICACION DE SANCION</h1></center>
+</div>
 <h2><%="Sanción para " + alumno.getNombre() + " " + alumno.getApellido()%></h2>
 <%}else if (alumnos.getLista().isEmpty() & error.equals("")){
 	empty = true;
 %>
+<div class="page-header">
 <center><h1>No hay alumnos cargados para el año</h1></center>
+</div>
 <%}else{%>
+<div class="page-header">
 <center><h1>ALTA DE SANCION</h1></center>
+</div>
 <%}%>
+<div class="form-group">
 <form action="SancionEdit" method="post">
 <%if (s != null){ %>
 <input type="hidden" name="action" value="update">
@@ -72,7 +80,7 @@
 <%}
 if (empty == false){
 %>
-<table>
+<table class="table table-hover table-bordered">
 <%if (s == null){%>
 	<tr>
 		<td>Alumno</td>
@@ -161,6 +169,7 @@ if (empty == false){
 <input type="reset" value="Cancelar">
 <%}%>
 </form>
+</div>
 <br>
 <%if (!error.equals("")) {%>
 <%=error%>
@@ -168,18 +177,21 @@ if (empty == false){
 <br>
 <%}%>
 <%
-String volver =  "menu_sanciones.jsp";
+String volver =  "menu_user.jsp";
 if (s != null){	
 	volver = "sanciones_list.jsp";
 }
 %>
+<div class="form-group">
 <form action="<%=volver%>" method="post">
-<input type="submit" value="Volver">
+<button type="submit" class="btn btn-primary"  value="Volver">Volver</button>
 </form>
+</div>
 <%
 	} else {
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 </html>

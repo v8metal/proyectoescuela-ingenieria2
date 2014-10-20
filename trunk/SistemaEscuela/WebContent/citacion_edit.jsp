@@ -7,11 +7,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/style.css" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0"> 
+<link rel="stylesheet" href="style/bootstrap.min.css">
 <title>Editar Citación</title>
 </head>
 <body>
+<div class="container">
 <%
 	if (session.getAttribute("usuario") != null) {
 
@@ -54,19 +55,24 @@
 		
 		Alumno a = AccionesAlumno.getOne(c.getDni());
 %>
+<div class="page-header"> 
 <center><h1>MODIFICACION DE CITACION</h1></center>
+</div>
 <br>
 <h2><%="Citación para " + a.getNombre() + " " + a.getApellido()%></h2>	
 <%}else if (alumnos.getLista().isEmpty() & error.equals("")){
 	empty = true;
 %>
+<div class="page-header"> 
 <center><h1>No hay alumnos cargados para el año en curso</h1></center>
+</div>
 <%}else{	
 	dia_citacion = Integer.valueOf((String)session.getAttribute("dia_sys"));
 	mes_citacion = "0" + (String) session.getAttribute("mes_sys");
 	año_citacion = Integer.valueOf((String)session.getAttribute("año_sys"));%>
 	<center><h1>ALTA DE CITACION</h1></center>
 <%}%>
+<div class="form-group">
 <form action="CitacionEdit" method="post">
 <%
 if (c == null){
@@ -76,7 +82,7 @@ if (c == null){
 <input type="hidden" name="action" value="update">
 <%}%>
 <%if (empty == false){ %>
-<table>
+<table class="table table-hover table-bordered">
 <% if (c == null){%>
 	<tr>
 		<td>Alumno</td>
@@ -165,6 +171,7 @@ if (c == null){
 <input type="reset" value="Cancelar">
 <%}%>
 </form>
+</div>
 <br>
 <%if (!error.equals("")) {%>
 <%=error%>
@@ -172,18 +179,21 @@ if (c == null){
 <br>
 <%}%>
 <%
-String volver = "menu_citaciones.jsp";
+String volver = "menu_user.jsp";
 if (c != null){
 	volver = "citaciones_list.jsp";
 }
 %>
+<div class="form-group">
 <form action="<%=volver%>" method="post">
-<input type="submit" value="Volver">
+<button type="submit" class="btn btn-primary"  value="Volver">Volver</button>
 </form>
+</div>
 <%
 	} else {
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 </html>

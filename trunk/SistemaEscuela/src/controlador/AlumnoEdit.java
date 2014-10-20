@@ -155,11 +155,16 @@ public class AlumnoEdit extends HttpServlet {
 			String nombre_alum = request.getParameter("nombre_alum");
 			String lugar_nac_alum = request.getParameter("lugar_nac_alum");				
 			// Recupero el dia, mes y año por separado
+
 			String dia_nac_alum = request.getParameter("dia_nac_alum");
 			String mes_nac_alum = request.getParameter("mes_nac_alum"); 
-			String año_nac_alum = request.getParameter("año_nac_alum"); 			
+			String año_nac_alum = request.getParameter("año_nac_alum"); 
+						
 			// Luego los uno como String en el formato aceptado por MySQL (YYYY-MM-DD)
-			String fecha_nac_alum = año_nac_alum + "-" + mes_nac_alum + "-" + dia_nac_alum;		
+
+			String fecha_nac_alum = año_nac_alum + "-" + mes_nac_alum + "-" + dia_nac_alum;	
+			
+			
 			String domicilio_alum = request.getParameter("domicilio_alum");
 			String telefono_alum = request.getParameter("telefono_alum");
 			String esc = request.getParameter("esc");
@@ -305,5 +310,6 @@ public class AlumnoEdit extends HttpServlet {
 		}
 			
 	}
+	
 	
 }
