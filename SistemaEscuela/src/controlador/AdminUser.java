@@ -68,7 +68,7 @@ import conexion.AccionesUsuario;
 				Integer dni = AccionesUsuario.validarUsuario(usuario, contraseña);
 				
 				
-				System.out.println("dni= " + dni);
+				//System.out.println("dni= " + dni);
 				
 				if (contraseña_nueva.equals(contraseña_nueva_r)){
 					
@@ -140,7 +140,7 @@ import conexion.AccionesUsuario;
 				
 				Integer dni = AccionesUsuario.validarUsuario(usuario, contraseña);
 				
-				System.out.println("dni= " + dni);
+				//System.out.println("dni= " + dni);
 				
 				if (usuario_nuevo.equals(usuario_nuevo_r)){					
 					
