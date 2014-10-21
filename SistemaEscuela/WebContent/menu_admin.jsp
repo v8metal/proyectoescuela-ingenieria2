@@ -99,7 +99,7 @@
         </li>
                   
         <li> <a href="menu_cuotas.jsp">Cobro de Cuotas</a></li>           
-        <li> <a href="UsuarioList">Gestionar Usuarios</a></li> 
+        <li> <a href="UsuarioList">Gestión de Usuarios</a></li> 
         
         <li class="dropdown">      
             <a href="#" data-toggle="dropdown" class="dropdown-toggle">Administración de cuenta<b class="caret"></b></a>
