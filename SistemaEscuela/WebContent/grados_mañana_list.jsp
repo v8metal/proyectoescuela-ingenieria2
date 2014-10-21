@@ -18,7 +18,7 @@
 	if (session.getAttribute("admin") != null) {	
 		 
 		Grados grados = (Grados)session.getAttribute("grados_alta");
-		Grados gradosp = (Grados)session.getAttribute("grados_pendientes");
+		Grados gradosp = (Grados)session.getAttribute("grados_pendientes"); //aca debe ser grados pendiente mañana
 		session.removeAttribute("grado_edit");
 %>
 <div class="page-header">  

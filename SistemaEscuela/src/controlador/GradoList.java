@@ -30,7 +30,7 @@ import datos.Grados;
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		
-			
+		
 		HttpSession sesion = request.getSession();
 		
 		if ((Grado) sesion.getAttribute("grado_edit") != null){		
@@ -43,17 +43,31 @@ import datos.Grados;
 		sesion.setAttribute("grados_alta",  grados);
 		
 		grados = new Grados();		
-		grados = AccionesGrado.getPendingAll();
-		
-		sesion.setAttribute("grados_pendientes",  grados);
-		
-		String listar = request.getParameter("listar");
+					
+		String listar = "";
+				
+		if (request.getParameter("listar") != null){
+			
+			listar = request.getParameter("listar");
+			sesion.setAttribute("listar", listar);
+			
+		}else{
+			
+			listar = (String) sesion.getAttribute("listar");
+			
+		}
 		
 		if (listar.equals("mañana")){
+			
+			grados = AccionesGrado.getPendingMañana();
+			sesion.setAttribute("grados_pendientes",  grados);
 			response.sendRedirect("grados_mañana_list.jsp");
 		}
 		
 		if (listar.equals("tarde")){
+			
+			grados = AccionesGrado.getPendingTarde();
+			sesion.setAttribute("grados_pendientes",  grados);
 			response.sendRedirect("grado_tarde_list.jsp");
 		}
 		

@@ -35,7 +35,7 @@ public class PrecioEdit extends HttpServlet {
 		
 		HttpSession sesion = request.getSession();
 		
-		if(sesion.getAttribute("login")!= null){
+		if(sesion.getAttribute("admin")!= null){
 			
 			String accion = request.getParameter("accion");
 			int año = 0;

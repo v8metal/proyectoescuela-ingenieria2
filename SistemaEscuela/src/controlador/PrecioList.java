@@ -41,7 +41,7 @@ public class PrecioList extends HttpServlet {
 		
 		//sesion.removeAttribute("añoPrecios");
 		
-		if(sesion.getAttribute("login")!=null){
+		if(sesion.getAttribute("admin")!=null){
 			
 			//modificación
 			sesion.removeAttribute("ultimoMes");
