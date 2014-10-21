@@ -204,7 +204,7 @@ if (grado != null){
 		 
 %>
 	<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="<%=mensaje%>">Guardar</button>
-	<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave">Cancelar</button>
+	<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button>
 </center>		
 </form>
 </div>
