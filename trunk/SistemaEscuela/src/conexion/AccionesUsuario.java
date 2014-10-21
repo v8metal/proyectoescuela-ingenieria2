@@ -12,17 +12,14 @@ public class AccionesUsuario {
 	
 	public static Integer validarUsuario(String usuario, String contraseña) {
 		
-		Integer code = -1;
+		Integer dni = 0;
 		
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT DNI_MAESTRO FROM USUARIOS WHERE USUARIO = '" + usuario + "' AND CONTRASEÑA = '" + contraseña + "'");
 			
 			while (rs.next()) {
-				code = rs.getInt("DNI_MAESTRO");
-				if (code.equals(null)){
-					code = 0;
-				}
+				dni = rs.getInt("DNI_MAESTRO");				
 			}
 			stmt.close();
 			Conexion.desconectar();
@@ -30,7 +27,7 @@ public class AccionesUsuario {
 			e.printStackTrace();
 		}
 		
-		return code;
+		return dni;
 	}
 	
 	public static boolean validarCuentaMaestro(int dni) {
@@ -79,7 +76,17 @@ public class AccionesUsuario {
 		Conexion.desconectar();
 	}
 	
-	public static void updateUser(String usuario, String contraseña) throws SQLException, Exception {
+	public static void updateUser(String usuario, String user) throws SQLException, Exception {
+		
+		Statement stmt = Conexion.conectar().createStatement();		
+		
+		stmt.executeUpdate("UPDATE USUARIOS SET USUARIO = '" + user + "' WHERE USUARIO = '" + usuario + "'");
+			
+		stmt.close();
+		Conexion.desconectar();		
+	}
+	
+	public static void updatePass(String usuario, String contraseña) throws SQLException, Exception {
 		
 		Statement stmt = Conexion.conectar().createStatement();		
 		
