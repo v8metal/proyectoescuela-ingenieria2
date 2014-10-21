@@ -110,8 +110,8 @@ if ((materias.getLista().size() - mat_grado.getLista().size()) == 0){
 <%}%>
 <br>
 <div class="form-group">
-<form action="grado_list.jsp" method="post">
-<button type="submit" class="btn btn-primary" value="Volver al menú">Volver al Listado</button>
+<form action="GradoList" method="get">
+<button type="submit" class="btn btn-primary"  value="Volver al Listado">Volver al Listado</button>
 </form>
 </div>
 <%
