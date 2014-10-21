@@ -13,7 +13,7 @@
 	if (session.getAttribute("usuario") != null) {
 		
 		Maestro maestro = (Maestro)session.getAttribute("maestro");
-		String titulo = "Bienvenido/a " + maestro.getNombre();
+		String titulo = "Bienvenido/a " + maestro.getNombre() + " " + maestro.getApellido();
 %>
 <div class="container">  
   <div class="page-header">
@@ -24,24 +24,30 @@
 
     <ul class="nav nav-pills">
     				
-        <li class="dropdown">      
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Sanciones   <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-                <li><a href="sanciones_select.jsp?action=listar">Listado</a></li>               
-                <li><a href="SancionEdit?do=alta">Nueva sancion</a></li>      
-            </ul>
-        </li>
-        
-         <li class="dropdown">      
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Asistencias   <b class="caret"></b></a>
+    	 <li class="dropdown">      
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Asistencias <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li><a href="AsistenciaList">Listado</a></li>               
                 <li><a href="AsistenciaListEdit">Nueva asistencia</a></li>      
             </ul>
         </li>
         
-         <li> <a href="nota_menu.jsp">Notas</a></li>
-  			
+                <li class="dropdown">      
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Citaciones   <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="citaciones_select.jsp?action=listar">Listado</a></li>
+                <li><a href="CitacionEdit?do=alta">Nueva citacion</a></li>                      
+            </ul>
+        </li>
+        
+        <li class="dropdown">      
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Sanciones <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="sanciones_select.jsp?action=listar">Listado</a></li>               
+                <li><a href="SancionEdit?do=alta">Nueva sancion</a></li>      
+            </ul>
+        </li>        
+         			
   		<li class="dropdown">      
             <a href="#" data-toggle="dropdown" class="dropdown-toggle">Entrevistas   <b class="caret"></b></a>
             <ul class="dropdown-menu">
@@ -49,13 +55,7 @@
             </ul>
         </li>
         
-        <li class="dropdown">      
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Citaciones   <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-                <li><a href="citaciones_select.jsp?action=listar">Listado</a></li>
-                <li><a href="CitacionEdit?do=alta">Nueva citacion</a></li>                      
-            </ul>
-        </li>
+        <li> <a href="nota_menu.jsp">Notas</a></li>
 
         <li class="dropdown">      
             <a href="#" data-toggle="dropdown" class="dropdown-toggle">Administración de cuenta<b class="caret"></b></a>

@@ -13,16 +13,20 @@
        <h1>Login</h1>
   </div>	
 <%	String error = "";
+	
 	if (session.getAttribute("error") != null) {
 		error = (String)session.getAttribute("error");
 		session.setAttribute("error", "");		
-	} 
+	
  %>
+ 	<%= error %>
+ <br> 
+ <%}%>
  <div class="form-group">
 <form action="login" method="post">
      <div class="form-group">
          <label for="inputEmail">Usuario</label>
-         <input type="text" class="form-control" name=usuario placeholder="Usuario"> <%=error%>
+         <input type="text" class="form-control" name=usuario placeholder="Usuario">
      </div>
      <div class="form-group">
          <label for="inputPassword">Contraseña</label>
