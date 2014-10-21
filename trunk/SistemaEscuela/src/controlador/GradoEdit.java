@@ -52,7 +52,22 @@ import conexion.AccionesMaestro;
 				Maestros maestros = AccionesMaestro.getAllActivos();												
 				request.setAttribute("maestros_list",  maestros);
 				
-				Grados grados = AccionesGrado.getPendingAll();												
+				String listar = (String) sesion.getAttribute("listar");
+				
+				Grados grados = null;
+				
+				if (listar.equals("mañana")){
+					
+					grados = AccionesGrado.getPendingMañana();
+					sesion.setAttribute("grados_pendientes",  grados);					
+				}
+				
+				if (listar.equals("tarde")){
+					
+					grados = AccionesGrado.getPendingTarde();
+					sesion.setAttribute("grados_pendientes",  grados);				
+				}
+																				
 				request.setAttribute("grados_alta",  grados);				
 
 				//get the request dispatcher

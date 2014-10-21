@@ -45,7 +45,7 @@ import conexion.AccionesUsuario;
 			if (!contraseña.equals("") && !contraseña_nueva.equals("")&& !contraseña_nueva_r.equals("")) {
 								
 				
-				String usuario = (String) sesion.getAttribute("login");				
+				String usuario = (String) sesion.getAttribute("usuario");				
 				Integer cod_maest = AccionesUsuario.validarUsuario(usuario, contraseña);
 				
 				if (contraseña_nueva.equals(contraseña_nueva_r)){

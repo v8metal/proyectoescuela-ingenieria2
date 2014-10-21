@@ -21,9 +21,9 @@
   	Grados grados = (Grados) request.getAttribute("grados_alta"); //agregado
     Maestros maestros = (Maestros) request.getAttribute("maestros_list");
   	Maestro titular = (Maestro)request.getAttribute("maestro_tit");
-  	Maestro paralelo = (Maestro)request.getAttribute("maestro_par");
-  	
-  	int año; 
+  	Maestro paralelo = (Maestro)request.getAttribute("maestro_par"); 	
+ 	
+  	int año;
   	
   	if (grado != null){
   	 	año = AccionesGrado.getCurrentYear(grado.getGrado(), grado.getTurno());
@@ -215,7 +215,7 @@ if (grado != null){
 <br>
 <%}%>
 <div class="form-group">
-<form action="grado_list.jsp" method="post">
+<form action="GradoList" method="get">
 <button type="submit" class="btn btn-primary"  value="Volver al Listado">Volver al Listado</button>
 </form>
 </div>

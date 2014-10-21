@@ -39,15 +39,15 @@ public class AccionesGrado {
 		return lista;
 	}
 	
-	//nuevo devuelve la lista de grados que no han sido dados de alta
-	public static Grados getPendingAll() {
+	//nuevo devuelve la lista de grados que no han sido dados de alta turno tarde
+	public static Grados getPendingTarde() {
 		
 		Grados lista = new Grados();
 		
 		try {
 			
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT GB.GRADO, GB.turno FROM GRADOS_BASE GB LEFT JOIN GRADOS G ON GB.GRADO = G.GRADO AND GB.Turno = G.TURNO WHERE G.TURNO IS NULL ORDER BY GB.ORDEN");
+			ResultSet rs = stmt.executeQuery("SELECT GB.GRADO, GB.turno FROM GRADOS_BASE GB LEFT JOIN GRADOS G ON GB.GRADO = G.GRADO AND GB.Turno = G.TURNO WHERE GB.TURNO = 'TARDE' AND G.TURNO IS NULL ORDER BY GB.ORDEN");
 			Grado tmp;
 			
 			while (rs.next()) {
@@ -61,8 +61,31 @@ public class AccionesGrado {
 		}
 		return lista;
 	}
-	//nuevo devuelve la lista de grados que no han sido dados de alta
+	//nuevo devuelve la lista de grados que no han sido dados de alta turno tarde
 
+	//nuevo devuelve la lista de grados que no han sido dados de alta turno mañana
+	public static Grados getPendingMañana() {
+		
+		Grados lista = new Grados();
+		
+		try {
+			
+			Statement stmt = Conexion.conectar().createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT GB.GRADO, GB.turno FROM GRADOS_BASE GB LEFT JOIN GRADOS G ON GB.GRADO = G.GRADO AND GB.Turno = G.TURNO WHERE GB.TURNO = 'MAÑANA' AND G.TURNO IS NULL ORDER BY GB.ORDEN");
+			Grado tmp;
+			
+			while (rs.next()) {
+				tmp = new Grado(rs.getString("GRADO"), rs.getString("TURNO"));
+				lista.agregarGrado(tmp);
+			}
+			stmt.close();
+			Conexion.desconectar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lista;
+	}
+	//nuevo devuelve la lista de grados que no han sido dados de alta turno mañana
 	//nuevo devuelve la lista de año y grados que tienen alumnos cargados para el cobro de cuotas
 	public static Grados getAñoGradosCuota(int año) {
 		

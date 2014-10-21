@@ -37,7 +37,7 @@ public class PlanPagoList extends HttpServlet {
 		
 		HttpSession sesion = request.getSession();						
 		
-		if(sesion.getAttribute("login")!=null){
+		if(sesion.getAttribute("admin")!=null){
 			
 			//System.out.println("CuotaList doGet");
 			
