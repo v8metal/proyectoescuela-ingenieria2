@@ -64,14 +64,13 @@ public class Login extends HttpServlet {
 			if (!usuario.equals("") && !contraseña.equals("")) {
 				
 				Integer dni = AccionesUsuario.validarUsuario(usuario, contraseña);
-							
-				if (dni == 0) {
+				
+				if (dni == 1) { // quiere decir que el usuario es administrador
 					
-					//sesion.setAttribute("login", usuario);
 					sesion.setAttribute("admin", usuario);
 					response.sendRedirect("menu_admin.jsp");
 					
-				} else if (dni > 0){
+				} else if (dni > 1){ // quiere decir que el usuario es maestro
 					
 					Maestro m = AccionesMaestro.getOne(dni);
 					
@@ -80,11 +79,10 @@ public class Login extends HttpServlet {
 						sesion.setAttribute("error", "Error al loguearse, el usuario está inhabilitado");
 						response.sendRedirect("login.jsp"); 
 					
-					}else{
-					
-						//sesion.setAttribute("login", usuario);			
+					}else{					
+	
 						sesion.setAttribute("usuario", usuario);
-		//				sesion.setAttribute("cod_maest", cod_maest);
+
 						Maestro maestro = AccionesMaestro.getOne(dni);
 						sesion.setAttribute("maestro", maestro);
 						sesion.setAttribute("dni_maestro", dni);

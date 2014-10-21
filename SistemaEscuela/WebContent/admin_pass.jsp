@@ -10,16 +10,16 @@
 <body>
 <div class="container">
 <%
-if (session.getAttribute("admin") != null || session.getAttribute("usuario") != null) {
-	
-	String volver = "menu_user.jsp";
-	
-	if (session.getAttribute("admin") != null){
-		volver = "menu_admin.jsp";
-	}
+	if (session.getAttribute("admin") != null || session.getAttribute("usuario") != null) {
+		
+		String volver = "menu_user.jsp";
+		
+		if (session.getAttribute("admin") != null){
+			volver = "menu_admin.jsp";
+		}
 %>
 <div class="page-header"> 
-<h1>Administración de usuario</h1>
+<h1>Administración de Contraseña</h1>
 </div>
 <%	String error = "";
 	if (session.getAttribute("error") != null) {
@@ -30,25 +30,26 @@ if (session.getAttribute("admin") != null || session.getAttribute("usuario") != 
  <%= error %>
  <br>
  <br>
-<center>
+ <center>
 <div class="form-group">
-<form action="AdminUser?do=user" method="post">
-<table class="table table-hover table-bordered">	
+<form action="AdminUser?do=pass" method="post">
+<table class="table table-hover table-bordered">
+	
 	<tr>
 		<td>Contraseña Actual: </td>
 		<td><input type="password" class="form-control" placeholder="Contraseña Actual" name="contraseña_actual"></td> 
 	</tr>
 	<tr>
-		<td>Nuevo Usuario: </td>
-		<td><input type="text" class="form-control" placeholder="Nuevo Usuario" name="usuario_nuevo"></td>
+		<td>Nueva Contraseña: </td>
+		<td><input type="password" class="form-control" placeholder="Contraseña Nueva" name="contraseña_nueva"></td>
 	</tr>
 	<tr>
-		<td>Repetir Nuevo Usuario: </td>
-		<td><input type="text" class="form-control" placeholder="Nuevo Usuario" name="usuario_nuevo_r"></td>
+		<td>Repetir Contraseña: </td>
+		<td><input type="password" class="form-control" placeholder="Contraseña Nueva" name="contraseña_nueva_r"></td>
 	</tr>
 </table>
 <br>
-<button type="submit" class="btn btn-primary"  value="Cambiar Usuario" onclick="return confirm('Esta seguro que desea modificar?');">Cambiar Usuario</button>
+<button type="submit" class="btn btn-primary"  value="Cambiar contraseña" onclick="return confirm('Esta seguro que desea modificar?');">Cambiar contraseña</button>
 <button type="reset" class="btn btn-primary"  value="Cancelar" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button>
 </form>
 </div>

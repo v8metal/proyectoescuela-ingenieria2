@@ -23,8 +23,7 @@
   </div>
 
     <ul class="nav nav-pills">
-    
-		<li class="active"><a href="#">Inicio</a></li>		
+    				
         <li class="dropdown">      
             <a href="#" data-toggle="dropdown" class="dropdown-toggle">Sanciones   <b class="caret"></b></a>
             <ul class="dropdown-menu">
@@ -57,9 +56,15 @@
                 <li><a href="CitacionEdit?do=alta">Nueva citacion</a></li>                      
             </ul>
         </li>
-        
-        <li> <a href="admin_user.jsp">Administración de cuenta   </a></li>
-        
+
+        <li class="dropdown">      
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Administración de cuenta<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li> <a href="admin_user.jsp">Cambiar Usuario </a></li>
+                <li> <a href="admin_pass.jsp">Cambiar Contraseña </a></li>                  
+            </ul>
+        </li>
+                     
   	</ul>
 <br>
 <br>

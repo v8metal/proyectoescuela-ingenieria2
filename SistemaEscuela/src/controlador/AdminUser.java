@@ -36,33 +36,64 @@ import conexion.AccionesUsuario;
 		
 		HttpSession sesion = request.getSession();
 		
-		try {
-			
-			String contraseña = request.getParameter("contraseña_actual");
+		String accion = request.getParameter("do");
+		
+		//System.out.println("accion= " + accion);			
+		
+		String contraseña = request.getParameter("contraseña_actual");
+		
+		switch(accion){
+		
+		case "pass":
+						
 			String contraseña_nueva = request.getParameter("contraseña_nueva");
 			String contraseña_nueva_r = request.getParameter("contraseña_nueva_r");
 			
 			if (!contraseña.equals("") && !contraseña_nueva.equals("")&& !contraseña_nueva_r.equals("")) {
 								
+				String usuario = "";
 				
-				String usuario = (String) sesion.getAttribute("usuario");				
-				Integer cod_maest = AccionesUsuario.validarUsuario(usuario, contraseña);
+				if (sesion.getAttribute("usuario") != null){
+					
+					usuario = (String) sesion.getAttribute("usuario"); 
+					
+				}
+				
+				if (sesion.getAttribute("admin") != null){					
+					
+					usuario = (String) sesion.getAttribute("admin");
+				}
+				
+								
+				Integer dni = AccionesUsuario.validarUsuario(usuario, contraseña);
+				
+				
+				System.out.println("dni= " + dni);
 				
 				if (contraseña_nueva.equals(contraseña_nueva_r)){
 					
-					if (cod_maest > 0){
+					if (dni > 0){
+						
+						try {
 					
-						AccionesUsuario.updateUser(usuario,contraseña_nueva);
-						sesion.setAttribute("error", "Contraseña actualizada correctamente");						
+						AccionesUsuario.updatePass(usuario,contraseña_nueva);
+						sesion.setAttribute("error", "Contraseña actualizada correctamente");
+						
+						
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+				
 				
 					}else{
 						
 						sesion.setAttribute("error", "Error al loguearse, contraseña inválida");
 						
 					}
+				
 					
 				}else {	
-						if (cod_maest == -1){
+						if (dni == 0){
 							
 							sesion.setAttribute("error", "Error al loguearse, contraseña inválida");
 							
@@ -73,17 +104,93 @@ import conexion.AccionesUsuario;
 						
 				}				
 				
+				response.sendRedirect("admin_pass.jsp");
+				
+			} else {
+				sesion.setAttribute("error", "Debe completar los campos para continuar");
+				response.sendRedirect("admin_pass.jsp");
+			}
+			
+			break;
+			
+		case "user":
+			
+			String usuario_nuevo = request.getParameter("usuario_nuevo");
+			String usuario_nuevo_r = request.getParameter("usuario_nuevo_r");
+			
+			if (!contraseña.equals("") && !usuario_nuevo.equals("")&& !usuario_nuevo_r.equals("")) {
+					
+				
+				int ind = 0;
+				
+				String usuario = "";				
+				
+				if (sesion.getAttribute("usuario") != null){
+					
+					usuario = (String) sesion.getAttribute("usuario"); 
+					
+				}
+				
+				if (sesion.getAttribute("admin") != null){					
+					
+					ind = 1;
+					
+					usuario = (String) sesion.getAttribute("admin");
+				}
+				
+				Integer dni = AccionesUsuario.validarUsuario(usuario, contraseña);
+				
+				System.out.println("dni= " + dni);
+				
+				if (usuario_nuevo.equals(usuario_nuevo_r)){					
+					
+					if (dni > 0){
+						
+						try {
+					
+						AccionesUsuario.updateUser(usuario, usuario_nuevo_r);
+						sesion.setAttribute("error", "Usuario actualizado correctamente");
+						
+						if (ind == 0){
+							sesion.setAttribute("usuario", usuario_nuevo_r);	
+						}
+						
+						if (ind == 1){
+							sesion.setAttribute("admin", usuario_nuevo_r);	
+						}
+
+						
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+				
+					}else{
+					
+						sesion.setAttribute("error", "Error al loguearse, contraseña inválida");
+						
+					}
+					
+				}else {	
+						if (dni == 0){
+							
+							sesion.setAttribute("error", "Error al loguearse, contraseña inválida");
+							
+						}else{
+							
+							sesion.setAttribute("error", "La confirmación no coincide con el nuevo usuario");
+						}
+						
+				}				
+				
 				response.sendRedirect("admin_user.jsp");
 				
 			} else {
 				sesion.setAttribute("error", "Debe completar los campos para continuar");
 				response.sendRedirect("admin_user.jsp");
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			}	
+	
 		 	 
+		}
 	}
 	
  }

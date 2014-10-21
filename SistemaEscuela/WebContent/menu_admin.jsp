@@ -20,9 +20,7 @@
 
     <ul class="nav nav-pills">
 
-		<li class="active"><a href="#">Inicio</a></li>
-		
-        <li class="dropdown">
+		  <li class="dropdown">
          
             <a href="#" data-toggle="dropdown" class="dropdown-toggle">Alumnos   <b class="caret"></b></a>
 
@@ -100,9 +98,16 @@
 
         </li>
                   
-        <li> <a href="menu_cuotas.jsp">Cobro de Cuotas</a></li>        
-        <li> <a href="UsuarioList">Gestionar Usuarios</a></li>       
-
+        <li> <a href="menu_cuotas.jsp">Cobro de Cuotas</a></li>           
+        <li> <a href="UsuarioList">Gestionar Usuarios</a></li> 
+        
+        <li class="dropdown">      
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Administración de cuenta<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li> <a href="admin_user.jsp">Cambiar Usuario </a></li>
+                <li> <a href="admin_pass.jsp">Cambiar Contraseña </a></li>                  
+            </ul>
+        </li>
 
     </ul>
 
