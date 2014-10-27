@@ -76,7 +76,7 @@ public class Login extends HttpServlet {
 					
 					if (m.getEstado() == 0){
 						
-						sesion.setAttribute("error", "Error al loguearse, el usuario está inhabilitado");
+						sesion.setAttribute("error", "El usuario está inhabilitado");
 						response.sendRedirect("login.jsp"); 
 					
 					}else{					
@@ -90,7 +90,7 @@ public class Login extends HttpServlet {
 					}
 					
 				} else {
-					sesion.setAttribute("error", "Error al loguearse, usuario y contraseña inválidos");
+					sesion.setAttribute("error", "Nombre de usuario y/o contraseña no válidos");
 					response.sendRedirect("login.jsp");} 
 				
 			} else {
