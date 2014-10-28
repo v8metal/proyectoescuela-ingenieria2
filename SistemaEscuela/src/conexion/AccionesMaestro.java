@@ -109,7 +109,7 @@ public class AccionesMaestro {
 		int i = 0;
 //		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			i = stmt.executeUpdate("DELETE FROM USUARIOS WHERE DNI_MAESTRO = '" + dni + "'"); //borra el usuarios, si se genero alguno para acceder
+			//i = stmt.executeUpdate("DELETE FROM USUARIOS WHERE DNI_MAESTRO = '" + dni + "'"); //borra el usuarios, si se genero alguno para acceder
 			
 			i = stmt.executeUpdate("DELETE FROM MAESTROS WHERE DNI = '" + dni + "'"); //borra el maestro
 //		} catch (Exception e) {
