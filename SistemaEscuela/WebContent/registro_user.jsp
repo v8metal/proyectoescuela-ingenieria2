@@ -140,26 +140,34 @@
 			%>
 		 </select>
 		</td>
-		<td><%=error%></td>
 	</tr>
 	
 	<tr>
 		<td><label for="input">Usuario</label></td>
-        <td><input type="text" class="form-control" name="usuario" placeholder="Nombre"></td>
+        <td><input type="text" class="form-control" name="usuario" placeholder="Nombre" required></td>
     </tr>
     
     <tr>
 		<td><label for="input">Contraseña</label></td>
-        <td><input type="password" class="form-control" name="contraseña" placeholder="Contraseña"></td>
+        <td><input type="password" class="form-control" name="contraseña" placeholder="Contraseña" required></td>
     </tr>
     
     
     <tr>
 		<td><label for="input">Confirmar contraseña</label></td>
-        <td><input type="password" class="form-control" name="contraseña_conf" placeholder="Repetir Contraseña"></td>
+        <td><input type="password" class="form-control" name="contraseña_conf" placeholder="Repetir Contraseña" required></td>
     </tr>	
 </table>
+
 <br>
+   <div class="bs-example">
+    	 <div class="alert alert-warning fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <strong>Cuidado!</strong> <%= error %>
+  	  </div>
+  </div><!-- /example -->
+<br>
+
 <button type="submit" class="btn btn-primary"  value="Registrar" name="btnSave" onclick="return confirm('Esta seguro que desea realizar el alta?');">Registrar</button>
 <button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea borrar los campos?');">Cancelar</button>
 </form>

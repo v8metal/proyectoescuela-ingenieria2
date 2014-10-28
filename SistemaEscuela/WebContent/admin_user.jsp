@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width; initial-scale=1.0"> 
-<title>Login</title>
+<title>Administración de Usuario</title>
 
 <link rel="icon" href="icono/favicon.ico">
 
@@ -113,14 +113,6 @@ if (session.getAttribute("admin") != null || session.getAttribute("usuario") != 
 <div class="page-header"> 
 <h1>Administración de usuario</h1>
 </div>
-<%	String error = "";
-	if (session.getAttribute("error") != null) {
-		error = (String)session.getAttribute("error");
-		session.setAttribute("error", "");
-	}
- %>
- <%= error %>
- <br>
  <br>
 <div class="form-group">
 <form action="AdminUser?do=user" method="post">
@@ -138,7 +130,43 @@ if (session.getAttribute("admin") != null || session.getAttribute("usuario") != 
 		<td><input type="text" class="form-control" placeholder="Nuevo Usuario" name="usuario_nuevo_r" required></td>
 	</tr>
 </table>
+
+<!-- MENSAJE DE ERROR -->
+<%	
+	String error = "";
+	if (session.getAttribute("error") != null) {
+		error = (String)session.getAttribute("error");
+		session.setAttribute("error", null);
+ %>
+ <br>
+   <div class="bs-example">
+    	 <div class="alert alert-warning fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <strong>Cuidado!</strong> <%= error %>
+  	  </div>
+  </div><!-- /example -->
 <br>
+ <%		
+	}
+ %>
+ 
+ <!-- MENSAJE DE EXITO -->
+ <%	
+	String succes = "";
+	if (session.getAttribute("succes") != null) {
+		error = (String)session.getAttribute("succes");
+		session.setAttribute("succes", null);
+ %>
+ <br>
+   	 <div class="alert alert-success" role="alert">
+        <strong>Bien Hecho!</strong> <%= error %>
+     </div>
+<br>
+ <%		
+	}
+ %>
+
+
 <button type="submit" class="btn btn-primary"  value="Guardar" onclick="return confirm('Esta seguro que desea modificar?');">Guardar</button>
 <button type="reset" class="btn btn-primary"  value="Cancelar" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button>
 </form>

@@ -21,6 +21,8 @@
 	if (session.getAttribute("usuario") != null) {
 		
 		Maestro maestro = (Maestro)session.getAttribute("maestro");
+		String nombre = maestro.getNombre();
+		String apellido = maestro.getApellido();
 		String titulo = "Bienvenido/a " + maestro.getNombre() + " " + maestro.getApellido();
 %>
 <div class="container">  
@@ -80,10 +82,13 @@
                   <li><a href="admin_pass.jsp">Cambiar contraseña</a></li>          
                 </ul>
               </li>
-            </ul>
+            </ul> 
             <ul class="nav navbar-nav navbar-right">
               <li class="active"><a href="CerrarSesion">Salir</a></li>
             </ul>
+            <ul>
+          		<p class="navbar-text navbar-right"><strong><%= nombre + " " + apellido %></strong></p>
+            </ul> 
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </div>

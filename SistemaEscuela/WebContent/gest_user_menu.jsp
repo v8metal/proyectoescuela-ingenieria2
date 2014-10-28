@@ -159,9 +159,12 @@
 
   	<a href="registro_user.jsp?">Registrar nuevo usuario</a>
 <%}else{%>
- 	<div class="alert alert-info" role="alert">
-        <strong>Atención!</strong> Todos los maestros están registrados
-    </div>
+    <div class="bs-example">
+    	 <div class="alert alert-info fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <strong>Atención!</strong> Todos los maestros están registrados
+  	  </div>
+  </div><!-- /example -->
 <%}%>
 <%
 

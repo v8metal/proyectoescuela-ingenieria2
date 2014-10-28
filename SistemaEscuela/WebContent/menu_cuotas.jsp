@@ -154,15 +154,13 @@ if (session.getAttribute("admin") != null) {
 		<h1>Menú Cobro de Cuotas</h1>		
     </div>
     
-    <div class="form-group">
-	<form action="CuotaList" method="get">
-	
-	<table class="table table-hover table-bordered">
-	
+    
+	<form class="form-horizontal" action="CuotaList" method="get" role="form">
+		<div class="form-group">
 	<%if(añoCuota == null){ %>
-	  <tr>
-	    <td><label for="input">Seleccionar año:</label></td>	    
-	    <td>
+		
+		 <label class="control-label col-sm-2" for="input">Seleccionar año:</label>
+		  <div class="col-xs-2">          
 	    	<select class="form-control" name="año_cuotas">
 	      		<%
 	      		    int año = (Integer)session.getAttribute("añoc");
@@ -173,49 +171,44 @@ if (session.getAttribute("admin") != null) {
 	      			}
 	      		%>
 	        </select>
-	     </td>         	     
-	     <td>
+		  </div>
+		 </div> 
 	     	<input type="hidden" name="accion" value="solicitarGrados">
-	     </td> 	     
-	  </tr>
+	     	<br>
+	     	<br>
+
 	<%}else{ %>
-	  <tr>
-	    <td><label for="input">Seleccionar año:</label></td>	    
-	     <td>
+
+		<label for="input">Seleccionar año:</label>    
+
 	     	<input class="form-control" type="text" size=4 readonly name="anio" value="<%=añoCuota%>">
-	     </td> 
-	  </tr>
+
+
 	  <%if (grados.getLista().isEmpty()) { %>
-	  <tr>	  	
-	  	<td><label for="input">Seleccionar grado-turno:</label></td>
-	  	<td><label for="input">No hay grados para el año seleccionado</label></td>	  	
-	  </tr>	  
+	
+		<label for="input">Seleccionar grado-turno:</label>
+		<label for="input">No hay grados para el año seleccionado</label>
+
 	  <%}else{%>
-	  <tr>
-	      <td><label for="input">Seleccionar grado-turno:</label></td>
-	      <td>
+
+	     <label for="input">Seleccionar grado-turno:</label>
+	    
 	      	<select class="form-control" name="grado_anio">
 	      	<%for (Grado g : grados.getLista()) { %>	            
 	            <option value="<%=g.getGrado() + " - " + g.getTurno()%>"><%=g.getGrado() + " - " + g.getTurno()%></option>            
 	          
 	      	<%}%>
 	      	</select>
-	      </td>
-	    </tr>
 	   <%}%>
 	<%}%>	    	      
-	     <tr>
-	      <td>
+
 	     	<input type="hidden" name="accion" value="listarGrado">
-	      </td>      
-	    </tr>	        
-	  </table>
 	  
 			<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave">Aceptar</button>
 			<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave">Cancelar</button>
-		
+			
 	</form>
-	</div>	
+	
 	<br>
 	<br>
 	<%if(añoCuota == null){ %>

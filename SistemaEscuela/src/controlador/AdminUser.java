@@ -149,7 +149,7 @@ import conexion.AccionesUsuario;
 						try {
 					
 						AccionesUsuario.updateUser(usuario, usuario_nuevo_r);
-						sesion.setAttribute("error", "Usuario actualizado correctamente");
+						sesion.setAttribute("succes", "Usuario actualizado correctamente");
 						
 						if (ind == 0){
 							sesion.setAttribute("usuario", usuario_nuevo_r);	

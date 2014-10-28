@@ -118,11 +118,20 @@ if (session.getAttribute("admin") != null) {
   <br>
   <br>
   
-	<center>
+
 	<% Alumno a = AccionesAlumno.getOne(dni); %>
 	<h1><%= a.getNombre() + " " + a.getApellido() + " - " + año + "- Mes " + mes%> </h1>
 	<% if (cuotas.getLista().isEmpty()) { %>
-	<a href="pago_edit.jsp"> No hay pagos para el mes, agregar pagos</a>
+	
+ 	<br>
+  	<br>
+  	
+	<div class="bs-example">
+    	<div class="alert alert-danger" role="alert">
+     	 <strong>Ups!</strong> No hay pagos cargados para este mes. <a href="pago_edit.jsp" class="alert-link">Agregar pagos</a>.
+    	</div>
+    </div>	
+	
 	<%}else{%>	
 	  <table class="table table-hover table-bordered">
 	  <tr>	  	    
@@ -162,15 +171,7 @@ if (session.getAttribute("admin") != null) {
 		<input name="accion" type="hidden" value="listarGrado">
 		<button type="submit" class="btn btn-primary"  value="Volver al listado de Pagos">Volver al listado de Pagos</button>
 		</form>
-	</div>
-	<br>
-	<br>
-	</center>
-	<div class="form-group">
-		<form action="CerrarSesion">		
-		<button type="submit" class="btn btn-primary"  value="Cerrar Sesión">Cerrar Sesión</button>
-		</form>
-	</div>		
+	</div>	
  <%
 	} else {
 		response.sendRedirect("login.jsp");
