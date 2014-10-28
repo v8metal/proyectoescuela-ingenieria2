@@ -35,12 +35,17 @@ import datos.Sancion;
 		String accion = request.getParameter("do");
 		
 		if (accion == null){			
+			
 			if (request.getParameter("accion") != null){				
 				accion = request.getParameter("accion");
-			}						
+			}
+			
 		}		
 		
-		if(accion.equals("alta")){		
+		switch(accion){
+		
+			
+		case "alta":				
 			
 			Maestro maestro = (Maestro) sesion.getAttribute("maestro");			
 			
@@ -51,8 +56,10 @@ import datos.Sancion;
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/sancion_edit.jsp");
 			
 			dispatcher.forward(request, response);
-				
-			}else if (accion.equals("modificar")){
+
+			break;
+			
+		case "modificar":			
 			
 				int dni = Integer.valueOf(request.getParameter("dni_sancion"));
 				String fecha = request.getParameter("fecha_sancion");
@@ -62,24 +69,29 @@ import datos.Sancion;
 				
 				sesion.setAttribute("sancion_edit", s);
 				
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/sancion_edit.jsp");				
+				dispatcher = getServletContext().getRequestDispatcher("/sancion_edit.jsp");				
 				
 				dispatcher.forward(request, response);
 				
-				}else if (accion.equals("baja")){				
+				break;
 				
-					int dni = Integer.valueOf(request.getParameter("dni_sancion"));
-					String fecha = request.getParameter("fecha_sancion");
-					String hora = request.getParameter("hora_sancion");				
-					
-					AccionesSancion.deleteOne(dni, fecha, hora);										
+		case "baja":								
+				
+				dni = Integer.valueOf(request.getParameter("dni_sancion"));
+				fecha = request.getParameter("fecha_sancion");
+				hora = request.getParameter("hora_sancion");				
+				
+				AccionesSancion.deleteOne(dni, fecha, hora);										
 									
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/SancionList");				
+				dispatcher = getServletContext().getRequestDispatcher("/SancionList");				
 				
-					dispatcher.forward(request, response);								
+				dispatcher.forward(request, response);								
 		
-				}
-		}  	
+				break;
+				
+	
+		}
+	}  	
 	
 	/* (non-Java-doc)
 	 * @see javax.servlet.http.HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -89,8 +101,10 @@ import datos.Sancion;
 		HttpSession sesion = request.getSession();
 	
 		String accion = request.getParameter("action");
-							
-		if(accion.equals("alta")){		
+		
+		switch(accion){
+		
+		case "alta":		
 			
 			int dni = Integer.valueOf(request.getParameter("alumno_sancion"));
 			String dia = request.getParameter("dia_sancion");
@@ -115,11 +129,13 @@ import datos.Sancion;
 			} catch (Exception e) {				
 				sesion.setAttribute("error", e);
 				response.sendRedirect("sancion_edit.jsp");
-			}						
+			}		
 			
-		}else if (accion.equals("update")){
+			break;
+		
+		case "update":		
 			
-			Sancion s = (Sancion) sesion.getAttribute("sancion_edit");
+			s = (Sancion) sesion.getAttribute("sancion_edit");
 			
 			String dia_sancion = request.getParameter("dia_sancion");
 			String mes_sancion = request.getParameter("mes_sancion");
@@ -142,7 +158,9 @@ import datos.Sancion;
 				response.sendRedirect("sancion_edit.jsp");
 			}	
 		
-			
+			break;
 		}
 	}   	  	    
-}
+
+ 
+ }
