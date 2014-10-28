@@ -86,6 +86,7 @@ public class AccionesGrado {
 		return lista;
 	}
 	//nuevo devuelve la lista de grados que no han sido dados de alta turno mañana
+	
 	//nuevo devuelve la lista de año y grados que tienen alumnos cargados para el cobro de cuotas
 	public static Grados getAñoGradosCuota(int año) {
 		
@@ -510,6 +511,34 @@ public static int getCurrentYear(Grado g) {
 		stmt.close();
 		Conexion.desconectar();		
 	}
+	
+	//devuelve la lista de grados para el año y el maestro seleccionado
+		public static Grados getAñoGradosByMaestro(int año, int dni) {
+			
+			Grados lista = new Grados();
+						
+			try {
+				
+				Statement stmt = Conexion.conectar().createStatement();
+				
+				//System.out.println("SELECT DISTINCT AG.GRADO, AG.TURNO, AG.AÑO FROM ALUMNOS_GRADO AG INNER JOIN GRADOS_BASE GB ON AG.GRADO = GB.GRADO AND AG.TURNO = GB.TURNO WHERE AG.AÑO = "+ año + " ORDER BY GB.ORDEN");
+				
+				ResultSet rs = stmt.executeQuery("SELECT DISTINCT AG.GRADO, AG.TURNO, AG.AÑO FROM ALUMNOS_GRADO AG INNER JOIN GRADOS_BASE GB ON AG.GRADO = GB.GRADO AND AG.TURNO = GB.TURNO INNER JOIN MAESTROS_GRADO MG ON AG.GRADO = MG.GRADO AND AG.TURNO = MG.TURNO AND (MG.DNI_MAESTRO_TIT = 30685259 OR DNI_MAESTRO_PAR = 30685259) WHERE AG.AÑO = 2014 ORDER BY GB.ORDEN");
+				Grado tmp;
+				
+				while (rs.next()) {
+					tmp = new Grado(rs.getString("GRADO"), rs.getString("TURNO"),rs.getInt("AÑO"));
+					lista.agregarGrado(tmp);
+				}
+				stmt.close();
+				Conexion.desconectar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return lista;
+		}
+		//nuevo devuelve la lista de grados que tienen alumnos cargados para el año seleccionado - cobro de cuotas
+		
 	
 	public static void main(String[] args) throws SQLException, Exception {
 		

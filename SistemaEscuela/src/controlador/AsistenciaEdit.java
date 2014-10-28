@@ -1,8 +1,6 @@
 package controlador;
 
 import java.io.IOException;
-import java.sql.SQLException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,11 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesAlumno;
-import conexion.AccionesEntrevista;
-import conexion.AccionesMaestro;
 import conexion.AccionesTardanza;
 import datos.Alumnos;
-import datos.Entrevista;
 import datos.Grado;
 import datos.Tardanza;
 
@@ -40,28 +35,28 @@ public class AsistenciaEdit extends HttpServlet {
 
 		HttpSession sesion = request.getSession();
 		
-		if(sesion.getAttribute("admin") != null){
+		if(sesion.getAttribute("usuario") != null){
 
-			//System.out.println("Tardanza doGet");
+			System.out.println("AsistenciaEdit doGet");
 			
 			String accion = (String) request.getParameter("do");
 			
-			//System.out.println("accion= " + accion);			
+			System.out.println("accion= " + accion);			
 			
 			switch(accion){
 			
 			case "alta":
 				
-				int año = (Integer) sesion.getAttribute("añoTardanza");
-				Grado grado = (Grado) sesion.getAttribute("gradoAltaTardanza");
+				int año = (Integer) sesion.getAttribute("añoAsistencia");
+				Grado grado = (Grado) sesion.getAttribute("gradoAltaAsistencia");
 				
 				try {
 					
 					Alumnos alumnos = AccionesAlumno.getAllByGradoTurnoYAño(grado.getGrado(), grado.getTurno(), año);
 					
-					sesion.setAttribute("alumnosAltaTardanza", alumnos);										
+					sesion.setAttribute("alumnosAltaAsistencia", alumnos);										
 					
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/tardanza_edit.jsp");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/asistencia_edit.jsp");
 					dispatcher.forward(request, response);				
 					
 				} catch (Exception e) {				
@@ -77,10 +72,10 @@ public class AsistenciaEdit extends HttpServlet {
 			
 				try {
 								
-					Tardanza t = AccionesTardanza.getOneTardanza(dni, fecha);					
-					request.setAttribute("tardanza", t);
+					Tardanza t = AccionesTardanza.getOneAsistencia(dni, fecha);					
+					request.setAttribute("asistencia", t);
 					
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/tardanza_edit.jsp");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/asistencia_edit.jsp");
 					dispatcher.forward(request, response);
 					
 				} catch (Exception e) {				
@@ -97,11 +92,11 @@ public class AsistenciaEdit extends HttpServlet {
 									
 				try {
 					
-					AccionesTardanza.bajaTardanza(dni, fecha);
+					AccionesTardanza.bajaAsistencia(dni, fecha);
 				
-					request.setAttribute("accion","listarTardanzas");
+					request.setAttribute("accion","listarAsistencias");
 				
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/TardanzaList");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/AsistenciaList");
 					dispatcher.forward(request, response);				
 							
 				
@@ -125,38 +120,42 @@ public class AsistenciaEdit extends HttpServlet {
 		
 		HttpSession sesion = request.getSession();
 		
-		if(sesion.getAttribute("admin") != null){
+		if(sesion.getAttribute("usuario") != null){
 
-			//System.out.println("Tardanza doGet");
+			System.out.println("Asistencia doPost");
 			
 			String accion = (String) request.getParameter("do");
 			
-			//System.out.println("accion= " + accion);
+			System.out.println("accion= " + accion);
 			
-			int dia = Integer.parseInt(request.getParameter("dia_tardanza"));
-			String mes = (String) request.getParameter("mes_tardanza");
-			int año = (Integer) sesion.getAttribute("añoTardanza");
-			int dni = Integer.parseInt(request.getParameter("alumno_tardanza"));				
-			String obs = (String) request.getParameter("observaciones");
+			int año = (Integer) sesion.getAttribute("añoAsistencia");
 								
-			String relleno = "";
+			String obs = (String) request.getParameter("observaciones");
+			String condicion = (String) request.getParameter("condicion");
+								
+			Tardanza a = null;
 			
-			if (dia < 10) relleno = "0";
-			
-			Tardanza t = new Tardanza(dni, año + "-" + mes + "-" + relleno + dia, obs, "T", "");				
-											
 			switch(accion){
 			
-			case "alta":				
+			case "alta":
 				
+				int dia = Integer.parseInt(request.getParameter("dia_asistencia"));
+				String mes = (String) request.getParameter("mes_asistencia");				
+				int dni = Integer.parseInt(request.getParameter("alumno_asistencia"));
+				
+				String relleno = "";
+				
+				if (dia < 10) relleno = "0";
+								
+				a = new Tardanza(dni, año + "-" + mes + "-" + relleno + dia, obs, "A", condicion);
 				
 				try {
 					
-					AccionesTardanza.altaTardanza(t);												
+					AccionesTardanza.altaTardanza(a);												
 					
-					request.setAttribute("accion","listarTardanzas");
+					request.setAttribute("accion","listarAsistencias");
 					
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/TardanzaList");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/AsistenciaList");
 					dispatcher.forward(request, response);				
 				
 				} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
@@ -172,15 +171,18 @@ public class AsistenciaEdit extends HttpServlet {
 				
 			case "modificar":
 			
-				String fecha = (String) request.getParameter("fecha_tardanza");
+				String fecha = (String) sesion.getAttribute("fechaAsistencia");
+				dni = Integer.parseInt(request.getParameter("alumno_asistencia"));
+				
+				a = new Tardanza(dni, fecha, obs, "A", condicion);
 				
 				try {
 					
-					AccionesTardanza.modificarTardanza(t, fecha);												
+					AccionesTardanza.modificarAsistencia(a);												
 					
-					request.setAttribute("accion","listarTardanzas");
+					request.setAttribute("accion","listarAsistencias");
 					
-					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/TardanzaList");
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/AsistenciaList");
 					dispatcher.forward(request, response);				
 				
 				} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
