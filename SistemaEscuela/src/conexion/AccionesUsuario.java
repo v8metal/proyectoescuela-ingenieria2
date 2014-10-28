@@ -70,7 +70,7 @@ public class AccionesUsuario {
 	
 	public static void registrar(String usuario, String contraseña, int codigo) throws SQLException, Exception {
 		Statement stmt = Conexion.conectar().createStatement();
-		stmt.executeUpdate("INSERT INTO USUARIOS VALUES ('" + usuario + "','" + contraseña + "','" + codigo + "')");
+		stmt.executeUpdate("INSERT INTO USUARIOS VALUES (" + codigo + ",'" + usuario + "','" + contraseña + "')");
 		
 		stmt.close();
 		Conexion.desconectar();
