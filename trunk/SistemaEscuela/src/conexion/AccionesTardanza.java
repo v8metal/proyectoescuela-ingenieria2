@@ -54,6 +54,7 @@ public class AccionesTardanza {
 		return i;
 	}
 	
+		
 	public static int modificarTardanza(Tardanza t, String fecha) throws Exception{
 		int i=0;
 		try{
@@ -85,11 +86,19 @@ public class AccionesTardanza {
 		return t;
 	}
 	
-	public static Tardanzas getAllAsistencias(int dni) throws Exception{
+	public static Tardanzas getAsistenciasByGradoFecha(String grado, String turno, String fecha) throws Exception{
 		Tardanzas tardanzas = new Tardanzas();
+		
+		String año = fecha.substring(0,4); //extrae el año de la fecha
+		
+		//System.out.println("año = " + año);
+		
 		try{
 			Statement stm = Conexion.conectar().createStatement();
-			ResultSet rs = stm.executeQuery("SELECT * FROM TARDANZAS WHERE DNI="+dni+" AND INDICADOR='A'");
+			
+			//System.out.println("SELECT AG.DNI, IFNULL(T.FECHA, 'Sin datos') AS FECHA, IFNULL(T.OBSERVACIONES, '') AS OBSERVACIONES, IFNULL(T.TIPO, 'Sin datos') AS TIPO, IFNULL(T.INDICADOR, 'V') AS INDICADOR FROM ALUMNOS_GRADO AG LEFT JOIN TARDANZAS T ON AG.DNI = T.DNI AND T.FECHA = '" + fecha + "' WHERE AG.GRADO = '" + grado + "' AND AG.TURNO = '" + turno + "' AND AG.AÑO = " + año);
+			
+			ResultSet rs = stm.executeQuery("SELECT AG.DNI, IFNULL(T.FECHA, '') AS FECHA, IFNULL(T.OBSERVACIONES, '') AS OBSERVACIONES, IFNULL(T.TIPO, 'V') AS TIPO, IFNULL(T.INDICADOR, 'Sin datos') AS INDICADOR FROM ALUMNOS_GRADO AG LEFT JOIN TARDANZAS T ON AG.DNI = T.DNI AND T.FECHA = '" + fecha + "' WHERE AG.GRADO = '" + grado + "' AND AG.TURNO = '" + turno + "' AND AG.AÑO = " + año);
 			Tardanza t;
 			while(rs.next()){
 				t = new Tardanza(rs.getInt("DNI"),rs.getString("FECHA"),rs.getString("OBSERVACIONES"),rs.getString("TIPO"),rs.getString("INDICADOR"));
@@ -102,6 +111,54 @@ public class AccionesTardanza {
 			System.out.println(sqle);
 		}
 		return tardanzas;
+	}
+	
+	public static int bajaAsistencia(int dni, String fecha) throws Exception{
+		int i=0;
+		try{
+			Statement stm = Conexion.conectar().createStatement();
+			i=stm.executeUpdate("DELETE FROM TARDANZAS WHERE TIPO = 'A' AND DNI=" + dni + " AND FECHA='" + fecha + "'");
+			stm.close();
+			Conexion.desconectar();
+		}catch(SQLException sqle){
+			System.out.println("error sql!!!");
+		}
+		return i;
+	}
+	
+	public static Tardanza getOneAsistencia(int dni, String fecha) throws Exception{
+		Tardanza t =null;
+		try{
+			Statement stm = Conexion.conectar().createStatement();
+			
+			System.out.println("SELECT DNI, FECHA, IFNULL(OBSERVACIONES,'') AS OBSERVACIONES, TIPO, INDICADOR FROM TARDANZAS WHERE TIPO = 'A' AND DNI = " + dni + " AND FECHA = '" + fecha + "'");
+			
+			ResultSet rs = stm.executeQuery("SELECT DNI, FECHA, IFNULL(OBSERVACIONES,'') AS OBSERVACIONES, TIPO, INDICADOR FROM TARDANZAS WHERE TIPO = 'A' AND DNI = " + dni + " AND FECHA = '" + fecha + "'");
+			
+			while(rs.next()){
+				t = new Tardanza(rs.getInt("DNI"),rs.getString("FECHA"),rs.getString("OBSERVACIONES"),rs.getString("TIPO"),rs.getString("INDICADOR"));
+			}	
+			stm.close();rs.close();Conexion.desconectar();
+		}catch(SQLException sqle){
+			System.out.println("ERROR SQL!!!");
+		}
+		return t;
+	}
+	
+	public static int modificarAsistencia(Tardanza t) throws Exception{
+		int i=0;
+		try{
+			Statement stm = Conexion.conectar().createStatement();
+			
+			//System.out.println("UPDATE TARDANZAS SET FECHA='"+ t.getFecha()+ "',OBSERVACIONES='"+t.getObservaciones() +"' WHERE TIPO = 'T' AND DNI='"+ t.getDni() +"' AND FECHA='" + fecha +"'");
+			
+			i = stm.executeUpdate("UPDATE TARDANZAS SET OBSERVACIONES='" + t.getObservaciones() +"' WHERE TIPO = '" + t.getTipo() +"' AND DNI = "+ t.getDni() + " AND FECHA='" + t.getFecha() +"'");
+			stm.close();
+			Conexion.desconectar();
+		}catch(SQLException sqle){
+			System.out.println(sqle);
+		}
+		return i;
 	}
 	
 }

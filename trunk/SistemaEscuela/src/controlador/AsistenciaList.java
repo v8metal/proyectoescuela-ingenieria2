@@ -9,10 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import conexion.AccionesEntrevista;
 import conexion.AccionesGrado;
 import conexion.AccionesTardanza;
-import datos.Entrevistas;
 import datos.Grado;
 import datos.Grados;
 import datos.Tardanzas;
@@ -51,7 +49,7 @@ public class AsistenciaList extends HttpServlet {
 				 accion = (String) request.getParameter("accion");
 			}
 			
-			//System.out.println("accion= " + accion);
+			System.out.println("accion= " + accion);
 			
 			int año = 0;
 			Grados grados = new Grados();
@@ -60,20 +58,22 @@ public class AsistenciaList extends HttpServlet {
 			
 			case "solicitarGrados":
 			
-			sesion.removeAttribute("gradosTardanza");
-			sesion.removeAttribute("añoTardanza");
+			sesion.removeAttribute("gradosAsitencia");
+			sesion.removeAttribute("añoAsistencia");
+			
+			int dni_maestro = (Integer) sesion.getAttribute("dni_maestro"); //dni de la session
 						
-			año = Integer.parseInt(request.getParameter("año_tardanza"));			
+			año = Integer.parseInt(request.getParameter("año_asistencia"));			
 									
 			try {
 				
 				//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado
-				grados = AccionesGrado.getAñoGradosCuota(año);
+				grados = AccionesGrado.getAñoGradosByMaestro(año, dni_maestro);
 				
-				request.setAttribute("gradosTardanza", grados);				
-				request.setAttribute("añoTardanza", año);
+				request.setAttribute("gradosAsistencia", grados);				
+				request.setAttribute("añoAsistencia", año);
 								
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/menu_tardanzas.jsp");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/menu_asistencias.jsp");
 				dispatcher.forward(request, response);				
 				
 			} catch (Exception e) {				
@@ -82,15 +82,19 @@ public class AsistenciaList extends HttpServlet {
 			
 			break;
 			
-			case "listarTardanzas":
+			case "listarAsistencias":
 				
 			String string = "";
 			String[] parts;
 			String grado="", turno="";
+			int dia = 0;
+			String mes = "";
+			String relleno="";
+			String fecha ="";
 			
+			año = (Integer) sesion.getAttribute("añoAsistencia");
 			
-			año = (Integer) sesion.getAttribute("añoTardanza");
-			
+						
 			Grado g = null;
 			
 			if(request.getParameter("grado_anio") != null){
@@ -101,30 +105,45 @@ public class AsistenciaList extends HttpServlet {
 				grado = parts[0];
 				turno = parts[1];
 				
-				sesion.setAttribute("gradoAltaTardanza", AccionesGrado.getOne(grado, turno));
-			
+				sesion.setAttribute("gradoAltaAsistencia", AccionesGrado.getOne(grado, turno));
+				
+				dia = Integer.parseInt(request.getParameter("dia_asistencia"));
+				mes = request.getParameter("mes_asistencia");	
+				
+				if (dia < 10) relleno ="0";
+				
+				fecha = año + "-" + mes + "-" + relleno + dia;
+				
+				sesion.setAttribute("fechaDisplayAsistencia", relleno + dia + "/" + mes + "/" + año);
+				sesion.setAttribute("fechaAsistencia", fecha);
+				
+				
+				
 			}else{
 				
-				 g = (Grado) sesion.getAttribute("gradoAltaTardanza");
+				 g = (Grado) sesion.getAttribute("gradoAltaAsistencia");
 				 
 				 grado = g.getGrado();
 				 turno = g.getTurno();
+				 
+				 fecha = (String) sesion.getAttribute("fechaAsistencia");
 				
 			}			
 			
 						
 			try {
 					
-					//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado
-				Tardanzas tardanzas = AccionesTardanza.getAllTardanzas(grado, turno, año);					
-				sesion.setAttribute("tardanzas", tardanzas);					
+				//obtener las asistencias por dni para la fecha seleccionada para el grado, turno y año
+				
+				Tardanzas tardanzas = AccionesTardanza.getAsistenciasByGradoFecha(grado, turno, fecha);					
+				sesion.setAttribute("Asistencias", tardanzas);					
 				
 			} catch (Exception e) {				
 				e.printStackTrace();
 			}			
 			
 									
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/tardanza_list.jsp");
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/asistencia_list.jsp");
 			dispatcher.forward(request, response);			
 			
 			
@@ -161,50 +180,71 @@ public class AsistenciaList extends HttpServlet {
 			
 			switch(accion){
 			
-				case "listarTardanzas": //este se usa luego del alta
+			case "listarAsistencias":
+				
+			String string = "";
+			String[] parts;
+			String grado="", turno="";
+			int dia = 0;
+			String mes = "";
+			String relleno="";
+			String fecha ="";
 			
-				String string = "";
-				String[] parts;
-				String grado="", turno="";
+			año = (Integer) sesion.getAttribute("añoAsistencia");
+									
+			Grado g = null;
+			
+			if(request.getParameter("grado_anio") != null){
+				
+				//año = Integer.parseInt(request.getParameter("anio"));
+				string = request.getParameter("grado_anio");				
+				parts = string.split(" - ");				
+				grado = parts[0];
+				turno = parts[1];
+				
+				sesion.setAttribute("gradoAltaAsistencia", AccionesGrado.getOne(grado, turno));
+				
+				dia = Integer.parseInt(request.getParameter("dia_asistencia"));
+				mes = request.getParameter("mes_asistencia");	
+				
+				if (dia < 10) relleno ="0";
+				
+				fecha = año + "-" + mes + "-" + relleno + dia;
+				
+				sesion.setAttribute("fechaDisplayAsistencia", relleno + dia + "/" + mes + "/" + año);
+				sesion.setAttribute("fechaAsistencia", fecha);
 				
 				
-				año = (Integer) sesion.getAttribute("añoTardanza");
 				
-				Grado g = null;
+			}else{
 				
-				if(request.getParameter("grado_anio") != null){
+				 g = (Grado) sesion.getAttribute("gradoAltaAsistencia");
+				 
+				 grado = g.getGrado();
+				 turno = g.getTurno();
+				 
+				 fecha = (String) sesion.getAttribute("fechaAsistencia");
+				
+			}			
+			
+						
+			try {
 					
-					string = request.getParameter("grado_anio");				
-					parts = string.split(" - ");				
-					grado = parts[0];
-					turno = parts[1];
-					
-					sesion.setAttribute("gradoAltaTardanza", AccionesGrado.getOne(grado, turno));
-				}else{
-					
-					 g = (Grado) sesion.getAttribute("gradoAltaTardanza");
-					 
-					 grado = g.getGrado();
-					 turno = g.getTurno();
-					
-				}	
+				//obtener las asistencias por dni para la fecha seleccionada para el grado, turno y año
 				
-							
-				try {
-										
-					Tardanzas tardanzas = AccionesTardanza.getAllTardanzas(grado, turno, año);					
-					sesion.setAttribute("tardanzas", tardanzas);					
-					
-				} catch (Exception e) {				
-					e.printStackTrace();
-				}			
+				Tardanzas tardanzas = AccionesTardanza.getAsistenciasByGradoFecha(grado, turno, fecha);					
+				sesion.setAttribute("Asistencias", tardanzas);					
 				
-										
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/tardanza_list.jsp");
-				dispatcher.forward(request, response);			
-				
-				
-				break;
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}			
+			
+									
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/asistencia_list.jsp");
+			dispatcher.forward(request, response);			
+			
+			
+			break;
 
 		} //fin del case
 
