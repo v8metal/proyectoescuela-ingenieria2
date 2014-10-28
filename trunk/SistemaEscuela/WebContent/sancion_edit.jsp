@@ -1,4 +1,5 @@
 <%@page import="datos.Sancion"%>
+<%@page import="datos.Maestro"%>
 <%@page import="datos.Alumno"%>
 <%@page import="datos.Alumnos"%>
 <%@page import="conexion.AccionesAlumno"%>
@@ -20,6 +21,14 @@
 
 </head>
 <body>
+
+<%
+		//Recupero el maestro para mostrar su nombre y apellido en el menú superior	
+		Maestro maestro = (Maestro)session.getAttribute("maestro");
+		String nombre = maestro.getNombre();
+		String apellido = maestro.getApellido();
+%>
+
 <div class="container">
 
 <!-- Fixed navbar -->
@@ -79,6 +88,7 @@
         		  <form action="cerrarSesion" method="post" class="navbar-form navbar-right" role="form">
            		 	<button type="submit" class="btn btn-primary">Salir</button>
         		  </form>
+        		  <p class="navbar-text navbar-right"><strong><%= nombre + " " + apellido %></strong></p>
         		</div>
 			</li>
           </ul>
@@ -246,9 +256,12 @@ if (empty == false){
 </div>
 <br>
 <%if (!error.equals("")) {%>
-<div class="alert alert-warning" role="alert">
-   <strong>Cuidado!</strong> <%=error%>
-</div>
+	 <div class="bs-example">
+    	 <div class="alert alert-warning fade in" role="alert">
+     	 	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 	<strong>Cuidado!</strong> <%=error%>
+  	  	</div>
+ 	 </div><!-- /example -->
 <br>
 <br>
 <%}%>

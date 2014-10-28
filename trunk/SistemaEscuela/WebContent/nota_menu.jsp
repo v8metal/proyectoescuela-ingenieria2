@@ -18,6 +18,19 @@
 
 </head>
 <body>
+<%
+	if (session.getAttribute("usuario") != null) {
+		
+		// recupero el año_sys de la sesion y lo utilizo como año lectivo
+		int año = Integer.parseInt((String)session.getAttribute("año_sys"));
+		
+		Maestro maestro = (Maestro)session.getAttribute("maestro");
+		String nombre = maestro.getNombre();
+		String apellido = maestro.getApellido();
+		String titulo = "Grados de " + nombre + " como titular";
+		
+		Grados grados = AccionesMaestro.getGradosTitular(maestro.getDni());
+%>
  <div class="container">
  
  <!-- Fixed navbar -->
@@ -73,10 +86,11 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
             <li>
-            	<div class="navbar-collapse collapse">
+            	<div class="navbar-collapse collapse">  
         		  <form action="cerrarSesion" method="post" class="navbar-form navbar-right" role="form">
            		 	<button type="submit" class="btn btn-primary">Salir</button>
         		  </form>
+        		  <p class="navbar-text navbar-right"><strong><%= nombre + " " + apellido %></strong></p>
         		</div>
 			</li>
           </ul>
@@ -87,17 +101,6 @@
   <br>
   <br>
   
-<%
-	if (session.getAttribute("usuario") != null) {
-		
-		// recupero el año_sys de la sesion y lo utilizo como año lectivo
-		int año = Integer.parseInt((String)session.getAttribute("año_sys"));
-		
-		Maestro maestro = (Maestro)session.getAttribute("maestro");
-		String titulo = "Grados de " + maestro.getNombre() + " como titular";
-		
-		Grados grados = AccionesMaestro.getGradosTitular(maestro.getDni());
-%>
 <div class="page-header">
 <h1><%= titulo %></h1>
 </div>

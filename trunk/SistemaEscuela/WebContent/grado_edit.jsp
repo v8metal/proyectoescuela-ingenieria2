@@ -181,8 +181,8 @@ if (grado != null){
 			   }			           
 			 	
 			 %>
-			<input class="form-control" type="radio" name="bimestral" value="si" <%=ck_bim%> /> Bimestral
-			<input class="form-control" type="radio" name="bimestral" value="no" <%=ck_tri%>/> Trimestral
+			<input type="radio" name="bimestral" value="si" <%=ck_bim%> /> Bimestral
+			<input type="radio" name="bimestral" value="no" <%=ck_tri%>/> Trimestral
 		</td>
 	</tr>
 		<tr>
@@ -215,9 +215,9 @@ if (grado != null){
 			   }			           
 			 	
 			 %>
-			<input class="form-control" type="radio" name="evaluacion" value=0 <%=ck_informe%> /> Informe
-			<input class="form-control" type="radio" name="evaluacion" value=1 <%=ck_cualitaviva%>/> Cualitativa
-			<input class="form-control" type="radio" name="evaluacion" value=2 <%=ck_numerica%>/> Numérica
+			<input type="radio" name="evaluacion" value=0 <%=ck_informe%> /> Informe
+			<input type="radio" name="evaluacion" value=1 <%=ck_cualitaviva%>/> Cualitativa
+			<input type="radio" name="evaluacion" value=2 <%=ck_numerica%>/> Numérica
 		</td>
 	</tr>
 	<tr>
@@ -286,7 +286,6 @@ if (grado != null){
 	</tr>
 </table>
 <br>
-<center>
 <%
 	String mensaje= "return confirm('Esta seguro que desea realizar el alta?');"; 
 	  
@@ -297,8 +296,7 @@ if (grado != null){
 		 
 %>
 	<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="<%=mensaje%>">Guardar</button>
-	<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button>
-</center>		
+	<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button>	
 </form>
 </div>
 <br>

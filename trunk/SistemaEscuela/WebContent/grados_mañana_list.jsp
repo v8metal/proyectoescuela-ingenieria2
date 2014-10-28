@@ -167,20 +167,20 @@ if (grados.getListaTM().isEmpty()){
 		<%if (m1 != null){ %> 
 		<td><%= m1.getNombre() + " " + m1.getApellido() %></td>
 		<%}else{%>
-		<td>No hay maestro asignado</td>
+		<td class="warning">No hay maestro asignado</td>
 		<%}%>
 		<%if (m2 != null){ %> 
 		<td><%= m2.getNombre() + " " + m2.getApellido() %></td>
 		<%}else{%>
-		<td>No hay maestro asignado</td>
+		<td class="warning">No hay maestro asignado</td>
 		<%}%>
 		<td><%= ciclo %></td>		
 		<td><a href="GradoEdit?do=modificar&grado_modif=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>">Modificar</a></td>
 		<%if(g.getGrado().equals("Sala 4") || g.getGrado().equals("Sala 5")){%>
-		<td>Grado con áreas de trabajo</td>
+		<td class="info">Grado con áreas de trabajo</td>
 		<%}else{
 		 if (año == 0){%>		
-		<td>Debe asignar alumnos primero</td>
+		<td class="warning">Debe asignar alumnos primero</td>
 		<%}else{ 
 		if(dni1 == 1){%>
 		<td>Debe asignar Maestro titular primero</td>
@@ -188,7 +188,7 @@ if (grados.getListaTM().isEmpty()){
 		<td><a href="MateriaGradoList?do=listar&grado_list=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>&grado_año=<%=año%>" >Ver Materias</a></td>
 		<%}}}%>
 		<% if ((g.getGrado().equals("7mo") || año == 0) || m1 == null){%>
-		<td>No se puede promocionar</td>
+		<td class="warning">No se puede promocionar</td>
 		<%}else{ %>
 		<td><a href="GradoEdit?do=promocion&grado_modif=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>&año=<%=año%>" onclick="<%="return confirm('Esta seguro que desea promocionar "+  g.getGrado() + "-" + g.getTurno()  +"?');"%>">Promocionar Grado</a></td>		
 		<% } %>				
@@ -203,9 +203,12 @@ if (grados.getListaTM().isEmpty()){
 <% if (!gradosp.getLista().isEmpty()){ %>
 <a href="GradoEdit?do=alta">Ingresar nuevo Grado</a>
 <%}else{%>
-  <div class="alert alert-info" role="alert">
-        <strong>Atención!</strong> No quedan grados para dar de alta
-  </div>
+   <div class="bs-example">
+    	<div class="alert alert-info fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <strong>Atención!</strong> No quedan grados para dar de alta
+  	  	</div>
+  </div><!-- /example -->
 <%}%>
 <br>
 <br>

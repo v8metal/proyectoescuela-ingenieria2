@@ -110,7 +110,7 @@ import datos.Maestro;
 				response.sendRedirect("CitacionList");
 				
 			} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
-				sesion.setAttribute("error", "<br>"+ "Ya existe una citacion para el mismo dia y horario"+"<br>");
+				sesion.setAttribute("error", "Ya existe una citacion para el mismo dia y horario");
 				response.sendRedirect("citacion_edit.jsp");			
 				
 			} catch (Exception e) {				
@@ -134,7 +134,7 @@ import datos.Maestro;
 				response.sendRedirect("CitacionList");
 			
 			} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
-				sesion.setAttribute("error", "<br>"+ "Ya existe una citacion para el mismo dia y horario"+"<br>");
+				sesion.setAttribute("error", "Ya existe una citacion para el mismo dia y horario");
 				response.sendRedirect("citacion_edit.jsp");			
 			} catch (Exception e) {				
 				sesion.setAttribute("error", e);

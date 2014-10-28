@@ -123,7 +123,7 @@ import datos.Sancion;
 				response.sendRedirect("SancionList");
 				
 			} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
-				sesion.setAttribute("error", "<br>"+ "Ya existe una sanción para el mismo dia y horario"+"<br>");
+				sesion.setAttribute("error", "Ya existe una sanción para el mismo dia y horario");
 				response.sendRedirect("sancion_edit.jsp");				
 				
 			} catch (Exception e) {				
@@ -150,7 +150,7 @@ import datos.Sancion;
 				response.sendRedirect("SancionList");
 				
 			} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
-				sesion.setAttribute("error", "<br>"+ "Ya existe una sanción para el mismo dia y horario"+"<br>");
+				sesion.setAttribute("error", "Ya existe una sanción para el mismo dia y horario");
 				response.sendRedirect("sancion_edit.jsp");
 				
 			} catch (Exception e) {				

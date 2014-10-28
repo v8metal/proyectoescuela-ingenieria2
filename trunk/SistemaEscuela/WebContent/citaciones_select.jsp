@@ -19,6 +19,14 @@
 
 </head>
 <body>
+
+<%
+		//Recupero el maestro para mostrar su nombre y apellido en el menú superior	
+		Maestro maestro = (Maestro)session.getAttribute("maestro");
+		String nombre = maestro.getNombre();
+		String apellido = maestro.getApellido();
+%>
+
 <div class="container">  
 
 <!-- Fixed navbar -->
@@ -78,6 +86,7 @@
         		  <form action="cerrarSesion" method="post" class="navbar-form navbar-right" role="form">
            		 	<button type="submit" class="btn btn-primary">Salir</button>
         		  </form>
+        		   <p class="navbar-text navbar-right"><strong><%= nombre + " " + apellido %></strong></p>
         		</div>
 			</li>
           </ul>

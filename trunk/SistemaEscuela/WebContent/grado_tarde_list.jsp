@@ -122,9 +122,12 @@
 <%   
 if (grados.getListaTT().isEmpty()){
 %>  
-	 <div class="alert alert-info" role="alert">
-        <strong>Atención!</strong> No hay grados para el turno tarde
-      </div>
+        <div class="bs-example">
+    		<div class="alert alert-info fade in" role="alert">
+     		 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 	 <strong>Atención!</strong> No hay grados para el turno tarde
+  	  		 </div>
+  		</div><!-- /example -->
 <%}else{%>
 <table class="table table-hover table-bordered">
 	<thead>
@@ -202,9 +205,12 @@ if (grados.getListaTT().isEmpty()){
 <% if (!gradosp.getLista().isEmpty()){ %>
 <a href="GradoEdit?do=alta">Ingresar nuevo Grado</a>
 <%}else{%>
-  <div class="alert alert-info" role="alert">
-        <strong>Atención!</strong> No quedan grados para dar de alta
-  </div>
+     <div class="bs-example">
+    	<div class="alert alert-info fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <strong>Atención!</strong> No quedan grados para dar de alta
+  	  	</div>
+  	</div><!-- /example -->
 <%}%>
 <br>
 <br>
