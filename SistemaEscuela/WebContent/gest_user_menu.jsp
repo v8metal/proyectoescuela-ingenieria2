@@ -157,12 +157,15 @@
 <br>
 <%if ((usuarios.getLista().size() < maestros.getLista().size()) ) { //aca agregar a futuro los maestros activos%> 
 
-  	<a href="registro_user.jsp?">Registrar nuevo usuario</a>
+	<div class="alert alert-warning" role="alert">
+      <strong>Cuidado!</strong> No todos los maestros están registrados. <a href="registro_user.jsp?" class="alert-link">Registrar nuevo usuario</a>.
+    </div>
 <%}else{%>
-    <div class="bs-example">
-    	 <div class="alert alert-info fade in" role="alert">
+  <!-- MENSAJE DE EXITO -->
+   <div class="bs-example">
+    	 <div class="alert alert-success fade in" role="alert">
      	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong>Atención!</strong> Todos los maestros están registrados
+     	 <strong>Bien Hecho!</strong> Todos los maestros están registrados
   	  </div>
   </div><!-- /example -->
 <%}%>

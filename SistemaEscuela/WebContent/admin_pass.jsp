@@ -113,15 +113,6 @@
 <div class="page-header"> 
 <h1>Administración de Contraseña</h1>
 </div>
-<%	String error = "";
-	if (session.getAttribute("error") != null) {
-		error = (String)session.getAttribute("error");
-		session.setAttribute("error", "");
-	}
- %>
- <%= error %>
- <br>
- <br>
 <div class="form-group">
 <form action="AdminUser?do=pass" method="post">
 <table class="table table-hover table-bordered">
@@ -145,6 +136,43 @@
 </form>
 </div>
 <br>
+<!-- MENSAJE DE ERROR -->
+<%	
+	String error = "";
+	if (session.getAttribute("error") != null) {
+		error = (String)session.getAttribute("error");
+		session.setAttribute("error", null);
+ %>
+ <br>
+   <div class="bs-example">
+    	 <div class="alert alert-warning fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <strong>Cuidado!</strong> <%= error %>
+  	  </div>
+  </div><!-- /example -->
+<br>
+ <%		
+	}
+ %>
+ 
+ <!-- MENSAJE DE EXITO -->
+ <%	
+	String success = "";
+	if (session.getAttribute("success") != null) {
+		success = (String)session.getAttribute("success");
+		session.setAttribute("success", null);
+ %>
+ <br>
+   <div class="bs-example">
+    	 <div class="alert alert-success fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <strong>Bien Hecho!</strong> <%= success %>
+  	  </div>
+  </div><!-- /example -->
+<br>
+ <%		
+	}
+ %>
 <%
 	} else {
 		response.sendRedirect("login.jsp");

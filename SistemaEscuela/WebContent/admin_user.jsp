@@ -113,7 +113,6 @@ if (session.getAttribute("admin") != null || session.getAttribute("usuario") != 
 <div class="page-header"> 
 <h1>Administración de usuario</h1>
 </div>
- <br>
 <div class="form-group">
 <form action="AdminUser?do=user" method="post">
 <table class="table table-hover table-bordered">	
@@ -130,7 +129,12 @@ if (session.getAttribute("admin") != null || session.getAttribute("usuario") != 
 		<td><input type="text" class="form-control" placeholder="Nuevo Usuario" name="usuario_nuevo_r" required></td>
 	</tr>
 </table>
-
+<br>
+<button type="submit" class="btn btn-primary"  value="Guardar" onclick="return confirm('Esta seguro que desea modificar?');">Guardar</button>
+<button type="reset" class="btn btn-primary"  value="Cancelar" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button>
+</form>
+</div>
+<br>
 <!-- MENSAJE DE ERROR -->
 <%	
 	String error = "";
@@ -152,26 +156,22 @@ if (session.getAttribute("admin") != null || session.getAttribute("usuario") != 
  
  <!-- MENSAJE DE EXITO -->
  <%	
-	String succes = "";
-	if (session.getAttribute("succes") != null) {
-		error = (String)session.getAttribute("succes");
-		session.setAttribute("succes", null);
+	String success = "";
+	if (session.getAttribute("success") != null) {
+		success = (String)session.getAttribute("success");
+		session.setAttribute("success", null);
  %>
  <br>
-   	 <div class="alert alert-success" role="alert">
-        <strong>Bien Hecho!</strong> <%= error %>
-     </div>
+   <div class="bs-example">
+    	 <div class="alert alert-success fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <strong>Bien Hecho!</strong> <%= success %>
+  	  </div>
+  </div><!-- /example -->
 <br>
  <%		
 	}
  %>
-
-
-<button type="submit" class="btn btn-primary"  value="Guardar" onclick="return confirm('Esta seguro que desea modificar?');">Guardar</button>
-<button type="reset" class="btn btn-primary"  value="Cancelar" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button>
-</form>
-</div>
-<br>
 <%
 	} else {
 		response.sendRedirect("login.jsp");

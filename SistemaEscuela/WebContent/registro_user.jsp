@@ -110,11 +110,11 @@
 		
 		Maestros maestros = (Maestros) session.getAttribute("activos");
 		
-		String error = "";
-		if (session.getAttribute("error") != null) {
-			error = (String)session.getAttribute("error");
-			session.setAttribute("error", "");
-		}
+//		String error = "";
+//		if (session.getAttribute("error") != null) {
+//			error = (String)session.getAttribute("error");
+//			session.setAttribute("error", "");
+//		}
 %>
 <div class="page-header">  
 	<h1>Alta de Usuario</h1>
@@ -158,8 +158,19 @@
         <td><input type="password" class="form-control" name="contraseña_conf" placeholder="Repetir Contraseña" required></td>
     </tr>	
 </table>
-
 <br>
+<button type="submit" class="btn btn-primary"  value="Aceptar" name="btnSave" onclick="return confirm('Esta seguro que desea realizar el alta?');">Aceptar</button>
+<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnCancel" onclick="return confirm('Esta seguro que desea borrar los campos?');">Cancelar</button>
+</form>
+</div>
+<!-- MENSAJE DE ERROR -->
+<%	
+	String error = "";
+	if (session.getAttribute("error") != null) {
+		error = (String)session.getAttribute("error");
+		session.setAttribute("error", null);
+ %>
+ <br>
    <div class="bs-example">
     	 <div class="alert alert-warning fade in" role="alert">
      	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -167,11 +178,9 @@
   	  </div>
   </div><!-- /example -->
 <br>
-
-<button type="submit" class="btn btn-primary"  value="Registrar" name="btnSave" onclick="return confirm('Esta seguro que desea realizar el alta?');">Registrar</button>
-<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea borrar los campos?');">Cancelar</button>
-</form>
-</div>
+ <%		
+	}
+ %>
 <br>
 <br>
 <div class="form-group">
