@@ -77,7 +77,7 @@ import conexion.AccionesUsuario;
 						try {
 					
 						AccionesUsuario.updatePass(usuario,contraseña_nueva);
-						sesion.setAttribute("error", "Contraseña actualizada correctamente");
+						sesion.setAttribute("success", "Contraseña actualizada correctamente");
 						
 						
 						} catch (Exception e) {
@@ -149,7 +149,7 @@ import conexion.AccionesUsuario;
 						try {
 					
 						AccionesUsuario.updateUser(usuario, usuario_nuevo_r);
-						sesion.setAttribute("succes", "Usuario actualizado correctamente");
+						sesion.setAttribute("success", "Usuario actualizado correctamente");
 						
 						if (ind == 0){
 							sesion.setAttribute("usuario", usuario_nuevo_r);	
