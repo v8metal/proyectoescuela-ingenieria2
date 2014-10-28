@@ -159,8 +159,9 @@
 
   	<a href="registro_user.jsp?">Registrar nuevo usuario</a>
 <%}else{%>
-
-	<a>Todos los maestros están registrados</a>
+ 	<div class="alert alert-info" role="alert">
+        <strong>Atención!</strong> Todos los maestros están registrados
+    </div>
 <%}%>
 <%
 

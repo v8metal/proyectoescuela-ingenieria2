@@ -109,15 +109,6 @@
         		</div>
 			</li>
           </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-            	<div class="navbar-collapse collapse">
-        		  <form action="cerrarSesion" method="post" class="navbar-form navbar-right" role="form">
-           		 	<button type="submit" class="btn btn-primary">Salir</button>
-        		  </form>
-        		</div>
-			</li>
-          </ul>   
         </div>
       </div>
     </div>

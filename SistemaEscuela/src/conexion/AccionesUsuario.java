@@ -100,7 +100,7 @@ public class AccionesUsuario {
 		Usuarios lista = new Usuarios();
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM USUARIOS WHERE DNI_MAESTRO > 0");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM USUARIOS WHERE DNI_MAESTRO <> 1");
 			Usuario tmp;
 			
 			while (rs.next()) {
