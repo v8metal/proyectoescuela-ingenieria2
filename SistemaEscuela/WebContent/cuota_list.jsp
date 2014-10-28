@@ -178,7 +178,7 @@ if (session.getAttribute("admin") != null) {
 	    	<%}%>
 	    	    	
 	    <%}else{%>
-	    	<td> SUBSIDIO<td>
+	    	<td> SUBSIDIO</td>
 	    <%}%>
 	    
 	    <%if(!tipoCobro.equals("SUBSIDIO")){
@@ -194,7 +194,7 @@ if (session.getAttribute("admin") != null) {
 	    	<%}%>
 	    	    	
 	    <%}else{%>
-	    	<td> SUBSIDIO<td>
+	    	<td> SUBSIDIO</td>
 	    <%}%>
 
 	    
@@ -211,7 +211,7 @@ if (session.getAttribute("admin") != null) {
 	    	<%}%>
 	    	    	
 	    <%}else{%>
-	    	<td> SUBSIDIO<td>
+	    	<td> SUBSIDIO</td>
 	    <%}%>
 
 	    
@@ -228,7 +228,7 @@ if (session.getAttribute("admin") != null) {
 	    	<%}%>
 	    	    	
 	    <%}else{%>
-	    	<td> SUBSIDIO<td>
+	    	<td> SUBSIDIO</td>
 	    <%}%>
 	    
    	    <%if(!tipoCobro.equals("SUBSIDIO")){
@@ -244,7 +244,7 @@ if (session.getAttribute("admin") != null) {
 	    	<%}%>
 	    	    	
 	    <%}else{%>
-	    	<td> SUBSIDIO<td>
+	    	<td> SUBSIDIO</td>
 	    <%}%>
 	    	    
 	    	    
@@ -261,7 +261,7 @@ if (session.getAttribute("admin") != null) {
 	    	<%}%>
 	    	    	
 	    <%}else{%>
-	    	<td> SUBSIDIO<td>
+	    	<td> SUBSIDIO</td>
 	    <%}%>
 	    	    
 	    <%if(!tipoCobro.equals("SUBSIDIO")){
@@ -277,7 +277,7 @@ if (session.getAttribute("admin") != null) {
 	    	<%}%>
 	    	    	
 	    <%}else{%>
-	    	<td> SUBSIDIO<td>
+	    	<td> SUBSIDIO</td>
 	    <%}%>
 	    
    	    <%if(!tipoCobro.equals("SUBSIDIO")){
@@ -293,7 +293,7 @@ if (session.getAttribute("admin") != null) {
 	    	<%}%>
 	    	    	
 	    <%}else{%>
-	    	<td> SUBSIDIO<td>
+	    	<td> SUBSIDIO</td>
 	    <%}%>
 
    	    <%if(!tipoCobro.equals("SUBSIDIO")){
@@ -309,7 +309,7 @@ if (session.getAttribute("admin") != null) {
 	    	<%}%>
 	    	    	
 	    <%}else{%>
-	    	<td> SUBSIDIO<td>
+	    	<td> SUBSIDIO</td>
 	    <%}%>
 	    
    	    <%if(!tipoCobro.equals("SUBSIDIO")){
@@ -325,7 +325,7 @@ if (session.getAttribute("admin") != null) {
 	    	<%}%>
 	    	    	
 	    <%}else{%>
-	    	<td> SUBSIDIO<td>
+	    	<td> SUBSIDIO</td>
 	    <%}%>
 	   
 		<%if ((cod_plan = AccionesPlanPago.checkPlanPagosMes(a.getDni(), año, 13)) == 0){ %>
@@ -339,7 +339,7 @@ if (session.getAttribute("admin") != null) {
 	  	
 	  <%}%>
 	  </tr>
-	  </table>
+	  </table>	
 	<br>
 	<br>
 	<a href="planPago_edit.jsp"> Armar plan de pagos</a>
