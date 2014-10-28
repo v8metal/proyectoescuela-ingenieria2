@@ -55,7 +55,7 @@ public class AccionesUsuario {
 		try {
 			
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM SISTEMA_ALUMNADO.USUARIOS WHERE DNI_MAESTRO > 0");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM SISTEMA_ALUMNADO.USUARIOS WHERE DNI_MAESTRO > 1");
 			
 			while (rs.next()) {
 				i++;
@@ -100,7 +100,11 @@ public class AccionesUsuario {
 		Usuarios lista = new Usuarios();
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
+<<<<<<< .mine
+			ResultSet rs = stmt.executeQuery("SELECT * FROM USUARIOS WHERE DNI_MAESTRO > 1");
+=======
 			ResultSet rs = stmt.executeQuery("SELECT * FROM USUARIOS WHERE DNI_MAESTRO <> 1");
+>>>>>>> .r52
 			Usuario tmp;
 			
 			while (rs.next()) {
