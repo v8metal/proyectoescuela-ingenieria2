@@ -56,20 +56,34 @@ public class AlumnoList extends HttpServlet {
 		} else { //llega de menu_listado_alum
 			sesion.setAttribute("turno", turno);
 		}
+	
+		//String año = request.getParameter("año");
+		Integer año = 0;
 		
-		String año = request.getParameter("año");
-		if (año == null) { //llega de alumno_edit (alta/modificar)	
-			año = (String)sesion.getAttribute("año");
-		} else { //llega de menu_listado_alum
-			sesion.setAttribute("año", año);
+		if(request.getParameter("año") != null){
+			año = Integer.parseInt(request.getParameter("año"));
+		}else{
+			año = (Integer) sesion.getAttribute("año");
+			año = (Integer) sesion.getAttribute("año");
 		}
 		
+		//System.out.println("grado= " + grado);
+		//System.out.println("turno= " + turno);
+		//System.out.println("año= " + año);
+		
+		/*
+		if (año == 0) { //llega de alumno_edit (alta/modificar)	
+			año = (Integer) sesion.getAttribute("año");
+		} else { //llega de menu_listado_alum
+			sesion.setAttribute("año", año);
+		}*/
+		
 			if (grado.equals("todos")) {
-				Alumnos alumno_list = AccionesAlumno.getAllByTurnoYAño(turno, Integer.parseInt(año));
+				Alumnos alumno_list = AccionesAlumno.getAllByTurnoYAño(turno, año);
 				sesion.setAttribute("alumnos", alumno_list);
 				sesion.setAttribute("titulo", "TURNO " + turno + " - " + año);
 			} else {
-				Alumnos alumno_list = AccionesAlumno.getAllByGradoTurnoYAño(grado, turno, Integer.parseInt(año));
+				Alumnos alumno_list = AccionesAlumno.getAllByGradoTurnoYAño(grado, turno, año);
 				
 				sesion.setAttribute("alumnos", alumno_list);
 				

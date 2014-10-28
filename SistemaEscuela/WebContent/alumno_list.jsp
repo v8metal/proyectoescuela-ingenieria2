@@ -124,7 +124,7 @@
 		if (alumnos.getLista().isEmpty()){
 			String grado = (String)session.getAttribute("grado");
 			String turno = (String)session.getAttribute("turno");
-			String año = (String)session.getAttribute("año");
+			String año = String.valueOf((Integer)session.getAttribute("año"));
 			
 			String rta = "No hay alumnos cargados en " + grado + ", turno " + turno.toLowerCase() + ", año " + año;
 			

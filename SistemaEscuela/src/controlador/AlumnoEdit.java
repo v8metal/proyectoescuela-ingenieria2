@@ -81,7 +81,8 @@ public class AlumnoEdit extends HttpServlet {
 				//get the alumno from simulated DB
 				Alumno alumno = new Alumno();
 				if(dni_alum != null){
-					int año = Integer.parseInt((String) sesion.getAttribute("año")); //modificado Ale
+					//int año = Integer.parseInt((String) sesion.getAttribute("año")); //modificado Ale
+					int año = (Integer) sesion.getAttribute("año"); //modificado Ale
 					alumno = AccionesAlumno.getOne(dni_alum.intValue(),año);//modificado Ale
 				}
 
@@ -146,9 +147,10 @@ public class AlumnoEdit extends HttpServlet {
 			
 		try {
 			
-			int año = Integer.parseInt((String) sesion.getAttribute("año")); //modificado Ale
+			//int año = Integer.parseInt((String) sesion.getAttribute("año")); //modificado Ale
+			int año = (Integer) sesion.getAttribute("año"); //modificado Ale
 			//get dni_alum properties from the request
-			int dni_alum = Integer.parseInt(request.getParameter("dni_alum"));
+			int dni_alum = Integer.parseInt((String)request.getParameter("dni_alum"));
 						
 			// DATOS ALUMNO
 			String apellido_alum = request.getParameter("apellido_alum");
@@ -275,7 +277,7 @@ public class AlumnoEdit extends HttpServlet {
 				//seteo el grado en la sesion asi me redirecciona a la lista del curso al que se inscribio
 				sesion.setAttribute("grado", grado);
 				sesion.setAttribute("turno", turno);
-				sesion.setAttribute("año", año_ing);
+				sesion.setAttribute("año", Integer.parseInt(año_ing));
 										
 			} else {	//Si ya estan los datos del alumno, que lo modifique
 				//update tutor

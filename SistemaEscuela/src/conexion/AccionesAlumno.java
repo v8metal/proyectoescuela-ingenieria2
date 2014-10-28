@@ -307,9 +307,11 @@ public class AccionesAlumno {
 			Statement stmt = Conexion.conectar().createStatement();
 			
 			stmt.executeUpdate("INSERT INTO ALUMNOS VALUES ('" + a.getDni() + "','" + a.getNombre() + "','" + a.getApellido() + "','" + a.getDomicilio() + "','" + a.getTelefono() + "','" + a.getFecha_nac() + "','" + a.getLugar_nac() + "','" + a.getDni_tutor() + "','" + a.getDni_madre() + "','" + a.getCant_her_may() + "','" + a.getCant_her_men() + "','" + a.getIglesia() + "','" + a.getEsc() + "')"); //modificado Ale
+					
+			//System.out.println("INSERT INTO ALUMNOS_SUBSIDIO VALUES (" + año + ", " + a.getDni() + " , " + boolToByte(a.isInd_grupo()) + " , " + boolToByte(a.isInd_subsidio()) + ")"); //modificado Ale;
 			
-			stmt.executeUpdate("INSERT INTO ALUMNOS_SUBSIDIO VALUES (" + a.getDni() + ", " + año + " , " + boolToByte(a.isInd_grupo()) + " , " + boolToByte(a.isInd_subsidio()) + ")"); //modificado Ale	
-									
+			stmt.executeUpdate("INSERT INTO ALUMNOS_SUBSIDIO VALUES (" + año + ", " + a.getDni() + " , " + boolToByte(a.isInd_grupo()) + " , " + boolToByte(a.isInd_subsidio()) + ")"); //modificado Ale						
+												
 			stmt.close();
 			Conexion.desconectar();
 	}
