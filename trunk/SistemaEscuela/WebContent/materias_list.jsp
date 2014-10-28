@@ -15,6 +15,9 @@
 <!-- Bootstrap core CSS -->
 <link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
 </head>
 <body>
 <div class="container">
@@ -191,9 +194,7 @@ if ((materias.getLista().size() - mat_grado.getLista().size()) == 0){
 	</tr>
 </table>
 <br>
-<center>
 <button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea Asignar?');" >Asignar Materia</button>
-</center>
 </form>
 </div>
 <%}%>
@@ -203,8 +204,6 @@ if ((materias.getLista().size() - mat_grado.getLista().size()) == 0){
 <button type="submit" class="btn btn-primary"  value="Volver al Listado">Volver al Listado</button>
 </form>
 </div>
-<script src="js/jquery-1.7.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
 <%
 	} else {
 		response.sendRedirect("login.jsp");

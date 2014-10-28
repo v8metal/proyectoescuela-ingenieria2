@@ -121,8 +121,6 @@ PagosPlanPago pp = (PagosPlanPago) request.getAttribute("pagospp");
   
   <br>
   <br>
-    
-	<center>
 	<%
 	String mesini = "";
 		
@@ -199,7 +197,6 @@ PagosPlanPago pp = (PagosPlanPago) request.getAttribute("pagospp");
 		<button type="submit" class="btn btn-primary"  value="Volver al al Plan de Pagos">Volver al Plan de Pagos</button>
 		</form>
 	</div>
-	</center>
 	<br>
 	<br>
 	<div class="form-group">

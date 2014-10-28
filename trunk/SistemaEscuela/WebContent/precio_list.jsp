@@ -112,8 +112,6 @@ if (session.getAttribute("admin") != null) {
   
   <br>
   <br>
-  
-<center>
 	<div class="page-header">  	  
 		<h1>Precios de Cuotas - <%=año%></h1>		
     </div>    
@@ -214,7 +212,6 @@ if (session.getAttribute("admin") != null) {
 	<button type="submit" class="btn btn-primary"  value="Volver atrás">Volver atrás</button>
 	</form>
   </div>
-  </center>
   <br>
   <br>  
   <div class="form-group">

@@ -12,6 +12,9 @@
 <!-- Bootstrap core CSS -->
 <link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
 <title>Listado de maestros</title>
 </head>
 <body>
@@ -162,8 +165,6 @@ if (maestros.getLista().size() == 0){
 <button type="submit" class="btn btn-primary"  value="Volver al listado principal">Volver al listado principal</button>
 </form>
 </div>
-<script src="js/jquery-1.7.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
 <%
 	} else {
 		response.sendRedirect("login.jsp");
