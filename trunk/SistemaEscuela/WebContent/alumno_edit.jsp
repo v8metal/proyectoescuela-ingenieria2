@@ -184,8 +184,7 @@
 	</tr>
 	<tr>
 		<td>Fecha de nacimiento: </td>
-		<td><input type="date" class="form-control" name="form_date" required id="form_date"></td>
-<!--  		
+				 		
 			<td><select name="dia_nac_alum">   
 			<%  
 				for (int i = 1; i <= 31; i++){			  	
@@ -217,8 +216,7 @@
 			<%
 			 	}
 			 %>
-  			 </select>
- -->			 
+  			 </select>			 
 	</tr>
 	<tr>
 		<td>D.N.I.: </td>
