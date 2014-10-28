@@ -24,7 +24,6 @@ if (session.getAttribute("admin") != null) {
    
    %>			
 <head>
-<head>
 <meta name="viewport" content="widtd=device-widtd; initial-scale=1.0"> 
 <title>Listado de Cuotas</title>
 
@@ -343,7 +342,6 @@ if (session.getAttribute("admin") != null) {
 	  </table>
 	<br>
 	<br>
-	<center>
 	<a href="planPago_edit.jsp"> Armar plan de pagos</a>
 	<br>
 	<br>
@@ -353,14 +351,6 @@ if (session.getAttribute("admin") != null) {
 	<div class="form-group"> 
 	  <form action="menu_cuotas.jsp">		   
 	   	<button type="submit" class="btn btn-primary"  value="Volver al Menú de Cuotas">Volver al Menú de Cuotas</button> 
-	   </form>
-	</div>
-	</center>
-	<br>
-	<br>	
-	<div class="form-group"> 
-	  <form action="CerrarSesion">		   
-	   	<button type="submit" class="btn btn-primary"  value="Cerrar Sesión">Cerrar Sesión</button> 
 	   </form>
 	</div>
  <%

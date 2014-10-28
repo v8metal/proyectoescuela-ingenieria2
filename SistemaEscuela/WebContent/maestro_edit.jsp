@@ -12,6 +12,9 @@
 <!-- Bootstrap core CSS -->
 <link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
 <title>Maestros</title>
 </head>
 <body>
@@ -196,8 +199,6 @@
 <button type="submit" class="btn btn-primary"  value="Volver al Listado">Volver al Listado</button>
 </form>
 </div>
-<script src="js/jquery-1.7.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
  <%
 	} else {
 		response.sendRedirect("login.jsp");

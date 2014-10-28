@@ -20,10 +20,8 @@
 	if (session.getAttribute("admin") != null) {
 %>
 <div class="container">  
-  <div class="page-header">
-  <center>  
+  <div class="page-header"> 
 	<h1>Bienvenido Administrador</h1>
-  </center>
   </div>
   
       <!-- Static navbar -->

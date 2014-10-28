@@ -16,6 +16,9 @@
 <!-- Bootstrap core CSS -->
 <link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
 </head>
 <body>
 <div class="container">
@@ -128,7 +131,7 @@ if (session.getAttribute("admin") != null) {
 	}
 %>
 	<div class="page-header">  	  
-		<h1>Menú de Tardanzas<h1>		
+		<h1>Menú de Tardanzas</h1>		
     </div>
     
     <div class="form-group">
@@ -221,9 +224,6 @@ if (session.getAttribute("admin") != null) {
 	<button type="submit" class="btn btn-primary"  value="Cerrar Sesión">Cerrar Sesión</button>
 	</form>
 	</div>
-<script src="js/jquery-1.7.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-
 	<%
 	} else {
 		response.sendRedirect("login.jsp");

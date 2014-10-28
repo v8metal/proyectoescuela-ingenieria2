@@ -107,8 +107,6 @@
   
   <br>
   <br>
-  
-<center>
  <% 
  if (session.getAttribute("admin") != null) {
 	 
@@ -390,7 +388,6 @@ if (alumnos.getLista().size() == 0){%>
 </div>
 <%}%>
 <%}%>
-</center>
 <br>
 <div class="form-group">
 <form action="CuotaList">

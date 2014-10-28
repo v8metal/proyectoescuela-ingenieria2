@@ -14,6 +14,9 @@
 <!-- Bootstrap core CSS -->
 <link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
 <title>Grados</title>
 </head>
 <body>
@@ -322,6 +325,4 @@ p=document.anio_grado.selectedIndex;
 alert(p);
 }
 </script>
-<script src="js/jquery-1.7.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
 </html>

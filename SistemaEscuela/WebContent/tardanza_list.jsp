@@ -16,6 +16,9 @@
 <!-- Bootstrap core CSS -->
 <link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>		
+
 </head>
 <body>
 <div class="container">
@@ -148,9 +151,7 @@ if(session.getAttribute("admin")!=null){
 	}
  %>
 	<br>
-	<center>
 	<a href="TardanzaEdit?do=alta">Agregar Tardanza</a>
-	</center>	
 	<br>
 	<br>
 	<div class="form-group"> 
@@ -159,8 +160,6 @@ if(session.getAttribute("admin")!=null){
 	   	<button type="submit" class="btn btn-primary"  value="Volver al Menú de Tardanzas">Volver al Menú de Tardanzas</button> 
 	   </form>
 	</div>
-<script src="js/jquery-1.7.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>		
 <%
 	} else {
 		response.sendRedirect("login.jsp");

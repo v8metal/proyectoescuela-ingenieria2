@@ -17,6 +17,9 @@
 <!-- Bootstrap core CSS -->
 <link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>		
+
 </head>
 <body>
 <div class="container">
@@ -232,9 +235,7 @@
 					<form action="CerrarSesion" method="get">
 			<button type="submit" class="btn btn-primary"  value="Cerrar Sesión">Cerrar Sesión</button>
 			</form>
-			</div>
-<script src="js/jquery-1.7.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>			
+			</div>	
 <%
 } else {
 	response.sendRedirect("login.jsp");
