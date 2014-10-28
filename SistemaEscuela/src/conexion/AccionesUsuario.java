@@ -16,10 +16,10 @@ public class AccionesUsuario {
 		
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT DNI_MAESTRO FROM USUARIOS WHERE USUARIO = '" + usuario + "' AND CONTRASEÑA = '" + contraseña + "'");
+			ResultSet rs = stmt.executeQuery("SELECT DNI FROM USUARIOS WHERE USUARIO = '" + usuario + "' AND CONTRASEÑA = '" + contraseña + "'");
 			
 			while (rs.next()) {
-				dni = rs.getInt("DNI_MAESTRO");				
+				dni = rs.getInt("DNI");				
 			}
 			stmt.close();
 			Conexion.desconectar();
@@ -36,7 +36,7 @@ public class AccionesUsuario {
 		try {
 			
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM SISTEMA_ALUMNADO.USUARIOS WHERE DNI_MAESTRO = '" + dni + "'");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM SISTEMA_ALUMNADO.USUARIOS WHERE DNI = '" + dni + "'");
 			
 			while (rs.next()) {
 				b = true;
@@ -55,7 +55,7 @@ public class AccionesUsuario {
 		try {
 			
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM SISTEMA_ALUMNADO.USUARIOS WHERE DNI_MAESTRO > 1");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM SISTEMA_ALUMNADO.USUARIOS WHERE DNI > 1");
 			
 			while (rs.next()) {
 				i++;
@@ -100,15 +100,15 @@ public class AccionesUsuario {
 		Usuarios lista = new Usuarios();
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
-<<<<<<< .mine
-			ResultSet rs = stmt.executeQuery("SELECT * FROM USUARIOS WHERE DNI_MAESTRO > 1");
-=======
-			ResultSet rs = stmt.executeQuery("SELECT * FROM USUARIOS WHERE DNI_MAESTRO <> 1");
->>>>>>> .r52
+
+			//ResultSet rs = stmt.executeQuery("SELECT * FROM USUARIOS WHERE DNI > 1");
+
+			ResultSet rs = stmt.executeQuery("SELECT * FROM USUARIOS WHERE DNI <> 1");
+
 			Usuario tmp;
 			
 			while (rs.next()) {
-				tmp = new Usuario(rs.getString("usuario"), rs.getString("contraseña"), rs.getInt("DNI_MAESTRO"));
+				tmp = new Usuario(rs.getString("usuario"), rs.getString("contraseña"), rs.getInt("DNI"));
 				lista.agregarUsuario(tmp);
 			}
 			stmt.close();
