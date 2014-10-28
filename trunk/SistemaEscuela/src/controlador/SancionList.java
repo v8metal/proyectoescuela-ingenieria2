@@ -51,8 +51,17 @@ import datos.Maestro;
 				año = Integer.valueOf(request.getParameter("año_sancion_selected"));
 				sesion.setAttribute("año_sancion", año);
 		}else{			
-			//Segundo acceso. Se utiliza el atributo 'año_sancion', seteado previamente en el primer acceso			
-			año = (Integer) sesion.getAttribute("año_sancion");			
+			//Segundo acceso. Se utiliza el atributo 'año_sancion', seteado previamente en el primer acceso
+			
+			if(sesion.getAttribute("año_sancion") != null){
+				
+				año = (Integer) sesion.getAttribute("año_sancion");
+				
+			}else{ //se ingresa al alta sin passar por el listado 
+				
+				año = Integer.valueOf((String) sesion.getAttribute("año_sys"));
+			}
+			
 		}		
 		
 		Maestro maestro = (Maestro) sesion.getAttribute("maestro");	

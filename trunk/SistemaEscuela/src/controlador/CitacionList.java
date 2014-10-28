@@ -1,6 +1,7 @@
 package controlador;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,7 +52,15 @@ import datos.Maestro;
 				sesion.setAttribute("año_citacion", año);
 		}else{			
 			//Segundo acceso. Se utiliza el atributo 'año_citacion', seteado previamente en el primer acceso			
-			año = (Integer) sesion.getAttribute("año_citacion");			
+			
+			if(sesion.getAttribute("año_citacion") != null){
+				
+				año = (Integer) sesion.getAttribute("año_citacion");
+				
+			}else{ //se ingresa al alta sin passar por el listado 
+				
+				año = Integer.valueOf((String) sesion.getAttribute("año_sys"));
+			}
 		}	
 				
 		Maestro maestro = (Maestro) sesion.getAttribute("maestro");
