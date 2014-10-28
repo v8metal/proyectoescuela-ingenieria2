@@ -172,19 +172,19 @@
 <table>
 	<tr>
 		<td>Apellido: </td>
-		<td><input type="text" size="29" name="apellido_alum" value="<%=alumno!=null? alumno.getApellido() : ""%>"></td><td><%= error %></td>
+		<td><input type="text" class="form-control" size="29" name="apellido_alum" required value="<%=alumno!=null? alumno.getApellido() : ""%>"></td><td><%= error %></td>
 	</tr>
 	<tr>
 		<td>Nombres: </td>
-		<td><input type="text" size="29" name="nombre_alum" value="<%=alumno!=null? alumno.getNombre() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="nombre_alum" required value="<%=alumno!=null? alumno.getNombre() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Lugar de nacimiento: </td>
-		<td><input type="text" size="29" name="lugar_nac_alum" value="<%=alumno!=null? alumno.getLugar_nac() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="lugar_nac_alum" required value="<%=alumno!=null? alumno.getLugar_nac() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Fecha de nacimiento: </td>
-		<td><input name="form_date" id="form_date" type="date"></td>
+		<td><input type="date" class="form-control" name="form_date" required id="form_date"></td>
 <!--  		
 			<td><select name="dia_nac_alum">   
 			<%  
@@ -222,35 +222,35 @@
 	</tr>
 	<tr>
 		<td>D.N.I.: </td>
-		<td><input type="text" size="29" name="dni_alum" value="<%=alumno!=null? alumno.getDni() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="dni_alum" required value="<%=alumno!=null? alumno.getDni() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Domicilio: </td>
-		<td><input type="text" size="29" name="domicilio_alum" value="<%=alumno!=null? alumno.getDomicilio() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="domicilio_alum" required value="<%=alumno!=null? alumno.getDomicilio() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Teléfono: </td>
-		<td><input type="text" size="29" name="telefono_alum" value="<%=alumno!=null? alumno.getTelefono() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="telefono_alum" value="<%=alumno!=null? alumno.getTelefono() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Escolaridad: </td>
 		<td>	 
-			<input type="radio" name="esc" value="Inicial" <%=alumno!=null && alumno.getEsc().equals("Inicial") ? "checked" : ""%> /> Inicial
-			<input type="radio" name="esc" value="Primaria" <%=alumno!=null && alumno.getEsc().equals("Primaria") ? "checked" : ""%>/> Primaria
+			<input type="radio"  name="esc" value="Inicial" required <%=alumno!=null && alumno.getEsc().equals("Inicial") ? "checked" : ""%> /> Inicial
+			<input type="radio"  name="esc" value="Primaria" required <%=alumno!=null && alumno.getEsc().equals("Primaria") ? "checked" : ""%>/> Primaria
 		</td>
 	</tr>
 	<tr>
 		<td>Grupo Familiar: </td>
 		<td>
-			<input type="radio" name="ind_grupo" value="si" <%=alumno!=null && alumno.isInd_grupo() ? "checked" : ""%>/> Si
-			<input type="radio" name="ind_grupo" value="no" <%=alumno!=null && !alumno.isInd_grupo() ? "checked" : ""%>/> No 
+			<input type="radio"  name="ind_grupo" value="si" required <%=alumno!=null && alumno.isInd_grupo() ? "checked" : ""%>/> Si
+			<input type="radio"  name="ind_grupo" value="no" required <%=alumno!=null && !alumno.isInd_grupo() ? "checked" : ""%>/> No 
 		</td>
 	</tr>
 	<tr>
 		<td>Subsidio: </td>
 		<td>
-			<input type="radio" name="ind_subsidio" value="si" <%=alumno!=null && alumno.isInd_subsidio() ? "checked" : ""%>/> Si
-			<input type="radio" name="ind_subsidio" value="no" <%=alumno!=null && !alumno.isInd_subsidio() ? "checked" : ""%>/> No
+			<input type="radio" name="ind_subsidio" value="si" required <%=alumno!=null && alumno.isInd_subsidio() ? "checked" : ""%>/> Si
+			<input type="radio" name="ind_subsidio" value="no" required <%=alumno!=null && !alumno.isInd_subsidio() ? "checked" : ""%>/> No
 		</td>
 	</tr>
 </table>
@@ -260,15 +260,15 @@
 <table>	
 	<tr>
 		<td>Apellido: </td>
-		<td><input type="text" size="29" name="apellido_tutor" value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getApellido() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="apellido_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getApellido() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Nombres: </td>
-		<td><input type="text" size="29" name="nombre_tutor" value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getNombre() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="nombre_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getNombre() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Lugar de nacimiento: </td>
-		<td><input type="text" size="29" name="lugar_nac_tutor" value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getLugar_nac() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="lugar_nac_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getLugar_nac() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Fecha de nacimiento: </td>
@@ -308,31 +308,31 @@
 	</tr>
 	<tr>
 		<td>D.N.I.: </td>
-		<td><input type="text" size="29" name="dni_tutor" value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getDni() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="dni_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getDni() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Domicilio: </td>
-		<td><input type="text" size="29" name="domicilio_tutor" value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getDomicilio() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="domicilio_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getDomicilio() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Teléfono: </td>
-		<td><input type="text" size="29" name="telefono_tutor" value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getTelefono() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="telefono_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getTelefono() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Ocupación: </td>
-		<td><input type="text" size="29" name="ocupacion_tutor" value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getOcupacion() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="ocupacion_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getOcupacion() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Dom. Lab.: </td>
-		<td><input type="text" size="29" name="dom_lab_tutor" value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getDom_lab() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="dom_lab_tutor" value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getDom_lab() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Teléfono Lab.: </td>
-		<td><input type="text" size="29" name="telefono_lab_tutor" value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getTel_lab() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="telefono_lab_tutor" value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getTel_lab() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Estado Civil: </td>
-		<td><select name="est_civil_tutor">
+		<td><select class="form-control" name="est_civil_tutor" required>
 			<option <%=tutor!=null && tutor.getEst_civil().equals("Soltero/a")? "selected" : ""%>>Soltero/a</option>
 			<option <%=tutor!=null && tutor.getEst_civil().equals("Casado/a")? "selected" : ""%>>Casado/a</option>
 			<option <%=tutor!=null && tutor.getEst_civil().equals("Divorsiado/a")? "selected" : ""%>>Divorciado/a</option>
@@ -347,15 +347,15 @@
 <table>	
 	<tr>
 		<td>Apellido: </td>
-		<td><input type="text" size="29" name="apellido_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getApellido() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="apellido_madre" required value="<%=madre!=null && madre.getDni()!=0 ? madre.getApellido() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Nombres: </td>
-		<td><input type="text" size="29" name="nombre_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getNombre() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="nombre_madre" required value="<%=madre!=null && madre.getDni()!=0 ? madre.getNombre() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Lugar de nacimiento: </td>
-		<td><input type="text" size="29" name="lugar_nac_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getLugar_nac() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="lugar_nac_madre" required value="<%=madre!=null && madre.getDni()!=0 ? madre.getLugar_nac() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Fecha de nacimiento: </td>
@@ -395,31 +395,31 @@
 	</tr>
 	<tr>
 		<td>D.N.I.: </td>
-		<td><input type="text" size="29" name="dni_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getDni() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="dni_madre" required value="<%=madre!=null && madre.getDni()!=0 ? madre.getDni() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Domicilio: </td>
-		<td><input type="text" size="29" name="domicilio_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getDomicilio() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="domicilio_madre" required value="<%=madre!=null && madre.getDni()!=0 ? madre.getDomicilio() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Teléfono: </td>
-		<td><input type="text" size="29" name="telefono_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getTelefono() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="telefono_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getTelefono() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Ocupación: </td>
-		<td><input type="text" size="29" name="ocupacion_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getOcupacion() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="ocupacion_madre" required value="<%=madre!=null && madre.getDni()!=0 ? madre.getOcupacion() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Dom. Lab.: </td>
-		<td><input type="text" size="29" name="dom_lab_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getDom_lab() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="dom_lab_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getDom_lab() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Teléfono Lab.: </td>
-		<td><input type="text" size="29" name="telefono_lab_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getTel_lab() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="telefono_lab_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getTel_lab() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Estado Civil: </td>
-		<td><select name="est_civil_madre">
+		<td><select class="form-control" name="est_civil_madre" required>
 			<option <%=madre!=null && madre.getEst_civil().equals("Soltero/a")? "selected" : ""%>>Soltero/a</option>
 			<option <%=madre!=null && madre.getEst_civil().equals("Casado/a")? "selected" : ""%>>Casado/a</option>
 			<option <%=madre!=null && madre.getEst_civil().equals("Divorsiado/a")? "selected" : ""%>>Divorciado/a</option>
@@ -434,9 +434,9 @@
 <table>	
 	<tr>
 		<td>Mayores: </td>
-		<td><input type="text" size="1" name="cant_her_may" value="<%=alumno!=null? alumno.getCant_her_may() : "0"%>"></td>	
+		<td><input type="text" class="form-control" size="1" name="cant_her_may" value="<%=alumno!=null? alumno.getCant_her_may() : "0"%>"></td>	
 		<td>Menores: </td>
-		<td><input type="text" size="1" name="cant_her_men" value="<%=alumno!=null? alumno.getCant_her_men() : "0"%>"></td>
+		<td><input type="text" class="form-control" size="1" name="cant_her_men" value="<%=alumno!=null? alumno.getCant_her_men() : "0"%>"></td>
 	</tr>
 </table>
 <br>
@@ -444,7 +444,7 @@
 <table>	
 	<tr>
 		<td>Nombre: </td>
-		<td><input type="text" size="29" name="iglesia" value="<%=alumno!=null? alumno.getIglesia() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="iglesia" value="<%=alumno!=null? alumno.getIglesia() : ""%>"></td>
 	</tr>							
 </table>
 <br>

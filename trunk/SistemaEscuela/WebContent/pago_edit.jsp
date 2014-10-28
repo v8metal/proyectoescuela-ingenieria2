@@ -106,7 +106,6 @@
   <br>
   <br>
   
-<center>
  <% 
  if (session.getAttribute("admin") != null) {
 	 
@@ -233,7 +232,6 @@
 	<%}%>	
 	</form>
 </div>
-</center>
 <br>
 <br>
 <div class="form-group">
