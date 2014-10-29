@@ -108,13 +108,7 @@
 	if (session.getAttribute("admin") != null) {
 		
 		Maestro maestro = (Maestro)request.getAttribute("maestro");
-		
-		String error = "";
-		
-		if (session.getAttribute("error") != null) {
-			error = (String)session.getAttribute("error");
-			session.setAttribute("error", "");
-		} 
+
   	//get the maestro object from the request
   	
   		String accion = "alta";
@@ -131,14 +125,7 @@
   </div> 
   	 
  		<%}%>  
-  <% 
-			if (!error.equals("")) { %>
-<%=error%>
-<br>
-<br>
-<%
-			}
-%> 
+ 		
 	<div class="form-group">
 	
 	<form action="maestroEdit" method="post">
@@ -150,12 +137,12 @@
 			<tbody>
 				<tr>
 				    <td><label for="input">Apellido:</label></td>
-         			<td><input type="text" class="form-control" name="apellido" placeholder="Apellido" value="<%=maestro!=null? maestro.getApellido() : ""%>"></td>
+         			<td><input type="text" class="form-control" name="apellido" placeholder="Apellido" required value="<%=maestro!=null? maestro.getApellido() : ""%>"></td>
          		</tr>
          		
          		<tr>
 				    <td><label for="input">Nombre:</label></td>
-         			<td><input type="text" class="form-control" name="nombre" placeholder="Nombre" value="<%=maestro!=null ? maestro.getNombre() : ""%>"></td>
+         			<td><input type="text" class="form-control" name="nombre" placeholder="Nombre" required value="<%=maestro!=null ? maestro.getNombre() : ""%>"></td>
          		</tr>					
 							
 				<tr>
@@ -164,18 +151,18 @@
 					<td><input readonly type="text" class="form-control" name="dni" placeholder="Dni" value="<%=maestro.getDni()%>"></td>
 					<%}else{%>					
 					<td><label for="input">D.N.I.:</label></td>
-         			<td><input type="text" class="form-control" name="dni" placeholder="Dni" value=""></td>
+         			<td><input type="text" class="form-control" name="dni" required placeholder="Dni" value=""></td>
 					<%}%>
 				</tr>
 
 				<tr>
 				    <td><label for="input">Domicilio:</label></td>
-         			<td><input type="text" class="form-control" name="domicilio" placeholder="Domicilio"  value="<%=maestro!=null ? maestro.getDomicilio() : ""%>"></td>
+         			<td><input type="text" class="form-control" name="domicilio" placeholder="Domicilio"  required value="<%=maestro!=null ? maestro.getDomicilio() : ""%>"></td>
          		</tr>				
 					
 				<tr>
 				    <td><label for="input">Teléfono:</label></td>
-         			<td><input type="text" class="form-control"  name="telefono" placeholder="Teléfono" value="<%=maestro!=null ? maestro.getTelefono() : ""%>"></td>
+         			<td><input type="text" class="form-control"  name="telefono" placeholder="Teléfono" required value="<%=maestro!=null ? maestro.getTelefono() : ""%>"></td>
          		</tr>				
 			</tbody>
 		</table>
@@ -194,6 +181,22 @@
 	</div>
  <br>
  <br>
+ <!-- MENSAJE DE ERROR -->
+ <%	String error = "";
+	
+	if (session.getAttribute("error") != null) {
+		error = (String)session.getAttribute("error");
+		session.setAttribute("error", null);		
+	
+ %>
+   <div class="bs-example">
+    	 <div class="alert alert-danger fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <strong>Ups!</strong> <%= error %>
+  	  </div>
+  </div><!-- /example -->
+ 	
+ <% } %>
 <div class="form-group">
 <form action="maestroList" method="post">
 <button type="submit" class="btn btn-primary"  value="Volver al Listado">Volver al Listado</button>
