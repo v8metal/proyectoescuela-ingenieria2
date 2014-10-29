@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="icono/favicon.ico">
+
+    <title>Narrow Jumbotron Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+	<link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
+	   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	
+	<!-- Custom styles for this template -->
+<!-- 	<link href="style/sticky-footer.css" rel="stylesheet">	-->
+
+    <!-- Custom styles for this template -->
+    <link href="style/jumbotron-narrow.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <h3 class="text-muted">Sistema</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Loguin</h1>
+        <p class="lead">Por favor regístrese</p>
+        <form class="form-signin" role="form" action="login" method="post">
+        <div class="form-group">
+         		
+         		
+         		<input type="text" class="form-control" name=usuario placeholder="Usuario" required autofocus>    <!-- required que nos permite comprobar que el campo ha sido rellenado antes incluso de pulsar ese botón de envío -->
+         		
+
+         		<input type="password" name="contraseña" class="form-control" placeholder="Contraseña" required>	<!-- autofocus es un atributo booleano para los campos de un formulario que hace que el foco del explorador esté fijado sobre uno de ellos cuando se carga la web -->
+
+				<br>
+     			<button type="submit" class="btn btn-primary">Ingresar</button>
+     			
+     	</div>		
+		</form>
+      </div>
+
+      <div class="footer">
+        <p>&copy; Escuela "Príncipe de Paz"</p>
+      </div>
+
+    </div> <!-- /container -->
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
