@@ -46,14 +46,8 @@
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="menu_user.jsp">Menú</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Asistencias <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="AsistenciaList">Listado</a></li>
-                  <li><a href="AsistenciaListEdit">Nueva asistencia</a></li>          
-                </ul>
-              </li>
+              <li class="active"><a href="menu_user.jsp">Menú</a></li>              
+              <li><a href="menu_asistencias.jsp">Asistencias</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Citaciones <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
