@@ -1,4 +1,5 @@
 <%@page import="datos.Maestro"%>
+<%@page import="datos.Maestro"%>
 <%@page import="datos.Maestros"%>
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -44,13 +45,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
               <li><a href="menu_user.jsp">Menú</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Asistencias <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="AsistenciaList">Listado</a></li>
-                  <li><a href="AsistenciaListEdit">Nueva asistencia</a></li>          
-                </ul>
-              </li>
+              <li> <a href="menu_asistencias.jsp">Asistencias</a></li>
               <li class="active" class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Citaciones <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
