@@ -40,11 +40,12 @@
 
 <br>
 
+<!-- MENSAJE DE ERROR -->
  <%	String error = "";
 	
 	if (session.getAttribute("error") != null) {
 		error = (String)session.getAttribute("error");
-		session.setAttribute("error", "");		
+		session.setAttribute("error", null);		
 	
  %>
    <div class="bs-example">

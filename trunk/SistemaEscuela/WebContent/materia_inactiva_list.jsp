@@ -151,7 +151,6 @@ if (materias.getLista().isEmpty()){ %>
 </table>
 <%}%>
 <br>
-<br>
 <div class="form-group">
 <form action="materiaList?from=menu_admin" method="post">
 <button type="submit" class="btn btn-primary"  value="Volver al listado principal">Volver al listado principal</button>
