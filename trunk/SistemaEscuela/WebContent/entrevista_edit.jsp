@@ -314,7 +314,7 @@ if(session.getAttribute("admin")!=null || session.getAttribute("usuario")!=null)
 		<%if(entrevista == null){%>
 			<tr>
 				<td>Maestro</td>
-				<td><select name="maestro_entrevista" class="form-control" >		
+				<td><select required name="maestro_entrevista" class="form-control">		
 				<%
 				for (Maestro m : maestros.getLista()){		 		
 		 		%>  			  
@@ -326,7 +326,7 @@ if(session.getAttribute("admin")!=null || session.getAttribute("usuario")!=null)
 			</tr>	
 			<tr>
 				<td>Nombre</td>
-				<td><input class="form-control" type="text" name="nombre_entrevista" value="<%=entrevista!=null? entrevista.getNombre() : ""%>"></td>
+				<td><input class="form-control" type="text" name="nombre_entrevista" required value="<%=entrevista!=null? entrevista.getNombre() : ""%>"></td>
 			</tr>
 		<%}%>
 		</table>

@@ -153,10 +153,10 @@ if (session.getAttribute("admin") != null) {
 	      		%>
 	        </select>
 	     </td>         	     
-	     <td>
-	     	<input type="hidden" name="accion" value="solicitarGrados">
-	     </td> 	     
 	  </tr>
+	  
+	  <input type="hidden" name="accion" value="solicitarGrados">
+	  
 	<%}else{ %>
 	  <tr>
 	    <td><label for="input">Seleccionar año:</label></td>	    
@@ -183,12 +183,10 @@ if (session.getAttribute("admin") != null) {
 	    </tr>
 	   <%}%>
 	<%}%>	    	      
-	     <tr>
-	      <td>
-	     	<input type="hidden" name="accion" value="listarTardanzas">
-	      </td>      
-	    </tr>	        
+  	        
 	  </table>
+	  
+			<input type="hidden" name="accion" value="listarTardanzas">
 	  
 			<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave">Aceptar</button>
 			<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave">Cancelar</button>
@@ -198,32 +196,26 @@ if (session.getAttribute("admin") != null) {
 	<br>
 	<br>
 	<%if(añoTardanza == null){ %>
-		
+<!-- 		
 	<div class="form-group">
 	<form action="menu_admin.jsp">
 	<button type="submit" class="btn btn-primary"  value="Volver al Menú Principal">Volver al Menú Principal</button>
 	</form>
 	</div>
-
+ -->
 	<%}else{ %>	
 	
 		
 	<table>
 		<tr>
 		<td><div class="form-group"> <form action="menu_tardanzas.jsp"> <input class="btn btn-primary" type="submit" value="Seleccionar otro año"> </form></div></td>
+<!-- 		
 		<td><div class="form-group"> <form action="menu_admin.jsp"> <input class="btn btn-primary" type="submit" value="Volver al Menú Principal"> </form></div></td>
+ -->		
 		</tr>
 	</table>
 	
 	<%}%>
-	<br>
-	<br>
-		
-	<div class="form-group">
-	<form action="CerrarSesion">
-	<button type="submit" class="btn btn-primary"  value="Cerrar Sesión">Cerrar Sesión</button>
-	</form>
-	</div>
 	<%
 	} else {
 		response.sendRedirect("login.jsp");

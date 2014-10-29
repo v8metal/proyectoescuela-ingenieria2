@@ -134,7 +134,8 @@ if (maestros.getLista().size() == 0){
 <br>
 <%}else{%>
 <table class="table table-hover table-bordered">
-	<tr>		
+	<thead>
+	<tr class="active">		
 		<th>Apellido y Nombres</th>
 		<th>D.N.I.</th>
 		<th>Domicilio</th>
@@ -142,9 +143,11 @@ if (maestros.getLista().size() == 0){
 		<th>&nbsp;</th>
 		<th>&nbsp;</th>		
 	</tr>
+	<thead>
 <% 	
 	for (Maestro m : maestros.getLista()) {
 %>
+	<tbody>
 	<tr>		
 		<td><%= m.getApellido() + ", " + m.getNombre() %></td>
 		<td><%= m.getDni() %></td>
@@ -153,6 +156,7 @@ if (maestros.getLista().size() == 0){
 		<td><a href="maestroEdit?accion=activar&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea activar?');">Activar</a></td>
 		<td><a name="delete-link" href="maestroEdit?accion=borrar&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea borrar?');">Borrar</a></td>
 	</tr>
+	<tbody>
 <%
 	}
  %>

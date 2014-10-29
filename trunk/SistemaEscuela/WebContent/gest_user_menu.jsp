@@ -120,13 +120,17 @@
 <%  
 		if (usuarios.getLista().isEmpty()) {
 %>
-<p>No hay usuarios registrados<p>
+<br>
+<!-- MENSAJE DE WARNING -->
+	<div class="alert alert-warning" role="alert">
+      <strong>Cuidado!</strong> No hay usuarios registrados. <a href="registro_user.jsp?" class="alert-link">Registrar nuevo usuario</a>
+    </div>
 <%
 		} else {
 %>
 <table class="table table-hover table-bordered">
 	<thead>
-	<tr>		
+	<tr class="active">		
 		<th>Maestro</th>
 		<th>Usuario</th>
 		<th>Contraseña</th>
@@ -155,20 +159,22 @@
 		}
 %>
 <br>
-<%if ((usuarios.getLista().size() < maestros.getLista().size()) ) { //aca agregar a futuro los maestros activos%> 
+<%if ( (!usuarios.getLista().isEmpty()) && (usuarios.getLista().size() < maestros.getLista().size()) ) { //aca agregar a futuro los maestros activos%> 
   <!-- MENSAJE DE WARNING -->
 	<div class="alert alert-warning" role="alert">
-      <strong>Cuidado!</strong> No todos los maestros están registrados. <a href="registro_user.jsp?" class="alert-link">Registrar nuevo usuario</a>.
+      <strong>Cuidado!</strong> No todos los maestros están registrados. <a href="registro_user.jsp?" class="alert-link">Registrar nuevo usuario</a>
     </div>
-<%}else{%>
-  <!-- MENSAJE DE EXITO -->
-   <div class="bs-example">
-    	 <div class="alert alert-success fade in" role="alert">
-     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong>Bien Hecho!</strong> Todos los maestros están registrados
-  	  </div>
-  </div><!-- /example -->
-<%}%>
+<%}else if ((usuarios.getLista().size() == maestros.getLista().size()))
+
+		{%>
+ 		 <!-- MENSAJE DE EXITO -->
+  		 <div class="bs-example">
+    			 <div class="alert alert-success fade in" role="alert">
+     			 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     			 <strong>Bien Hecho!</strong> Todos los maestros están registrados
+  	  		</div>
+  		</div><!-- /example -->
+		<%}%>
 <%
 
 	} else {

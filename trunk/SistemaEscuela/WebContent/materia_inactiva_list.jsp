@@ -134,22 +134,27 @@ if (materias.getLista().isEmpty()){ %>
 	
 <%}else{%>
 <table class="table table-hover table-bordered">
-	<tr>
+	<thead>
+	<tr class="active">
 		<th>Materia</th>
 		<th>&nbsp;</th>		
 	</tr>
+	<thead>
 <% 	
 	for (Materia m : materias.getLista()) {
 %>
+	<tbody>
 	<tr>
 		<td><%= m.getMateria() %></td>
 		<td><a href="materiaEdit?do=activar&materia=<%= m.getMateria() %>" onclick="return confirm('Esta seguro que desea activar la materia?');">Activar Materia</a></td>	
 	</tr>
+	<tbody>
 <%
 	}
  %>
 </table>
 <%}%>
+
 <br>
 <div class="form-group">
 <form action="materiaList?from=menu_admin" method="post">

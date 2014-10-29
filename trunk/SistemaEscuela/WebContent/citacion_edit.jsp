@@ -144,7 +144,11 @@
 <h2><%="Citación para " + a.getNombre() + " " + a.getApellido()%></h2>	
 <%}else if (alumnos.getLista().isEmpty() & error.equals("")){
 	empty = true;
-%> 
+%>
+<div class="page-header"> 	
+<h1>Alta de Citación</h1>
+</div> 
+<br>
 <div class="alert alert-info" role="alert">
     <strong>Atención!</strong> No hay alumnos cargados para el año en curso
 </div>

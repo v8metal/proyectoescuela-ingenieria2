@@ -98,7 +98,6 @@
   
   <br>
   <br>
-  <br>
 <%
 	if (session.getAttribute("usuario") != null) {
 	

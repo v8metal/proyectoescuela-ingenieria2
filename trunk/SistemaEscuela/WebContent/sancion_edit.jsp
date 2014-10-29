@@ -91,6 +91,7 @@
     </div>
   
   <br>
+  <br>
 <%
 	if (session.getAttribute("usuario") != null) {
 
@@ -132,7 +133,6 @@
 		}		
 		
 %>
-<br>
 <%if (s != null){ %>
 <div class="page-header">
 <h1>Modificación de Sanción</h1>
@@ -141,6 +141,10 @@
 <%}else if (alumnos.getLista().isEmpty() & error.equals("")){
 	empty = true;
 %>
+<div class="page-header">
+<h1>Alta de Sanción</h1>
+</div>
+<br>
 <div class="alert alert-info" role="alert">
     <strong>Atención!</strong> No hay alumnos cargados para el año
 </div>

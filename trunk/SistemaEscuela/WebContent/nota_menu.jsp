@@ -48,13 +48,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
               <li><a href="menu_user.jsp">Menú</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Asistencias <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="AsistenciaList">Listado</a></li>
-                  <li><a href="AsistenciaListEdit">Nueva asistencia</a></li>          
-                </ul>
-              </li>
+              <li> <a href="menu_asistencias.jsp">Asistencias</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Citaciones <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
@@ -86,11 +80,11 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
             <li>
-            	<div class="navbar-collapse collapse">  
+            	<div class="navbar-collapse collapse">
         		  <form action="cerrarSesion" method="post" class="navbar-form navbar-right" role="form">
            		 	<button type="submit" class="btn btn-primary">Salir</button>
         		  </form>
-        		  <p class="navbar-text navbar-right"><strong><%= nombre + " " + apellido %></strong></p>
+        		   <p class="navbar-text navbar-right"><strong><%= nombre + " " + apellido %></strong></p>
         		</div>
 			</li>
           </ul>
