@@ -111,24 +111,22 @@
 <%
 	if (session.getAttribute("admin") != null) {
 		
-		String error = "";
-		if (session.getAttribute("error") != null) {
-			error = (String)session.getAttribute("error");
-			session.setAttribute("error", "");
-		}
+//		String error = "";
+//		if (session.getAttribute("error") != null) {
+//			error = (String)session.getAttribute("error");
+//			session.setAttribute("error", "");
+//		}
 		
 		Materias materias = (Materias)session.getAttribute("materias");
 		Materias materiasbaja = (Materias)session.getAttribute("materiasbaja");		
 %>
 
 <% 
-			if (!error.equals("")) {
+//			if (!error.equals("")) {
 %>
-<%=error%>
-<br>
-<br>
+
 <%
-			}
+//			}
 
 if (materias.getLista().isEmpty()){ %>
 
@@ -164,18 +162,36 @@ if (materias.getLista().isEmpty()){ %>
   	<a href="materiaEdit?do=alta">Agregar materia</a>
 <br>
 <br>
+<br>
 <%}
 if(materiasbaja.getLista().size() != 0){%>
- <a href="materiaList?from=materia_inactiva_list">Listado de materias inactivas</a> 
-<br>
+  <!-- MENSAJE INFORMATIVO -->
+	<div class="alert alert-info" role="alert">
+      <strong>Atención!</strong> Se encuentran materias en estado inactivo. <a href="materiaList?from=materia_inactiva_list" class="alert-link">Ver listado</a>.
+    </div> 
 <br>
 <%}%>
-<br>
-</div>
+<!-- MENSAJE DE ERROR -->
+ <%	String error = "";
+	
+	if (session.getAttribute("error") != null) {
+		error = (String)session.getAttribute("error");
+		session.setAttribute("error", null);		
+	
+ %>
+   <div class="bs-example">
+    	 <div class="alert alert-danger fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <strong>Ups!</strong> <%= error %>
+  	  </div>
+  </div><!-- /example -->
+ 	
+ <% } %>
 <%
 	} else {
 		response.sendRedirect("login.jsp");
 	}
 %>
+</div>
 </body>
 </html>

@@ -156,7 +156,7 @@
 %>
 <br>
 <%if ((usuarios.getLista().size() < maestros.getLista().size()) ) { //aca agregar a futuro los maestros activos%> 
-
+  <!-- MENSAJE DE WARNING -->
 	<div class="alert alert-warning" role="alert">
       <strong>Cuidado!</strong> No todos los maestros están registrados. <a href="registro_user.jsp?" class="alert-link">Registrar nuevo usuario</a>.
     </div>

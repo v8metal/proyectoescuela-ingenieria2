@@ -114,19 +114,10 @@
 		Maestros maestros = (Maestros)session.getAttribute("maestros");
 		Maestros maestros_inac = (Maestros)session.getAttribute("maestros_inac");
 		
-		String error = "";
-		if (session.getAttribute("error") != null) {
-			error = (String)session.getAttribute("error");
-			session.setAttribute("error", "");
-		}
- 
-			if (!error.equals("")) {
 %>
-<%=error%>
-<br>
-<br>
+
 <%
-			}
+
 
 if (maestros.getLista().size() == 0){
 %>
@@ -169,12 +160,31 @@ if (maestros.getLista().size() == 0){
   	
  <%}%>
 <br>
+<br>
+<br>
 <%if(maestros_inac.getLista().size() != 0){%>
-<br>
-  	<a href="MaestroList?tipo=inactivos">Listado de maestros inactivos</a>
-<br>
+  <!-- MENSAJE INFORMATIVO -->
+	<div class="alert alert-info" role="alert">
+      <strong>Atención!</strong> Se encuentran maestros en estado inactivo. <a href="MaestroList?tipo=inactivos" class="alert-link">Ver listado</a>.
+    </div>
 <%}%>
 <br>
+<!-- MENSAJE DE ERROR -->
+ <%	String error = "";
+	
+	if (session.getAttribute("error") != null) {
+		error = (String)session.getAttribute("error");
+		session.setAttribute("error", null);		
+	
+ %>
+   <div class="bs-example">
+    	 <div class="alert alert-danger fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <strong>Ups!</strong> <%= error %>
+  	  </div>
+  </div><!-- /example -->
+ 	
+ <% } %>
 <%
 	} else {
 		response.sendRedirect("login.jsp");

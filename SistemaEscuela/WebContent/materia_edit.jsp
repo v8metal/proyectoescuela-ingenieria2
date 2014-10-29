@@ -141,7 +141,7 @@
 			<tbody>							
 				<tr>
 				    <td><label for="input">Nombre:</label></td>
-         			<td><input type="text" class="form-control" name="materia" placeholder="Nombre" value="<%=materia!=null ? materia.getMateria() : ""%>"></td>
+         			<td><input type="text" class="form-control" name="materia" placeholder="Nombre" required value="<%=materia!=null ? materia.getMateria() : ""%>"></td>
          		</tr>			
 			</tbody>
 		</table>		
