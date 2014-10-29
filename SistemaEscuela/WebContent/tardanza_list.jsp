@@ -154,6 +154,7 @@ if(session.getAttribute("admin")!=null){
 	<a href="TardanzaEdit?do=alta">Agregar Tardanza</a>
 	<br>
 	<br>
+	<br>
 	<div class="form-group"> 
 	  	<form action="menu_tardanzas.jsp">
 	  	<input type="hidden" name="volver" value="volver">		   

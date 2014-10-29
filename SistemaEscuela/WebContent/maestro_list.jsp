@@ -2,7 +2,7 @@
 <%@page import="datos.Maestros"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html">
+<!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width; initial-scale=1.0"> 
@@ -112,22 +112,24 @@
 	if (session.getAttribute("admin") != null) {
 		
 		Maestros maestros = (Maestros)session.getAttribute("maestros");
-		Maestros maestros_inac = (Maestros)session.getAttribute("maestros_inac");
-		
+		Maestros maestros_inac = (Maestros)session.getAttribute("maestros_inac");	
 %>
 
 <%
-
-
 if (maestros.getLista().size() == 0){
 %>
-	<a href="maestroEdit?accion=alta">No hay maestros activos, agregar maestro</a>
+
+<br>
+ <!-- MENSAJE INFORMATIVO -->
+	<div class="alert alert-info" role="alert">
+      <strong>Atención!</strong> No hay maestros activos. <a href="maestroEdit?accion=alta" class="alert-link">Agregar maestro</a>
+    </div>	
 	
 <%}else{%>
 
 <table class="table table-hover table-bordered">
 	<thead>
-	<tr>		
+	<tr class="active">		
 		<th>Apellido y Nombres</th>
 		<th>D.N.I.</th>
 		<th>Domicilio</th>
@@ -156,16 +158,16 @@ if (maestros.getLista().size() == 0){
  %>
 </table>
 <br>
-    <a href="maestroEdit?accion=alta"> Agregar Maestro</a>
-  	
+    <p><a href="maestroEdit?accion=alta"> Agregar Maestro</a></p>
+<br>
+<br>	
  <%}%>
-<br>
-<br>
-<br>
+ 
 <%if(maestros_inac.getLista().size() != 0){%>
+
   <!-- MENSAJE INFORMATIVO -->
 	<div class="alert alert-info" role="alert">
-      <strong>Atención!</strong> Se encuentran maestros en estado inactivo. <a href="MaestroList?tipo=inactivos" class="alert-link">Ver listado</a>.
+      <strong>Atención!</strong> Se encuentran maestros en estado inactivo. <a href="MaestroList?tipo=inactivos" class="alert-link">Ver listado</a>
     </div>
 <%}%>
 <br>

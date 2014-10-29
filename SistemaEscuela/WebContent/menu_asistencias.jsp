@@ -77,7 +77,7 @@ if (session.getAttribute("usuario") != null) {
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
               <li><a href="menu_user.jsp">Menú</a></li>
-              <li class="active"> <a href="menu_asistencias.jsp">Asistencias</a></li>              
+              <li class="active"> <a href="menu_asistencias.jsp">Asistencias</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Citaciones <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
@@ -107,16 +107,22 @@ if (session.getAttribute("usuario") != null) {
                 </ul>
               </li>
             </ul>
-             <ul class="nav navbar-nav navbar-right">
-              <li class="active"><a href="CerrarSesion">Salir</a></li>
-            </ul>
-            <ul>
-          		<p class="navbar-text navbar-right"><strong><%= nombre + " " + apellido %></strong></p>
-            </ul> 
+            <ul class="nav navbar-nav navbar-right">
+            <li>
+            	<div class="navbar-collapse collapse">
+        		  <form action="cerrarSesion" method="post" class="navbar-form navbar-right" role="form">
+           		 	<button type="submit" class="btn btn-primary">Salir</button>
+        		  </form>
+        		  <p class="navbar-text navbar-right"><strong><%= nombre + " " + apellido %></strong></p>
+        		</div>
+			</li>
+          </ul>
         </div>
       </div>
     </div>
   
+  
+  <br>
   <br>
 
 	<div class="page-header">  	  

@@ -111,7 +111,6 @@
 <%
 	if (session.getAttribute("admin") != null) {
 %>
-<center>
 <%
 	Tardanza tardanza = (Tardanza) request.getAttribute("tardanza");
 	Alumnos alumnos = (Alumnos) session.getAttribute("alumnosAltaTardanza");
@@ -155,7 +154,6 @@
 <%}else{%>
 <h1>Alta de Tardanza </h1>
 <%}%>
-</center>
 </div>
 	<div class="form-group">	
 	<form action="TardanzaEdit" method="post">
@@ -192,7 +190,7 @@
 		  		<%if(tardanza ==null){%>
 		  		<th>ALUMNO</th>
 		  		<td>
-		  			<select name="alumno_tardanza" class="form-control" >   
+		  			<select name="alumno_tardanza" class="form-control" required>   
 		  			<%
 					for (Alumno a : alumnos.getLista()){		 		
 		 			%>
@@ -209,33 +207,21 @@
 		      <th>OBSERVACIONES:</th>
 		      <td><textarea name="observaciones" cols="40" rows="4"><%=tardanza!=null?tardanza.getObservaciones():"" %></textarea></td>
 		    </tr>
-		    <tr>
-		      <td></td>
-		      <td>
-		      	  <button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');">Guardar</button>
-		          <button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button> 
-		      </td>
-		    </tr>  
 		  </table>
+		  
+		 		<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');">Guardar</button>
+		  		<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button> 
+		 
 		  </form>
 		  </div>
 		  <br>
-		  <br>
-		  <center> 			
+		  <br>		
 		 	<div class="form-group">
 			<form action="TardanzaList" method="get">
 			<input type="hidden" name="accion" value="listarTardanzas">
 			<button type="submit" class="btn btn-primary"  value="Volver al Listado de Tardanzas">Volver al Listado de Tardanzas</button>
 			</form>
 			</div>
-		  	<br>
-		  	<br>
-		  </center>		  
-		  	<div class="form-group">
-					<form action="CerrarSesion" method="get">
-			<button type="submit" class="btn btn-primary"  value="Cerrar Sesión">Cerrar Sesión</button>
-			</form>
-			</div>	
 <%
 } else {
 	response.sendRedirect("login.jsp");

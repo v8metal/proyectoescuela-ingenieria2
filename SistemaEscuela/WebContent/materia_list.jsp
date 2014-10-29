@@ -6,7 +6,6 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width; initial-scale=1.0"> 
-<title>Listado de Materias</title>
 
 <link rel="icon" href="icono/favicon.ico">
 
@@ -16,6 +15,7 @@
 <script src="js/jquery-1.7.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
+<title>Listado de Materias</title>
 </head>
 <body>
 
@@ -110,34 +110,24 @@
   </div>
 <%
 	if (session.getAttribute("admin") != null) {
-		
-//		String error = "";
-//		if (session.getAttribute("error") != null) {
-//			error = (String)session.getAttribute("error");
-//			session.setAttribute("error", "");
-//		}
-		
+	
 		Materias materias = (Materias)session.getAttribute("materias");
 		Materias materiasbaja = (Materias)session.getAttribute("materiasbaja");		
 %>
 
-<% 
-//			if (!error.equals("")) {
-%>
+<%if (materias.getLista().isEmpty()){ %>
 
-<%
-//			}
-
-if (materias.getLista().isEmpty()){ %>
-
-<a href="materiaEdit?do=alta">No hay materias asignadas, agregar materias</a>
 <br>
-<br>
+ <!-- MENSAJE INFORMATIVO -->
+	<div class="alert alert-info" role="alert">
+      <strong>Atención!</strong> No hay materias asignadas. <a href="materiaEdit?do=alta" class="alert-link">Agregar materia</a>
+    </div>	
+    
 <%}else{%>
 
 <table class="table table-hover table-bordered">
 	<thead>
-	<tr>
+	<tr class="active">
 		<th>Materia</th>
 		<th>&nbsp;</th>
 		<th>&nbsp;</th>
