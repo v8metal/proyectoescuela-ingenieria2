@@ -123,6 +123,7 @@
 <br>
 <!-- MENSAJE DE WARNING -->
 	<div class="alert alert-warning" role="alert">
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       <strong>Cuidado!</strong> No hay usuarios registrados. <a href="registro_user.jsp?" class="alert-link">Registrar nuevo usuario</a>
     </div>
 <%
@@ -148,7 +149,7 @@
 		<td><%= m.getApellido() + ", " + m.getNombre() %></td>
 		<td><%= u.getUsuario() %></td>
 		<td><%= u.getContraseña() %></td>
-		<td><a name="delete-link" href="registroUser?do=baja&usuario=<%= u.getUsuario() %>" onclick="return confirm('Esta seguro que desea borrar?');">Borrar</a></td>
+		<td><strong><a name="delete-link" href="registroUser?do=baja&usuario=<%= u.getUsuario() %>" onclick="return confirm('Esta seguro que desea borrar?');">Borrar</a></strong></td>
 	</tr>
 	</tbody>
 <%
@@ -162,6 +163,7 @@
 <%if ( (!usuarios.getLista().isEmpty()) && (usuarios.getLista().size() < maestros.getLista().size()) ) { //aca agregar a futuro los maestros activos%> 
   <!-- MENSAJE DE WARNING -->
 	<div class="alert alert-warning" role="alert">
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       <strong>Cuidado!</strong> No todos los maestros están registrados. <a href="registro_user.jsp?" class="alert-link">Registrar nuevo usuario</a>
     </div>
 <%}else if ((usuarios.getLista().size() == maestros.getLista().size()))

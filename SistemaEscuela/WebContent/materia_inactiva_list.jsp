@@ -146,7 +146,7 @@ if (materias.getLista().isEmpty()){ %>
 	<tbody>
 	<tr>
 		<td><%= m.getMateria() %></td>
-		<td><a href="materiaEdit?do=activar&materia=<%= m.getMateria() %>" onclick="return confirm('Esta seguro que desea activar la materia?');">Activar Materia</a></td>	
+		<td><strong><a href="materiaEdit?do=activar&materia=<%= m.getMateria() %>" onclick="return confirm('Esta seguro que desea activar la materia?');">Activar Materia</a></strong></td>	
 	</tr>
 	<tbody>
 <%

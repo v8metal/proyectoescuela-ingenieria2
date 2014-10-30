@@ -156,7 +156,7 @@ public class TardanzaEdit extends HttpServlet {
 					dispatcher.forward(request, response);				
 				
 				} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
-					sesion.setAttribute("error", "<br>"+ "Ya existe una tardanza para el alumno, en el mismo dia"+"<br>");
+					sesion.setAttribute("error", "Ya existe una tardanza para el alumno en el mismo dia");
 					response.sendRedirect("tardanza_edit.jsp");		
 					
 				} catch (Exception e) {				

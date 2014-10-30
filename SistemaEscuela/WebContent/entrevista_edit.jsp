@@ -249,7 +249,7 @@ if(session.getAttribute("admin")!=null || session.getAttribute("usuario")!=null)
 		<table id="TablaEntrevistas" class="table table-hover table-bordered">
 			<tr>
 				<td>Fecha </td>
-				<td><select name="dia_entrevista" class="form-control" >   
+				<td><select name="dia_entrevista" class="form-control" autofocus>   
 					<%  
 					for (int i = dia_entrevista; i <= 31; i++){			  	
 		 			%>

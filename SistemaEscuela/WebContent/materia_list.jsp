@@ -120,6 +120,7 @@
 <br>
  <!-- MENSAJE DE WARNING -->
 	<div class="alert alert-warning" role="alert">
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       <strong>Cuidado!</strong> No hay materias asignadas. <a href="materiaEdit?do=alta" class="alert-link">Agregar materia</a>
     </div>	
     
@@ -139,8 +140,8 @@
 	<tbody>
 	<tr>
 		<td><%= m.getMateria() %></td>
-		<td><a href="materiaEdit?do=baja&materia=<%= m.getMateria() %>" onclick="return confirm('Esta seguro que desea dar de baja?');">Baja de Materia</a></td>		
-		<td><a href="materiaEdit?do=borrar&materia=<%= m.getMateria() %>"  onclick="return confirm('Esta seguro que desea borrar?');" >Borrar Materia</a></td>
+		<td><strong><a href="materiaEdit?do=baja&materia=<%= m.getMateria() %>" onclick="return confirm('Esta seguro que desea dar de baja?');">Baja de Materia</a></strong></td>		
+		<td><strong><a href="materiaEdit?do=borrar&materia=<%= m.getMateria() %>"  onclick="return confirm('Esta seguro que desea borrar?');" >Borrar Materia</a></strong></td>
 	</tr>
 	<tbody>	
 <%
@@ -149,7 +150,7 @@
 </table>
 
 <br>
-  	<a href="materiaEdit?do=alta">Agregar materia</a>
+  	<p><strong><a href="materiaEdit?do=alta">Agregar materia</a></strong></p>
 <br>
 <br>
 <br>
@@ -157,6 +158,7 @@
 if(materiasbaja.getLista().size() != 0){%>
   <!-- MENSAJE INFORMATIVO -->
 	<div class="alert alert-info" role="alert">
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       <strong>Atención!</strong> Se encuentran materias en estado inactivo. <a href="materiaList?from=materia_inactiva_list" class="alert-link">Ver listado</a>
     </div> 
 <br>

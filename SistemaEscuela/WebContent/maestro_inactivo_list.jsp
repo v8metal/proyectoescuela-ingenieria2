@@ -153,8 +153,8 @@ if (maestros.getLista().size() == 0){
 		<td><%= m.getDni() %></td>
 		<td><%= m.getDomicilio() %></td>
 		<td><%= m.getTelefono() %></td>		
-		<td><a href="maestroEdit?accion=activar&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea activar?');">Activar</a></td>
-		<td><a name="delete-link" href="maestroEdit?accion=borrar&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea borrar?');">Borrar</a></td>
+		<td><strong><a href="maestroEdit?accion=activar&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea activar?');">Activar</a></strong></td>
+		<td><strong><a name="delete-link" href="maestroEdit?accion=borrar&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea borrar?');">Borrar</a></strong></td>
 	</tr>
 	<tbody>
 <%

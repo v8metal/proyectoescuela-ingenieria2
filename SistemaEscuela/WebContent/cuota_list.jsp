@@ -128,7 +128,8 @@ if (session.getAttribute("admin") != null) {
 	</div>	
 	
 	<table class="table table-hover">
-	  <tr>	  	    
+	  <thead>
+	  <tr class="active">	  	    
 	    <td> NOMBRE </td>
 	    <td> TIPO DE COBRO</td>
 	    <td> INSCRIPCION - <%= año%> </td>	    
@@ -144,9 +145,11 @@ if (session.getAttribute("admin") != null) {
 	    <td> DICIEMBRE </td>
 	    <td> INSCRIPCION - <%= año+1%> </td>	    	    
 	  </tr>
+	  </thead>
 	  <% int cod_plan = 0;
 	  
 	  	for (Alumno a : alumnos.getLista()) { %>
+	  <tbody> 	
 	  <tr>	    
 	  <% String tipoCobro = AccionesAlumno.getTipoCobro(a.getDni(), año); %>
 	  
@@ -339,13 +342,13 @@ if (session.getAttribute("admin") != null) {
 	  	
 	  <%}%>
 	  </tr>
+	  </tbody>
 	  </table>	
 	<br>
 	<br>
-	<a href="planPago_edit.jsp"> Armar plan de pagos</a>
+		<p><strong><a href="planPago_edit.jsp"> Armar plan de pagos</a></strong></p>
 	<br>
-	<br>
-		<a href="PrecioList?año=<%=año%>">Ver Precios <%=año%></a>
+		<p><strong><a href="PrecioList?año=<%=año%>">Ver Precios <%=año%></a></strong></p>
 	<br>
 	<br>	
 	<div class="form-group"> 
