@@ -155,7 +155,7 @@ if (grado != null){
 	<tr>
 		<td>Grado/Turno: </td>
 		<td>
-			<select name=anio_grado_turno class="form-control">
+			<select name=anio_grado_turno class="form-control" autofocus>
 <% 			
 			
 			for (Grado g : grados.getLista()){ %>

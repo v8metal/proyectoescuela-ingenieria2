@@ -200,11 +200,12 @@ if (grados.getListaTM().isEmpty()){
 %>
 </table>
  <%}%>	
-<% if (!gradosp.getLista().isEmpty()){ %>
+<% if (!gradosp.getLista().isEmpty() && !grados.getListaTM().isEmpty()){ %>
 <br>
     <p><strong><a href="GradoEdit?do=alta">Ingresar nuevo Grado</a></strong></p>
-<%}else{%>
+<%}else if (gradosp.getLista().isEmpty()){%>
 <br>
+	<!-- MENSAJE DE ALERTA -->
    <div class="bs-example">
     	<div class="alert alert-info fade in" role="alert">
      	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
