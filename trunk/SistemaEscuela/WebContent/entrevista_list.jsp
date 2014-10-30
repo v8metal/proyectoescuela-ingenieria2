@@ -131,7 +131,8 @@ if (entrevistas.getLista().isEmpty()){
 <h1>Listado de Entrevistas</h1>
 </div>
 <table class="table table-hover table-bordered">
-	<tr>
+	<thead>
+	<tr class="active">
 		<th>Fecha</th>
 		<th>Hora</th>
 		<th>Maestro</th>
@@ -140,6 +141,7 @@ if (entrevistas.getLista().isEmpty()){
 		<th>&nbsp;</th>
 		<th>&nbsp;</th>
 	</tr>
+	</thead>
 <%
 	Maestro m = new Maestro();	
 	for (Entrevista e : entrevistas.getLista()) {
@@ -152,15 +154,17 @@ if (entrevistas.getLista().isEmpty()){
 		String mes = fecha_ent[fecha_ent.length - 2];
 		String año = fecha_ent[fecha_ent.length - 3];
 %>
+	<tbody>
 	<tr>
 		<td><%= dia +"/" + mes + "/" + año %></td>		
 		<td><%= e.getHora().substring(0,5)%></td>
 		<td><%= m.getNombre() + " " + m.getApellido() %></td>
 		<td><%= e.getNombre() %></td>	
 		<td><%= e.getDescripcion() %></td>		
-		<td><a href="EntrevistaEdit?do=modificar&fecha=<%=e.getFecha()%>&nombre=<%=e.getNombre()%>&hora=<%=e.getHora()%>">Modificar</a></td>		
-		<td><a href="EntrevistaEdit?do=borrar&fecha=<%=e.getFecha()%>&nombre=<%=e.getNombre()%>&hora=<%=e.getHora()%>"  onclick="return confirm('Esta seguro que desea borrar la entrevista?');">Borrar</a></td>				
+		<td><strong><a href="EntrevistaEdit?do=modificar&fecha=<%=e.getFecha()%>&nombre=<%=e.getNombre()%>&hora=<%=e.getHora()%>">Modificar</a></strong></td>		
+		<td><strong><a href="EntrevistaEdit?do=borrar&fecha=<%=e.getFecha()%>&nombre=<%=e.getNombre()%>&hora=<%=e.getHora()%>"  onclick="return confirm('Esta seguro que desea borrar la entrevista?');">Borrar</a></strong></td>				
 	</tr>
+	</tbody>
 <%
 	}
  %>
@@ -169,9 +173,7 @@ if (entrevistas.getLista().isEmpty()){
 if(session.getAttribute("admin") != null){
 	%>
 	<br>
-	<a href="EntrevistaEdit?do=alta">Agregar Entrevista</a>
-	<br>
-	<br>
+	<p><strong><a href="EntrevistaEdit?do=alta">Agregar Entrevista</a></strong></p>
 	<br>
 	<br>
 	<div class="form-group">

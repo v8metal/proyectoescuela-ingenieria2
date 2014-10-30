@@ -120,8 +120,9 @@ if (maestros.getLista().size() == 0){
 %>
 
 <br>
- <!-- MENSAJE de WARNING -->
+ <!-- MENSAJE DE WARNING -->
 	<div class="alert alert-warning" role="alert">
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       <strong>Cuidado!</strong> No hay maestros activos. <a href="maestroEdit?accion=alta" class="alert-link">Agregar maestro</a>
     </div>	
 	
@@ -148,9 +149,9 @@ if (maestros.getLista().size() == 0){
 		<td><%= m.getDni() %></td>
 		<td><%= m.getDomicilio() %></td>
 		<td><%= m.getTelefono() %></td>		
-		<td><a href="maestroEdit?accion=modificar&dni=<%= m.getDni() %>">Modificar Maestro</a></td>		
-		<td><a href="maestroEdit?accion=baja&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea dar de baja?');">Baja de Maestro</a></td>		
-		<td><a href="maestroEdit?accion=borrar&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea borrar?');">Borrar Maestro</a></td>		
+		<td><strong><a href="maestroEdit?accion=modificar&dni=<%= m.getDni() %>">Modificar Maestro</a></strong></td>		
+		<td><strong><a href="maestroEdit?accion=baja&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea dar de baja?');">Baja de Maestro</a></strong></td>		
+		<td><strong><a href="maestroEdit?accion=borrar&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea borrar?');">Borrar Maestro</a></strong></td>		
 	</tr>
 	<tbody>
 <%
@@ -158,7 +159,7 @@ if (maestros.getLista().size() == 0){
  %>
 </table>
 <br>
-    <p><a href="maestroEdit?accion=alta"> Agregar Maestro</a></p>
+    <p><strong><a href="maestroEdit?accion=alta"> Agregar Maestro</a></strong></p>
 <br>
 <br>	
  <%}%>
@@ -167,6 +168,7 @@ if (maestros.getLista().size() == 0){
 
   <!-- MENSAJE INFORMATIVO -->
 	<div class="alert alert-info" role="alert">
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       <strong>Atención!</strong> Se encuentran maestros en estado inactivo. <a href="MaestroList?tipo=inactivos" class="alert-link">Ver listado</a>
     </div>
 <%}%>

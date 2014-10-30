@@ -119,10 +119,6 @@
 	String mes_tardanza = "";
 	int año_tardanza = 0;
 	
-	String error = "";
-	
-	if (session.getAttribute("error") != null) error = (String) session.getAttribute("error");
-	
 	String accion = "alta";
 	
 	if (tardanza != null) {
@@ -159,9 +155,9 @@
 	<form action="TardanzaEdit" method="post">
 	<input type="hidden" name=do value="<%=accion%>">
 		 <table class="table table-hover table-bordered">
-		    <tr> <%= error %>
-				<td>Fecha </td>
-				<td><select name="dia_tardanza" class="form-control" >   
+		    <tr> 
+				<th>Fecha </th>
+				<td><select name="dia_tardanza" class="form-control" autofocus>   
 					<%  
 					for (int i = 1; i <= 31; i++){			  	
 		 			%>
@@ -188,7 +184,7 @@
 		  	</tr>
 		  	<tr>		  		
 		  		<%if(tardanza ==null){%>
-		  		<th>ALUMNO</th>
+		  		<th>Alumno</th>
 		  		<td>
 		  			<select name="alumno_tardanza" class="form-control" required>   
 		  			<%
@@ -204,18 +200,35 @@
 		 		<%}%>
 		 	</tr>
 		    <tr>
-		      <th>OBSERVACIONES:</th>
+		      <th>Observaciones</th>
 		      <td><textarea name="observaciones" cols="40" rows="4"><%=tardanza!=null?tardanza.getObservaciones():"" %></textarea></td>
 		    </tr>
 		  </table>
 		  
 		 		<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');">Guardar</button>
 		  		<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button> 
-		 
 		  </form>
 		  </div>
 		  <br>
-		  <br>		
+		  
+		  <!-- MENSAJE DE ERROR -->
+		   <%	String error = "";
+	
+			if (session.getAttribute("error") != null) {
+				error = (String)session.getAttribute("error");
+				session.setAttribute("error", null);		
+	
+ 			%>
+		  <div class="bs-example">
+    	 	<div class="alert alert-danger fade in" role="alert">
+     	 		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     			<strong>Ups!</strong> <%= error %>
+  	 		 </div>
+  		  </div><!-- /example -->
+  		  
+  		   <% } %>   
+  		  
+		  <br>	
 		 	<div class="form-group">
 			<form action="TardanzaList" method="get">
 			<input type="hidden" name="accion" value="listarTardanzas">

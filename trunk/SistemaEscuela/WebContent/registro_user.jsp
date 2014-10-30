@@ -128,7 +128,7 @@
 
 	<tr>
 		<td><label for="input">Maestro</label></td>
-		<td><select name="maestro" class="form-control">
+		<td><select name="maestro" class="form-control" autofocus>
 			<%
 			for (Maestro m : maestros.getLista()){
 				if (!AccionesUsuario.validarCuentaMaestro(m.getDni())) {
@@ -144,7 +144,7 @@
 	
 	<tr>
 		<td><label for="input">Usuario</label></td>
-        <td><input type="text" class="form-control" name="usuario" placeholder="Nombre" required></td>
+        <td><input type="text" class="form-control" name="usuario" placeholder="Usuario" required></td>
     </tr>
     
     <tr>

@@ -33,9 +33,6 @@
         </ul>
         <h3 class="text-muted">Sistema Escuela "Príncipe de Paz"</h3>  
 </div>
-      
-<br>
-<br>
 <br>
     <div class="row">
         <div class="col-sm-6 col-md-4 col-md-offset-4">

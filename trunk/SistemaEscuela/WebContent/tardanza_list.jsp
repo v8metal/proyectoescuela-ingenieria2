@@ -116,13 +116,22 @@ if(session.getAttribute("admin")!=null){
 	if (tardanzas.getTardanzas().isEmpty()){
 %>
 <div class="page-header">
-<h1>No hay tardanzas cargadas</h1>
+<h1>Listado de Tardanzas</h1>
 </div>
+<br>
+<!-- MENSAJE INFORMATIVO -->
+   <div class="bs-example">
+    	 <div class="alert alert-info fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <strong>Atención!</strong> No hay tandanzas cargadas. <a href="TardanzaEdit?do=alta" class="alert-link">Agregar tardanza</a>
+  	  </div>
+  </div><!-- /example -->
 <%}else{%> 
 <div class="page-header">
 <h1>Listado de Tardanzas</h1>
 </div>
 <table class="table table-hover table-bordered">
+	<thead>
 	<tr>
 		<th>Alumno</th>
 		<th>Fecha</th>
@@ -130,19 +139,22 @@ if(session.getAttribute("admin")!=null){
 		<th>&nbsp;</th>
 		<th>&nbsp;</th>
 	</tr>
+	</thead>
 <%	
 	Alumno a = new Alumno();
 
 	for (Tardanza t : tardanzas.getTardanzas()) {		
 		a = AccionesAlumno.getOne(t.getDni());		
 %>
+	<tbody>
 	<tr>
 		<td><%= a.getNombre() + " " + a.getApellido() %></td>		
 		<td><%= t.getFecha() %></td>
 		<td><%= t.getObservaciones() %></td>				
-		<td><a href="TardanzaEdit?do=modificar&&dni=<%=t.getDni()%>&&fecha=<%=t.getFecha()%>">Modificar</a></td>		
-		<td><a href="TardanzaEdit?do=borrar&&dni=<%=t.getDni()%>&&fecha=<%=t.getFecha()%>>" onclick="return confirm('Esta seguro que desea borrar la tardanza?');">Borrar</a></td>				
+		<td><strong><a href="TardanzaEdit?do=modificar&&dni=<%=t.getDni()%>&&fecha=<%=t.getFecha()%>">Modificar</a></strong></td>		
+		<td><strong><a href="TardanzaEdit?do=borrar&&dni=<%=t.getDni()%>&&fecha=<%=t.getFecha()%>>" onclick="return confirm('Esta seguro que desea borrar la tardanza?');">Borrar</a></strong></td>				
 	</tr>
+	</tbody>
 <%
 	}
  %>
@@ -151,7 +163,7 @@ if(session.getAttribute("admin")!=null){
 	}
  %>
 	<br>
-	<a href="TardanzaEdit?do=alta">Agregar Tardanza</a>
+	<p><strong><a href="TardanzaEdit?do=alta">Agregar Tardanza</a></strong></p>
 	<br>
 	<br>
 	<br>

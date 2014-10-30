@@ -142,7 +142,7 @@ if (session.getAttribute("admin") != null) {
 	<%if(añoTardanza == null){ %>
 	  <tr>
 	    <td><label for="input">Seleccionar año:</label></td>	    
-	    <td><select class="form-control" name="año_tardanza">
+	    <td><select class="form-control" name="año_tardanza" autofocus>
 	      		<%
 	      		    int año = (Integer)session.getAttribute("añoc");
 	      			for(int i=año; i>año-20;i--){
@@ -173,7 +173,7 @@ if (session.getAttribute("admin") != null) {
 	  <tr>
 	      <td><label for="input">Seleccionar grado-turno:</label></td>
 	      <td>
-	      	<select class="form-control" name="grado_anio">
+	      	<select class="form-control" name="grado_anio" autofocus>
 	      	<%for (Grado g : grados.getLista()) { %>	            
 	            <option value="<%=g.getGrado() + " - " + g.getTurno()%>"><%=g.getGrado() + " - " + g.getTurno()%></option>            
 	          
