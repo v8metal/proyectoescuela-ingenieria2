@@ -99,12 +99,12 @@ public class MaestroEdit extends HttpServlet {
 
 		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
 			e.printStackTrace();
-			sesion.setAttribute("error", "Error al intentar borrar " + maestro.getNombre() + " " + maestro.getApellido() + ". Ya esta asignado/a a un curso");
+			sesion.setAttribute("error", "Error al intentar borrar " + maestro.getNombre() + " " + maestro.getApellido() + ". Ya esta asignado/a a un curso.");
 			response.sendRedirect("maestroList");
 		
 		} catch (CustomException e) {
 			e.printStackTrace();
-			sesion.setAttribute("error", "Error en la baja " + maestro.getNombre() + " " + maestro.getApellido() + ". Ya está asignado/a a un grado para el año en curso");
+			sesion.setAttribute("error", "Error en la baja de " + maestro.getNombre() + " " + maestro.getApellido() + ". Ya está asignado/a a un grado para el año en curso.");
 			response.sendRedirect("maestroList");
 		} catch (Exception e) {
 			e.printStackTrace();

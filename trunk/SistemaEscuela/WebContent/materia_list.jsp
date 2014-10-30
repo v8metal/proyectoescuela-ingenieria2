@@ -118,9 +118,9 @@
 <%if (materias.getLista().isEmpty()){ %>
 
 <br>
- <!-- MENSAJE INFORMATIVO -->
-	<div class="alert alert-info" role="alert">
-      <strong>Atención!</strong> No hay materias asignadas. <a href="materiaEdit?do=alta" class="alert-link">Agregar materia</a>
+ <!-- MENSAJE DE WARNING -->
+	<div class="alert alert-warning" role="alert">
+      <strong>Cuidado!</strong> No hay materias asignadas. <a href="materiaEdit?do=alta" class="alert-link">Agregar materia</a>
     </div>	
     
 <%}else{%>
@@ -157,7 +157,7 @@
 if(materiasbaja.getLista().size() != 0){%>
   <!-- MENSAJE INFORMATIVO -->
 	<div class="alert alert-info" role="alert">
-      <strong>Atención!</strong> Se encuentran materias en estado inactivo. <a href="materiaList?from=materia_inactiva_list" class="alert-link">Ver listado</a>.
+      <strong>Atención!</strong> Se encuentran materias en estado inactivo. <a href="materiaList?from=materia_inactiva_list" class="alert-link">Ver listado</a>
     </div> 
 <br>
 <%}%>

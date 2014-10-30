@@ -5,7 +5,7 @@
 <%@page import="conexion.AccionesGrado"%>
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding ="ISO-8859-1"%>
-<!DOCTYPE html">
+<!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width; initial-scale=1.0"> 
@@ -121,27 +121,27 @@
   </div>
 <%   
 if (grados.getListaTT().isEmpty()){
-%>  
-        <div class="bs-example">
-    		<div class="alert alert-info fade in" role="alert">
-     		 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 	 <strong>Atención!</strong> No hay grados para el turno tarde
-  	  		 </div>
-  		</div><!-- /example -->
+%>
+<br>  	
+  	<!-- MENSAJE ATENCION -->
+	<div class="alert alert-info" role="alert">
+		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	<strong>Atención!</strong> No hay grados para el turno tarde. <a href="GradoEdit?do=alta" class="alert-link">Ingresar nuevo grado</a>
+    </div>		
 <%}else{%>
 <table class="table table-hover table-bordered">
 	<thead>
-	<tr>
+	<tr class="active">
 		<th>Grado</th>				
-		<th>Tipo de evaluación</th>
-		<th>Periodo evaluación</th>
+		<th>Tipo</th>
+		<th>Evaluación</th>
 		<th>Salón</th>
 		<th>Maestro Titular</th>
 		<th>Maestro Paralelo</th>
 		<th>Ciclo Lectivo</th>
 		<th>Modificar</th>
 		<th>Materias</th>
-		<th>Promocion</th>
+		<th>Promoción</th>
 	</tr>
 	<thead>
 <% 
@@ -169,20 +169,20 @@ if (grados.getListaTT().isEmpty()){
 		<%if (m1 != null){ %> 
 		<td><%= m1.getNombre() + " " + m1.getApellido() %></td>
 		<%}else{%>
-		<td>No hay maestro asignado</td>
+		<td class="warning">No hay maestro asignado</td>
 		<%}%>
 		<%if (m2 != null){ %> 
 		<td><%= m2.getNombre() + " " + m2.getApellido() %></td>
 		<%}else{%>
-		<td>No hay maestro asignado</td>
+		<td class="warning">No hay maestro asignado</td>
 		<%}%>
 		<td><%= ciclo %></td>		
-		<td><a href="GradoEdit?do=modificar&grado_modif=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>">Modificar</a></td>
+		<td><strong><a href="GradoEdit?do=modificar&grado_modif=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>">Modificar</a></strong></td>
 		<%if(g.getGrado().equals("Sala 4") || g.getGrado().equals("Sala 5")){%>
-		<td>Grado con áreas de trabajo</td>
+		<td class="info">Grado con áreas de trabajo</td>
 		<%}else{
 		 if (año == 0){%>		
-		<td>Debe asignar alumnos primero</td>
+		<td class="warning">Debe asignar alumnos primero</td>
 		<%}else{ 
 		if(dni1 == 1){%>
 		<td>Debe asignar Maestro titular primero</td>
@@ -190,21 +190,22 @@ if (grados.getListaTT().isEmpty()){
 		<td><a href="MateriaGradoList?do=listar&grado_list=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>&grado_año=<%=año%>" >Ver Materias</a></td>
 		<%}}}%>
 		<% if ((g.getGrado().equals("7mo") || año == 0) || m1 == null){%>
-		<td>No se puede promocionar</td>
+		<td class="warning">No se puede promocionar</td>
 		<%}else{ %>		
-		<td><a href="GradoEdit?do=promocion&grado_modif=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>&año=<%=año%>" onclick="<%="return confirm('Esta seguro que desea promocionar "+  g.getGrado() + "-" + g.getTurno()  +"?');"%>">Promocionar Grado</a></td>		
+		<td><a href="GradoEdit?do=promocion&grado_modif=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>&año=<%=año%>" onclick="<%="return confirm('Esta seguro que desea promocionar "+  g.getGrado() + "-" + g.getTurno()  +"?');"%>">Promocionar</a></td>		
 		<% } %>				
 	</tr>
 	<tbody>	
 <%	 
-		}
-	}		
+		}	
 %>
 </table>
-<br>
+ <%}%>	
 <% if (!gradosp.getLista().isEmpty()){ %>
-<a href="GradoEdit?do=alta">Ingresar nuevo Grado</a>
+<br>
+    <p><strong><a href="GradoEdit?do=alta">Ingresar nuevo Grado</a></strong></p>
 <%}else{%>
+<br>
      <div class="bs-example">
     	<div class="alert alert-info fade in" role="alert">
      	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
