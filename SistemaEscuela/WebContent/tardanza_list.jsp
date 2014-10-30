@@ -119,6 +119,7 @@ if(session.getAttribute("admin")!=null){
 <h1>Listado de Tardanzas</h1>
 </div>
 <br>
+
 <!-- MENSAJE INFORMATIVO -->
    <div class="bs-example">
     	 <div class="alert alert-info fade in" role="alert">
@@ -126,6 +127,7 @@ if(session.getAttribute("admin")!=null){
      	 <strong>Atención!</strong> No hay tandanzas cargadas. <a href="TardanzaEdit?do=alta" class="alert-link">Agregar tardanza</a>
   	  </div>
   </div><!-- /example -->
+  
 <%}else{%> 
 <div class="page-header">
 <h1>Listado de Tardanzas</h1>
@@ -159,14 +161,13 @@ if(session.getAttribute("admin")!=null){
 	}
  %>
 </table>
+<br>
+<p><strong><a href="TardanzaEdit?do=alta">Agregar Tardanza</a></strong></p>
+<br>
 <%
 	}
  %>
-	<br>
-	<p><strong><a href="TardanzaEdit?do=alta">Agregar Tardanza</a></strong></p>
-	<br>
-	<br>
-	<br>
+<br>
 	<div class="form-group"> 
 	  	<form action="menu_tardanzas.jsp">
 	  	<input type="hidden" name="volver" value="volver">		   
