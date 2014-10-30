@@ -115,31 +115,32 @@
   <br>
   <br>
   
-<div class="page-header">
-  
+<div class="page-header"> 
 	<h1>Listado de Grados Turno Mañana</h1>
   </div>
 <%   
 if (grados.getListaTM().isEmpty()){
-%>  
-<div class="alert alert-info" role="alert">
-   <strong>Atención!</strong> No hay grados para el turno mañana
-</div>
-
+%> 
+<br>
+  	<!-- MENSAJE ATENCION -->
+	<div class="alert alert-info" role="alert">
+		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	<strong>Atención!</strong> No hay grados para el turno mañana. <a href="GradoEdit?do=alta" class="alert-link">Ingresar nuevo grado</a>
+    </div>	
 <%}else{%>
 <table class="table table-hover table-bordered">
 	<thead>
-	<tr>
+	<tr class="active">
 		<th>Grado</th>				
-		<th>Tipo de evaluación</th>
-		<th>Periodo evaluación</th>
+		<th>Tipo</th>
+		<th>Evaluación</th>
 		<th>Salón</th>
 		<th>Maestro Titular</th>
 		<th>Maestro Paralelo</th>
 		<th>Ciclo Lectivo</th>
 		<th>Modificar</th>
 		<th>Materias</th>
-		<th>Promocion</th>
+		<th>Promoción</th>
 	</tr>
 	<thead>
 <% 
@@ -175,7 +176,7 @@ if (grados.getListaTM().isEmpty()){
 		<td class="warning">No hay maestro asignado</td>
 		<%}%>
 		<td><%= ciclo %></td>		
-		<td><a href="GradoEdit?do=modificar&grado_modif=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>">Modificar</a></td>
+		<td><strong><a href="GradoEdit?do=modificar&grado_modif=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>">Modificar</a></strong></td>
 		<%if(g.getGrado().equals("Sala 4") || g.getGrado().equals("Sala 5")){%>
 		<td class="info">Grado con áreas de trabajo</td>
 		<%}else{
@@ -185,24 +186,25 @@ if (grados.getListaTM().isEmpty()){
 		if(dni1 == 1){%>
 		<td>Debe asignar Maestro titular primero</td>
 		<%}else{%>		
-		<td><a href="MateriaGradoList?do=listar&grado_list=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>&grado_año=<%=año%>" >Ver Materias</a></td>
+		<td><strong><a href="MateriaGradoList?do=listar&grado_list=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>&grado_año=<%=año%>" >Ver Materias</a></strong></td>
 		<%}}}%>
 		<% if ((g.getGrado().equals("7mo") || año == 0) || m1 == null){%>
 		<td class="warning">No se puede promocionar</td>
 		<%}else{ %>
-		<td><a href="GradoEdit?do=promocion&grado_modif=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>&año=<%=año%>" onclick="<%="return confirm('Esta seguro que desea promocionar "+  g.getGrado() + "-" + g.getTurno()  +"?');"%>">Promocionar Grado</a></td>		
+		<td><a href="GradoEdit?do=promocion&grado_modif=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>&año=<%=año%>" onclick="<%="return confirm('Esta seguro que desea promocionar "+  g.getGrado() + "-" + g.getTurno()  +"?');"%>"><strong>Promocionar</strong></a></td>		
 		<% } %>				
 	</tr>
 	<tbody>
 <%	 
-		}
-	}		
+		}	
 %>
 </table>
-<br>
+ <%}%>	
 <% if (!gradosp.getLista().isEmpty()){ %>
-<a href="GradoEdit?do=alta">Ingresar nuevo Grado</a>
+<br>
+    <p><strong><a href="GradoEdit?do=alta">Ingresar nuevo Grado</a></strong></p>
 <%}else{%>
+<br>
    <div class="bs-example">
     	<div class="alert alert-info fade in" role="alert">
      	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>

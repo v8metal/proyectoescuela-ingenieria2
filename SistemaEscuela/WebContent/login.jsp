@@ -27,7 +27,7 @@
 
 <div class="header">
         <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="#">Home</a></li>
+          <li class="active"><a href="#">Inicio</a></li>
           <li><a href="#">Acerca de</a></li>
           <li><a href="#">Contacto</a></li>
         </ul>
@@ -39,7 +39,7 @@
 <br>
     <div class="row">
         <div class="col-sm-6 col-md-4 col-md-offset-4">
- <!--            <h1 class="text-center login-title">Sign in to continue to Bootsnipp</h1>	-->
+            <h1 class="text-center login-title">Registrarse para continuar</h1>	
             <div class="account-wall">
                 <img class="profile-img" src="imagenes/photo.png?sz=120"
                     alt="">

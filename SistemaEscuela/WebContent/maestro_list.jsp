@@ -120,9 +120,9 @@ if (maestros.getLista().size() == 0){
 %>
 
 <br>
- <!-- MENSAJE INFORMATIVO -->
-	<div class="alert alert-info" role="alert">
-      <strong>Atención!</strong> No hay maestros activos. <a href="maestroEdit?accion=alta" class="alert-link">Agregar maestro</a>
+ <!-- MENSAJE de WARNING -->
+	<div class="alert alert-warning" role="alert">
+      <strong>Cuidado!</strong> No hay maestros activos. <a href="maestroEdit?accion=alta" class="alert-link">Agregar maestro</a>
     </div>	
 	
 <%}else{%>

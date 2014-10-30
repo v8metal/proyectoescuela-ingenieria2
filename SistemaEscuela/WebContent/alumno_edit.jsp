@@ -233,22 +233,34 @@
 	<tr>
 		<td>Escolaridad: </td>
 		<td>	 
+			<label class="radio-inline"> 
 			<input type="radio"  name="esc" value="Inicial" required <%=alumno!=null && alumno.getEsc().equals("Inicial") ? "checked" : ""%> /> Inicial
+			</label>
+			<label class="radio-inline"> 
+			</label>
 			<input type="radio"  name="esc" value="Primaria" required <%=alumno!=null && alumno.getEsc().equals("Primaria") ? "checked" : ""%>/> Primaria
 		</td>
 	</tr>
 	<tr>
 		<td>Grupo Familiar: </td>
 		<td>
+			<label class="radio-inline"> 
 			<input type="radio"  name="ind_grupo" value="si" required <%=alumno!=null && alumno.isInd_grupo() ? "checked" : ""%>/> Si
+			</label>
+			<label class="radio-inline"> 
 			<input type="radio"  name="ind_grupo" value="no" required <%=alumno!=null && !alumno.isInd_grupo() ? "checked" : ""%>/> No 
+			</label>		
 		</td>
 	</tr>
 	<tr>
 		<td>Subsidio: </td>
 		<td>
+			<label class="radio-inline"> 
 			<input type="radio" name="ind_subsidio" value="si" required <%=alumno!=null && alumno.isInd_subsidio() ? "checked" : ""%>/> Si
+			</label>
+			<label class="radio-inline"> 
 			<input type="radio" name="ind_subsidio" value="no" required <%=alumno!=null && !alumno.isInd_subsidio() ? "checked" : ""%>/> No
+			</label>
 		</td>
 	</tr>
 </table>

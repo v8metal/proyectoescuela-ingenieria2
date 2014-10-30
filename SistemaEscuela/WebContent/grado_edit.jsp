@@ -181,8 +181,12 @@ if (grado != null){
 			   }			           
 			 	
 			 %>
+			<label class="radio-inline"> 
 			<input type="radio" name="bimestral" value="si" <%=ck_bim%> /> Bimestral
+			</label>
+			<label class="radio-inline">
 			<input type="radio" name="bimestral" value="no" <%=ck_tri%>/> Trimestral
+			</label>
 		</td>
 	</tr>
 		<tr>
@@ -215,14 +219,24 @@ if (grado != null){
 			   }			           
 			 	
 			 %>
+			<label class="radio-inline"> 
 			<input type="radio" name="evaluacion" value=0 <%=ck_informe%> /> Informe
+			</label>
+			<label class="radio-inline">
 			<input type="radio" name="evaluacion" value=1 <%=ck_cualitaviva%>/> Cualitativa
+			</label>
+			<label class="radio-inline">
 			<input type="radio" name="evaluacion" value=2 <%=ck_numerica%>/> Numérica
+			</label>
 		</td>
 	</tr>
 	<tr>
 		<td>Salón: </td>
-		<td><input class="form-control" type="text" placeholder="Salon" name="salon_grado" value="<%=grado!=null? grado.getSalon() : ""%>"></td>
+		<td>
+			<div class="col-xs-2">
+			<input class="form-control" type="text" placeholder="Salon" name="salon_grado" required value="<%=grado!=null? grado.getSalon() : ""%>">
+			</div>
+		</td>
 	</tr>
 	<tr>
 		<td>Maestro Titular: </td>
@@ -254,7 +268,7 @@ if (grado != null){
 			 %>
 			 </select>
 <%}else{%>
-		<td>Asignar alumnos antes</td>
+		<td class="warning">Asignar alumnos antes</td>
 <%}%>	
 	</tr>
 	<tr>
@@ -281,11 +295,11 @@ if (grado != null){
 		%>
 		</select>
 <%}else{%>
-		<td>Asignar alumnos antes</td>
+		<td class="warning">Asignar alumnos antes</td>
 <%}%>		 
 	</tr>
 </table>
-<br>
+
 <%
 	String mensaje= "return confirm('Esta seguro que desea realizar el alta?');"; 
 	  
@@ -301,8 +315,10 @@ if (grado != null){
 </div>
 <br>
 <%if (año == 0 && grado != null){%>
-<a>No hay alumnos asignados, el grado se puede </a><a href="GradoEdit?do=baja">borrar</a>
-<br>
+<!-- MENSAJE DE WARNING -->
+	<div class="alert alert-warning" role="alert">
+      <strong>Cuidado!</strong> No hay alumnos asignados. <a href="GradoEdit?do=baja" class="alert-link">Borrar grado</a>
+    </div>
 <br>
 <%}%>
 <div class="form-group">
