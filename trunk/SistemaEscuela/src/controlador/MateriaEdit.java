@@ -127,8 +127,13 @@ public class MateriaEdit extends HttpServlet {
 				
 			response.sendRedirect(request.getContextPath() + "/materiaList?from=materiaEdit");
 			
+		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
+			
+			sesion.setAttribute("error", "Error al insertar. Ya esta asignada a un curso");			
+			response.sendRedirect("materia_edit.jsp");
+			
 		} catch (Exception e) {
-			sesion.setAttribute("error", e);
+			sesion.setAttribute("error", e);			
 			response.sendRedirect("materia_edit.jsp");
 		}
 	}

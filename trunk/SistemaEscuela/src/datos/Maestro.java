@@ -13,7 +13,7 @@ public class Maestro {
 		
 	}
 
-	public Maestro(int dni, String nombre, String apellido, String domicilio, String telefono, int estado) {
+	public Maestro(int dni, String apellido, String nombre, String domicilio, String telefono, int estado) {
 		this.dni = dni;		
 		this.apellido = apellido;
 		this.nombre = nombre;		
