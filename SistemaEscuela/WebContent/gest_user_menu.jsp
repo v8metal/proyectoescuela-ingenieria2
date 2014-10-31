@@ -166,7 +166,7 @@
 	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       <strong>Cuidado!</strong> No todos los maestros están registrados. <a href="registro_user.jsp?" class="alert-link">Registrar nuevo usuario</a>
     </div>
-<%}else if ((usuarios.getLista().size() == maestros.getLista().size()))
+<%}else if ((usuarios.getLista().size() >= maestros.getLista().size()))
 
 		{%>
  		 <!-- MENSAJE DE EXITO -->
