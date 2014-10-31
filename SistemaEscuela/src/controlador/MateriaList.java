@@ -35,6 +35,8 @@ public class MateriaList extends HttpServlet {
 		
 		HttpSession sesion = request.getSession();
 		
+		sesion.removeAttribute("error");
+		
 		try {
 
 			String from = request.getParameter("from"); 	// nombre de la pagina que llamo al servlet 	

@@ -129,8 +129,13 @@
     <% 
 			if (!error.equals("")) {
 %>
-<%=error%>
-<br>
+ <br>
+   <div class="bs-example">
+    	 <div class="alert alert-warning fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <strong>Cuidado!</strong> <%= error %>
+  	  </div>
+  </div><!-- /example -->
 <br>
 <%
 			}
