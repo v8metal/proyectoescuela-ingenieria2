@@ -119,27 +119,6 @@
 	<h1>Alta de Materia</h1>
 </div>
 
-<%	
-	String error = "";
-	if (session.getAttribute("error") != null) {
-		error = (String)session.getAttribute("error");
-		session.setAttribute("error", "");
-	}
- %> 
-    <% 
-			if (!error.equals("")) {
-%>
- <br>
-   <div class="bs-example">
-    	 <div class="alert alert-warning fade in" role="alert">
-     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong>Cuidado!</strong> <%= error %>
-  	  </div>
-  </div><!-- /example -->
-<br>
-<%
-			}
-%>
 <div class="form-group"> 
 	<form action="materiaEdit" method="post">
 		<table class="table table-hover table-bordered">
@@ -167,12 +146,31 @@
 </div>
 <%}%> 
 <br>
-<br> 
-<div class="form-group">
-<form action="materiaList?from=menu_admin" method="post">
-<button type="submit" class="btn btn-primary"  value="Volver a Materias">Volver a Materias</button>
-</form>
-</div>
+
+<%	
+	String error = "";
+	if (session.getAttribute("error") != null) {
+		error = (String)session.getAttribute("error");
+		session.setAttribute("error", "");
+	}
+ %> 
+    <% 
+			if (!error.equals("")) {
+%>
+ <br>
+ 	<!-- MENSAJE DE ERROR -->
+   <div class="bs-example">
+    	 <div class="alert alert-danger fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <strong>Ups!</strong> <%= error %>
+  	  </div>
+  </div><!-- /example -->
+  <br>
+<%
+			}
+%>
+ <br>
+<strong><a href="materiaList?from=menu_admin" class="alert-link">Volver a materias</a></strong>
  <%
 	} else {
 		response.sendRedirect("login.jsp");

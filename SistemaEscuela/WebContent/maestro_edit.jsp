@@ -195,13 +195,9 @@
      	 <strong>Ups!</strong> <%= error %>
   	  </div>
   </div><!-- /example -->
- 	
+<br> 	
  <% } %>
-<div class="form-group">
-<form action="maestroList" method="post">
-<button type="submit" class="btn btn-primary"  value="Volver al Listado">Volver al Listado</button>
-</form>
-</div>
+<strong><a href="maestroList" class="alert-link">Volver a materias</a></strong>
  <%
 	} else {
 		response.sendRedirect("login.jsp");

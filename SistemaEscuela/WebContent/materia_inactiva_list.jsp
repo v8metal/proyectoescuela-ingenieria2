@@ -128,8 +128,9 @@
 if (materias.getLista().isEmpty()){ %>
 
 <br>	
+<!--  MENSAJE INFORMATIVO -->
 <div class="alert alert-info" role="alert">
-    <strong>Atención!</strong> No hay materias en estado de baja
+    <strong>Atención!</strong> No hay materias en estado de baja. <a href="materiaList?from=menu_admin" class="alert-link">Volver al listado principal</a>
 </div>
 	
 <%}else{%>
@@ -153,7 +154,6 @@ if (materias.getLista().isEmpty()){ %>
 	}
  %>
 </table>
-<%}%>
 
 <br>
 <div class="form-group">
@@ -161,6 +161,9 @@ if (materias.getLista().isEmpty()){ %>
 <button type="submit" class="btn btn-primary"  value="Volver al listado principal">Volver al listado principal</button>
 </form>
 </div>
+
+<%}%>
+
 <%
 	} else {
 		response.sendRedirect("login.jsp");

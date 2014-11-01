@@ -129,7 +129,7 @@ public class MateriaEdit extends HttpServlet {
 			
 		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
 			
-			sesion.setAttribute("error", "Error al insertar. Ya esta asignada a un curso");			
+			sesion.setAttribute("error", "Error al insertar, la materia ya existe");			
 			response.sendRedirect("materia_edit.jsp");
 			
 		} catch (Exception e) {

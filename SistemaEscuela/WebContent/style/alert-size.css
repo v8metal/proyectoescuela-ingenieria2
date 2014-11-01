@@ -3,3 +3,15 @@
 .alert alert-warning {
    width:40%;    
 }
+
+.alert alert-danger {
+   width:40%;    
+}
+
+.alert alert-info {
+   width:40%;    
+}
+
+.alert alert-success {
+   width:40%;    
+}

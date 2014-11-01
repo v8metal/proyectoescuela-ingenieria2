@@ -158,6 +158,11 @@ public class MaestroEdit extends HttpServlet {
 			e.printStackTrace();
 			sesion.setAttribute("error", "Se ha producido un error. Debe completar todos los campos. Exception: " + e.toString());
 			response.sendRedirect("maestro_edit.jsp");
+			
+		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
+			
+			sesion.setAttribute("error", "Error al insertar, ya se ingreso esta persona");			
+			response.sendRedirect("maestro_edit.jsp");	
 		
 		} catch (Exception e) {
 
