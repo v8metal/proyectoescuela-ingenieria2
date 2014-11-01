@@ -28,8 +28,8 @@
 <div class="header">
         <ul class="nav nav-pills pull-right">
           <li class="active"><a href="#">Inicio</a></li>
-          <li><a href="#">Acerca de</a></li>
-          <li><a href="#">Contacto</a></li>
+          <li><a href="acercade.html">Acerca de</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
         </ul>
         <h3 class="text-muted">Sistema Escuela "Príncipe de Paz"</h3>  
 </div>
@@ -46,7 +46,7 @@
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
                 <label class="checkbox pull-left">
                     <input type="checkbox" value="remember-me">Recordarme</label>
-                <a href="#" class="pull-right need-help">Necesita ayuda? </a><span class="clearfix"></span>
+                <a href="#" class="pull-right need-help">¿Necesita ayuda? </a><span class="clearfix"></span>
                 </form>
             </div>
   <!--            <a href="#" class="text-center new-account">Create an account </a>  -->

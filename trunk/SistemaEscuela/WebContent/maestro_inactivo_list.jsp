@@ -128,8 +128,9 @@
 if (maestros.getLista().size() == 0){
 %>
 <br>	
+<!-- MENSAJE INFORMATIVO -->
 <div class="alert alert-info" role="alert">
-    <strong>Atención!</strong> No hay maestros inactivos
+    <strong>Atención!</strong> No hay maestros inactivos. <a href="maestroList" class="alert-link">Volver al listado principal</a>
 </div>
 <br>
 <%}else{%>
@@ -161,14 +162,14 @@ if (maestros.getLista().size() == 0){
 	}
  %>
 </table>
-<%}%>
 <br>
-
 <div class="form-group">
 <form action="maestroList" method="post">
 <button type="submit" class="btn btn-primary"  value="Volver al listado principal">Volver al listado principal</button>
 </form>
 </div>
+<%}%>
+
 <%
 	} else {
 		response.sendRedirect("login.jsp");
