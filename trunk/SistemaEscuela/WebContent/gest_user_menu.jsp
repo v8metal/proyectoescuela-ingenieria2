@@ -141,7 +141,7 @@
 <% 	
 	int i = 0;
 	for (Usuario u : usuarios.getLista()) {
-	Maestro m = AccionesMaestro.getOne(u.getCod_maest());
+	Maestro m = AccionesMaestro.getOne(u.getDni());
 	i++;
 %>
 	<tbody>
@@ -149,7 +149,7 @@
 		<td><%= m.getApellido() + ", " + m.getNombre() %></td>
 		<td><%= u.getUsuario() %></td>
 		<td><%= u.getContraseña() %></td>
-		<td><strong><a name="delete-link" href="registroUser?do=baja&usuario=<%= u.getUsuario() %>" onclick="return confirm('Esta seguro que desea borrar?');">Borrar</a></strong></td>
+		<td><strong><a name="delete-link" href="registroUser?do=baja&dni=<%= u.getDni() %>" onclick="return confirm('Esta seguro que desea borrar?');">Borrar</a></strong></td>
 	</tr>
 	</tbody>
 <%

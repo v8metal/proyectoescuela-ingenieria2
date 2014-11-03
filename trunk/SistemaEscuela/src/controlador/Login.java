@@ -65,6 +65,9 @@ public class Login extends HttpServlet {
 				
 				Integer tipo = AccionesUsuario.validarUsuario(usuario, contraseña);
 				
+			 if (tipo != null){
+					
+				
 				if (tipo == 0) { // quiere decir que el usuario es administrador
 					
 					sesion.setAttribute("admin", usuario);
@@ -90,9 +93,13 @@ public class Login extends HttpServlet {
 						response.sendRedirect("menu_user.jsp");
 					}
 					
+				}
+								
 				} else {
 					sesion.setAttribute("error", "Nombre de usuario y/o contraseña no válidos");
-					response.sendRedirect("login.jsp");} 
+					response.sendRedirect("login.jsp");
+				
+				}
 				
 			} else {
 				sesion.setAttribute("error", "Debe completar el usuario y la contraseña para poder ingresar");

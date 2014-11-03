@@ -2,19 +2,20 @@ package datos;
 
 public class Usuario {
 	
+	private int dni;
 	private String usuario;
 	private String contraseña;
-	private int cod_maest;
+	
 	
 	public Usuario() {
 		
 	}
 
-	public Usuario(String usuario, String contraseña, int cod_maest) {
-		super();
+	public Usuario(String usuario, String contraseña, int dni) {
+		this.dni = dni;
 		this.usuario = usuario;
 		this.contraseña = contraseña;
-		this.cod_maest = cod_maest;
+		
 	}
 
 	public String getUsuario() {
@@ -33,12 +34,12 @@ public class Usuario {
 		this.contraseña = contraseña;
 	}
 
-	public int getCod_maest() {
-		return cod_maest;
+	public int getDni() {
+		return dni;
 	}
 
-	public void setCod_maest(int cod_maest) {
-		this.cod_maest = cod_maest;
+	public void setDni(int dni) {
+		this.dni = dni;
 	}
 
 	@Override
@@ -50,7 +51,7 @@ public class Usuario {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		if (cod_maest != other.cod_maest)
+		if (dni != other.dni)
 			return false;
 		if (contraseña == null) {
 			if (other.contraseña != null)
@@ -68,7 +69,7 @@ public class Usuario {
 	@Override
 	public String toString() {
 		return "Usuario [usuario=" + usuario + ", contraseña=" + contraseña
-				+ ", cod_maest=" + cod_maest + "]";
+				+ ", dni=" + dni + "]";
 	}
 	
 }

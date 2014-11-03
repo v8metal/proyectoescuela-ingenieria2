@@ -32,10 +32,10 @@ public class RegistroUser extends HttpServlet {
 		try {
 			
 			String accion = request.getParameter("do");
-			String usuario = request.getParameter("usuario");
+			int dni = Integer.parseInt(request.getParameter("dni"));
 			
 			if (accion.equals("baja")) {
-				AccionesUsuario.deleteOne(usuario);
+				AccionesUsuario.deleteOne(dni);
 				response.sendRedirect("UsuarioList");
 			}
 			
