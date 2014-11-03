@@ -63,15 +63,16 @@ public class Login extends HttpServlet {
 			
 			if (!usuario.equals("") && !contraseña.equals("")) {
 				
-				Integer dni = AccionesUsuario.validarUsuario(usuario, contraseña);
+				Integer tipo = AccionesUsuario.validarUsuario(usuario, contraseña);
 				
-				if (dni == 1) { // quiere decir que el usuario es administrador
+				if (tipo == 0) { // quiere decir que el usuario es administrador
 					
 					sesion.setAttribute("admin", usuario);
 					response.sendRedirect("menu_admin.jsp");
 					
-				} else if (dni > 1){ // quiere decir que el usuario es maestro
+				} else if (tipo == 1){ // quiere decir que el usuario es maestro
 					
+					int dni = AccionesUsuario.getDniUsuario(usuario, contraseña);					
 					Maestro m = AccionesMaestro.getOne(dni);
 					
 					if (m.getEstado() == 0){

@@ -52,7 +52,7 @@ public class RegistroUser extends HttpServlet {
 		
 		try {
 			
-			int cod_maest = Integer.parseInt(request.getParameter("maestro"));
+			int dni = Integer.parseInt(request.getParameter("maestro"));
 			String usuario = request.getParameter("usuario");
 			String contraseña = request.getParameter("contraseña");
 			String contraseña_conf = request.getParameter("contraseña_conf");
@@ -62,7 +62,7 @@ public class RegistroUser extends HttpServlet {
 					
 					if (contraseña.equals(contraseña_conf)) {
 						
-					AccionesUsuario.registrar(usuario, contraseña_conf, cod_maest);	
+					AccionesUsuario.registrar(dni, usuario, contraseña_conf);	
 						
 				} else {
 					sesion.setAttribute("error", "Error al confirmar contraseña");

@@ -12,14 +12,14 @@ public class AccionesUsuario {
 	
 	public static Integer validarUsuario(String usuario, String contraseña) {
 		
-		Integer dni = 0;
+		Integer tipo = 0;
 		
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT DNI FROM USUARIOS WHERE USUARIO = '" + usuario + "' AND CONTRASEÑA = '" + contraseña + "'");
+			ResultSet rs = stmt.executeQuery("SELECT UT.TIPO FROM USUARIOS U INNER JOIN usuarios_tipo UT WHERE U.USUARIO = '" + usuario + "' AND CONTRASEÑA = '" + contraseña + "'");
 			
 			while (rs.next()) {
-				dni = rs.getInt("DNI");				
+				tipo = rs.getInt("TIPO");				
 			}
 			stmt.close();
 			Conexion.desconectar();
@@ -27,9 +27,29 @@ public class AccionesUsuario {
 			e.printStackTrace();
 		}
 		
-		return dni;
+		return tipo;
 	}
 	
+	public static Integer getDniUsuario(String usuario, String contraseña) {
+			
+			Integer dni = 0;
+			
+			try {
+				Statement stmt = Conexion.conectar().createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT DNI FROM USUARIOS WHERE U.USUARIO = '" + usuario + "' AND U.CONTRASEÑA = '" + contraseña + "'");
+				
+				while (rs.next()) {
+					dni = rs.getInt("DNI");				
+				}
+				stmt.close();
+				Conexion.desconectar();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return dni;
+		}
+		
 	public static boolean validarCuentaMaestro(int dni) {
 		boolean b = false;
 		
@@ -55,7 +75,7 @@ public class AccionesUsuario {
 		try {
 			
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM SISTEMA_ALUMNADO.USUARIOS WHERE DNI > 1");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM USUARIOS U INNER JOIN USUARIOS_TIPO UT ON UT.DNI = U.DNI AND UT.TIPO = 1");
 			
 			while (rs.next()) {
 				i++;
@@ -68,9 +88,13 @@ public class AccionesUsuario {
 		return i;
 	}    
 	
-	public static void registrar(String usuario, String contraseña, int codigo) throws SQLException, Exception {
+	public static void registrar(int dni, String usuario, String contraseña) throws SQLException, Exception {
 		Statement stmt = Conexion.conectar().createStatement();
-		stmt.executeUpdate("INSERT INTO USUARIOS VALUES (" + codigo + ",'" + usuario + "','" + contraseña + "')");
+		stmt.executeUpdate("INSERT INTO USUARIOS VALUES (" + dni + ",'" + usuario + "','" + contraseña + "')");
+
+		//insertar el tipo de usuario, 1 maestro, por ahora lo hacemos manualmente
+		
+		stmt.executeUpdate("INSERT INTO USUARIOS_TIPO VALUES (" + dni + " , "+ 1 + ")");
 		
 		stmt.close();
 		Conexion.desconectar();
@@ -103,7 +127,7 @@ public class AccionesUsuario {
 
 			//ResultSet rs = stmt.executeQuery("SELECT * FROM USUARIOS WHERE DNI > 1");
 
-			ResultSet rs = stmt.executeQuery("SELECT * FROM USUARIOS WHERE DNI <> 1");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM USUARIOS U INNER JOIN USUARIOS_TIPO UT ON UT.DNI = U.DNI AND UT.TIPO = 1");
 
 			Usuario tmp;
 			
