@@ -46,7 +46,24 @@
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
                 <label class="checkbox pull-left">
                     <input type="checkbox" value="remember-me">Recordarme</label>
-                <a href="#" class="pull-right need-help">¿Necesita ayuda? </a><span class="clearfix"></span>
+                	<a href="#" class="pull-right need-help" data-toggle="modal" data-target=".bs-example-modal-sm">¿Necesita ayuda? </a><span class="clearfix"></span>
+                
+  						<!--  Modal content for the above example -->
+  						<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    						<div class="modal-dialog modal-sm">
+      							<div class="modal-content">
+
+        						<div class="modal-header">
+          							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          							<h4 class="modal-title" id="mySmallModalLabel">Información</h4>
+        						</div>
+        						<div class="modal-body">
+          						Para obtener un usuario y contraseña comuniquese con el administrador
+        						</div>
+      							</div><!-- /.modal-content -->
+    						</div><!-- /.modal-dialog -->
+  						</div><!-- /.modal -->
+                					
                 </form>
             </div>
   <!--            <a href="#" class="text-center new-account">Create an account </a>  -->
