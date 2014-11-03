@@ -12,11 +12,11 @@ public class AccionesUsuario {
 	
 	public static Integer validarUsuario(String usuario, String contraseña) {
 		
-		Integer tipo = 0;
+		Integer tipo = null;
 		
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT UT.TIPO FROM USUARIOS U INNER JOIN usuarios_tipo UT WHERE U.USUARIO = '" + usuario + "' AND CONTRASEÑA = '" + contraseña + "'");
+			ResultSet rs = stmt.executeQuery("SELECT UT.TIPO FROM USUARIOS U INNER JOIN USUARIOS_TIPO UT ON UT.DNI = U.DNI  WHERE U.USUARIO = '" + usuario + "' AND CONTRASEÑA = '" + contraseña + "'");
 			
 			while (rs.next()) {
 				tipo = rs.getInt("TIPO");				
@@ -143,11 +143,12 @@ public class AccionesUsuario {
 		return lista;
 	}
 	
-	public static int deleteOne(String usuario) throws SQLException, Exception {
+	public static int deleteOne(int dni) throws SQLException, Exception {
 		int i = 0;
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			i = stmt.executeUpdate("DELETE FROM USUARIOS WHERE USUARIO = '" + usuario + "'");
+			i = stmt.executeUpdate("DELETE FROM USUARIOS_TIPO WHERE DNI = '" + dni + "'");
+			i = stmt.executeUpdate("DELETE FROM USUARIOS WHERE DNI = '" + dni + "'");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

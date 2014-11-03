@@ -203,7 +203,7 @@ if (grados.getListaTM().isEmpty()){
 <% if (!gradosp.getLista().isEmpty() && !grados.getListaTM().isEmpty()){ %>
 <br>
     <p><strong><a href="GradoEdit?do=alta">Ingresar nuevo Grado</a></strong></p>
-<%}else if (gradosp.getLista().isEmpty()){%>
+<%}else if (gradosp.getLista().isEmpty() && !grados.getListaTM().isEmpty() ){%>
 <br>
 	<!-- MENSAJE DE ALERTA -->
    <div class="bs-example">
