@@ -36,7 +36,7 @@ public class AccionesUsuario {
 			
 			try {
 				Statement stmt = Conexion.conectar().createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT DNI FROM USUARIOS WHERE U.USUARIO = '" + usuario + "' AND U.CONTRASEÑA = '" + contraseña + "'");
+				ResultSet rs = stmt.executeQuery("SELECT DNI FROM USUARIOS WHERE USUARIO = '" + usuario + "' AND CONTRASEÑA = '" + contraseña + "'");
 				
 				while (rs.next()) {
 					dni = rs.getInt("DNI");				
