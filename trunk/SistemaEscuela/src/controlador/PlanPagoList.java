@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import conexion.AccionesAlumno;
 import conexion.AccionesPlanPago;
+import conexion.AccionesUsuario;
 import datos.PagoPlanPago;
 import datos.PagosPlanPago;
 import datos.PlanPago;
@@ -37,40 +38,50 @@ public class PlanPagoList extends HttpServlet {
 		
 		HttpSession sesion = request.getSession();						
 		
-		if(sesion.getAttribute("admin")!=null){
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		
+		if (AccionesUsuario.validarAcceso(tipo, "PlanPagoList") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
 			
-			//System.out.println("CuotaList doGet");
+		//System.out.println("CuotaList doGet");
 			
-			String accion = "";
+		String accion = "";
 				
-			//accion = (String) request.getParameter("accion");
+		//accion = (String) request.getParameter("accion");
 			
-			if (request.getAttribute("accion") != null){
-				 accion = (String) request.getAttribute("accion");
-			}else{
-				 accion = (String) request.getParameter("accion");
-			}
+		if (request.getAttribute("accion") != null){
+			 accion = (String) request.getAttribute("accion");
+		}else{
+			 accion = (String) request.getParameter("accion");
+		}
 			
-			//System.out.println("accion= " + accion);
+		//System.out.println("accion= " + accion);
 			
-			int cod_plan = 0 ;
+		int cod_plan = 0 ;
 			
-			switch(accion){			
+		switch(accion){			
 			
 			case "visualizarPlan":
-				
+			
+			if (AccionesUsuario.validarAcceso(tipo, "planPago_edit.jsp") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			sesion.removeAttribute("planPagos");
 									
 			cod_plan = Integer.parseInt(request.getParameter("codplan"));
 						
 			try {
 				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesPlanPago") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				PlanPago plan = AccionesPlanPago.getOnePlan(cod_plan);
 				
-				request.setAttribute("PlanPago", plan);
-				//sesion.setAttribute("PlanPago", plan);
+				request.setAttribute("PlanPago", plan);	
 				
-				//RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/planPago_list.jsp");
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/planPago_edit.jsp");
 				dispatcher.forward(request, response);								
 				
@@ -83,6 +94,10 @@ public class PlanPagoList extends HttpServlet {
 			case "altaPlanPago":
 				
 			//sesion.removeAttribute("PlanPago");
+				
+			if (AccionesUsuario.validarAcceso(tipo, "CuotaList") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
 				
 			int dia = Integer.parseInt(request.getParameter("dia_plan"));
 			int mes = Integer.parseInt(request.getParameter("mes_plan"));
@@ -108,6 +123,10 @@ public class PlanPagoList extends HttpServlet {
 				
 				PlanPago plan = new PlanPago(0, dni, añoini, añofin, inicio, fin, año + "-" + mes + "-" + relleno + dia, obs);
 				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesPlanPago") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				AccionesPlanPago.insertOnePlan(plan);
 			
 				request.setAttribute("añoplan", año);
@@ -124,7 +143,10 @@ public class PlanPagoList extends HttpServlet {
 			
 			case "modificarPlanPago":
 				
-			
+			if (AccionesUsuario.validarAcceso(tipo, "CuotaList") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+				
 			cod_plan = Integer.parseInt(request.getParameter("cod_plan"));
 			añoini = Integer.parseInt(request.getParameter("añoini"));
 			añofin = Integer.parseInt(request.getParameter("añofin"));
@@ -143,6 +165,10 @@ public class PlanPagoList extends HttpServlet {
 				
 				PlanPago plan = new PlanPago(cod_plan, 0, añoini,añofin, inicio, fin, "",obs);
 				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesPlanPago") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				AccionesPlanPago.updatePlanPago(plan);
 
 				//request.setAttribute("añoplan", año);
@@ -159,9 +185,17 @@ public class PlanPagoList extends HttpServlet {
 			
 			case "borrarPlanPago":
 				
+				if (AccionesUsuario.validarAcceso(tipo, "CuotaList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				cod_plan = Integer.parseInt(request.getParameter("codplan"));
 							
 				try {
+					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesPlanPago") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
 					
 					AccionesPlanPago.deletePagosPlanPago(cod_plan);
 					
@@ -182,6 +216,10 @@ public class PlanPagoList extends HttpServlet {
 			
 				case "listarPagosPlan":
 				
+				if (AccionesUsuario.validarAcceso(tipo, "pagosPlanPago_list.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				if (request.getParameter("codplan") != null){
 					cod_plan = Integer.parseInt(request.getParameter("codplan"));
 				}else{
@@ -194,6 +232,10 @@ public class PlanPagoList extends HttpServlet {
 				
 							
 				try {
+					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesPlanPago") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
 					
 					pp= AccionesPlanPago.getOnePlan(cod_plan);					
 					
@@ -216,6 +258,10 @@ public class PlanPagoList extends HttpServlet {
 				break;
 				
 				case "altaPagopp":
+				
+				if (AccionesUsuario.validarAcceso(tipo, "PlanPagoList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 					
 			    PlanPago plan = (PlanPago) sesion.getAttribute("planPagos");
 				
@@ -234,6 +280,10 @@ public class PlanPagoList extends HttpServlet {
 					
 					PagoPlanPago pagopp = new PagoPlanPago(plan.getCod_plan(), 0, plan.getDni(), año + "-" + mes + "-" + dia, pago, obs);
 					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesPlanPago") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+					
 					AccionesPlanPago.insertOnePagopp(pagopp);
 					
 					request.setAttribute("accion", "listarPagosPlan");
@@ -249,6 +299,10 @@ public class PlanPagoList extends HttpServlet {
 				
 				case "modificarPagopp":
 					
+					if (AccionesUsuario.validarAcceso(tipo, "pagoPlanPago_edit.jsp") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+					
 				    int cod_pago = Integer.parseInt(request.getParameter("cod_pago"));
 				    
 				    //System.out.println("cod_pago" + cod_pago);
@@ -257,7 +311,10 @@ public class PlanPagoList extends HttpServlet {
 				    							
 					try {
 						
-						
+						if (AccionesUsuario.validarAcceso(tipo, "AccionesPlanPago") != 1){							
+							response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						}
+												
 						PagoPlanPago pagopp = AccionesPlanPago.getOnePagopp(plan.getCod_plan(), cod_pago);
 						
 						request.setAttribute("pagopp", pagopp);
@@ -272,6 +329,10 @@ public class PlanPagoList extends HttpServlet {
 					break;
 					
 					case "modificarPagopp2":
+					
+					if (AccionesUsuario.validarAcceso(tipo, "PlanPagoList") != 1){							
+							response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
 					
 				    cod_pago = Integer.parseInt(request.getParameter("cod_pago"));
 				    
@@ -292,6 +353,10 @@ public class PlanPagoList extends HttpServlet {
 						
 						PagoPlanPago pagopp = new PagoPlanPago(plan.getCod_plan(), cod_pago, plan.getDni(), año + "-" + mes + "-" + dia, pago, obs);
 					
+						if (AccionesUsuario.validarAcceso(tipo, "AccionesPlanPago") != 1){							
+							response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						}
+						
 						AccionesPlanPago.updatePagopp(pagopp);
 						
 						request.setAttribute("accion", "listarPagosPlan");
@@ -308,11 +373,19 @@ public class PlanPagoList extends HttpServlet {
 					
 					case "borrarPagopp":
 						
+						if (AccionesUsuario.validarAcceso(tipo, "PlanPagoList") != 1){							
+							response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						}
+						
 					    cod_pago = Integer.parseInt(request.getParameter("cod_pago"));
 					    
 					    plan = (PlanPago) sesion.getAttribute("planPagos");
 					    
 					    try {
+					    	
+							if (AccionesUsuario.validarAcceso(tipo, "AccionesPlanPago") != 1){							
+								response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+							}
 							
 							AccionesPlanPago.borrarPagopp(plan.getCod_plan(), cod_pago);
 							
@@ -330,11 +403,7 @@ public class PlanPagoList extends HttpServlet {
 
 					
 			} //fin del case
-			
-		}else{
-			response.sendRedirect("login.jsp");
-		}
-
+		
 	}
 
 	/**

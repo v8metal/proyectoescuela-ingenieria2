@@ -155,6 +155,26 @@ public class AccionesUsuario {
 		return i;
 	}
 	
+	public static int validarAcceso(int tipo, String objeto) {
+		
+		int i = 0;
+		
+		try {
+			Statement stmt = Conexion.conectar().createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT COUNT(1) AS COUNT FROM OBJETOS_TIPO WHERE TIPO = " + tipo + " AND OBJETO = '" + objeto + "'");
+			
+			while (rs.next()) {
+				i = rs.getInt("COUNT");				
+			}
+			stmt.close();
+			Conexion.desconectar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return i;
+	}
+	
 	/*	
 	public static int getCodigo(String apellido, String nombres){
 		

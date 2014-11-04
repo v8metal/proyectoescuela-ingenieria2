@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesCuota;
+import conexion.AccionesUsuario;
 import datos.Cuota;
 
 /**
@@ -30,21 +31,27 @@ public class CuotaEdit extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		HttpSession sesion = request.getSession();
 		
-		if(sesion.getAttribute("admin") != null){
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(tipo, "CuotaEdit") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
 
-			//System.out.println("CuotaEdit doGet");
+		//System.out.println("CuotaEdit doGet");
 			
-			String accion = (String) request.getParameter("accion");
+		String accion = (String) request.getParameter("accion");
 			
+		int cod_pago = 0;
 			
-			int cod_pago = 0;
-			
-			
-			switch(accion){			
+		switch(accion){			
 			
 			case "altaPago":
+				
+				if (AccionesUsuario.validarAcceso(tipo, "CuotaList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 				
 				sesion.removeAttribute("pagoEdit");		
 				
@@ -87,6 +94,10 @@ public class CuotaEdit extends HttpServlet {
 										
 				try {
 					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesCuota") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+					
 					//inserta un pago para la cuota seleccionada					
 					AccionesCuota.insertOnePago(cuota);
 					
@@ -105,12 +116,20 @@ public class CuotaEdit extends HttpServlet {
 				
 			case "modificarPago":
 			
+			if (AccionesUsuario.validarAcceso(tipo, "pago_edit.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			cod_pago = Integer.parseInt(request.getParameter("cod_pago"));			
 									
 			try {
 				
 				//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado
-								
+				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesCuota") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				cuota = AccionesCuota.getOnePago(cod_pago);
 				
 				sesion.setAttribute("pagoEdit", cuota);				
@@ -125,10 +144,18 @@ public class CuotaEdit extends HttpServlet {
 			break;
 			
 			case "borrarPago":
-				
+			
+			if (AccionesUsuario.validarAcceso(tipo, "CuotaList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			cod_pago = Integer.parseInt(request.getParameter("cod_pago"));			
 									
 			try {
+				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesCuota") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 				
 				//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado
 				AccionesCuota.deleteOnePago(cod_pago);
@@ -146,10 +173,6 @@ public class CuotaEdit extends HttpServlet {
 			break;
 			
 			}// fin del case
-			
-		}else{
-			response.sendRedirect("login.jsp");
-		}
 	}
 
 	/**
@@ -159,15 +182,22 @@ public class CuotaEdit extends HttpServlet {
 		
 		HttpSession sesion = request.getSession();
 		
-		if(sesion.getAttribute("login")!=null){
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(tipo, "CuotaEdit") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
 	
-			String accion = (String) request.getParameter("accion");
+		String accion = (String) request.getParameter("accion");
 			
-			//System.out.println("accion = " + accion);
+		//System.out.println("accion = " + accion);
 			
-			switch(accion){			
+		switch(accion){			
 						
 			case "altaPago":
+				
+				if (AccionesUsuario.validarAcceso(tipo, "CuotaList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 				
 				sesion.removeAttribute("pagoEdit");
 				
@@ -204,6 +234,10 @@ public class CuotaEdit extends HttpServlet {
 										
 				try {
 					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesCuota") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+					
 					//inserta un pago para la cuota seleccionada
 					AccionesCuota.insertOnePago(cuota);
 					
@@ -221,6 +255,10 @@ public class CuotaEdit extends HttpServlet {
 				break;
 				
 			case "modificarPago":
+				
+			if (AccionesUsuario.validarAcceso(tipo, "CuotaList") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
 			
 			//System.out.println("modificar pago doGet");
 				
@@ -264,6 +302,10 @@ public class CuotaEdit extends HttpServlet {
 				
 				Cuota c = new Cuota(cuota.getCod_pago(), cuota.getDni(),cuota.getAño(),cuota.getPeriodo(), año + "-" + relleno1 + mes + "-" + relleno2 + dia, pago, obs);
 				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesCuota") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				AccionesCuota.updateOnePago(c);
 				
 				//System.out.println("accion visualizarPagos");
@@ -281,9 +323,6 @@ public class CuotaEdit extends HttpServlet {
 			
 			}// fin del case
 	
-		}else{
-			response.sendRedirect("login.jsp");
-		}
 	}
 
 }

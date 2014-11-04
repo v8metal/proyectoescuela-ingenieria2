@@ -31,7 +31,10 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
+		//doPost(request, response);
+		HttpSession sesion = request.getSession();		
+		sesion.setAttribute("error", "Usted no posee acceso a este componente");
+		response.sendRedirect("login.jsp");
 	}
 
 	/**
@@ -61,6 +64,8 @@ public class Login extends HttpServlet {
 			String usuario = request.getParameter("usuario");
 			String contraseña = request.getParameter("contraseña");
 			
+			String objeto = "";
+			
 			if (!usuario.equals("") && !contraseña.equals("")) {
 				
 				Integer tipo = AccionesUsuario.validarUsuario(usuario, contraseña);
@@ -68,13 +73,25 @@ public class Login extends HttpServlet {
 			 if (tipo != null){
 					
 				
+				sesion.setAttribute("tipoUsuario", tipo);
+				
 				if (tipo == 0) { // quiere decir que el usuario es administrador
 					
-					sesion.setAttribute("admin", usuario);
-					response.sendRedirect("menu_admin.jsp");
+					//colocar un servlet?
+					
+					//sesion.setAttribute("admin", usuario);
+					
+					objeto = "menu_admin.jsp";							
+					if (AccionesUsuario.validarAcceso(tipo, objeto) != 1){						
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso												
+					}
+					
+					response.sendRedirect(objeto);
 					
 				} else if (tipo == 1){ // quiere decir que el usuario es maestro
 					
+					//colocar un servlet?		
+		
 					int dni = AccionesUsuario.getDniUsuario(usuario, contraseña);					
 					Maestro m = AccionesMaestro.getOne(dni);
 					
@@ -84,13 +101,21 @@ public class Login extends HttpServlet {
 						response.sendRedirect("login.jsp"); 
 					
 					}else{					
-	
-						sesion.setAttribute("usuario", usuario);
+						
+													
+						//sesion.setAttribute("usuario", usuario);
 
 						Maestro maestro = AccionesMaestro.getOne(dni);
 						sesion.setAttribute("maestro", maestro);
 						sesion.setAttribute("dni_maestro", dni);
-						response.sendRedirect("menu_user.jsp");
+						
+						objeto = "menu_user.jsp";						
+						if (AccionesUsuario.validarAcceso(tipo, objeto ) == 1){													
+							response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						}
+						
+						response.sendRedirect(objeto);
+					
 					}
 					
 				}

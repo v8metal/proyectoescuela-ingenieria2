@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import conexion.AccionesUsuario;
 import conexion.AccionesAlumno;
 import conexion.AccionesCuota;
 import conexion.AccionesGrado;
@@ -38,26 +39,33 @@ public class CuotaList extends HttpServlet {
 		HttpSession sesion = request.getSession();
 						
 		
-		if(sesion.getAttribute("admin")!=null){
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");			
+		if (AccionesUsuario.validarAcceso(tipo, "CuotaList") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
 			
-			//System.out.println("CuotaList doGet");
+		//System.out.println("CuotaList doGet");
 			
-			String accion = "";
+		String accion = "";
 			
-			if (request.getAttribute("accion") != null){
-				 accion = (String) request.getAttribute("accion");
-			}else{
-				 accion = (String) request.getParameter("accion");
-			}
+		if (request.getAttribute("accion") != null){
+			 accion = (String) request.getAttribute("accion");
+		}else{
+			 accion = (String) request.getParameter("accion");
+		}
 			
-			//System.out.println("accion= " + accion);
+		//System.out.println("accion= " + accion);
 			
-			int año = 0;
-			Grados grados = new Grados();
+		int año = 0;
+		Grados grados = new Grados();
 			
-			switch(accion){			
+		switch(accion){			
 			
 			case "solicitarGrados":
+			
+			if (AccionesUsuario.validarAcceso(tipo, "menu_cuotas.jsp") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
 			
 			sesion.removeAttribute("gradoCuota");
 			sesion.removeAttribute("turnoCuota");	
@@ -67,17 +75,17 @@ public class CuotaList extends HttpServlet {
 			año = Integer.parseInt(request.getParameter("año_cuotas"));			
 									
 			try {
+		
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesGrado") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 				
 				//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado
 				grados = AccionesGrado.getAñoGradosCuota(año);
 				
 				request.setAttribute("gradosCuota", grados);				
 				request.setAttribute("añoCuota", año);
-				
-				//sesion.setAttribute("gradosCuota", grados);				
-				//sesion.setAttribute("añoCuota", año);
-
-				
+										
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/menu_cuotas.jsp");
 				dispatcher.forward(request, response);				
 				
@@ -88,7 +96,11 @@ public class CuotaList extends HttpServlet {
 			break;
 			
 			case "listarGrado":
-				
+			
+			if (AccionesUsuario.validarAcceso(tipo, "cuota_list.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			sesion.removeAttribute("año");
 			sesion.removeAttribute("dni");
 			sesion.removeAttribute("mes");
@@ -111,6 +123,10 @@ public class CuotaList extends HttpServlet {
 				
 				try {
 					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesAlumno") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+					
 					//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado
 					Alumnos alumnos = AccionesAlumno.getAllByGradoTurnoYAño(grado,turno,año);					
 					sesion.setAttribute("alumnos_cuota", alumnos);					
@@ -126,7 +142,7 @@ public class CuotaList extends HttpServlet {
 			
 				
 			//System.out.println("grado = " + grado + " turno = " + turno + " año= " + año);
-			
+		
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/cuota_list.jsp");
 			dispatcher.forward(request, response);			
 			
@@ -134,7 +150,11 @@ public class CuotaList extends HttpServlet {
 			break;
 
 			case "visualizarPagos":
-				
+			
+			if (AccionesUsuario.validarAcceso(tipo, "pagos_list.jsp") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			//System.out.println("visualizar pagos goGet");
 			int dni = 0, mes = 0;
 			
@@ -159,9 +179,12 @@ public class CuotaList extends HttpServlet {
 				//System.out.println("mes= " + mes);			
 				
 				try {
+							
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesCuota") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
 					
 					//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado
-					
 					Cuotas cuotas = AccionesCuota.getPagosMes(dni, año, mes);
 					
 				    sesion.setAttribute("pagosMes", cuotas); //lo dejamos como session						
@@ -184,6 +207,10 @@ public class CuotaList extends HttpServlet {
 					
 					//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado
 					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesCuota") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+					
 					Cuotas cuotas = AccionesCuota.getPagosMes(dni, año, mes);
 					
 				    sesion.setAttribute("pagosMes", cuotas); //lo dejamos como session						
@@ -193,7 +220,7 @@ public class CuotaList extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
-				
+	
 			dispatcher = getServletContext().getRequestDispatcher("/pagos_list.jsp");
 			dispatcher.forward(request, response);			
 			
@@ -201,6 +228,10 @@ public class CuotaList extends HttpServlet {
 			break;
 			
 			case "pagosDia":
+				
+				if (AccionesUsuario.validarAcceso(tipo, "pagos_dia.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 				
 				double d = 0.0;
 				
@@ -223,6 +254,10 @@ public class CuotaList extends HttpServlet {
 				
 				try {
 					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesCuota") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+					
 					d = AccionesCuota.getPagosDia(año + "-" + mes_pago + "-" + relleno + dia);
 					request.setAttribute("totalcuotas", ""+d);
 					
@@ -239,38 +274,43 @@ public class CuotaList extends HttpServlet {
 					
 				break;
 				
-			} //fin del case
-			
-		}else{
-			response.sendRedirect("login.jsp");
-		}
+			} //fin del case		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		HttpSession sesion = request.getSession();
-		if(sesion.getAttribute("login")!=null){
+		
+		//System.out.println("CuotaList doPost");
 			
-			//System.out.println("CuotaList doPost");
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");			
+		if (AccionesUsuario.validarAcceso(tipo, "CuotaList") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
 			
-			String accion = "";
+		String accion = "";
 			
-			if (request.getAttribute("accion") != null){
-				 accion = (String) request.getAttribute("accion");
-			}else{
-				 accion = (String) request.getParameter("accion");
-			}
+		if (request.getAttribute("accion") != null){
+			 accion = (String) request.getAttribute("accion");
+		}else{
+			 accion = (String) request.getParameter("accion");
+		}
 			
-			//System.out.println("accion= " + accion);
+		//System.out.println("accion= " + accion);
 			
-			int año = 0;
-			Grados grados = new Grados();
+		int año = 0;
+		Grados grados = new Grados();
 			
-			switch(accion){			
+		switch(accion){			
 			
 			case "solicitarGrados":
+			
+			if (AccionesUsuario.validarAcceso(tipo, "menu_cuotas.jsp") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
 			
 			sesion.removeAttribute("gradoCuota");
 			sesion.removeAttribute("turnoCuota");	
@@ -286,12 +326,15 @@ public class CuotaList extends HttpServlet {
 												
 			try {
 				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesGrado") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado
 				grados = AccionesGrado.getAñoGradosCuota(año);
 				
-				request.setAttribute("gradosCuota", grados);				
-				request.setAttribute("añoCuota", año);
-								
+				request.setAttribute("gradosCuota", grados);			
+				request.setAttribute("añoCuota", año);		
 				
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/menu_cuotas.jsp");
 				dispatcher.forward(request, response);				
@@ -303,6 +346,10 @@ public class CuotaList extends HttpServlet {
 			break;
 			
 			case "listarGrado":
+			
+			if (AccionesUsuario.validarAcceso(tipo, "cuota_list.jsp") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
 				
 			sesion.removeAttribute("año");
 			sesion.removeAttribute("dni");
@@ -326,7 +373,11 @@ public class CuotaList extends HttpServlet {
 				
 				try {
 					
-					//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesAlumno") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+					
+					//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado					
 					Alumnos alumnos = AccionesAlumno.getAllByGradoTurnoYAño(grado,turno,año);
 					
 					sesion.setAttribute("alumnos_cuota", alumnos);					
@@ -347,7 +398,10 @@ public class CuotaList extends HttpServlet {
 			break;
 
 			case "visualizarPagos":
-				
+			
+			if (AccionesUsuario.validarAcceso(tipo, "pagos_list.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
 			//System.out.println("visualizar pagos goPost");
 			
 			sesion.removeAttribute("pagoEdit");
@@ -371,9 +425,12 @@ public class CuotaList extends HttpServlet {
 				//System.out.println("mes= " + mes);			
 				
 				try {
+
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesCuota") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
 					
 					//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado
-					
 					Cuotas cuotas = AccionesCuota.getPagosMes(dni, año, mes);
 					
 				    sesion.setAttribute("pagosMes", cuotas); //lo dejamos como session						
@@ -393,9 +450,12 @@ public class CuotaList extends HttpServlet {
 				mes = (Integer) sesion.getAttribute("mes");
 				
 				try {
+	
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesCuota") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
 					
-					//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado
-					
+					//obtiene los grados en condiciones de cobrar cuota, para el año seleccionado					
 					Cuotas cuotas = AccionesCuota.getPagosMes(dni, año, mes);
 					
 				    sesion.setAttribute("pagosMes", cuotas); //lo dejamos como session						
@@ -405,19 +465,13 @@ public class CuotaList extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
-			
-						
+									
 			dispatcher = getServletContext().getRequestDispatcher("/pagos_list.jsp");
 			dispatcher.forward(request, response);			
 			
 			
 			break;
-			} //fin del case
-
-			
-		}else{
-			response.sendRedirect("login.jsp");
-		}
+			} //fin del case		
 	}
 
 }

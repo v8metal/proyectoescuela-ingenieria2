@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesPrecio;
+import conexion.AccionesUsuario;
 import datos.PrecioInscrip;
 import datos.PrecioMes;
 
@@ -35,23 +36,34 @@ public class PrecioEdit extends HttpServlet {
 		
 		HttpSession sesion = request.getSession();
 		
-		if(sesion.getAttribute("admin")!= null){
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(tipo, "PrecioEdit") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
 			
-			String accion = request.getParameter("accion");
-			int año = 0;
+		String accion = request.getParameter("accion");
+		int año = 0;
 			
-			//System.out.println("accion = " + accion);
+		//System.out.println("accion = " + accion);
 			
-			switch (accion){
+		switch (accion){
 			
-				case ("altaMes"):				
-												
+			case ("altaMes"):				
+				
+				if (AccionesUsuario.validarAcceso(tipo, "precioMes_edit.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+			
 				año =  (Integer) sesion.getAttribute("añoPrecios");
 										
 				sesion.setAttribute("control", "altaMes");
 				
 				try {					
 					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesPrecio") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+									
 					sesion.setAttribute("ultimoMes", AccionesPrecio.getUltimoMes(año));			
 					
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/precioMes_edit.jsp");
@@ -66,12 +78,20 @@ public class PrecioEdit extends HttpServlet {
 			
 				case ("modificarMes"):				
 			
+				if (AccionesUsuario.validarAcceso(tipo, "precioMes_edit.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				sesion.setAttribute("control", "modificarMes");
 				
 				año = Integer.parseInt(request.getParameter("año"));			
 				int mes = Integer.parseInt(request.getParameter("mes"));
 				
 				try {
+					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesPrecio") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
 					
 					sesion.setAttribute("añoModific", año);
 					sesion.setAttribute("mesModific", AccionesPrecio.getOneMes(año, mes));
@@ -89,11 +109,19 @@ public class PrecioEdit extends HttpServlet {
 			
 				case ("bajaMes"):							
 				
+				if (AccionesUsuario.validarAcceso(tipo, "PrecioList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				año = Integer.parseInt(request.getParameter("año"));			
 				mes = Integer.parseInt(request.getParameter("mes"));
 				
 				try {
 				
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesPrecio") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+					
 					AccionesPrecio.borrarMes(año, mes);
 					
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/PrecioList");
@@ -107,7 +135,11 @@ public class PrecioEdit extends HttpServlet {
 				break;
 				
 				case ("altaInscrip"):				
-					
+				
+				if (AccionesUsuario.validarAcceso(tipo, "precioInscrip_edit.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				año =  (Integer) sesion.getAttribute("añoPrecios");
 				
 				sesion.setAttribute("control", "altaInscrip");
@@ -125,7 +157,11 @@ public class PrecioEdit extends HttpServlet {
 				break;
 			
 				case ("modificarInscrip"):
-					
+				
+				if (AccionesUsuario.validarAcceso(tipo, "precioInscrip_edit.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				sesion.setAttribute("control", "modificarInscrip");
 				
 				año = Integer.parseInt(request.getParameter("año"));				
@@ -134,6 +170,10 @@ public class PrecioEdit extends HttpServlet {
 					
 					sesion.setAttribute("añoModific", año);
 					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesPrecio") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+										
 					PrecioInscrip precioI = AccionesPrecio.getOneInscrip(año);
 					
 					sesion.setAttribute("precioInscrip", precioI);					
@@ -149,6 +189,10 @@ public class PrecioEdit extends HttpServlet {
 				break;
 			
 				case ("bajaInscrip"):							
+				
+				if (AccionesUsuario.validarAcceso(tipo, "PrecioList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 				
 				//sesion.setAttribute("control", "modificarInscrip");
 				
@@ -170,9 +214,6 @@ public class PrecioEdit extends HttpServlet {
 				
 			}			
 
-		}else{
-			response.sendRedirect("login.jsp");
-		}
 	}
 
 	/**
@@ -182,38 +223,48 @@ public class PrecioEdit extends HttpServlet {
 		
 		HttpSession sesion = request.getSession();
 		
-		if(sesion.getAttribute("login")!=null){
-			
-			String control =(String)sesion.getAttribute("control");
-			sesion.removeAttribute("control");
-			sesion.removeAttribute("ultimoMes");
-			
-			String dia = (String) request.getParameter("dia_inscrip");			
-			
-			String mes;
-			
-			if (request.getParameter("mes") !=  null){
-				mes = request.getParameter("mes");			
-			}else{
-				mes = request.getParameter("mes_inscrip");
-			}
-						
-			int grupo = 0, hijos = 0;
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(tipo, "PrecioEdit") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
 		
-			if (request.getParameter("grupo") != null){			
-				grupo = Integer.parseInt(request.getParameter("grupo"));
-				hijos = Integer.parseInt(request.getParameter("hijos"));
-			}
+		if (AccionesUsuario.validarAcceso(tipo, "PrecioList") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
+		
+		if (AccionesUsuario.validarAcceso(tipo, "AccionesPrecio") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
 			
-			//compartidas por mes e inscripciones
-			int regular =Integer.parseInt(request.getParameter("regular"));
-			int recargo  = Integer.parseInt(request.getParameter("recargo"));
+		String control =(String)sesion.getAttribute("control");
+		sesion.removeAttribute("control");
+		sesion.removeAttribute("ultimoMes");
+			
+		String dia = (String) request.getParameter("dia_inscrip");			
+			
+		String mes;
+			
+		if (request.getParameter("mes") !=  null){
+			mes = request.getParameter("mes");			
+		}else{
+			mes = request.getParameter("mes_inscrip");
+		}
 						
-					
-			int año = 0;
-			int i = 0;
+		int grupo = 0, hijos = 0;
+		
+		if (request.getParameter("grupo") != null){			
+			grupo = Integer.parseInt(request.getParameter("grupo"));
+			hijos = Integer.parseInt(request.getParameter("hijos"));
+		}
 			
-			switch (mes){
+		//compartidas por mes e inscripciones
+		int regular =Integer.parseInt(request.getParameter("regular"));
+		int recargo  = Integer.parseInt(request.getParameter("recargo"));
+						
+		int año = 0;
+		int i = 0;
+			
+		switch (mes){
 			
 			case "Enero":
 				i = 1;
@@ -267,11 +318,11 @@ public class PrecioEdit extends HttpServlet {
 				break;
 			}
 			
-			switch (control){
+		switch (control){
 			
 			
 			case "altaMes":			
-								
+		
 				año =  (Integer) sesion.getAttribute("añoPrecios");
 				
 				try {
@@ -353,11 +404,5 @@ public class PrecioEdit extends HttpServlet {
 				
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/PrecioList");
 			dispatcher.forward(request, response);
-		
-			
-		}else{
-			response.sendRedirect("login.jsp");
 		}
-	}
-
 }

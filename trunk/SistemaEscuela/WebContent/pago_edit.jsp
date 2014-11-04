@@ -2,6 +2,7 @@
 <%@page import="datos.Cuotas"%>
 <%@page import="datos.Alumno"%>
 <%@page import="conexion.AccionesAlumno"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -107,7 +108,10 @@
   <br>
   
  <% 
- if (session.getAttribute("admin") != null) {
+ int tipo = (Integer) session.getAttribute("tipoUsuario");						
+ if (AccionesUsuario.validarAcceso(tipo, "pago_edit.jsp") != 1){							
+ 	response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+ }
 	 
  	Cuota cuota = (Cuota) session.getAttribute("pagoEdit");
     int dni = (Integer) session.getAttribute("dni");
@@ -240,11 +244,6 @@
 	<button type="submit" class="btn btn-primary"  value="Volver atrás">Volver atrás</button>
 </form>
 </div>
- <%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>

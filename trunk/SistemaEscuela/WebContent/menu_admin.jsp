@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@page import="conexion.AccionesUsuario"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +18,10 @@
 </head>
 <body>
 <%
-	if (session.getAttribute("admin") != null) {
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "menu_admin.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
 %>
 <div class="container">  
   <div class="page-header"> 
@@ -108,11 +112,6 @@
         </p>
  -->       
       </div>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%> 
 </div>
 </body>
 </html>
