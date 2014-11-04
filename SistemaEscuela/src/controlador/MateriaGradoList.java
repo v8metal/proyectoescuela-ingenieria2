@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import conexion.AccionesGrado;
 import conexion.AccionesMateria;
+import conexion.AccionesUsuario;
 import datos.Grado;
 import datos.MateriasGrado;
 
@@ -35,6 +36,15 @@ import datos.MateriasGrado;
 		
 		HttpSession sesion = request.getSession();
 		
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(tipo, "MateriaGradoList") != 1){							
+			response.sendRedirect("Login");
+		}
+		
+		if (AccionesUsuario.validarAcceso(tipo, "materias_list.jsp") != 1){							
+			response.sendRedirect("Login");
+		}
+		
 		try {
 			
 			//get parameter do of the request
@@ -45,10 +55,17 @@ import datos.MateriasGrado;
 			String turno = null;
 			int año;
 			
-			//get the grado from simulated DB
+			switch(accion){
 			
-			if(accion.equals("listar")){				
+			case "listar":
 				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesGrado") != 1){							
+					response.sendRedirect("Login");
+				}
+				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesMateria") != 1){							
+					response.sendRedirect("Login");
+				}
 				sesion.removeAttribute("grado_materias");
 				
 				grado = request.getParameter("grado_list");
@@ -56,7 +73,7 @@ import datos.MateriasGrado;
 				año = Integer.valueOf(request.getParameter("grado_año"));
 				
 				Grado g = AccionesGrado.getOne(grado,turno, año);
-	
+				
 				MateriasGrado mat_grado = AccionesGrado.getMaterias(grado, turno, año);		
 						
 				sesion.setAttribute("grado_materias", g);				
@@ -65,33 +82,36 @@ import datos.MateriasGrado;
 			
 				sesion.setAttribute("materias", AccionesMateria.getAllActivas());
 								
-				//get the request dispatcher
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/materias_list.jsp");
+				break;
 				
-				//forward to the jsp file to display the alumno list
-				dispatcher.forward(request, response);				
-			
-			}else if(accion.equals("desasignar")){
+			case "desasignar":
 				
-				Grado g = (Grado) sesion.getAttribute("grado_materias");
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesGrado") != 1){							
+					response.sendRedirect("Login");
+				}
+				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesMateria") != 1){							
+					response.sendRedirect("Login");
+				}
+				
+				g = (Grado) sesion.getAttribute("grado_materias");
 				
 				String materia = (String) request.getParameter("materia");
 				
 				AccionesGrado.deleteMateria(g.getGrado(), g.getTurno(), g.getAño(), materia);
 
-				MateriasGrado mat_grado = AccionesGrado.getMaterias(g.getGrado(), g.getTurno(), g.getAño());
+				mat_grado = AccionesGrado.getMaterias(g.getGrado(), g.getTurno(), g.getAño());
 							
 				sesion.setAttribute("materias_grado", mat_grado);		
 				
 				sesion.setAttribute("materias", AccionesMateria.getAllActivas());
 				
-				//get the request dispatcher
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/materias_list.jsp");
-					
-				//forward to the jsp file to display the alumno list
-				dispatcher.forward(request, response);				
-				// se puede evitar esto?	
-			}			
+				break;
+	
+			}
+			
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/materias_list.jsp");
+			dispatcher.forward(request, response);
 			
 		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
 			//e.printStackTrace();
@@ -99,10 +119,29 @@ import datos.MateriasGrado;
 			response.sendRedirect("materias_list.jsp");	
 		
 		} catch (Exception e) {
+			
+			String listar = (String) sesion.getAttribute("listar");
+			
 			e.printStackTrace();
-
 			sesion.setAttribute("error", e);
-			response.sendRedirect("grado_list.jsp");
+			
+			if (listar.equals("mañana")){
+				
+				if (AccionesUsuario.validarAcceso(tipo, "grados_mañana_list.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+
+				response.sendRedirect("grados_mañana_list.jsp");
+			}
+			
+			if (listar.equals("tarde")){
+				
+				if (AccionesUsuario.validarAcceso(tipo, "grado_tarde_list.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+
+				response.sendRedirect("grado_tarde_list.jsp");
+			}
 		}  
 	}  	
 	
@@ -112,7 +151,12 @@ import datos.MateriasGrado;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession sesion = request.getSession();
-
+		
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");		
+		if (AccionesUsuario.validarAcceso(tipo, "MateriaGradoList") != 1){							
+			response.sendRedirect("Login");
+		}
+		
 		Grado g = (Grado) sesion.getAttribute("grado_materias");
 		
 		String materia = (String) request.getParameter("materia_asignar");
@@ -120,6 +164,18 @@ import datos.MateriasGrado;
 		//System.out.println("materia_asignar= " + materia);		
 		
 		try {
+			
+			if (AccionesUsuario.validarAcceso(tipo, "materias_list.jsp") != 1){							
+				response.sendRedirect("Login");
+			}
+			
+			if (AccionesUsuario.validarAcceso(tipo, "AccionesGrado") != 1){							
+				response.sendRedirect("Login");
+			}
+			
+			if (AccionesUsuario.validarAcceso(tipo, "AccionesMateria") != 1){							
+				response.sendRedirect("Login");
+			}
 			
 			AccionesGrado.asignarMateria(g.getGrado(), g.getTurno(), g.getAño(), materia);
 			

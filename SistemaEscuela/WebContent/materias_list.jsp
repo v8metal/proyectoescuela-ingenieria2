@@ -2,6 +2,7 @@
 <%@page import="datos.Materia"%>
 <%@page import="datos.Materias"%>
 <%@page import="datos.MateriasGrado"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -106,23 +107,26 @@
   <br>
   <br>
 <%
-	if (session.getAttribute("admin") != null) {
+	int tipo = (Integer) session.getAttribute("tipoUsuario");
+	if (AccionesUsuario.validarAcceso(tipo, "materias_list.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
 		
-		String error = "";
-		if (session.getAttribute("error") != null) {
-			error = (String)session.getAttribute("error");
-			session.setAttribute("error", "");
-		}
+	String error = "";
+	if (session.getAttribute("error") != null) {
+		error = (String)session.getAttribute("error");
+		session.setAttribute("error", "");
+	}
 		
-		MateriasGrado mat_grado = new MateriasGrado();
+	MateriasGrado mat_grado = new MateriasGrado();
 		
-		if(session.getAttribute("materias_grado") != null) {			
-			mat_grado = (MateriasGrado) session.getAttribute("materias_grado");
-		}
+	if(session.getAttribute("materias_grado") != null) {			
+		mat_grado = (MateriasGrado) session.getAttribute("materias_grado");
+	}
 		
-		Materias materias  = (Materias) session.getAttribute("materias");		
+	Materias materias  = (Materias) session.getAttribute("materias");		
 		
-		Grado grado  = (Grado) session.getAttribute("grado_materias");
+	Grado grado  = (Grado) session.getAttribute("grado_materias");
 %>
 <div class="page-header">  
 	<h1><%= grado.getGrado() + " - Turno " + grado.getTurno() + " - AÑO " + grado.getAño() %></h1>
@@ -204,11 +208,6 @@ if ((materias.getLista().size() - mat_grado.getLista().size()) == 0){
 <button type="submit" class="btn btn-primary"  value="Volver al Listado">Volver al Listado</button>
 </form>
 </div>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>

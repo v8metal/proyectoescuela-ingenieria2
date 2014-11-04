@@ -3,6 +3,7 @@
 <%@page import="datos.Grado"%>
 <%@page import="datos.Grados"%>
 <%@page import="conexion.AccionesGrado"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -107,7 +108,10 @@
   <br>
    
 <%
-	if (session.getAttribute("admin") != null) { 
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "grado_edit.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	} 
   
   	Grado grado = (Grado) session.getAttribute("grado_edit");
   	Grados grados = (Grados) request.getAttribute("grados_alta"); //agregado
@@ -326,11 +330,6 @@ if (grado != null){
 <button type="submit" class="btn btn-primary"  value="Volver al Listado">Volver al Listado</button>
 </form>
 </div>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 <script language = "JavaScript">
