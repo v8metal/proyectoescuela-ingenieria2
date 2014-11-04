@@ -3,6 +3,7 @@
 <%@page import="datos.Tardanzas"%>
 <%@page import="conexion.AccionesAlumno"%>
 <%@page import="conexion.AccionesTardanza"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -109,7 +110,10 @@
   
 <%
 
-if(session.getAttribute("admin")!=null){
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "tardanza_list.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
 		
 	Tardanzas tardanzas = (Tardanzas)session.getAttribute("tardanzas");
 
@@ -174,11 +178,6 @@ if(session.getAttribute("admin")!=null){
 	   	<button type="submit" class="btn btn-primary"  value="Volver al Menú de Tardanzas">Volver al Menú de Tardanzas</button> 
 	   </form>
 	</div>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>

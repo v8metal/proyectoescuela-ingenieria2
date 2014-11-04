@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import conexion.AccionesAlumno;
 import conexion.AccionesTardanza;
+import conexion.AccionesUsuario;
 import datos.Alumnos;
 import datos.Grado;
 import datos.Tardanza;
@@ -36,22 +37,33 @@ public class TardanzaEdit extends HttpServlet {
 
 		HttpSession sesion = request.getSession();
 		
-		if(sesion.getAttribute("admin") != null){
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");		
+		if (AccionesUsuario.validarAcceso(tipo, "TardanzaEdit") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
 
-			//System.out.println("Tardanza doGet");
+		//System.out.println("Tardanza doGet");
 			
-			String accion = (String) request.getParameter("do");
+		String accion = (String) request.getParameter("do");
 			
-			//System.out.println("accion= " + accion);			
-			
-			switch(accion){
+		//System.out.println("accion= " + accion);			
+		
+		switch(accion){
 			
 			case "alta":
+				
+				if (AccionesUsuario.validarAcceso(tipo, "tardanza_edit.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 				
 				int año = (Integer) sesion.getAttribute("añoTardanza");
 				Grado grado = (Grado) sesion.getAttribute("gradoAltaTardanza");
 				
 				try {
+					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesAlumno") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
 					
 					Alumnos alumnos = AccionesAlumno.getAllByGradoTurnoYAño(grado.getGrado(), grado.getTurno(), año);
 					
@@ -68,11 +80,19 @@ public class TardanzaEdit extends HttpServlet {
 				
 			case "modificar":
 				
+				if (AccionesUsuario.validarAcceso(tipo, "tardanza_edit.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				int dni = Integer.parseInt(request.getParameter("dni"));
 				String fecha = (String) (request.getParameter("fecha"));										
 			
 				try {
 								
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesTardanza") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+					
 					Tardanza t = AccionesTardanza.getOneTardanza(dni, fecha);					
 					request.setAttribute("tardanza", t);
 					
@@ -87,11 +107,18 @@ public class TardanzaEdit extends HttpServlet {
 				
 			case "borrar":			
 			
+				if (AccionesUsuario.validarAcceso(tipo, "TardanzaList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 			
 				dni = Integer.parseInt(request.getParameter("dni"));
 				fecha = (String) (request.getParameter("fecha"));			
 									
 				try {
+					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesTardanza") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
 					
 					AccionesTardanza.bajaTardanza(dni, fecha);
 				
@@ -107,11 +134,8 @@ public class TardanzaEdit extends HttpServlet {
 			
 				break;
 					
-				}// fin del case
+			}// fin del case
 			
-		}else{
-			response.sendRedirect("login.jsp");
-		}
 	}
 
 	/**
@@ -121,32 +145,42 @@ public class TardanzaEdit extends HttpServlet {
 		
 		HttpSession sesion = request.getSession();
 		
-		if(sesion.getAttribute("admin") != null){
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");		
+		if (AccionesUsuario.validarAcceso(tipo, "TardanzaEdit") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
 
-			//System.out.println("Tardanza doGet");
+		//System.out.println("Tardanza doGet");
 			
-			String accion = (String) request.getParameter("do");
+		String accion = (String) request.getParameter("do");
 			
-			//System.out.println("accion= " + accion);
+		//System.out.println("accion= " + accion);
 			
-			int dia = Integer.parseInt(request.getParameter("dia_tardanza"));
-			String mes = (String) request.getParameter("mes_tardanza");
-			int año = (Integer) sesion.getAttribute("añoTardanza");
-			int dni = Integer.parseInt(request.getParameter("alumno_tardanza"));				
-			String obs = (String) request.getParameter("observaciones");
+		int dia = Integer.parseInt(request.getParameter("dia_tardanza"));
+		String mes = (String) request.getParameter("mes_tardanza");
+		int año = (Integer) sesion.getAttribute("añoTardanza");
+		int dni = Integer.parseInt(request.getParameter("alumno_tardanza"));				
+		String obs = (String) request.getParameter("observaciones");
 								
-			String relleno = "";
+		String relleno = "";
 			
-			if (dia < 10) relleno = "0";
+		if (dia < 10) relleno = "0";
 			
 			Tardanza t = new Tardanza(dni, año + "-" + mes + "-" + relleno + dia, obs, "T", "");				
 											
-			switch(accion){
+		switch(accion){
 			
 			case "alta":				
 				
+				if (AccionesUsuario.validarAcceso(tipo, "TardanzaList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 				
 				try {
+					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesTardanza") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
 					
 					AccionesTardanza.altaTardanza(t);												
 					
@@ -167,10 +201,18 @@ public class TardanzaEdit extends HttpServlet {
 				break;
 				
 			case "modificar":
-			
+				
+				if (AccionesUsuario.validarAcceso(tipo, "TardanzaList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				String fecha = (String) request.getParameter("fecha_tardanza");
 				
 				try {
+					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesTardanza") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
 					
 					AccionesTardanza.modificarTardanza(t, fecha);												
 					
@@ -191,9 +233,6 @@ public class TardanzaEdit extends HttpServlet {
 			
 			}// fin del case
 			
-		}else{
-			response.sendRedirect("login.jsp");
-		}
 	}
 
 }

@@ -2,6 +2,7 @@
 <%@page import="datos.Maestros_Grados"%>
 <%@page import="datos.Tardanza"%>
 <%@page import="conexion.AccionesAlumno"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@page import="datos.Alumno"%>
 <%@page import="datos.Alumnos"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -109,7 +110,10 @@
 
 <div class="page-header">
 <%
-	if (session.getAttribute("admin") != null) {
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "tardanza_edit.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
 %>
 <%
 	Tardanza tardanza = (Tardanza) request.getAttribute("tardanza");
@@ -228,18 +232,13 @@
   		  
   		   <% } %>   
   		  
-		  <br>	
+		  <br>
 		 	<div class="form-group">
 			<form action="TardanzaList" method="get">
 			<input type="hidden" name="accion" value="listarTardanzas">
 			<button type="submit" class="btn btn-primary"  value="Volver al Listado de Tardanzas">Volver al Listado de Tardanzas</button>
 			</form>
 			</div>
-<%
-} else {
-	response.sendRedirect("login.jsp");
-}
-%> 
 </div>
 </body>
 </html>
