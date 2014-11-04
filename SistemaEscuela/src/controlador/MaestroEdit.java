@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesMaestro;
+import conexion.AccionesUsuario;
 import datos.Maestro;
 import datos.CustomException;
 
@@ -34,6 +35,11 @@ public class MaestroEdit extends HttpServlet {
 		//get session of the request
 		HttpSession sesion = request.getSession();
 		
+		int type = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(type, "MaestroEdit") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
+		
 		Maestro maestro = new Maestro();
 		
 		try {
@@ -45,6 +51,11 @@ public class MaestroEdit extends HttpServlet {
 			
 			if(request.getParameter("dni") != null){
 				dni = Integer.valueOf(request.getParameter("dni"));
+				
+				if (AccionesUsuario.validarAcceso(type, "AccionesMaestro") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				maestro = AccionesMaestro.getOne(dni.intValue());				
 			}
 			
@@ -52,36 +63,61 @@ public class MaestroEdit extends HttpServlet {
 			
 			switch(accion){
 			
-			case "alta":	
+			case "alta":
+				
+				if (AccionesUsuario.validarAcceso(type, "maestro_edit.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 				
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/maestro_edit.jsp");				
 				dispatcher.forward(request, response);	
 				
 				break;
 			
-			case "baja":	
-				
+			case "baja":
+					
 				maestro.setEstado(0);
 				
-				AccionesMaestro.updateOne(maestro);				
+				if (AccionesUsuario.validarAcceso(type, "AccionesMaestro") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
+				AccionesMaestro.updateOne(maestro);	
+				
+				if (AccionesUsuario.validarAcceso(type, "MaestroList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 				
 				response.sendRedirect(request.getContextPath() + "/maestroList");				
 								
 				break;				
 			
-			case "activar":	
+			case "activar":
 				
 				maestro.setEstado(1);
 				
-				AccionesMaestro.updateOne(maestro);				
+				if (AccionesUsuario.validarAcceso(type, "AccionesMaestro") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
+				AccionesMaestro.updateOne(maestro);
+				
+				if (AccionesUsuario.validarAcceso(type, "MaestroList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				
 				response.sendRedirect(request.getContextPath() + "/maestroList?tipo=inactivos");
 				
 				break;
 				
 			case "modificar":
-
+				
 				request.setAttribute("maestro", maestro);
+				
+				if (AccionesUsuario.validarAcceso(type, "maestro_edit.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 				
 				dispatcher = getServletContext().getRequestDispatcher("/maestro_edit.jsp");				
 				dispatcher.forward(request, response);	
@@ -89,6 +125,10 @@ public class MaestroEdit extends HttpServlet {
 				break;
 
 			case "borrar":
+				
+				if (AccionesUsuario.validarAcceso(type, "MaestroList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 				
 				AccionesMaestro.deleteOne(dni.intValue());				
 				response.sendRedirect(request.getContextPath() + "/maestroList");
@@ -100,16 +140,31 @@ public class MaestroEdit extends HttpServlet {
 		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
 			e.printStackTrace();
 			sesion.setAttribute("error", "Error al intentar borrar " + maestro.getNombre() + " " + maestro.getApellido() + ". Ya esta asignado/a a un curso.");
+			
+			if (AccionesUsuario.validarAcceso(type, "MaestroList") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			response.sendRedirect("maestroList");
 		
 		} catch (CustomException e) {
 			e.printStackTrace();
 			sesion.setAttribute("error", "Error en la baja de " + maestro.getNombre() + " " + maestro.getApellido() + ". Ya está asignado/a a un grado para el año en curso.");
+			
+			if (AccionesUsuario.validarAcceso(type, "MaestroList") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			response.sendRedirect("maestroList");
 		} catch (Exception e) {
 			e.printStackTrace();
 
 			sesion.setAttribute("error", e);
+			
+			if (AccionesUsuario.validarAcceso(type, "maestro_edit.jsp") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			response.sendRedirect("maestro_edit.jsp");
 		}  
 	}
@@ -120,6 +175,11 @@ public class MaestroEdit extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//get session of the request
 		HttpSession sesion = request.getSession();
+		
+		int type = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(type, "MaestroEdit") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
 		
 		try {
 			
@@ -140,15 +200,27 @@ public class MaestroEdit extends HttpServlet {
 				
 				//System.out.println("alta de maestro");
 				
+				if (AccionesUsuario.validarAcceso(type, "AccionesMaestro") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				AccionesMaestro.insertOne(maestro);
 				
 				break;
 			
 			case "modificar":
 				
+				if (AccionesUsuario.validarAcceso(type, "AccionesMaestro") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				AccionesMaestro.updateOne(maestro);
 				
 				break;
+			}
+			
+			if (AccionesUsuario.validarAcceso(type, "MaestroList") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 			}
 			
 			//redirect to the maestro list servlet 
@@ -157,9 +229,18 @@ public class MaestroEdit extends HttpServlet {
 		} catch (java.lang.NumberFormatException e) {
 			e.printStackTrace();
 			sesion.setAttribute("error", "Se ha producido un error. Debe completar todos los campos. Exception: " + e.toString());
+			
+			if (AccionesUsuario.validarAcceso(type, "maestro_edit.jsp") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			response.sendRedirect("maestro_edit.jsp");
 			
 		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
+			
+			if (AccionesUsuario.validarAcceso(type, "maestro_edit.jsp") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
 			
 			sesion.setAttribute("error", "Error al insertar, ya se ingreso esta persona");			
 			response.sendRedirect("maestro_edit.jsp");	
@@ -167,6 +248,11 @@ public class MaestroEdit extends HttpServlet {
 		} catch (Exception e) {
 
 			sesion.setAttribute("error", e);
+			
+			if (AccionesUsuario.validarAcceso(type, "maestro_edit.jsp") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			response.sendRedirect("maestro_edit.jsp");
 		}
 	}
