@@ -109,10 +109,14 @@
   <br>
   
 <%
-	if (session.getAttribute("admin") != null) {
-		String titulo = (String)session.getAttribute("titulo");
-		Usuarios usuarios = (Usuarios) session.getAttribute("usuarios");
-		Maestros maestros = (Maestros) session.getAttribute("activos");
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "gest_user_menu.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
+	
+	String titulo = (String)session.getAttribute("titulo");
+	Usuarios usuarios = (Usuarios) session.getAttribute("usuarios");
+	Maestros maestros = (Maestros) session.getAttribute("activos");
 %>
 <div class="page-header">  
 	<h1>Listado de usuarios registrados</h1>
@@ -176,13 +180,7 @@
      			 <strong>Bien Hecho!</strong> Todos los maestros están registrados
   	  		</div>
   		</div><!-- /example -->
-		<%}%>
-<%
-
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
+<%}%>
 </div>
 </body>
 </html>

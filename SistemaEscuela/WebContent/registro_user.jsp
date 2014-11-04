@@ -106,15 +106,13 @@
   <br>
   <br>
 <%
-	if (session.getAttribute("admin") != null) {
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "registro_user.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
 		
-		Maestros maestros = (Maestros) session.getAttribute("activos");
-		
-//		String error = "";
-//		if (session.getAttribute("error") != null) {
-//			error = (String)session.getAttribute("error");
-//			session.setAttribute("error", "");
-//		}
+	Maestros maestros = (Maestros) session.getAttribute("activos");
+
 %>
 <div class="page-header">  
 	<h1>Alta de Usuario</h1>
@@ -188,11 +186,6 @@
 <button type="submit" class="btn btn-primary"  value="Volver al Listado">Volver al Listado</button>
 </form>
 </div>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>
