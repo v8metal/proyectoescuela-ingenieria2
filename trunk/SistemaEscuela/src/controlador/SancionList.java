@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesSancion;
+import conexion.AccionesUsuario;
 import datos.Maestro;
 
 /**
@@ -38,6 +39,12 @@ import datos.Maestro;
 	
 		HttpSession sesion = request.getSession();
 		
+		// modulo de seguridad
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(tipo, "SancionList") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
+		
 		String acceso = "segundo";
 		
 		if (request.getParameter("acceso") != null){
@@ -66,7 +73,17 @@ import datos.Maestro;
 		
 		Maestro maestro = (Maestro) sesion.getAttribute("maestro");	
 		
+		// modulo de seguridad
+		if (AccionesUsuario.validarAcceso(tipo, "AccionesSancion") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
+				
 		sesion.setAttribute("sanciones_list", AccionesSancion.getAll(año, maestro.getDni()));		
+		
+		// modulo de seguridad
+		if (AccionesUsuario.validarAcceso(tipo, "sanciones_list.jsp") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
 						
 		response.sendRedirect("sanciones_list.jsp");
 		

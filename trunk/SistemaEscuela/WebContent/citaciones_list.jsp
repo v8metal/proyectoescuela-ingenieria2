@@ -3,6 +3,7 @@
 <%@page import="datos.Citacion"%>
 <%@page import="datos.Citaciones"%>
 <%@page import="conexion.AccionesAlumno"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -23,6 +24,12 @@
 <body>
 
 <%
+		//modulo de seguridad
+		int tipo = (Integer) session.getAttribute("tipoUsuario");						
+		if (AccionesUsuario.validarAcceso(tipo, "citaciones_list.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
+
 		//Recupero el maestro para mostrar su nombre y apellido en el menú superior	
 		Maestro maestro = (Maestro)session.getAttribute("maestro");
 		String nombre = maestro.getNombre();
@@ -93,8 +100,6 @@
   <br>
   <br>
 <%
-	if (session.getAttribute("usuario") != null) {
-	
 		session.removeAttribute("citacion_edit");
 		session.removeAttribute("alumnos_citacion");
 		
@@ -131,7 +136,8 @@ if (citaciones.getLista().isEmpty()){
 <h1>Listado de Citaciones</h1>
 </div>
 <table class="table table-hover table-bordered">
-	<tr>
+	<thead>
+	<tr class="active">
 		<th>Apellido y Nombres</th>
 		<th>Grado</th>
 		<th>Turno</th>				
@@ -141,6 +147,7 @@ if (citaciones.getLista().isEmpty()){
 		<th>&nbsp;</th>
 		<th>&nbsp;</th>
 	</tr>
+	</thead>
 <%	
 	Alumno m = new Alumno();
 
@@ -154,6 +161,7 @@ if (citaciones.getLista().isEmpty()){
 		String mes = fecha_ent[fecha_ent.length - 2];
 		String año = fecha_ent[fecha_ent.length - 3];
 %>
+	<tbody>
 	<tr>
 		<td><%= m.getApellido() + ", " + m.getNombre() %></td>
 		<td><%= c.getGrado() %></td>
@@ -161,8 +169,10 @@ if (citaciones.getLista().isEmpty()){
 		<td><%= dia +"/" + mes + "/" + año %></td>
 		<td><%= c.getHora().substring(0,5) %></td>
 		<td><%= c.getDescripcion() %></td>						
-		<td><a href="CitacionEdit?do=modificar&dni_citacion=<%=c.getDni()%>&fecha_citacion=<%=c.getFecha()%>&hora_citacion=<%=c.getHora()%>&exit=<%=exit%>">Modificar</a></td>
-		<td><a href="CitacionEdit?do=baja&dni_citacion=<%=c.getDni()%>&fecha_citacion=<%=c.getFecha()%>&hora_citacion=<%=c.getHora()%>&exit=<%=exit%>">Borrar</a></td>	</tr>
+		<td><strong><a href="CitacionEdit?do=modificar&dni_citacion=<%=c.getDni()%>&fecha_citacion=<%=c.getFecha()%>&hora_citacion=<%=c.getHora()%>&exit=<%=exit%>">Modificar</a></strong></td>
+		<td><strong><a href="CitacionEdit?do=baja&dni_citacion=<%=c.getDni()%>&fecha_citacion=<%=c.getFecha()%>&hora_citacion=<%=c.getHora()%>&exit=<%=exit%>" onclick="return confirm('Esta seguro que desea borrar?');">Borrar</a></strong></td>
+	</tr>
+	</tbody>
 <%
 	}
  %>
@@ -177,11 +187,6 @@ if (citaciones.getLista().isEmpty()){
 <button type="submit" class="btn btn-primary"  value="Volver">Volver</button>
 </form>
 </div>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>

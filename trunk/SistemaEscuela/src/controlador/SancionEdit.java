@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesSancion;
+import conexion.AccionesUsuario;
 import datos.Maestro;
 import datos.Sancion;
 
@@ -32,6 +33,12 @@ import datos.Sancion;
 		
 		HttpSession sesion = request.getSession();
 		
+		// modulo de seguridad
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(tipo, "SancionEdit") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
+		
 		String accion = request.getParameter("do");
 		
 		if (accion == null){			
@@ -50,8 +57,16 @@ import datos.Sancion;
 			Maestro maestro = (Maestro) sesion.getAttribute("maestro");			
 			
 			int año = Integer.valueOf((String) sesion.getAttribute("año_sys"));
+			
+			if (AccionesUsuario.validarAcceso(tipo, "AccionesSancion") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
 								
-			sesion.setAttribute("alumnos_sancion", AccionesSancion.getAlumnos(año, maestro.getDni()));			
+			sesion.setAttribute("alumnos_sancion", AccionesSancion.getAlumnos(año, maestro.getDni()));	
+			
+			if (AccionesUsuario.validarAcceso(tipo, "sancion_edit.jsp") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
 			
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/sancion_edit.jsp");
 			
@@ -63,11 +78,19 @@ import datos.Sancion;
 			
 				int dni = Integer.valueOf(request.getParameter("dni_sancion"));
 				String fecha = request.getParameter("fecha_sancion");
-				String hora = request.getParameter("hora_sancion");				
+				String hora = request.getParameter("hora_sancion");	
+				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesSancion") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 							
 				Sancion s = AccionesSancion.getOne(dni, fecha, hora);
 				
 				sesion.setAttribute("sancion_edit", s);
+				
+				if (AccionesUsuario.validarAcceso(tipo, "sancion_edit.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 				
 				dispatcher = getServletContext().getRequestDispatcher("/sancion_edit.jsp");				
 				
@@ -79,9 +102,17 @@ import datos.Sancion;
 				
 				dni = Integer.valueOf(request.getParameter("dni_sancion"));
 				fecha = request.getParameter("fecha_sancion");
-				hora = request.getParameter("hora_sancion");				
+				hora = request.getParameter("hora_sancion");	
 				
-				AccionesSancion.deleteOne(dni, fecha, hora);										
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesSancion") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
+				AccionesSancion.deleteOne(dni, fecha, hora);		
+				
+				if (AccionesUsuario.validarAcceso(tipo, "SancionList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 									
 				dispatcher = getServletContext().getRequestDispatcher("/SancionList");				
 				
@@ -99,6 +130,12 @@ import datos.Sancion;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession sesion = request.getSession();
+		
+		// modulo de seguridad
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(tipo, "SancionEdit") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
 	
 		String accion = request.getParameter("action");
 		
@@ -117,17 +154,40 @@ import datos.Sancion;
 			
 			try {
 				
+				// modulo de seguridad
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesSancion") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				AccionesSancion.insertOne(s);
 				
-				sesion.setAttribute("exit_alta", "exit");				
+				sesion.setAttribute("exit_alta", "exit");
+				
+				// modulo de seguridad
+				if (AccionesUsuario.validarAcceso(tipo, "SancionList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				response.sendRedirect("SancionList");
 				
 			} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
 				sesion.setAttribute("error", "Ya existe una sanción para el mismo dia y horario");
+				
+				// modulo de seguridad
+				if (AccionesUsuario.validarAcceso(tipo, "sancion_edit.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				response.sendRedirect("sancion_edit.jsp");				
 				
 			} catch (Exception e) {				
 				sesion.setAttribute("error", e);
+				
+				// modulo de seguridad
+				if (AccionesUsuario.validarAcceso(tipo, "sancion_edit.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				response.sendRedirect("sancion_edit.jsp");
 			}		
 			
@@ -145,16 +205,38 @@ import datos.Sancion;
 						
 			try {
 				
+				// modulo de seguridad
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesSancion") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				AccionesSancion.updateOne(s.getDni(), s.getFecha(), s.getHora(), año_sancion+"-"+mes_sancion+"-"+dia_sancion, hora_update, motivo_update);
+				
+				// modulo de seguridad
+				if (AccionesUsuario.validarAcceso(tipo, "SancionList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 										
 				response.sendRedirect("SancionList");
 				
 			} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
 				sesion.setAttribute("error", "Ya existe una sanción para el mismo dia y horario");
+				
+				// modulo de seguridad
+				if (AccionesUsuario.validarAcceso(tipo, "sancion_edit.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				response.sendRedirect("sancion_edit.jsp");
 				
 			} catch (Exception e) {				
 				sesion.setAttribute("error", e);
+				
+				// modulo de seguridad
+				if (AccionesUsuario.validarAcceso(tipo, "sancion_edit.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				response.sendRedirect("sancion_edit.jsp");
 			}	
 		

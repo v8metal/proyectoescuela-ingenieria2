@@ -1,5 +1,6 @@
 <%@page import="datos.Maestro"%>
 <%@page import="datos.Maestros"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -21,6 +22,12 @@
 <body>
 
 <%
+		//modulo de seguridad
+		int tipo = (Integer) session.getAttribute("tipoUsuario");						
+		if (AccionesUsuario.validarAcceso(tipo, "sanciones_select.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}		
+
 		//Recupero el maestro para mostrar su nombre y apellido en el menú superior	
 		Maestro maestro = (Maestro)session.getAttribute("maestro");
 		String nombre = maestro.getNombre();
@@ -92,9 +99,7 @@
   <br>
   <br>
   
-  <%
-	if (session.getAttribute("usuario") != null) {
-		
+  <%		
 	String action = "";
 		
 	if (request.getParameter("action") != null){			
@@ -110,14 +115,20 @@
 	int año_actual = Calendar.getInstance().get(Calendar.YEAR);
 	int año_inicio = año_actual - 30;
 %>
-<div class="form-group">
-<form action="SancionList" method="post">	
+<label class="control-label" for="input">Seleccionar año:</label>
+<br>
+<br>
+<form class="form-horizontal" action="SancionList" method="post" role="form">	
+	<div class="form-group">
+	
 <input type="hidden" name="acceso" value="primero">
+
+<!-- 
 <table class="table table-hover table-bordered">	
 	<tr>
 		<td><label for="input">Seleccionar año:</label></td>
 		<td>
-			<select class="form-control" name="año_sancion_selected">   
+			<select class="form-control" name="año_sancion_selected" autofocus>   
 			<%  			
 				for (int i = año_inicio; i <= año_actual; i++){					 
  			 %>
@@ -129,16 +140,26 @@
  		</td>
 	</tr>
 	</table>
-<br>
-<button type="submit" class="btn btn-primary"  value="Aceptar" name="btnAcept">Aceptar</button>
-<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnCancel">Cancelar</button>
+ -->	
+ 
+	<div class="col-xs-2">	
+			<select class="form-control" name="año_sancion_selected" autofocus>   
+			<%  			
+				int año = (Integer)session.getAttribute("añoc");
+  				for(int i=año; i>año-20;i--){					 
+ 			 %>
+			 <option value="<%=i %>"><%=i %></option>		 	
+   			<%
+				}			
+			 %>
+			</select>
+			<br>
+			<br>
+			<button type="submit" class="btn btn-primary"  value="Aceptar" name="btnAcept">Aceptar</button>
+			<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnCancel">Cancelar</button>
+		</div>			
+	</div>
 </form>
-</div>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>
