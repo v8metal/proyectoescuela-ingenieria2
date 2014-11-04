@@ -110,7 +110,7 @@ public class Login extends HttpServlet {
 						sesion.setAttribute("dni_maestro", dni);
 						
 						objeto = "menu_user.jsp";						
-						if (AccionesUsuario.validarAcceso(tipo, objeto ) == 1){													
+						if (AccionesUsuario.validarAcceso(tipo, objeto ) != 1){													
 							response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 						}
 						
