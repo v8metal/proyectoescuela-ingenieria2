@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesPlanPago;
+import conexion.AccionesUsuario;
 import datos.PlanPago;
 
 
@@ -34,11 +35,14 @@ public class PlanPagoEdit extends HttpServlet {
 		
 		HttpSession sesion = request.getSession();						
 		
-		if(sesion.getAttribute("admin")!=null){
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(tipo, "PlanPagoEdit") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
+		
+		//System.out.println("CuotaList doGet");
 			
-			//System.out.println("CuotaList doGet");
-			
-			String accion = "";
+		String accion = "";
 			
 			/*
 			if (request.getAttribute("accion") != null){
@@ -46,15 +50,19 @@ public class PlanPagoEdit extends HttpServlet {
 			}else
 			{
 			*/
-			accion = (String) request.getParameter("accion");
+		accion = (String) request.getParameter("accion");
 			
 			
-			//System.out.println("accion= " + accion);
+		//System.out.println("accion= " + accion);
 			
-			switch(accion){			
+		switch(accion){			
 			
 			case "altaPlanPago":
-									
+			
+			if (AccionesUsuario.validarAcceso(tipo, "CuotaList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			int dia = Integer.parseInt(request.getParameter("dia_plan"));
 			int mes = Integer.parseInt(request.getParameter("mes_plan"));
 			int año = (Integer) sesion.getAttribute("añoPlan");
@@ -77,6 +85,10 @@ public class PlanPagoEdit extends HttpServlet {
 				
 				PlanPago plan = new PlanPago(0, dni, 1,1, inicio, fin, año + "-" + mes + "-" + relleno + dia, obs);
 				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesPlanPago") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				AccionesPlanPago.insertOnePlan(plan);
 			
 				request.setAttribute("añoplan", año);
@@ -92,10 +104,6 @@ public class PlanPagoEdit extends HttpServlet {
 			break;
 			
 			} //fin del case
-			
-		}else{
-			response.sendRedirect("login.jsp");
-		}
 		
 	}
 

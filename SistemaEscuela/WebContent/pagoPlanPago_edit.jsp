@@ -3,6 +3,7 @@
 <%@page import="datos.Alumno"%>
 <%@page import="datos.PlanPago"%>
 <%@page import="datos.PagoPlanPago"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@page import="conexion.AccionesAlumno"%>
 <%@page import="conexion.AccionesPlanPago"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -111,10 +112,13 @@
   
 <center>
  <% 
- 	if (session.getAttribute("admin") != null) {
+ 	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+ 	if (AccionesUsuario.validarAcceso(tipo, "pagoPlanPago_edit.jsp") != 1){							
+ 		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+ 	}
  
- 	 	PlanPago plan = (PlanPago) session.getAttribute("planPagos");	
- 	 	PagoPlanPago ppp = (PagoPlanPago) request.getAttribute("pagopp");
+ 	 PlanPago plan = (PlanPago) session.getAttribute("planPagos");	
+ 	 PagoPlanPago ppp = (PagoPlanPago) request.getAttribute("pagopp");
  	
  		if (ppp != null){
  %>  		
@@ -266,11 +270,6 @@
 <button type="submit" class="btn btn-primary"  value="Volver atrás">Volver atrás</button>
 </form>
 </div>
- <%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>

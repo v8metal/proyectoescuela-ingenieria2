@@ -3,6 +3,7 @@
 <%@page import="datos.Grado"%>
 <%@page import="datos.Grados"%>
 <%@page import="datos.Alumno"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@page import="conexion.AccionesCuota"%>
 <%@page import="conexion.AccionesAlumno"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -10,7 +11,10 @@
 <!DOCTYPE html>
 <html>
 <% 
-if (session.getAttribute("admin") != null) {
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "pagos_list.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
 
    Cuotas cuotas = (Cuotas) session.getAttribute("pagosMes");//lo dejamos como session para poder utilizarlo
    int año = (Integer) session.getAttribute("año");
@@ -171,12 +175,7 @@ if (session.getAttribute("admin") != null) {
 		<input name="accion" type="hidden" value="listarGrado">
 		<button type="submit" class="btn btn-primary"  value="Volver al listado de Pagos">Volver al listado de Pagos</button>
 		</form>
-	</div>	
- <%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
+	</div>
 </div>
 </body>
 </html>

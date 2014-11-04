@@ -3,6 +3,7 @@
 <%@page import="datos.Alumno"%>
 <%@page import="datos.Alumnos"%>
 <%@page import="datos.PlanPago"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@page import="conexion.AccionesAlumno"%>
 <%@page import="conexion.AccionesPlanPago"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
@@ -108,8 +109,11 @@
   <br>
   <br>
  <% 
- if (session.getAttribute("admin") != null) {
-	 
+ 	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+ 	if (AccionesUsuario.validarAcceso(tipo, "planPago_edit.jsp") != 1){							
+ 		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+ 	}
+ 	
  	PlanPago plan = (PlanPago) request.getAttribute("PlanPago"); 	
  	Alumnos alumnos = (Alumnos) session.getAttribute("alumnos_PlanPagos");
  	int año = (Integer) session.getAttribute("añoPlan");
@@ -395,12 +399,6 @@ if (alumnos.getLista().size() == 0){%>
 <button type="submit" class="btn btn-primary"  value="Volver al listado de Cuotas">Volver al listado de Cuotas</button>
 </form>
 </div>
-
- <%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 <script type="text/javascript">
 
 function accion1() {

@@ -2,6 +2,7 @@
 <%@page import="datos.PreciosMes"%>
 <%@page import="datos.PrecioInscrip"%>
 <%@page import="datos.PreciosInscrip"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -9,7 +10,10 @@
 <head>
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
 <%
-if (session.getAttribute("admin") != null) {
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "precio_list.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
 	
 	PreciosMes preciosMes = (PreciosMes) session.getAttribute("preciosMes");
  	PreciosInscrip preciosInscrip = (PreciosInscrip) session.getAttribute("preciosInscrip"); 
@@ -212,19 +216,6 @@ if (session.getAttribute("admin") != null) {
 	<button type="submit" class="btn btn-primary"  value="Volver atrás">Volver atrás</button>
 	</form>
   </div>
-  <br>
-  <br>  
-  <div class="form-group">
-	<form action="CerrarSesion" method="get">
-	<button type="submit" class="btn btn-primary"  value="Cerrar Sesión">Cerrar Sesión</button>
-	</form>
-  </div>
-  
-   <%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>

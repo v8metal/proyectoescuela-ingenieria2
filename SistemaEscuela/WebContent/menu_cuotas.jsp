@@ -3,6 +3,7 @@
 <%@page import="datos.Grado"%>
 <%@page import="datos.Grados"%>
 <%@page import="conexion.AccionesCuota"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -107,14 +108,16 @@
   <br>
   <br>
 <% 
-if (session.getAttribute("admin") != null) {
+	int tipo = (Integer) session.getAttribute("tipoUsuario");					
+	if (AccionesUsuario.validarAcceso(tipo, "menu_cuotas.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
 	
 	Integer añoCuota = null;
 	Grados grados = null;
 			
 	if (request.getAttribute("añoCuota") != null){
 		
-		//System.out.println((Integer) request.getAttribute("añoCuota"));
 		añoCuota = (Integer) request.getAttribute("añoCuota");
 		session.setAttribute("añoPlan", añoCuota);		
 				
@@ -130,25 +133,7 @@ if (session.getAttribute("admin") != null) {
 		
 		session.removeAttribute("añoMenuCuota");
 		session.removeAttribute("gradosMenuCuota");
-	}
-	 
-	/*
-	if (request.getAttribute("gradosCuota") != null){
-		System.out.println((Grados) request.getAttribute("gradosCuota"));
-		grados = (Grados) request.getAttribute("gradosCuota");
-		session.setAttribute("gradosPlan", grados);
-	}
-	
-	*/
-	
-	/*
-	añoCuota = (Integer) session.getAttribute("añoCuota");
-	session.setAttribute("añoPlan", añoCuota);	
-				
-	grados = (Grados) session.getAttribute("gradosCuota");
-	*/
-	
-	
+	}	
 %>
 	<div class="page-header">  	  
 		<h1>Menú Cobro de Cuotas</h1>		
@@ -201,7 +186,7 @@ if (session.getAttribute("admin") != null) {
 	      	</select>
 	   <%}%>
 	<%}%>	    	      
-
+	<br>
 	     	<input type="hidden" name="accion" value="listarGrado">
 	  
 			<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave">Aceptar</button>
@@ -246,13 +231,7 @@ if (session.getAttribute("admin") != null) {
 	<button type="submit" class="btn btn-primary"  value="Cerrar Sesión">Cerrar Sesión</button>
 	</form>
 	</div>
- -->	
-	
-	<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
+ -->
 </div>
 </body>
 </html>

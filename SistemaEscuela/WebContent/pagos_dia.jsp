@@ -2,6 +2,7 @@
 <%@page import="datos.Cuotas"%>
 <%@page import="datos.Grado"%>
 <%@page import="datos.Grados"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@page import="conexion.AccionesCuota"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -107,7 +108,10 @@
   <br>
   <br>
 <% 
-	if (session.getAttribute("admin") != null) {
+	int tipo = (Integer) session.getAttribute("tipoUsuario");
+	if (AccionesUsuario.validarAcceso(tipo, "pagos_dia.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
 	
 	String type = "";
 
@@ -261,19 +265,7 @@
 <%}%>
 </tr>
 </table>
-<br>
-	
-<div class="form-group">
-<form action="CerrarSesion">
-	<button type="submit" class="btn btn-primary"  value="Cerrar Sesión">Cerrar Sesión</button>
-</form>
-</div>
 </center>
-	<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>

@@ -1,4 +1,5 @@
 <%@page import="datos.PrecioInscrip"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -103,7 +104,10 @@
   <br>
   <br>
 <%
-if (session.getAttribute("admin") != null) {
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "precioInscrip_edit.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
 	
 	int dia = 0;
 	String mes = "";
@@ -209,14 +213,7 @@ if (session.getAttribute("admin") != null) {
 			<button type="submit" class="btn btn-primary"  value="Volver al Menú de Precios">Volver al Menú de Precios</button>
 		</form>
 	</div>
-	</center>  
-  <br>
-  <br>
-   <div class="form-group">
-		<form action="CerrarSesion" method="get">
-			<button type="submit" class="btn btn-primary"  value="Cerrar Sesión">Cerrar Sesión</button>
-		</form>
-	</div>  
+	</center> 
   <%String error = (String)session.getAttribute("error");
     if(error!=null){
     	 %>
@@ -254,12 +251,7 @@ if (session.getAttribute("admin") != null) {
 	 
 }
  
-</script> 
-   <%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
+</script>
 </div>
 </body>
 </html>

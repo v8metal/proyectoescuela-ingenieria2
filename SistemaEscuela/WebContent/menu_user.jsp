@@ -1,6 +1,7 @@
 <%@ page import="datos.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@page import="conexion.AccionesUsuario"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,12 +19,15 @@
 </head>
 <body>
 <%
-	if (session.getAttribute("usuario") != null) {
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "menu_user.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
 		
-		Maestro maestro = (Maestro)session.getAttribute("maestro");
-		String nombre = maestro.getNombre();
-		String apellido = maestro.getApellido();
-		String titulo = "Bienvenido/a " + maestro.getNombre() + " " + maestro.getApellido();
+	Maestro maestro = (Maestro)session.getAttribute("maestro");
+	String nombre = maestro.getNombre();
+	String apellido = maestro.getApellido();
+	String titulo = "Bienvenido/a " + maestro.getNombre() + " " + maestro.getApellido();
 %>
 <div class="container">  
 
@@ -95,12 +99,6 @@
         </p>
        
       </div>
-
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>

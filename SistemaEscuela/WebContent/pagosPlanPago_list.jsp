@@ -6,6 +6,7 @@
 <%@page import="datos.PlanPago"%>
 <%@page import="datos.PagoPlanPago"%>
 <%@page import="datos.PagosPlanPago"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@page import="conexion.AccionesCuota"%>
 <%@page import="conexion.AccionesAlumno"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -13,9 +14,12 @@
 <!DOCTYPE html>
 <html>
 <% 
-if (session.getAttribute("admin") != null) {
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "pagosPlanPago_list.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
 	
-PagosPlanPago pp = (PagosPlanPago) request.getAttribute("pagospp");
+   PagosPlanPago pp = (PagosPlanPago) request.getAttribute("pagospp");
    PlanPago plan = (PlanPago) session.getAttribute("planPagos");
    Alumno a = (Alumno) request.getAttribute("alumnopp");
 %>			
@@ -197,18 +201,6 @@ PagosPlanPago pp = (PagosPlanPago) request.getAttribute("pagospp");
 		<button type="submit" class="btn btn-primary"  value="Volver al al Plan de Pagos">Volver al Plan de Pagos</button>
 		</form>
 	</div>
-	<br>
-	<br>
-	<div class="form-group">
-		<form action="CerrarSesion">
-		<button type="submit" class="btn btn-primary"  value="Cerrar Sesión">Cerrar Sesión</button>
-		</form>
-	</div>	
- <%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
-</div>
+	</div>
 </body>
 </html>
