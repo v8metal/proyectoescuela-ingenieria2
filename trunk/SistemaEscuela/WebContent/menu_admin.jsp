@@ -3,6 +3,14 @@
 <%@page import="conexion.AccionesUsuario"%>
 <!DOCTYPE html>
 <html>
+
+<%
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "menu_admin.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
+%>
+
 <head>
 <meta name="viewport" content="width=device-width; initial-scale=1.0"> 
 <title>Menú de administrador</title>
@@ -17,12 +25,7 @@
 
 </head>
 <body>
-<%
-	int tipo = (Integer) session.getAttribute("tipoUsuario");						
-	if (AccionesUsuario.validarAcceso(tipo, "menu_admin.jsp") != 1){							
-		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
-	}
-%>
+
 <div class="container">  
   <div class="page-header"> 
 	<h1>Administrador</h1>

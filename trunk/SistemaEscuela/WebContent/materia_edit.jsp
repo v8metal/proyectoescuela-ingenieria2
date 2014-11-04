@@ -1,5 +1,6 @@
 <%@page import="datos.Materia"%>
 <%@page import="datos.Materias"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -18,6 +19,15 @@
 
 </head>
 <body>
+
+<%
+	// modulo de seguridad
+	int tipo = (Integer) session.getAttribute("tipoUsuario");
+	if (AccionesUsuario.validarAcceso(tipo, "materia_edit.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
+%>
+
 <div class="container">
 
 <!-- Fixed navbar -->
@@ -103,10 +113,8 @@
   
   <br>
   <br>
-<%
-	if (session.getAttribute("admin") != null) {
-		
-		Materia materia = (Materia)request.getAttribute("materia");
+<%	
+	Materia materia = (Materia)request.getAttribute("materia");
 		
 	if(materia != null){
 %>
@@ -171,11 +179,6 @@
 %>
  <br>
 <strong><a href="materiaList?from=menu_admin" class="alert-link">Volver a materias</a></strong>
- <%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>

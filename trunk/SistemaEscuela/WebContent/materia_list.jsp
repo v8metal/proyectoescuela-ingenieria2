@@ -1,5 +1,6 @@
 <%@page import="datos.Materia"%>
 <%@page import="datos.Materias"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -18,6 +19,14 @@
 <title>Listado de Materias</title>
 </head>
 <body>
+
+<%
+	// modulo de seguridad
+	int tipo = (Integer) session.getAttribute("tipoUsuario");
+	if (AccionesUsuario.validarAcceso(tipo, "materia_list.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
+%>
 
 <div class="container">
 
@@ -109,8 +118,6 @@
 	<h1>Listado de Materias Activas</h1>
   </div>
 <%
-	if (session.getAttribute("admin") != null) {
-	
 		Materias materias = (Materias)session.getAttribute("materias");
 		Materias materiasbaja = (Materias)session.getAttribute("materiasbaja");		
 %>
@@ -177,13 +184,7 @@ if(materiasbaja.getLista().size() != 0){%>
      	 <strong>Ups!</strong> <%= error %>
   	  </div>
   </div><!-- /example -->
- 	
  <% } %>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>

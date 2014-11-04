@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import conexion.AccionesGrado;
 import conexion.AccionesMateria;
+import conexion.AccionesUsuario;
 import datos.Materias;
 import datos.MateriasGrado;
 
@@ -35,6 +36,12 @@ public class MateriaList extends HttpServlet {
 		
 		HttpSession sesion = request.getSession();
 		
+		// modulo de seguridad
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(tipo, "MateriaList") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
+		
 		sesion.removeAttribute("error");
 		
 		try {
@@ -47,6 +54,11 @@ public class MateriaList extends HttpServlet {
 			if (from.equals("menu_admin") || from.equals("materiaEdit") || from.equals("materia_list") || from.equals("materia_inactiva_list")){
 				
 				if(from.equals("menu_admin") || from.equals("materiaEdit") || from.equals("materia_list")){
+					
+					// modulo de seguridad
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesMateria") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
 				
 					Materias materia_list = AccionesMateria.getAllActivas();
 					sesion.setAttribute("materias", materia_list);
@@ -54,12 +66,28 @@ public class MateriaList extends HttpServlet {
 					materia_list = AccionesMateria.getAllInactivas();
 					sesion.setAttribute("materiasbaja", materia_list);
 					
+					// modulo de seguridad
+					if (AccionesUsuario.validarAcceso(tipo, "materia_list.jsp") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+					
 					response.sendRedirect("materia_list.jsp");
 					
 				}else{
 					
+					// modulo de seguridad
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesMateria") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+					
 					Materias materia_list = AccionesMateria.getAllInactivas();
 					sesion.setAttribute("materiasbaja", materia_list);
+					
+					// modulo de seguridad
+					if (AccionesUsuario.validarAcceso(tipo, "materia_inactiva_list.jsp") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+					
 					response.sendRedirect("materia_inactiva_list.jsp");
 				}						
 				
@@ -88,6 +116,12 @@ public class MateriaList extends HttpServlet {
 				
 					String turno = (String)sesion.getAttribute("turno");
 					int año = Integer.parseInt((String)sesion.getAttribute("año"));
+					
+					// modulo de seguridad
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesGrado") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+					
 					MateriasGrado mat_grado = AccionesGrado.getMateriasByGradoTurnoYAño(grado, turno, año);
 									
 					sesion.setAttribute("grado", grado);			
@@ -97,6 +131,11 @@ public class MateriaList extends HttpServlet {
 					} 
 				
 					if (from.equals("nota_lista_alum")) {
+						
+						// modulo de seguridad
+						if (AccionesUsuario.validarAcceso(tipo, "nota_lista_mat.jsp") != 1){							
+							response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						}
 					
 						//get the request dispatcher
 						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/nota_lista_mat.jsp");
@@ -105,6 +144,11 @@ public class MateriaList extends HttpServlet {
 						dispatcher.forward(request, response);
 					
 					} else {
+						
+						// modulo de seguridad
+						if (AccionesUsuario.validarAcceso(tipo, "materias_list.jsp") != 1){							
+							response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						}
 					
 						//get the request dispatcher
 						RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/materias_list.jsp");
@@ -120,6 +164,12 @@ public class MateriaList extends HttpServlet {
 			e.printStackTrace();
 
 			sesion.setAttribute("error", e);
+			
+			// modulo de seguridad
+			if (AccionesUsuario.validarAcceso(tipo, "grado_list.jsp") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			response.sendRedirect("grado_list.jsp");
 		}  
 	}

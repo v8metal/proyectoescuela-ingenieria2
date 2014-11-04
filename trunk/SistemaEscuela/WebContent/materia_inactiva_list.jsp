@@ -1,5 +1,6 @@
 <%@page import="datos.Materia"%>
 <%@page import="datos.Materias"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -17,6 +18,16 @@
 <script src="js/bootstrap.min.js"></script>
 
 </head>
+<body>
+
+<%
+	// modulo de seguridad
+	int tipo = (Integer) session.getAttribute("tipoUsuario");
+	if (AccionesUsuario.validarAcceso(tipo, "materia_inactiva_list.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
+%>
+
 <div class="container">
 
 <!-- Fixed navbar -->
@@ -102,9 +113,7 @@
   
   <br>
   <br>
-<%
-	if (session.getAttribute("admin") != null) {
-		
+<%		
 		String error = "";
 		if (session.getAttribute("error") != null) {
 			error = (String)session.getAttribute("error");
@@ -161,14 +170,7 @@ if (materias.getLista().isEmpty()){ %>
 <button type="submit" class="btn btn-primary"  value="Volver al listado principal">Volver al listado principal</button>
 </form>
 </div>
-
 <%}%>
-
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>
