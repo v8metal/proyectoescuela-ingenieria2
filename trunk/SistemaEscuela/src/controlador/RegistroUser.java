@@ -27,12 +27,21 @@ public class RegistroUser extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//HttpSession sesion = request.getSession();
+		HttpSession sesion = request.getSession();
+		
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");						
+		if (AccionesUsuario.validarAcceso(tipo, "RegistroUser") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
 		
 		try {
 			
 			String accion = request.getParameter("do");
 			int dni = Integer.parseInt(request.getParameter("dni"));
+			
+			if (AccionesUsuario.validarAcceso(tipo, "AccionesUsuario") != 1){							
+				response.sendRedirect("Login");						
+			}
 			
 			if (accion.equals("baja")) {
 				AccionesUsuario.deleteOne(dni);
@@ -48,9 +57,23 @@ public class RegistroUser extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		HttpSession sesion = request.getSession();
 		
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");						
+		if (AccionesUsuario.validarAcceso(tipo, "RegistroUser") != 1){							
+			response.sendRedirect("Login");						
+		}
+		
 		try {
+			
+			if (AccionesUsuario.validarAcceso(tipo, "AccionesUsuario") != 1){							
+				response.sendRedirect("Login");						
+			}
+			
+			if (AccionesUsuario.validarAcceso(tipo, "registro_user.jsp") != 1){							
+				response.sendRedirect("Login");						
+			}
 			
 			int dni = Integer.parseInt(request.getParameter("maestro"));
 			String usuario = request.getParameter("usuario");
@@ -72,6 +95,10 @@ public class RegistroUser extends HttpServlet {
 			} else {
 				sesion.setAttribute("error", "Debe completar todos los campos para registrarse");
 				response.sendRedirect("registro_user.jsp");
+			}
+			
+			if (AccionesUsuario.validarAcceso(tipo, "UsuarioList") != 1){							
+				response.sendRedirect("Login");						
 			}
 			
 			response.sendRedirect("UsuarioList");

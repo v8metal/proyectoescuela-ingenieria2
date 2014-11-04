@@ -38,7 +38,17 @@ public class UsuarioList extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		HttpSession sesion = request.getSession();
+		
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(tipo, "UsuarioList") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
+		
+		if (AccionesUsuario.validarAcceso(tipo, "AccionesUsuario") != 1){							
+			response.sendRedirect("Login");						
+		}
 		
 		Usuarios usuario_list = AccionesUsuario.getAll();
 		sesion.setAttribute("usuarios", usuario_list);
@@ -46,6 +56,10 @@ public class UsuarioList extends HttpServlet {
 		Maestros maestros = AccionesMaestro.getAllActivos();
 		
 		sesion.setAttribute("activos", maestros);		
+		
+		if (AccionesUsuario.validarAcceso(tipo, "gest_user_menu.jsp") != 1){							
+			response.sendRedirect("Login");						
+		}
 		
 		response.sendRedirect("gest_user_menu.jsp");
 	}
