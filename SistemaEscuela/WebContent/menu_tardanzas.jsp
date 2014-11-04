@@ -3,6 +3,7 @@
 <%@page import="datos.Grado"%>
 <%@page import="datos.Grados"%>
 <%@page import="conexion.AccionesCuota"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -108,7 +109,10 @@
   <br>
   
 <% 
-if (session.getAttribute("admin") != null) {
+	int tipo = (Integer) session.getAttribute("tipoUsuario");
+	if (AccionesUsuario.validarAcceso(tipo, "menu_tardanzas.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
 	
 	Integer añoTardanza = null;
 	Grados grados = null;
@@ -216,11 +220,6 @@ if (session.getAttribute("admin") != null) {
 	</table>
 	
 	<%}%>
-	<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>
