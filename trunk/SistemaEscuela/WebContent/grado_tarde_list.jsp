@@ -3,6 +3,7 @@
 <%@page import="datos.Maestro"%>
 <%@page import="conexion.AccionesMaestro"%>
 <%@page import="conexion.AccionesGrado"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding ="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -23,11 +24,14 @@
 <body>
 
 <%
-	if (session.getAttribute("admin") != null) {	
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "grado_tarde_list.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
 		 
-		Grados grados = (Grados)session.getAttribute("grados_alta");
-		Grados gradosp = (Grados)session.getAttribute("grados_pendientes"); //aca debe ser grados pendiente tarde
-		session.removeAttribute("grado_edit");
+	Grados grados = (Grados)session.getAttribute("grados_alta");
+	Grados gradosp = (Grados)session.getAttribute("grados_pendientes"); //aca debe ser grados pendiente tarde
+	session.removeAttribute("grado_edit");
 %>
 
 <div class="container">
@@ -217,11 +221,6 @@ if (grados.getListaTT().isEmpty()){
 <%}%>
 <br>
 <br>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>

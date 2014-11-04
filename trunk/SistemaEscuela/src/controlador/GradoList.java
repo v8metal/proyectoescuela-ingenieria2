@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesGrado;
+import conexion.AccionesUsuario;
 import datos.Grado;
 import datos.Grados;
 
@@ -30,11 +31,20 @@ import datos.Grados;
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		
-		
 		HttpSession sesion = request.getSession();
+		
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(tipo, "GradoList") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
+
 		
 		if ((Grado) sesion.getAttribute("grado_edit") != null){		
 			sesion.removeAttribute("grado_edit");
+		}
+		
+		if (AccionesUsuario.validarAcceso(tipo, "AccionesGrado") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 		}
 		
 		Grados grados = new Grados();
@@ -59,12 +69,20 @@ import datos.Grados;
 		
 		if (listar.equals("mañana")){
 			
+			if (AccionesUsuario.validarAcceso(tipo, "grados_mañana_list.jsp") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			grados = AccionesGrado.getPendingMañana();
 			sesion.setAttribute("grados_pendientes",  grados);
 			response.sendRedirect("grados_mañana_list.jsp");
 		}
 		
 		if (listar.equals("tarde")){
+			
+			if (AccionesUsuario.validarAcceso(tipo, "grado_tarde_list.jsp") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
 			
 			grados = AccionesGrado.getPendingTarde();
 			sesion.setAttribute("grados_pendientes",  grados);
