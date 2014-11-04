@@ -1,5 +1,6 @@
 <%@page import="datos.Maestro"%>
 <%@page import="datos.Maestros"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -18,6 +19,13 @@
 <title>Listado de maestros</title>
 </head>
 <body>
+
+<%
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "menu_admin.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
+%>
 
 <div class="container">
   
@@ -108,9 +116,7 @@
   <div class="page-header"> 
 	<h1>Listado de Maestros Activos</h1>
   </div>
-<%
-	if (session.getAttribute("admin") != null) {
-		
+<%	
 		Maestros maestros = (Maestros)session.getAttribute("maestros");
 		Maestros maestros_inac = (Maestros)session.getAttribute("maestros_inac");	
 %>
@@ -189,11 +195,6 @@ if (maestros.getLista().size() == 0){
   </div><!-- /example -->
  	
  <% } %>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesMaestro;
+import conexion.AccionesUsuario;
 import datos.Maestros;
 
 /**
@@ -38,6 +39,11 @@ public class MaestroList extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sesion = request.getSession();
 		
+		int type = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(type, "MaestroList") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
+		
 		String tipo = "";
 		
 		if (request.getParameter("tipo") != null) {
@@ -49,16 +55,30 @@ public class MaestroList extends HttpServlet {
 		Maestros maestro_list = null;
 		Maestros maestro_list_inac = AccionesMaestro.getAllInactivos();
 		
-		if(tipo.equals("inactivos")){			
+		if(tipo.equals("inactivos")){
+			
+			if (AccionesUsuario.validarAcceso(type, "AccionesMaestro") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			maestro_list = AccionesMaestro.getAllInactivos();
 			sesion.setAttribute("maestros", maestro_list);			
 			response.sendRedirect("maestro_inactivo_list.jsp");
 		}else{
 			
+			if (AccionesUsuario.validarAcceso(type, "AccionesMaestro") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			maestro_list = AccionesMaestro.getAllActivos();
 						
 			sesion.setAttribute("maestros", maestro_list);
-			sesion.setAttribute("maestros_inac", maestro_list_inac);			
+			sesion.setAttribute("maestros_inac", maestro_list_inac);
+			
+			if (AccionesUsuario.validarAcceso(type, "maestro_list.jsp") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			response.sendRedirect("maestro_list.jsp");
 		}
 		
