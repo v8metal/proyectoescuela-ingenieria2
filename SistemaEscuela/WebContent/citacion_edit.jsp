@@ -3,6 +3,7 @@
 <%@page import="datos.Alumno"%>
 <%@page import="datos.Alumnos"%>
 <%@page import="conexion.AccionesAlumno"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -23,6 +24,12 @@
 <body>
 
 <%
+		//modulo de seguridad
+		int tipo = (Integer) session.getAttribute("tipoUsuario");						
+		if (AccionesUsuario.validarAcceso(tipo, "citaciones_list.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
+		
 		//Recupero el maestro para mostrar su nombre y apellido en el menú superior	
 		Maestro maestro = (Maestro)session.getAttribute("maestro");
 		String nombre = maestro.getNombre();
@@ -95,8 +102,6 @@
 
 
 <%
-	if (session.getAttribute("usuario") != null) {
-
 		//update de sancion
 		Citacion c = (Citacion) session.getAttribute("citacion_edit");
 		//update de sancion
@@ -141,7 +146,8 @@
 <div class="page-header"> 
 <h1>Modificación de Citación</h1>
 </div>
-<h2><%="Citación para " + a.getNombre() + " " + a.getApellido()%></h2>	
+<h3><%="Citación para " + a.getNombre() + " " + a.getApellido()%></h3>
+<br>	
 <%}else if (alumnos.getLista().isEmpty() & error.equals("")){
 	empty = true;
 %>
@@ -173,8 +179,10 @@ if (c == null){
 <table class="table table-hover table-bordered">
 <% if (c == null){%>
 	<tr>
-		<td>Alumno</td>
-		<td><select name="alumno_citacion">		
+		<td><label for="input">Alumno</label></td>
+		<td>
+		<div class="col-xs-5">
+		<select name="alumno_citacion" class="form-control" autofocus>		
 		<%
 		for (Alumno a  : alumnos.getLista()){		 		
  		%>  			  
@@ -183,11 +191,14 @@ if (c == null){
 		}		
 		%>
 		</select>
+		</div>
 	</tr>
 <%}%>
 	<tr>
-		<td>Fecha </td>
-		<td><select name="dia_citacion">   
+		<td><label for="input">Fecha</label></td>
+		<td>
+		<div class="col-xs-2">
+		<select name="dia_citacion" class="form-control">   
 			<%  
 			for (int i = 1; i <= 31; i++){			  	
  			%>
@@ -196,7 +207,9 @@ if (c == null){
 			}	
 			 %>
  			 </select>
-  			 <select name="mes_citacion">
+ 			 </div>
+ 			 <div class="col-xs-3">
+  			 <select name="mes_citacion" class="form-control">
   			 <option value="01" <%=mes_citacion.equals("01") ? "selected" : ""%>>Enero</option>
 			 <option value="02" <%=mes_citacion.equals("02") ? "selected" : ""%>>Febrero</option>
 			 <option value="03" <%=mes_citacion.equals("03") ? "selected" : ""%>>Marzo</option>
@@ -210,8 +223,10 @@ if (c == null){
 			 <option value="11" <%=mes_citacion.equals("11") ? "selected" : ""%>>Noviembre</option>
 			 <option value="12" <%=mes_citacion.equals("12") ? "selected" : ""%>>Diciembre</option>	   			 		
  			 </select>
+ 			 </div>
  <%if (c != null){ %>
-			 <select name="año_citacion">
+ 			 <div class="col-xs-2">
+			 <select name="año_citacion" class="form-control">
 			<%
 			for (int i = 1900; i < 2090; i++){
  			 %>
@@ -220,12 +235,14 @@ if (c == null){
 			 }
 			 %>
   			 </select>
+  			 </div>
  <%}%>
   		</td>
   	<tr>
-		<td>Hora</td>
+		<td><label for="input">Hora</label></td>
 		<td>
-		<select name="hora_citacion">
+		<div class="col-xs-2">
+		<select name="hora_citacion" class="form-control">
 			 <option value="08:00:00" <%=c !=null && c.getHora().equals("08:00:00") ? "selected" : ""%>>08:00</option>
   			 <option value="08:30:00" <%=c !=null && c.getHora().equals("08:30:00") ? "selected" : ""%>>08:30</option>
   			 <option value="09:00:00" <%=c !=null && c.getHora().equals("09:00:00") ? "selected" : ""%>>09:00</option>
@@ -246,16 +263,31 @@ if (c == null){
   			 <option value="16:30:00" <%=c !=null && c.getHora().equals("16:30:00") ? "selected" : ""%>>16:30</option>
   			 <option value="17:00:00" <%=c !=null && c.getHora().equals("17:00:00") ? "selected" : ""%>>17:00</option>
   			 <option value="17:30:00" <%=c !=null && c.getHora().equals("17:30:00") ? "selected" : ""%>>17:30</option>  			 
-  		</select>  			 
+  		</select>  
+  		</div>			 
 		</td>		
 	</tr>
 	<tr>
-	<td>Descripción</td>	
-	<td><textarea rows="4" cols="50" name="descripcion_citacion"><%=c != null ? c.getDescripcion() : ""%></textarea></td>	
+	<td><label for="input">Descripción</label></td>	
+	<td>
+	<div class="col-xs-10">
+	<textarea rows="4" cols="50" class="form-control" name="descripcion_citacion"><%=c != null ? c.getDescripcion() : ""%></textarea>
+	</div>
+	</td>	
 	</tr>
 </table>
 <br>
-<button type="submit" class="btn btn-primary"  value="Guardar">Guardar</button>
+	<!-- MENSAJE DE CONFIRMACION -->
+	<%
+		String mensaje= "return confirm('Esta seguro que desea realizar el alta?');"; 
+		  
+//		if (citacion != null){			//ARREGLAR
+			
+			mensaje = "return confirm('Esta seguro que desea modificar?');"; 
+//		}
+		 
+		%>
+<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="<%=mensaje%>">Guardar</button>
 <button type="reset" class="btn btn-primary"  value="Cancelar">Cancelar</button>
 <%}%>
 </form>
@@ -282,11 +314,6 @@ if (c != null){
 <button type="submit" class="btn btn-primary"  value="Volver">Volver</button>
 </form>
 </div>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>

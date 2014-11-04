@@ -3,6 +3,7 @@
 <%@page import="datos.Sancion"%>
 <%@page import="datos.Sanciones"%>
 <%@page import="conexion.AccionesAlumno"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -23,6 +24,12 @@
 <body>
 
 <%
+		//modulo de seguridad
+		int tipo = (Integer) session.getAttribute("tipoUsuario");						
+		if (AccionesUsuario.validarAcceso(tipo, "sanciones_list.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
+
 		//Recupero el maestro para mostrar su nombre y apellido en el menú superior	
 		Maestro maestro = (Maestro)session.getAttribute("maestro");
 		String nombre = maestro.getNombre();
@@ -99,8 +106,6 @@
   <br>
   <br>
 <%
-	if (session.getAttribute("usuario") != null) {
-	
 		session.removeAttribute("sancion_edit");
 		session.removeAttribute("alumnos_sancion");
 		
@@ -133,10 +138,12 @@ if (sanciones.getLista().isEmpty()){
 <%	
 }else{
 %>
+<div class="page-header">
 <h1>Listado de Sanciones</h1>
-
+</div>
 <table  class="table table-hover table-bordered">
-	<tr>
+	<thead>
+	<tr class="active">
 		<th>Apellido y Nombres</th>
 		<th>Grado</th>
 		<th>Turno</th>
@@ -146,6 +153,7 @@ if (sanciones.getLista().isEmpty()){
 		<th>&nbsp;</th>
 		<th>&nbsp;</th>
 	</tr>
+	</thead>
 <%	
 	Alumno m = new Alumno();
 	
@@ -159,6 +167,7 @@ if (sanciones.getLista().isEmpty()){
 		String mes = fecha_ent[fecha_ent.length - 2];
 		String año = fecha_ent[fecha_ent.length - 3];
 %>
+	<tbody>
 	<tr>
 		<td><%= m.getApellido() + ", " + m.getNombre() %></td>
 		<td><%= s.getGrado()%></td>
@@ -166,8 +175,10 @@ if (sanciones.getLista().isEmpty()){
 		<td><%= dia +"/" + mes + "/" + año %></td>
 		<td><%= s.getHora().substring(0,5) %></td>
 		<td><%= s.getMotivo() %></td>		
-		<td><a href="SancionEdit?do=modificar&dni_sancion=<%=s.getDni()%>&fecha_sancion=<%=s.getFecha()%>&hora_sancion=<%=s.getHora()%>&exit=<%=exit%>">Modificar</a></td>
-		<td><a href="SancionEdit?do=baja&dni_sancion=<%=s.getDni()%>&fecha_sancion=<%=s.getFecha()%>&hora_sancion=<%=s.getHora()%>&exit=<%=exit%>">Borrar</a></td>	</tr>
+		<td><strong><a href="SancionEdit?do=modificar&dni_sancion=<%=s.getDni()%>&fecha_sancion=<%=s.getFecha()%>&hora_sancion=<%=s.getHora()%>&exit=<%=exit%>">Modificar</a></strong></td>
+		<td><strong><a href="SancionEdit?do=baja&dni_sancion=<%=s.getDni()%>&fecha_sancion=<%=s.getFecha()%>&hora_sancion=<%=s.getHora()%>&exit=<%=exit%>" onclick="return confirm('Esta seguro que desea borrar?');">Borrar</a></strong></td>
+	</tr>
+	</tbody>
 <%
 	}
  %>
@@ -182,11 +193,6 @@ if (sanciones.getLista().isEmpty()){
 <input type="submit" class="btn btn-primary" value="Volver">
 </form>
 </div>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>

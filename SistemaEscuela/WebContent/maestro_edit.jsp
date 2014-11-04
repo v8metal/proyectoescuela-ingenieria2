@@ -173,6 +173,7 @@
          		</tr>				
 			</tbody>
 		</table>
+		<!-- MENSAJE DE CONFIRMACION -->
 		<%
 		String mensaje= "return confirm('Esta seguro que desea realizar el alta?');"; 
 		  
