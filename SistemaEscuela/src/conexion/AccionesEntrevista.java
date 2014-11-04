@@ -35,7 +35,8 @@ public class AccionesEntrevista {
 		try {
 			
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM ENTREVISTAS" );
+			//ResultSet rs = stmt.executeQuery("SELECT * FROM ENTREVISTAS" );
+			ResultSet rs = stmt.executeQuery("SELECT * FROM ENTREVISTAS WHERE DESCRIP = ''" );
 			Entrevista tmp;
 			
 			while (rs.next()) {
@@ -128,11 +129,11 @@ public class AccionesEntrevista {
 		return i;
 	}
 	
-	public static int modificarEntrevista(Entrevista e, String fecha, int dni_maest, String hora) throws Exception{
+	public static int modificarEntrevista(Entrevista e) throws Exception{
 		int i=0;
 		try{
 			Statement stm = Conexion.conectar().createStatement();
-			i = stm.executeUpdate("UPDATE ENTREVISTAS SET FECHA=curdate()"+",HORA=curtime()"+",DNI_MAEST="+e.getdniMaestro()+",NOMBRE_ALUM='"+e.getNombre()+"',DESCRIP='"+e.getDescripcion()+"' WHERE FECHA='"+fecha+"' AND dni_MAEST="+dni_maest+" AND HORA='"+hora+"'");
+			i = stm.executeUpdate("UPDATE ENTREVISTAS SET DESCRIP='"+e.getDescripcion()+"' WHERE FECHA='"+ e.getFecha() +"' AND dni_MAEST="+ e.getdniMaestro() + " AND HORA='" + e.getHora() +"'");
 			stm.close();
 			Conexion.desconectar();
 		}catch(SQLException sqle){

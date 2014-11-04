@@ -40,6 +40,10 @@ public class Entrevista {
 		return descripcion;
 	}	
 	
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	
 	public String toString() {
 		return fecha + " " + hora + " " + dniMaestro + " " + nombre + " " + descripcion;
 	}

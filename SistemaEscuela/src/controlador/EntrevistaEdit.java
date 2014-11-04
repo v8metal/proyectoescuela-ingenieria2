@@ -195,12 +195,14 @@ import conexion.AccionesUsuario;
 				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 			}
 			
-			String nombre_alum = request.getParameter("nombre_alum");				
-			String desc = request.getParameter("desc");
+			//String nombre_alum = request.getParameter("nombre_alum");			
 			//String accion = (String)sesion.getAttribute("accion");
-			int dni_maestro=(int)sesion.getAttribute("dni_maestro");
-			Entrevista x = (Entrevista)sesion.getAttribute("entrevista");
-			Entrevista e = new Entrevista("","",dni_maestro,nombre_alum,desc);
+			//int dni_maestro=(int)sesion.getAttribute("dni_maestro");
+			//Entrevista e = new Entrevista("","",dni_maestro,nombre_alum,desc);
+			String desc = request.getParameter("desc");
+			Entrevista e = (Entrevista)sesion.getAttribute("entrevista");
+			
+			e.setDescripcion(desc);
 				
 			try {
 				
@@ -208,7 +210,7 @@ import conexion.AccionesUsuario;
 					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 				}
 				
-				AccionesEntrevista.modificarEntrevista(e, x.getFecha(), x.getdniMaestro(), x.getHora());
+				AccionesEntrevista.modificarEntrevista(e);
 				response.sendRedirect("EntrevistaList");
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -233,8 +235,8 @@ import conexion.AccionesUsuario;
 					String año = (String) sesion.getAttribute("año_sys");			
 					String hora = (String) request.getParameter("hora_entrevista");
 					int maestro = Integer.valueOf(request.getParameter("maestro_entrevista"));
-					String nombre = (String) request.getParameter("nombre_entrevista");			
-							
+					String nombre = (String) request.getParameter("nombre_entrevista");
+											
 					Entrevista ent = new Entrevista(año +"-"+ mes +"-"+ dia, hora, maestro, nombre, "");
 							
 					try {
