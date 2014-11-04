@@ -21,6 +21,15 @@
 
 </head>
 <body>
+
+<%
+	// modulo de seguridad
+	int tipo = (Integer) session.getAttribute("tipoUsuario");
+	if (AccionesUsuario.validarAcceso(tipo, "materias_list.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
+%>
+
 <div class="container">
 
 <!-- Fixed navbar -->
@@ -107,10 +116,6 @@
   <br>
   <br>
 <%
-	int tipo = (Integer) session.getAttribute("tipoUsuario");
-	if (AccionesUsuario.validarAcceso(tipo, "materias_list.jsp") != 1){							
-		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
-	}
 		
 	String error = "";
 	if (session.getAttribute("error") != null) {

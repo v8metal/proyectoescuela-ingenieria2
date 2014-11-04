@@ -125,7 +125,8 @@ public class Login extends HttpServlet {
 					response.sendRedirect("login.jsp");
 				
 				}
-				
+			 
+			 // else obsoleto, con el atributo "required" en el imput text no se puede enviar un form sin el campo completado	
 			} else {
 				sesion.setAttribute("error", "Debe completar el usuario y la contraseña para poder ingresar");
 				response.sendRedirect("login.jsp");

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesMateria;
+import conexion.AccionesUsuario;
 import datos.CustomException;
 import datos.Materia;
 
@@ -34,6 +35,12 @@ public class MateriaEdit extends HttpServlet {
 		//get session of the request
 		HttpSession sesion = request.getSession();
 		
+		// modulo de seguridad
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(tipo, "MateriaEdit") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
+		
 		String mat = "";
 		
 		try {
@@ -50,6 +57,11 @@ public class MateriaEdit extends HttpServlet {
 			
 			case "alta":
 				
+				// modulo de seguridad
+				if (AccionesUsuario.validarAcceso(tipo, "materia_edit.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				//get the request dispatcher
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/materia_edit.jsp");
 				
@@ -60,7 +72,17 @@ public class MateriaEdit extends HttpServlet {
 			
 			case "baja":
 				
+				// modulo de seguridad
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesMateria") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
 				AccionesMateria.bajaLogicaMateria(mat);
+				
+				// modulo de seguridad
+				if (AccionesUsuario.validarAcceso(tipo, "MateriaList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 				
 				response.sendRedirect(request.getContextPath() + "/materiaList?from=materiaEdit");
 				
@@ -68,8 +90,17 @@ public class MateriaEdit extends HttpServlet {
 				
 			case "activar":
 				
+				// modulo de seguridad
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesMateria") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 				
 				AccionesMateria.activarMateria(mat);
+				
+				// modulo de seguridad
+				if (AccionesUsuario.validarAcceso(tipo, "MateriaList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 								
 				response.sendRedirect(request.getContextPath() + "/materiaList?from=materia_list");
 				
@@ -78,7 +109,17 @@ public class MateriaEdit extends HttpServlet {
 				
 			case "borrar":
 				
-				AccionesMateria.deleteOne(mat);				
+				// modulo de seguridad
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesMateria") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
+				AccionesMateria.deleteOne(mat);			
+				
+				// modulo de seguridad
+				if (AccionesUsuario.validarAcceso(tipo, "MateriaList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
 				 
 				response.sendRedirect(request.getContextPath() + "/materiaList?from=materiaEdit");
 				
@@ -90,16 +131,34 @@ public class MateriaEdit extends HttpServlet {
 		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
 			e.printStackTrace();
 			sesion.setAttribute("error", "Error al intentar borrar " + mat + ". Ya esta asignada a un curso");
+			
+			// modulo de seguridad
+			if (AccionesUsuario.validarAcceso(tipo, "MateriaList") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			response.sendRedirect("materiaList?from=materiaEdit");
 			
 		} catch (CustomException e) {
 			e.printStackTrace();
 			sesion.setAttribute("error", "Error en la baja " + mat + ". Ya está asignada a un grado para el año en curso");
+			
+			// modulo de seguridad
+			if (AccionesUsuario.validarAcceso(tipo, "MateriaList") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			response.sendRedirect("materiaList?from=materia_list"	);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			sesion.setAttribute("error", e);
+			
+			// modulo de seguridad
+			if (AccionesUsuario.validarAcceso(tipo, "materia_edit.jsp") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			response.sendRedirect("materia_edit.jsp");
 		
 		}	
@@ -113,6 +172,12 @@ public class MateriaEdit extends HttpServlet {
 		//get session of the request
 		HttpSession sesion = request.getSession();
 		
+		// modulo de seguridad
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(tipo, "MateriaEdit") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
+		
 		try {
 			
 			String accion = (String) request.getParameter("accion");
@@ -122,18 +187,41 @@ public class MateriaEdit extends HttpServlet {
 			Materia m = new Materia(materia, 1);	
 
 			if (accion.equals("alta")){
+				
+					// modulo de seguridad
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesMateria") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+				
 					AccionesMateria.insertOne(m);
-			} 
+			}
+			
+			// modulo de seguridad
+			if (AccionesUsuario.validarAcceso(tipo, "MateriaList") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
 				
 			response.sendRedirect(request.getContextPath() + "/materiaList?from=materiaEdit");
 			
 		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
 			
-			sesion.setAttribute("error", "Error al insertar, la materia ya existe");			
+			sesion.setAttribute("error", "Error al insertar, la materia ya existe");	
+			
+			// modulo de seguridad
+			if (AccionesUsuario.validarAcceso(tipo, "materia_edit.jsp") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			response.sendRedirect("materia_edit.jsp");
 			
 		} catch (Exception e) {
-			sesion.setAttribute("error", e);			
+			sesion.setAttribute("error", e);	
+			
+			// modulo de seguridad
+			if (AccionesUsuario.validarAcceso(tipo, "materia_edit.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
 			response.sendRedirect("materia_edit.jsp");
 		}
 	}
