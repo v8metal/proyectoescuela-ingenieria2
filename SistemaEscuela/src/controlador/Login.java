@@ -74,12 +74,9 @@ public class Login extends HttpServlet {
 					
 				
 				sesion.setAttribute("tipoUsuario", tipo);
+				sesion.setAttribute("user", usuario);
 				
 				if (tipo == 0) { // quiere decir que el usuario es administrador
-					
-					//colocar un servlet?
-					
-					//sesion.setAttribute("admin", usuario);
 					
 					objeto = "menu_admin.jsp";							
 					if (AccionesUsuario.validarAcceso(tipo, objeto) != 1){						
@@ -90,8 +87,6 @@ public class Login extends HttpServlet {
 					
 				} else if (tipo == 1){ // quiere decir que el usuario es maestro
 					
-					//colocar un servlet?		
-		
 					int dni = AccionesUsuario.getDniUsuario(usuario, contraseña);					
 					Maestro m = AccionesMaestro.getOne(dni);
 					
@@ -103,8 +98,6 @@ public class Login extends HttpServlet {
 					}else{					
 						
 													
-						//sesion.setAttribute("usuario", usuario);
-
 						Maestro maestro = AccionesMaestro.getOne(dni);
 						sesion.setAttribute("maestro", maestro);
 						sesion.setAttribute("dni_maestro", dni);

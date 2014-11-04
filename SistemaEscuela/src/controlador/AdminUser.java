@@ -36,6 +36,11 @@ import conexion.AccionesUsuario;
 		
 		HttpSession sesion = request.getSession();
 		
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(tipo, "AdminUser") != 1){							
+			response.sendRedirect("Login");
+		}
+		
 		String accion = request.getParameter("do");
 		
 		//System.out.println("accion= " + accion);			
@@ -45,7 +50,11 @@ import conexion.AccionesUsuario;
 		switch(accion){
 		
 		case "pass":
-						
+			
+			if (AccionesUsuario.validarAcceso(tipo, "admin_pass.jsp") != 1){							
+				response.sendRedirect("Login");
+			}
+			
 			String contraseña_nueva = request.getParameter("contraseña_nueva");
 			String contraseña_nueva_r = request.getParameter("contraseña_nueva_r");
 			
@@ -53,19 +62,17 @@ import conexion.AccionesUsuario;
 								
 				String usuario = "";
 				
-				if (sesion.getAttribute("usuario") != null){
+				if (sesion.getAttribute("user") != null){
 					
-					usuario = (String) sesion.getAttribute("usuario"); 
+					usuario = (String) sesion.getAttribute("user"); 
 					
 				}
-				
-				if (sesion.getAttribute("admin") != null){					
-					
-					usuario = (String) sesion.getAttribute("admin");
-				}
-				
 								
-				Integer dni = AccionesUsuario.validarUsuario(usuario, contraseña);
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesUsuario") != 1){							
+					response.sendRedirect("Login");
+				}
+								
+				Integer dni = AccionesUsuario.getDniUsuario(usuario, contraseña);
 				
 				
 				//System.out.println("dni= " + dni);
@@ -115,30 +122,27 @@ import conexion.AccionesUsuario;
 			
 		case "user":
 			
+			if (AccionesUsuario.validarAcceso(tipo, "admin_user.jsp") != 1){							
+				response.sendRedirect("Login");
+			}
+			
 			String usuario_nuevo = request.getParameter("usuario_nuevo");
 			String usuario_nuevo_r = request.getParameter("usuario_nuevo_r");
 			
 			if (!contraseña.equals("") && !usuario_nuevo.equals("")&& !usuario_nuevo_r.equals("")) {
-					
-				
-				int ind = 0;
 				
 				String usuario = "";				
 				
-				if (sesion.getAttribute("usuario") != null){
+				if (sesion.getAttribute("user") != null){					
 					
-					usuario = (String) sesion.getAttribute("usuario"); 
-					
+					usuario = (String) sesion.getAttribute("user");
 				}
 				
-				if (sesion.getAttribute("admin") != null){					
-					
-					ind = 1;
-					
-					usuario = (String) sesion.getAttribute("admin");
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesUsuario") != 1){							
+					response.sendRedirect("Login");
 				}
 				
-				Integer dni = AccionesUsuario.validarUsuario(usuario, contraseña);
+				Integer dni = AccionesUsuario.getDniUsuario(usuario, contraseña);
 				
 				//System.out.println("dni= " + dni);
 				
@@ -151,13 +155,7 @@ import conexion.AccionesUsuario;
 						AccionesUsuario.updateUser(usuario, usuario_nuevo_r);
 						sesion.setAttribute("success", "Usuario actualizado correctamente");
 						
-						if (ind == 0){
-							sesion.setAttribute("usuario", usuario_nuevo_r);	
-						}
-						
-						if (ind == 1){
-							sesion.setAttribute("admin", usuario_nuevo_r);	
-						}
+						sesion.setAttribute("user", usuario_nuevo_r);						
 
 						
 						} catch (Exception e) {

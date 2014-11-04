@@ -1,3 +1,5 @@
+<%@page import="conexion.AccionesUsuario"%>
+<%@page import="datos.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -19,6 +21,76 @@
 <div class="container">
 
 <!-- Fixed navbar -->
+
+<%
+	
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "admin_pass.jsp") != 1){							
+		response.sendRedirect("Login");						
+	}
+		
+	String nombre = "";
+	String apellido = "";
+	
+	if (session.getAttribute("dni_maestro") != null ){		
+		Maestro maestro = (Maestro)session.getAttribute("maestro");
+		nombre = maestro.getNombre();
+		apellido = maestro.getApellido();
+%>
+      <div class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Sistema</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="menu_user.jsp">Menú</a></li>              
+              <li><a href="menu_asistencias.jsp">Asistencias</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Citaciones <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="citaciones_select.jsp?action=listar">Listado</a></li>                 
+                  <li><a href="CitacionEdit?do=alta">Nueva citación</a></li>          
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sanciones <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="sanciones_select.jsp?action=listar">Listado</a></li>
+                  <li><a href="SancionEdit?do=alta">Nueva sanción</a></li>          
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Entrevistas <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="EntrevistaList">Listado</a></li>
+                </ul>
+              </li>
+              <li><a href="nota_menu.jsp">Notas</a></li>
+               <li  class="active" class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cuenta <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="admin_user.jsp">Cambiar usuario</a></li>
+                  <li><a href="admin_pass.jsp">Cambiar contraseña</a></li>          
+                </ul>
+              </li>
+            </ul> 
+            <ul class="nav navbar-nav navbar-right">
+              <li class="active"><a href="CerrarSesion">Salir</a></li>
+            </ul>
+            <ul>
+          		<p class="navbar-text navbar-right"><strong><%= nombre + " " + apellido%></strong></p><br>
+            </ul> 
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </div>      
+<%}else{%>
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -78,7 +150,7 @@
               </li>
               <li><a href="menu_cuotas.jsp">Cuotas</a></li>
               <li><a href="UsuarioList">Usuarios</a></li>
-               <li class="active" class="dropdown">
+               <li  class="active" class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cuenta <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="admin_user.jsp">Cambiar usuario</a></li>
@@ -101,15 +173,7 @@
   
   <br>
   <br>
-<%
-	if (session.getAttribute("admin") != null || session.getAttribute("usuario") != null) {
-		
-		String volver = "menu_user.jsp";
-		
-		if (session.getAttribute("admin") != null){
-			volver = "menu_admin.jsp";
-		}
-%>
+<%}%>
 <div class="page-header"> 
 <h1>Administración de Contraseña</h1>
 </div>
@@ -173,11 +237,6 @@
  <%		
 	}
  %>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>
