@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesEntrevista;
+import conexion.AccionesUsuario;
 import datos.Entrevistas;
 
 /**
@@ -35,14 +36,26 @@ import datos.Entrevistas;
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sesion = request.getSession();		
-		if(sesion.getAttribute("admin")!=null || sesion.getAttribute("usuario")!=null){
+		
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(tipo, "EntrevistaList") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
 			
 		Entrevistas entrevistas=null;
 		
-		if(sesion.getAttribute("usuario") != null){
+		if (AccionesUsuario.validarAcceso(tipo, "AccionesEntrevista") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
+		
+		if(sesion.getAttribute("dni_maestro") != null){
+			
 			int dni_maestro = (int)sesion.getAttribute("dni_maestro");
+			
 			try {
+				
 				entrevistas = AccionesEntrevista.getAllEntrevistas_Maestro(dni_maestro);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -52,10 +65,11 @@ import datos.Entrevistas;
 					
 		sesion.setAttribute("entrevistas",  entrevistas);	
 		
-		response.sendRedirect("entrevista_list.jsp");
-		}else{
-			response.sendRedirect("login.jsp");
+		if (AccionesUsuario.validarAcceso(tipo, "entrevista_list.jsp") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 		}
+		
+		response.sendRedirect("entrevista_list.jsp");
 		
 	}  	
 	   	  	    

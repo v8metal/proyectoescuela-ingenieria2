@@ -2,6 +2,7 @@
 <%@page import="datos.Entrevistas"%>
 <%@page import="datos.Maestro"%>
 <%@page import="conexion.AccionesMaestro"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -23,7 +24,10 @@
 
 <%
 
-if(session.getAttribute("admin")!=null || session.getAttribute("usuario")!=null){
+int tipo = (Integer) session.getAttribute("tipoUsuario");
+if (AccionesUsuario.validarAcceso(tipo, "entrevista_list.jsp") != 1){							
+	response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+}
 	
 session.removeAttribute("entrevista_edit");
 session.removeAttribute("maestros_ent_alta");
@@ -114,8 +118,6 @@ Entrevistas entrevistas = (Entrevistas)session.getAttribute("entrevistas");
   
   <br>
   <br>
-
-
 <%  
 if (entrevistas.getLista().isEmpty()){
 %>
@@ -130,6 +132,7 @@ if (entrevistas.getLista().isEmpty()){
 <%}else{%> 
 <h1>Listado de Entrevistas</h1>
 </div>
+<div class="container">
 <table class="table table-hover table-bordered">
 	<thead>
 	<tr class="active">
@@ -170,7 +173,7 @@ if (entrevistas.getLista().isEmpty()){
  %>
 </table>
 <%}
-if(session.getAttribute("admin") != null){
+if(session.getAttribute("dni_maestro") == null){
 	%>
 	<br>
 	<p><strong><a href="EntrevistaEdit?do=alta">Agregar Entrevista</a></strong></p>
@@ -193,11 +196,7 @@ if(session.getAttribute("admin") != null){
 	<%
 }
 %>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
+</div>
 </div>
 </body>
 </html>

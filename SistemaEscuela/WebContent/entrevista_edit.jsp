@@ -1,6 +1,7 @@
 <%@page import="datos.Entrevista"%>
 <%@page import="datos.Maestro"%>
 <%@page import="datos.Maestros"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -105,9 +106,12 @@
   <br>
   <br>
 <%
-if(session.getAttribute("admin")!=null || session.getAttribute("usuario")!=null){
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "entrevista_edit.jsp") != 1){							
+		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	}
 	
-		if(session.getAttribute("usuario") != null){
+		if(session.getAttribute("dni_maestro") != null){
 			Entrevista entrevista = (Entrevista)session.getAttribute("entrevista");
 			%>
 		
@@ -359,10 +363,7 @@ if(session.getAttribute("admin")!=null || session.getAttribute("usuario")!=null)
 		</div>
 		<% 
 		}
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
+		%>
 </div>
 </body>
 </html>

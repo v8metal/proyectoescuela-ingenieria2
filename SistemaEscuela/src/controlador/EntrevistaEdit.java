@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import datos.Entrevista;
 import conexion.AccionesEntrevista;
 import conexion.AccionesMaestro;
+import conexion.AccionesUsuario;
 
 /**
  * Servlet implementation class for Servlet: EntrevistaEdit
@@ -33,46 +34,81 @@ import conexion.AccionesMaestro;
 		
 		HttpSession sesion = request.getSession();
 		
-		if(sesion.getAttribute("admin")!=null || sesion.getAttribute("usuario")!=null){
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		
+		if (AccionesUsuario.validarAcceso(tipo, "EntrevistaEdit") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
 			
-			if(sesion.getAttribute("usuario") != null){
+		if(sesion.getAttribute("dni_maestro") != null){
 				
-				String accion = request.getParameter("do");
-				String fecha = request.getParameter("fecha");
-				String hora = request.getParameter("hora");
+			String accion = request.getParameter("do");
+			String fecha = request.getParameter("fecha");
+			String hora = request.getParameter("hora");
 				
-				int dni_maestro= (int)sesion.getAttribute("dni_maestro");
+			int dni_maestro= (int)sesion.getAttribute("dni_maestro");
 				
-				//System.out.println("doGet accion= " + accion);
+			//System.out.println("doGet accion= " + accion);
+			
+			sesion.setAttribute("accion", accion);
+			
+			if(accion.equals("modificar")){
 				
-				sesion.setAttribute("accion", accion);
-				
-				if(accion.equals("modificar")){
-					Entrevista e=null;
-					try {
-						e = AccionesEntrevista.getOneEntrevista(fecha, hora, dni_maestro);
-						sesion.setAttribute("entrevista", e);
-						response.sendRedirect("entrevista_edit.jsp");
-						
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
-						
-				}else if(accion.equals("borrar")){
-					try {
-						AccionesEntrevista.borrarEntrevista(fecha, dni_maestro, hora);
-						response.sendRedirect("EntrevistaList");
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+				if (AccionesUsuario.validarAcceso(tipo, "entrevista_edit.jsp") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 				}
+				
+				Entrevista e=null;
+		
+				try {
+					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesEntrevista") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+					
+					e = AccionesEntrevista.getOneEntrevista(fecha, hora, dni_maestro);
+					sesion.setAttribute("entrevista", e);
+					response.sendRedirect("entrevista_edit.jsp");
+						
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+						
+			}else if(accion.equals("borrar")){
+				
+				if (AccionesUsuario.validarAcceso(tipo, "EntrevistaList") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
+				try {
+					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesEntrevista") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+					
+					AccionesEntrevista.borrarEntrevista(fecha, dni_maestro, hora);
+					response.sendRedirect("EntrevistaList");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
 			}else{
+				
 				try {
 					
 					//get parameter do of the request
 					String accion = request.getParameter("do");
 					
 					if(accion.equals("alta")){
+						
+						if (AccionesUsuario.validarAcceso(tipo, "entrevista_edit.jsp") != 1){							
+							response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						}
+						
+						if (AccionesUsuario.validarAcceso(tipo, "AccionesMaestro") != 1){							
+							response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						}
 						
 						sesion.setAttribute("maestros_ent_alta", AccionesMaestro.getAllActivos());
 						
@@ -83,8 +119,16 @@ import conexion.AccionesMaestro;
 					
 					}  else if(accion.equals("modificar")){
 						
+						if (AccionesUsuario.validarAcceso(tipo, "entrevista_edit.jsp") != 1){							
+							response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						}
+						
 						String fecha = request.getParameter("fecha");
 						String nombre = request.getParameter("nombre");
+						
+						if (AccionesUsuario.validarAcceso(tipo, "AccionesEntrevista") != 1){							
+							response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						}
 						
 						Entrevista entrevista = AccionesEntrevista.getOne(fecha, nombre);
 														
@@ -101,9 +145,17 @@ import conexion.AccionesMaestro;
 					//delete
 					} else if(accion.equals("borrar")){
 						
+						if (AccionesUsuario.validarAcceso(tipo, "EntrevistaList") != 1){							
+							response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						}
+						
 						String fecha = request.getParameter("fecha");
 						String nombre = request.getParameter("nombre");
-														
+						
+						if (AccionesUsuario.validarAcceso(tipo, "AccionesEntrevista") != 1){							
+							response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						}
+						
 						AccionesEntrevista.deleteOne(fecha, nombre);
 						
 						//redirect to the maestro list servlet 
@@ -112,16 +164,16 @@ import conexion.AccionesMaestro;
 					}		
 										
 				} catch (Exception e) {
+					
+					if (AccionesUsuario.validarAcceso(tipo, "entrevista_edit.jsp") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+					
 					e.printStackTrace();
-
-					sesion.setAttribute("error", e);
+					sesion.setAttribute("error", e);										
 					response.sendRedirect("entrevista_edit.jsp");
 				}  
-			}
-			
-		}else{
-			response.sendRedirect("login.jsp");
-		}
+		}		
 
 	}  	
 	
@@ -132,23 +184,35 @@ import conexion.AccionesMaestro;
 		
 		HttpSession sesion = request.getSession();
 		
-		if(sesion.getAttribute("admin")!= null || sesion.getAttribute("usuario") != null){
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(tipo, "EntrevistaEdit") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}
 			
-			if(sesion.getAttribute("usuario") != null){
+		if(sesion.getAttribute("dni_maestro") != null){
+			
+			if (AccionesUsuario.validarAcceso(tipo, "EntrevistaList") != 1){							
+				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			}
+			
+			String nombre_alum = request.getParameter("nombre_alum");				
+			String desc = request.getParameter("desc");
+			//String accion = (String)sesion.getAttribute("accion");
+			int dni_maestro=(int)sesion.getAttribute("dni_maestro");
+			Entrevista x = (Entrevista)sesion.getAttribute("entrevista");
+			Entrevista e = new Entrevista("","",dni_maestro,nombre_alum,desc);
 				
-				String nombre_alum = request.getParameter("nombre_alum");				
-				String desc = request.getParameter("desc");
-				String accion = (String)sesion.getAttribute("accion");
-				int dni_maestro=(int)sesion.getAttribute("dni_maestro");
-				Entrevista x = (Entrevista)sesion.getAttribute("entrevista");
-				Entrevista e = new Entrevista("","",dni_maestro,nombre_alum,desc);
+			try {
 				
-				try {
-					AccionesEntrevista.modificarEntrevista(e, x.getFecha(), x.getdniMaestro(), x.getHora());
-					response.sendRedirect("EntrevistaList");
-				} catch (Exception e1) {
-					e1.printStackTrace();
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesEntrevista") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 				}
+				
+				AccionesEntrevista.modificarEntrevista(e, x.getFecha(), x.getdniMaestro(), x.getHora());
+				response.sendRedirect("EntrevistaList");
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 				
 			}else{
 				
@@ -158,7 +222,11 @@ import conexion.AccionesMaestro;
 				
 				if(accion.equals("alta")){
 					
-					System.out.println("alta");
+					if (AccionesUsuario.validarAcceso(tipo, "EntrevistaList") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+					
+					//System.out.println("alta");
 				
 					String dia = (String) request.getParameter("dia_entrevista");					
 					String mes = (String) request.getParameter("mes_entrevista");			
@@ -171,6 +239,10 @@ import conexion.AccionesMaestro;
 							
 					try {
 					
+						if (AccionesUsuario.validarAcceso(tipo, "AccionesEntrevista") != 1){							
+							response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						}
+						
 						AccionesEntrevista.insertOne(ent);
 					
 						response.sendRedirect("EntrevistaList");
@@ -185,7 +257,11 @@ import conexion.AccionesMaestro;
 					}
 					
 				}else if(accion.equals("modificar")){			
-
+					
+					if (AccionesUsuario.validarAcceso(tipo, "EntrevistaList") != 1){							
+						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					}
+					
 					Entrevista et = (Entrevista) sesion.getAttribute("entrevista_edit");		
 
 					String dia = request.getParameter("dia_entrevista");
@@ -195,11 +271,20 @@ import conexion.AccionesMaestro;
 					
 					try {
 						
+						if (AccionesUsuario.validarAcceso(tipo, "AccionesEntrevista") != 1){							
+							response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						}
+												
 						AccionesEntrevista.updateOne(año +"-"+ mes +"-"+ dia, hora, et.getFecha(), et.getHora(), et.getdniMaestro());
 						
 						response.sendRedirect("EntrevistaList");
 					
 					} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
+						
+						if (AccionesUsuario.validarAcceso(tipo, "entrevista_edit.jsp") != 1){							
+							response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						}
+						
 						sesion.setAttribute("error", "<br>"+ "Ya existe una entrevista para el mismo dia y horario"+"<br>");
 						response.sendRedirect("entrevista_edit.jsp");
 						
@@ -210,9 +295,5 @@ import conexion.AccionesMaestro;
 				}
 			}
 			
-		}else{
-			response.sendRedirect("login.jsp");
-		}
-		
 	}   	  	    
 }	
