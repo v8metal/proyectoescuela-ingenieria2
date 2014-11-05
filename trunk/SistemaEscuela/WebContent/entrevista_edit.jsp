@@ -64,7 +64,7 @@
                   <li><a href="SancionEdit?do=alta">Nueva sanción</a></li>          
                 </ul>
               </li>
-              <li  class="active" class="dropdown">
+              <li class="active" class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Entrevistas <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="EntrevistaList">Listado</a></li>
@@ -139,7 +139,7 @@
                 </ul>
               </li>
               <li><a href="menu_tardanzas.jsp">Tardanzas</a></li>
-              <li class="dropdown">
+              <li class="active" class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Entrevistas <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="EntrevistaList">Listado</a></li>
@@ -148,7 +148,7 @@
               </li>
               <li><a href="menu_cuotas.jsp">Cuotas</a></li>
               <li><a href="UsuarioList">Usuarios</a></li>
-               <li  class="active" class="dropdown">
+               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cuenta <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="admin_user.jsp">Cambiar usuario</a></li>
@@ -284,7 +284,8 @@
 		<div class="page-header">  
 			<h1>Modificación de Entrevista</h1>
 		</div>
-		<h2><%="Entrevista para " + entrevista.getNombre()%></h2>
+		<h3><%="Entrevista para " + entrevista.getNombre()%></h3>
+		<br>
 		<%}else{%>
 		<div class="page-header">  
 			<h1>Alta de Entrevista</h1>
@@ -304,8 +305,10 @@
 				
 		<table id="TablaEntrevistas" class="table table-hover table-bordered">
 			<tr>
-				<td>Fecha </td>
-				<td><select name="dia_entrevista" class="form-control" autofocus>   
+				<td><label for="input">Fecha</label></td>
+				<td>
+				<div class="col-xs-2">
+				<select name="dia_entrevista" class="form-control" autofocus>   
 					<%  
 					for (int i = dia_entrevista; i <= 31; i++){			  	
 		 			%>
@@ -314,6 +317,8 @@
 					}	
 					%>
 		 			 </select>
+		 			 </div>
+		 			 <div class="col-xs-3">
 		  			 <select id="mes" name="mes_entrevista" class="form-control">
 		  			 <option value="01" <%=mes_entrevista.equals("01") ? "selected" : ""%>>Enero</option>
 					 <option value="02" <%=mes_entrevista.equals("02") ? "selected" : ""%>>Febrero</option>
@@ -328,7 +333,9 @@
 					 <option value="11" <%=mes_entrevista.equals("11") ? "selected" : ""%>>Noviembre</option>
 					 <option value="12" <%=mes_entrevista.equals("12") ? "selected" : ""%>>Diciembre</option>	   			 		
 		 			 </select>
+		 			 </div>
 		<%if(entrevista != null){%>
+					 <div class="col-xs-2">
 					 <select name="año_entrevista" class="form-control">
 					<%
 					for (int i = 1900; i < 2090; i++){
@@ -338,11 +345,13 @@
 					 }
 					 %>
 		  			 </select>
+		  			 </div>
 		  <%}%>
 		  		</td>
 		  	<tr>
-				<td>Hora</td>
+				<td><label for="input">Hora</label></td>
 				<td>
+				<div class="col-xs-2">
 				<select name="hora_entrevista" class="form-control">
 					 <option value="08:00:00" <%=entrevista!=null && entrevista.getHora().equals("08:00:00") ? "selected" : ""%>>08:00</option>
 		  			 <option value="08:30:00" <%=entrevista!=null && entrevista.getHora().equals("08:30:00") ? "selected" : ""%>>08:30</option>
@@ -364,13 +373,16 @@
 		  			 <option value="16:30:00" <%=entrevista!=null && entrevista.getHora().equals("16:30:00") ? "selected" : ""%>>16:30</option>
 		  			 <option value="17:00:00" <%=entrevista!=null && entrevista.getHora().equals("17:00:00") ? "selected" : ""%>>17:00</option>
 		  			 <option value="17:30:00" <%=entrevista!=null && entrevista.getHora().equals("17:30:00") ? "selected" : ""%>>17:30</option>  			 
-		  		</select>  			 
+		  		</select>  
+		  		</div>			 
 				</td>
 			</tr>	
 		<%if(entrevista == null){%>
 			<tr>
-				<td>Maestro</td>
-				<td><select required name="maestro_entrevista" class="form-control">		
+				<td><label for="input">Maestro</label></td>
+				<td>
+				<div class="col-xs-5">
+				<select required name="maestro_entrevista" class="form-control">		
 				<%
 				for (Maestro m : maestros.getLista()){		 		
 		 		%>  			  
@@ -379,10 +391,15 @@
 				}		
 				%>
 				</select>
+				</div>
 			</tr>	
 			<tr>
-				<td>Nombre</td>
-				<td><input class="form-control" type="text" name="nombre_entrevista" required value="<%=entrevista!=null? entrevista.getNombre() : ""%>"></td>
+				<td><label for="input">Nombre</label></td>
+				<td>
+				<div class="col-xs-5">
+				<input class="form-control" type="text" name="nombre_entrevista" required value="<%=entrevista!=null? entrevista.getNombre() : ""%>">
+				</div>
+				</td>
 			</tr>
 		<%}%>
 		</table>
