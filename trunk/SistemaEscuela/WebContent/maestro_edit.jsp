@@ -16,7 +16,7 @@
 <script src="js/jquery-1.7.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
-<title>Maestros</title>
+<title>Editar Maestro</title>
 </head>
 <body>
 
@@ -143,33 +143,69 @@
 		
 			<tbody>
 				<tr>
-				    <td><label for="input">Apellido:</label></td>
-         			<td><input type="text" class="form-control" name="apellido" placeholder="Apellido" required value="<%=maestro!=null? maestro.getApellido() : ""%>"></td>
+				    <td>
+				    	<label for="input">Apellido</label>
+				    </td>
+         			<td>
+         				<div class="col-xs-6">
+         					<input type="text" class="form-control" name="apellido" placeholder="Apellido" required autofocus value="<%=maestro!=null? maestro.getApellido() : ""%>">
+         				</div>
+         			</td>
          		</tr>
          		
          		<tr>
-				    <td><label for="input">Nombre:</label></td>
-         			<td><input type="text" class="form-control" name="nombre" placeholder="Nombre" required value="<%=maestro!=null ? maestro.getNombre() : ""%>"></td>
+				    <td>
+				    	<label for="input">Nombre</label>
+				    </td>
+         			<td>
+         				<div class="col-xs-6">
+         					<input type="text" class="form-control" name="nombre" placeholder="Nombre" required value="<%=maestro!=null ? maestro.getNombre() : ""%>">
+         				</div>
+         			</td>
          		</tr>					
 							
 				<tr>
 					<% if(maestro != null){%>
-					<td><label for="input">D.N.I.:</label></td>					
-					<td><input readonly type="text" class="form-control" name="dni" placeholder="Dni" value="<%=maestro.getDni()%>"></td>
+					<td>
+						<label for="input">D.N.I.</label>
+					</td>					
+					<td>
+						<div class="col-xs-6">
+							<input readonly type="text" class="form-control" name="dni" placeholder="Dni" value="<%=maestro.getDni()%>">
+						</div>
+					</td>
 					<%}else{%>					
-					<td><label for="input">D.N.I.:</label></td>
-         			<td><input type="text" class="form-control" name="dni" required placeholder="Dni" value=""></td>
+					<td>
+						<label for="input">D.N.I.</label>
+					</td>
+         			<td>
+         				<div class="col-xs-6">
+         					<input type="text" class="form-control" name="dni" required placeholder="Dni" value="">
+         				</div>
+         			</td>
 					<%}%>
 				</tr>
 
 				<tr>
-				    <td><label for="input">Domicilio:</label></td>
-         			<td><input type="text" class="form-control" name="domicilio" placeholder="Domicilio"  required value="<%=maestro!=null ? maestro.getDomicilio() : ""%>"></td>
+				    <td>
+				    	<label for="input">Domicilio</label>
+				    </td>
+         			<td>
+         				<div class="col-xs-6">
+         					<input type="text" class="form-control" name="domicilio" placeholder="Domicilio"  required value="<%=maestro!=null ? maestro.getDomicilio() : ""%>">
+         				</div>
+         			</td>
          		</tr>				
 					
 				<tr>
-				    <td><label for="input">Teléfono:</label></td>
-         			<td><input type="text" class="form-control"  name="telefono" placeholder="Teléfono" required value="<%=maestro!=null ? maestro.getTelefono() : ""%>"></td>
+				    <td>
+				    	<label for="input">Teléfono</label>
+				    </td>
+         			<td>
+         				<div class="col-xs-6">
+         					<input type="text" class="form-control"  name="telefono" placeholder="Teléfono" required value="<%=maestro!=null ? maestro.getTelefono() : ""%>">
+         				</div>
+         			</td>
          		</tr>				
 			</tbody>
 		</table>
@@ -205,7 +241,7 @@
   </div><!-- /example -->
 <br> 	
  <% } %>
-<strong><a href="maestroList" class="alert-link">Volver a materias</a></strong>
+<strong><a href="maestroList" class="alert-link">Volver al listado</a></strong>
 
 </div>
 </body>

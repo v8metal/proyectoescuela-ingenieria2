@@ -158,7 +158,7 @@ if (grado != null){
 	if (grado == null){
 %>
 	<tr>
-		<td><label for="input">Grado/Turno:</label></td>
+		<td><label for="input">Grado/Turno</label></td>
 		<td>
 			<div class="col-xs-4">
 			<select name=anio_grado_turno class="form-control" autofocus>
@@ -175,7 +175,7 @@ if (grado != null){
 	</tr>
 <%}%>
 	<tr>
-		<td><label for="input">Tipo de Calificación:</label></td>
+		<td><label for="input">Tipo de Calificación</label></td>
 		<td>
 			<% 
 			   String ck_bim = "";
@@ -199,7 +199,7 @@ if (grado != null){
 		</td>
 	</tr>
 		<tr>
-		<td><label for="input">Tipo de Evaluación:</label></td>
+		<td><label for="input">Tipo de Evaluación</label></td>
 		<td>
 			<% 
 			   String ck_informe = "";
@@ -242,7 +242,7 @@ if (grado != null){
 		</td>
 	</tr>
 	<tr>
-		<td><label for="input">Salón:</label></td>
+		<td><label for="input">Salón</label></td>
 		<td>
 			<div class="col-xs-2">
 			<input class="form-control" type="text" placeholder="Salón" name="salon_grado" required value="<%=grado!=null? grado.getSalon() : ""%>">
@@ -250,7 +250,7 @@ if (grado != null){
 		</td>
 	</tr>
 	<tr>
-		<td><label for="input">Maestro Titular:</label></td>
+		<td><label for="input">Maestro Titular</label></td>
 <% if (año > 0){%>
 		<td>
 		<div class="col-xs-6">
@@ -282,11 +282,15 @@ if (grado != null){
 			 </select>
 			 </div>
 <%}else{%>
-		<td class="warning">Asignar alumnos antes</td>
+		<td class="warning">
+			<div class="col-xs-6">
+				<strong><p>Asignar alumnos antes</p></strong>
+			</div>
+		</td>
 <%}%>	
 	</tr>
 	<tr>
-		<td><label for="input">Maestro Paralelo:</label></td>
+		<td><label for="input">Maestro Paralelo</label></td>
 <% if (año > 0){%>
 		<td>
 		<div class="col-xs-6">
@@ -312,7 +316,11 @@ if (grado != null){
 		</select>
 		</div>
 <%}else{%>
-		<td class="warning">Asignar alumnos antes</td>
+		<td class="warning">
+			<div class="col-xs-6">
+				<strong><p>Asignar alumnos antes</p></strong>
+			</div>
+		</td>
 <%}%>		 
 	</tr>
 </table>
