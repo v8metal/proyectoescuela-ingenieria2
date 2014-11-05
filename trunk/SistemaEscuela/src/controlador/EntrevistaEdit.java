@@ -250,7 +250,7 @@ import conexion.AccionesUsuario;
 						response.sendRedirect("EntrevistaList");
 						
 					} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
-						sesion.setAttribute("error", "<br>"+ "Ya existe una entrevista para el mismo dia y horario"+"<br>");
+						sesion.setAttribute("error", "Ya existe una entrevista para el mismo dia y horario");
 						response.sendRedirect("entrevista_edit.jsp");		
 					
 					} catch (Exception e) {				
