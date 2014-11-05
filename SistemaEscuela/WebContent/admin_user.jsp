@@ -52,13 +52,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
               <li><a href="menu_user.jsp">Menú</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Asistencias <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="AsistenciaList">Listado</a></li>
-                  <li><a href="AsistenciaListEdit">Nueva asistencia</a></li>          
-                </ul>
-              </li>
+              <li><a href="menu_asistencias.jsp">Asistencias</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Citaciones <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
@@ -193,16 +187,34 @@
 <form action="AdminUser?do=user" method="post">
 <table class="table table-hover table-bordered">	
 	<tr>
-		<td>Contraseña Actual: </td>
-		<td><input type="password" class="form-control" placeholder="Contraseña Actual" name="contraseña_actual" required autofocus></td> 
+		<td>
+			<label for="input">Contraseña Actual:</label>
+		</td>
+		<td>
+			<div class="col-xs-6">
+				<input type="password" class="form-control" placeholder="Contraseña Actual" name="contraseña_actual" required autofocus>
+			</div>
+		</td> 
 	</tr>
 	<tr>
-		<td>Nuevo Usuario: </td>
-		<td><input type="text" class="form-control" placeholder="Nuevo Usuario" name="usuario_nuevo" required></td>
+		<td>
+			<label for="input">Nuevo Usuario:</label>
+		</td>
+		<td>
+			<div class="col-xs-6">
+				<input type="text" class="form-control" placeholder="Nuevo Usuario" name="usuario_nuevo" required>
+			</div>
+		</td>
 	</tr>
 	<tr>
-		<td>Repetir Nuevo Usuario: </td>
-		<td><input type="text" class="form-control" placeholder="Nuevo Usuario" name="usuario_nuevo_r" required></td>
+		<td>
+			<label for="input">Repetir Nuevo Usuario:</label>
+		</td>
+		<td>
+			<div class="col-xs-6">
+				<input type="text" class="form-control" placeholder="Nuevo Usuario" name="usuario_nuevo_r" required>
+			</div>
+		</td>
 	</tr>
 </table>
 <br>

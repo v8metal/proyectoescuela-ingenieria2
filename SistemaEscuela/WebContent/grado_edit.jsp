@@ -134,7 +134,8 @@ if (grado != null){
 <div class="page-header">  
 	<h1>Edición de grado</h1>
 </div> 
-<h2><%= grado.getGrado() + " - Turno " + grado.getTurno() %></h2>
+<h3><%= grado.getGrado() + " - Turno " + grado.getTurno() %></h3>
+<br>
 <%}else{%>
 <div class="page-header">  
 	<h1>Alta de grado</h1>
@@ -157,8 +158,9 @@ if (grado != null){
 	if (grado == null){
 %>
 	<tr>
-		<td>Grado/Turno: </td>
+		<td><label for="input">Grado/Turno:</label></td>
 		<td>
+			<div class="col-xs-4">
 			<select name=anio_grado_turno class="form-control" autofocus>
 <% 			
 			
@@ -168,11 +170,12 @@ if (grado != null){
 			   
 <%          } %>		 	   		 
  			 </select> 
+ 			 </div>
  		</td>
 	</tr>
 <%}%>
 	<tr>
-		<td>Tipo de Calificación: </td>
+		<td><label for="input">Tipo de Calificación:</label></td>
 		<td>
 			<% 
 			   String ck_bim = "";
@@ -185,16 +188,18 @@ if (grado != null){
 			   }			           
 			 	
 			 %>
+			 <div class="col-xs-6">
 			<label class="radio-inline"> 
 			<input type="radio" name="bimestral" value="si" <%=ck_bim%> /> Bimestral
 			</label>
 			<label class="radio-inline">
 			<input type="radio" name="bimestral" value="no" <%=ck_tri%>/> Trimestral
 			</label>
+			</div>
 		</td>
 	</tr>
 		<tr>
-		<td>Tipo de Evaluación: </td>
+		<td><label for="input">Tipo de Evaluación:</label></td>
 		<td>
 			<% 
 			   String ck_informe = "";
@@ -223,6 +228,7 @@ if (grado != null){
 			   }			           
 			 	
 			 %>
+			 <div class="col-xs-6">
 			<label class="radio-inline"> 
 			<input type="radio" name="evaluacion" value=0 <%=ck_informe%> /> Informe
 			</label>
@@ -232,20 +238,23 @@ if (grado != null){
 			<label class="radio-inline">
 			<input type="radio" name="evaluacion" value=2 <%=ck_numerica%>/> Numérica
 			</label>
-		</td>
-	</tr>
-	<tr>
-		<td>Salón: </td>
-		<td>
-			<div class="col-xs-2">
-			<input class="form-control" type="text" placeholder="Salon" name="salon_grado" required value="<%=grado!=null? grado.getSalon() : ""%>">
 			</div>
 		</td>
 	</tr>
 	<tr>
-		<td>Maestro Titular: </td>
+		<td><label for="input">Salón:</label></td>
+		<td>
+			<div class="col-xs-2">
+			<input class="form-control" type="text" placeholder="Salón" name="salon_grado" required value="<%=grado!=null? grado.getSalon() : ""%>">
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td><label for="input">Maestro Titular:</label></td>
 <% if (año > 0){%>
-		<td><select name="maestro_tit_grado" class="form-control" placeholder="Maestro Titular" >
+		<td>
+		<div class="col-xs-6">
+		<select name="maestro_tit_grado" class="form-control" placeholder="Maestro Titular" >
 		<% if (grado != null && titular != null){ %>
 			<option value="<%= titular.getDni()%>"><%=titular.getNombre()+ " " + titular.getApellido()%> </option>
 			<%
@@ -271,14 +280,17 @@ if (grado != null){
 		}	
 			 %>
 			 </select>
+			 </div>
 <%}else{%>
 		<td class="warning">Asignar alumnos antes</td>
 <%}%>	
 	</tr>
 	<tr>
-		<td>Maestro Paralelo: </td>
+		<td><label for="input">Maestro Paralelo:</label></td>
 <% if (año > 0){%>
-		<td><select name="maestro_par_grado" class="form-control"  placeholder="Maestro Paralelo">
+		<td>
+		<div class="col-xs-6">
+		<select name="maestro_par_grado" class="form-control"  placeholder="Maestro Paralelo">
 		<% if (grado != null && paralelo != null){ %>
 			<option value="<%= paralelo.getDni()%>"><%=paralelo.getNombre()+ " " + paralelo.getApellido()%> </option>						
 			<%
@@ -298,6 +310,7 @@ if (grado != null){
 		}
 		%>
 		</select>
+		</div>
 <%}else{%>
 		<td class="warning">Asignar alumnos antes</td>
 <%}%>		 
