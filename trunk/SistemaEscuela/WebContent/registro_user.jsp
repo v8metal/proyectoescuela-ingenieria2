@@ -125,8 +125,12 @@
 <table class="table table-hover table-bordered">
 
 	<tr>
-		<td><label for="input">Maestro</label></td>
-		<td><select name="maestro" class="form-control" autofocus>
+		<td>
+			<label for="input">Maestro</label>
+		</td>
+		<td>
+			<div class="col-xs-6">
+			<select name="maestro" class="form-control" autofocus>
 			<%
 			for (Maestro m : maestros.getLista()){
 				if (!AccionesUsuario.validarCuentaMaestro(m.getDni())) {
@@ -137,23 +141,42 @@
 			}			
 			%>
 		 </select>
+		 </div>
 		</td>
 	</tr>
 	
 	<tr>
-		<td><label for="input">Usuario</label></td>
-        <td><input type="text" class="form-control" name="usuario" placeholder="Usuario" required></td>
+		<td>
+			<label for="input">Usuario</label>
+		</td>
+        <td>
+        	<div class="col-xs-6">
+        		<input type="text" class="form-control" name="usuario" placeholder="Usuario" required>
+        	</div>
+        </td>
     </tr>
     
     <tr>
-		<td><label for="input">Contraseña</label></td>
-        <td><input type="password" class="form-control" name="contraseña" placeholder="Contraseña" required></td>
+		<td>
+			<label for="input">Contraseña</label>
+		</td>
+        <td>
+        	<div class="col-xs-6">
+        		<input type="password" class="form-control" name="contraseña" placeholder="Contraseña" required>
+        	</div>
+        </td>
     </tr>
     
     
     <tr>
-		<td><label for="input">Confirmar contraseña</label></td>
-        <td><input type="password" class="form-control" name="contraseña_conf" placeholder="Repetir Contraseña" required></td>
+		<td>
+			<label for="input">Confirmar contraseña</label>
+		</td>
+        <td>
+        	<div class="col-xs-6">
+        		<input type="password" class="form-control" name="contraseña_conf" placeholder="Repetir Contraseña" required>
+        	</div>
+        </td>
     </tr>	
 </table>
 <br>
