@@ -126,9 +126,11 @@ if (citaciones.getLista().isEmpty()){
 <h1>Citaciones</h1>
 </div>
 <br>
-<div class="alert alert-info" role="alert">
-    <strong>Atención!</strong> No hay citaciones para el año seleccionado
-</div>
+<!-- MENSAJE ATENCION -->
+	<div class="alert alert-info" role="alert">
+		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	<strong>Atención!</strong> No hay citaciones para el año seleccionado. <a href="citaciones_select.jsp?action=listar" class="alert-link">Volver a selección de año</a>
+    </div>
 <%	
 }else{
 %>
@@ -177,16 +179,21 @@ if (citaciones.getLista().isEmpty()){
 	}
  %>
 </table>
-<%} %>
+
+
 <br>
-<div class="form-group">
+
 <form action="<%=volver%>" method="<%=method%>">
+<div class="form-group">
 <%if (b){%> 
 <input type="hidden" name="accion" value="alta">
 <%}%>
-<button type="submit" class="btn btn-primary"  value="Volver">Volver</button>
-</form>
+<button type="submit" class="btn btn-primary"  value="Volver">Volver a selección de año</button>
 </div>
+</form>
+
+<%} %>
+
 </div>
 </body>
 </html>
