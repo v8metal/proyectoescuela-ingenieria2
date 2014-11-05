@@ -132,8 +132,14 @@
 		<table class="table table-hover table-bordered">
 			<tbody>							
 				<tr>
-				    <td><label for="input">Nombre:</label></td>
-         			<td><input type="text" class="form-control" name="materia" placeholder="Nombre" required autofocus value="<%=materia!=null ? materia.getMateria() : ""%>"></td>
+				    <td>
+				    	<label for="input">Nombre:</label>
+				    </td>
+         			<td>
+         				<div class="col-xs-6">
+         					<input type="text" class="form-control" name="materia" placeholder="Nombre" required autofocus value="<%=materia!=null ? materia.getMateria() : ""%>">
+         				</div>
+         			</td>
          		</tr>			
 			</tbody>
 		</table>		
@@ -178,7 +184,7 @@
 			}
 %>
  <br>
-<strong><a href="materiaList?from=menu_admin" class="alert-link">Volver a materias</a></strong>
+<strong><a href="materiaList?from=menu_admin" class="alert-link">Volver al listado</a></strong>
 </div>
 </body>
 </html>
