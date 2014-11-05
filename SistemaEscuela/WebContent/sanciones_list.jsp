@@ -126,9 +126,11 @@ if (sanciones.getLista().isEmpty()){
 <h1>Sanciones</h1>
 </div>
 <br>
-<div class="alert alert-info" role="alert">
-    <strong>Atención!</strong> No hay sanciones para el año seleccionado
-</div>
+<!-- MENSAJE ATENCION -->
+	<div class="alert alert-info" role="alert">
+		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	<strong>Atención!</strong> No hay sanciones para el año seleccionado. <a href="sanciones_select.jsp?action=listar" class="alert-link">Volver a selección de año</a>
+    </div>
 <%	
 }else{
 %>
@@ -177,16 +179,20 @@ if (sanciones.getLista().isEmpty()){
 	}
  %>
 </table>
-<%} %>
+
 <br>
-<div class="form-group">
+
 <form action="<%=volver%>" method="<%=method%>">
+<div class="form-group">
 <%if (b){%> 
 <input type="hidden" name="accion" value="alta">
 <%}%>
-<input type="submit" class="btn btn-primary" value="Volver">
-</form>
+<input type="submit" class="btn btn-primary" value="Volver a selección de año">
 </div>
+</form>
+
+<%} %>
+
 </div>
 </body>
 </html>
