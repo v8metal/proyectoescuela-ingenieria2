@@ -115,49 +115,33 @@
 %>
 
 <label class="control-label" for="input">Seleccionar año:</label>
-<br>
-<br>
-<form class="form-horizontal" action="CitacionList" method="post" role="form">	
-	<div class="form-group">
-	
-<input type="hidden" name="acceso" value="primero">
 
-<!-- <table class="table table-hover table-bordered">	
-	<tr>
-		<td>Seleccione Año</td>
-		<td>
-			<select class="form-control" name="año_sancion_selected" autofocus>   
-			<%  			
-				for (int i = año_inicio; i <= año_actual; i++){					 
- 			 %>
-			 <option <%=año_actual==i ? "selected" : ""%>><%=i%></option>		 	
-   			<%
-				}			
-			 %>
-			</select>			
- 		</td>
-	</tr>
-	</table>
- -->	
- 
-	<div class="col-xs-2">	
-			<select class="form-control" name="año_sancion_selected" autofocus>   
-			<%  			
-				int año = (Integer)session.getAttribute("añoc");
-  				for(int i=año; i>año-20;i--){					 
- 			 %>
-			 <option value="<%=i %>"><%=i %></option>		 	
-   			<%
-				}			
-			 %>
-			</select>
-			<br>
-			<br>
-			<button type="submit" class="btn btn-primary"  value="Aceptar" name="btnAcept">Aceptar</button>
-			<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnCancel">Cancelar</button>
-		</div>			
-	</div>
-</form>
+<br>
+<br>
+
+     <form action="CitacionList" method="post">
+        <div class="row">
+            <div class="col-xs-3">
+                <div class="input-group">
+                     <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnAcept">Buscar</button>
+                    </span>
+                    <select class="form-control" name="año_sancion_selected" autofocus>
+  						 <%  			
+							int año = (Integer)session.getAttribute("añoc");
+  							for(int i=año; i>año-20;i--){					 
+ 						 %>	
+ 						  <option value="<%=i %>"><%=i %></option>		 	
+   						<%
+							}			
+						 %>   			 		
+ 					 </select>					
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="acceso" value="primero">
+    </form>
+    
 </div>
 </body>
 </html>

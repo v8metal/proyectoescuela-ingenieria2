@@ -69,14 +69,14 @@
                   <li><a href="CitacionEdit?do=alta">Nueva citación</a></li>          
                 </ul>
               </li>
-              <li class="active" class="dropdown">
+              <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sanciones <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="sanciones_select.jsp?action=listar">Listado</a></li>
                   <li><a href="SancionEdit?do=alta">Nueva sanción</a></li>          
                 </ul>
               </li>
-              <li class="dropdown">
+              <li class="active" class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Entrevistas <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="EntrevistaList">Listado</a></li>

@@ -198,7 +198,7 @@ if (c == null){
 		<td><label for="input">Fecha</label></td>
 		<td>
 		<div class="col-xs-2">
-		<select name="dia_citacion" class="form-control">   
+		<select name="dia_citacion" class="form-control" autofocus>   
 			<%  
 			for (int i = 1; i <= 31; i++){			  	
  			%>

@@ -191,7 +191,7 @@ if (empty == false){
 		<td><label for="input">Fecha</label></td>
 		<td>
 		<div class="col-xs-2">
-		<select name="dia_sancion" class="form-control">   
+		<select name="dia_sancion" class="form-control" autofocus>   
 			<%  
 			for (int i = 1; i <= 31; i++){			  	
  			%>
