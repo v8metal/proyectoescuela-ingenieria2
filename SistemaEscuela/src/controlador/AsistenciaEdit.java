@@ -1,6 +1,7 @@
 package controlador;
 
 import java.io.IOException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,8 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import conexion.AccionesAlumno;
 import conexion.AccionesTardanza;
-import datos.Alumnos;
-import datos.Grado;
+import conexion.AccionesUsuario;
+import datos.Alumno;
 import datos.Tardanza;
 
 /**
@@ -35,26 +36,36 @@ public class AsistenciaEdit extends HttpServlet {
 
 		HttpSession sesion = request.getSession();
 		
-		if(sesion.getAttribute("usuario") != null){
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(tipo, "AsistenciaEdit") != 1){							
+			response.sendRedirect("Login");
+		}
 
-			System.out.println("AsistenciaEdit doGet");
+		//System.out.println("AsistenciaEdit doGet");
 			
-			String accion = (String) request.getParameter("do");
+		String accion = (String) request.getParameter("do");
 			
-			System.out.println("accion= " + accion);			
+		//System.out.println("accion= " + accion);			
+		
+		int dni = Integer.parseInt(request.getParameter("dni"));
+		
+		switch(accion){
 			
-			switch(accion){
-			
-			case "alta":
+			case "Alta":
 				
-				int año = (Integer) sesion.getAttribute("añoAsistencia");
-				Grado grado = (Grado) sesion.getAttribute("gradoAltaAsistencia");
+				if (AccionesUsuario.validarAcceso(tipo, "asistencia_edit.jsp") != 1){							
+					response.sendRedirect("Login");
+				}
 				
 				try {
 					
-					Alumnos alumnos = AccionesAlumno.getAllByGradoTurnoYAño(grado.getGrado(), grado.getTurno(), año);
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesAlumno") != 1){							
+						response.sendRedirect("Login");
+					}
 					
-					sesion.setAttribute("alumnosAltaAsistencia", alumnos);										
+					Alumno alumno = AccionesAlumno.getOne(dni);
+					
+					sesion.setAttribute("alumnoAltaAsistencia", alumno);										
 					
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/asistencia_edit.jsp");
 					dispatcher.forward(request, response);				
@@ -65,13 +76,20 @@ public class AsistenciaEdit extends HttpServlet {
 				
 				break;
 				
-			case "modificar":
+			case "Modificar":
 				
-				int dni = Integer.parseInt(request.getParameter("dni"));
+				if (AccionesUsuario.validarAcceso(tipo, "asistencia_edit.jsp") != 1){							
+					response.sendRedirect("Login");
+				}
+				
 				String fecha = (String) (request.getParameter("fecha"));										
 			
 				try {
-								
+					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesTardanza") != 1){							
+						response.sendRedirect("Login");
+					}
+					
 					Tardanza t = AccionesTardanza.getOneAsistencia(dni, fecha);					
 					request.setAttribute("asistencia", t);
 					
@@ -85,12 +103,18 @@ public class AsistenciaEdit extends HttpServlet {
 				break;
 				
 			case "borrar":			
-			
-			
-				dni = Integer.parseInt(request.getParameter("dni"));
+				
+				if (AccionesUsuario.validarAcceso(tipo, "AsistenciaList") != 1){							
+					response.sendRedirect("Login");
+				}
+							
 				fecha = (String) (request.getParameter("fecha"));			
 									
 				try {
+					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesTardanza") != 1){							
+						response.sendRedirect("Login");
+					}
 					
 					AccionesTardanza.bajaAsistencia(dni, fecha);
 				
@@ -107,10 +131,6 @@ public class AsistenciaEdit extends HttpServlet {
 				break;
 					
 				}// fin del case
-			
-		}else{
-			response.sendRedirect("login.jsp");
-		}
 	}
 
 	/**
@@ -120,36 +140,37 @@ public class AsistenciaEdit extends HttpServlet {
 		
 		HttpSession sesion = request.getSession();
 		
-		if(sesion.getAttribute("usuario") != null){
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
+		if (AccionesUsuario.validarAcceso(tipo, "AsistenciaEdit") != 1){							
+			response.sendRedirect("Login");
+		}
 
-			System.out.println("Asistencia doPost");
+		//System.out.println("Asistencia doPost");
 			
-			String accion = (String) request.getParameter("do");
+		String accion = (String) request.getParameter("do");
 			
-			System.out.println("accion= " + accion);
+		//System.out.println("accion= " + accion);
+											
+		if (AccionesUsuario.validarAcceso(tipo, "AsistenciaList") != 1){							
+			response.sendRedirect("Login");
+		}
+		
+		String fecha = (String) sesion.getAttribute("fechaAsistencia");
+		int dni = Integer.parseInt(request.getParameter("alumno_asistencia"));
+		String obs = (String) request.getParameter("observaciones");
+		String condicion = (String) request.getParameter("condicion");
+		
+		Tardanza a = new Tardanza(dni, fecha, obs, "A", condicion);
+		
+		switch(accion){
 			
-			int año = (Integer) sesion.getAttribute("añoAsistencia");
-								
-			String obs = (String) request.getParameter("observaciones");
-			String condicion = (String) request.getParameter("condicion");
-								
-			Tardanza a = null;
-			
-			switch(accion){
-			
-			case "alta":
-				
-				int dia = Integer.parseInt(request.getParameter("dia_asistencia"));
-				String mes = (String) request.getParameter("mes_asistencia");				
-				int dni = Integer.parseInt(request.getParameter("alumno_asistencia"));
-				
-				String relleno = "";
-				
-				if (dia < 10) relleno = "0";
-								
-				a = new Tardanza(dni, año + "-" + mes + "-" + relleno + dia, obs, "A", condicion);
+			case "Alta":				
 				
 				try {
+					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesTardanza") != 1){							
+						response.sendRedirect("Login");
+					}
 					
 					AccionesTardanza.altaTardanza(a);												
 					
@@ -169,14 +190,18 @@ public class AsistenciaEdit extends HttpServlet {
 				
 				break;
 				
-			case "modificar":
-			
-				String fecha = (String) sesion.getAttribute("fechaAsistencia");
-				dni = Integer.parseInt(request.getParameter("alumno_asistencia"));
+			case "Modificar":
 				
-				a = new Tardanza(dni, fecha, obs, "A", condicion);
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesTardanza") != 1){							
+					response.sendRedirect("Login");
+				}
 				
+								
 				try {
+					
+					if (AccionesUsuario.validarAcceso(tipo, "AccionesTardanza") != 1){							
+						response.sendRedirect("Login");
+					}
 					
 					AccionesTardanza.modificarAsistencia(a);												
 					
@@ -196,10 +221,6 @@ public class AsistenciaEdit extends HttpServlet {
 				break;			
 			
 			}// fin del case
-			
-		}else{
-			response.sendRedirect("login.jsp");
-		}
 	}
 	
 }

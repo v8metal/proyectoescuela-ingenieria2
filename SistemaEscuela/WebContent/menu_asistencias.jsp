@@ -4,6 +4,7 @@
 <%@page import="datos.Grado"%>
 <%@page import="datos.Grados"%>
 <%@page import="conexion.AccionesTardanza"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -24,7 +25,11 @@
 <body>
 <div class="container">
 <% 
-if (session.getAttribute("usuario") != null) {
+
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "menu_asistencias.jsp") != 1){							
+		response.sendRedirect("Login");
+	}
 	
 	Maestro maestro = (Maestro)session.getAttribute("maestro");
 	String nombre = maestro.getNombre();
@@ -214,19 +219,12 @@ if (session.getAttribute("usuario") != null) {
 		<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave">Cancelar</button>		
  </form>
  <br>
- 	<%if(añoAsistencia != null){ %>		
-		<div class="form-group">
-		<form action="menu_asistencias.jsp">
-		<input class="btn btn-primary" type="submit" value="Seleccionar otro año"> </form>
-		</div>
-	<%}%>
-	<br>
-	<br>	
-	<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
+ <%if(añoAsistencia != null){ %>		
+	<div class="form-group">
+	<form action="menu_asistencias.jsp">
+	<input class="btn btn-primary" type="submit" value="Seleccionar otro año"> </form>
+	</div>
+<%}%>
 </div>
 </body>
 </html>

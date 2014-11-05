@@ -131,7 +131,7 @@ public class AccionesTardanza {
 		try{
 			Statement stm = Conexion.conectar().createStatement();
 			
-			System.out.println("SELECT DNI, FECHA, IFNULL(OBSERVACIONES,'') AS OBSERVACIONES, TIPO, INDICADOR FROM TARDANZAS WHERE TIPO = 'A' AND DNI = " + dni + " AND FECHA = '" + fecha + "'");
+			//System.out.println("SELECT DNI, FECHA, IFNULL(OBSERVACIONES,'') AS OBSERVACIONES, TIPO, INDICADOR FROM TARDANZAS WHERE TIPO = 'A' AND DNI = " + dni + " AND FECHA = '" + fecha + "'");
 			
 			ResultSet rs = stm.executeQuery("SELECT DNI, FECHA, IFNULL(OBSERVACIONES,'') AS OBSERVACIONES, TIPO, INDICADOR FROM TARDANZAS WHERE TIPO = 'A' AND DNI = " + dni + " AND FECHA = '" + fecha + "'");
 			
@@ -152,7 +152,7 @@ public class AccionesTardanza {
 			
 			//System.out.println("UPDATE TARDANZAS SET FECHA='"+ t.getFecha()+ "',OBSERVACIONES='"+t.getObservaciones() +"' WHERE TIPO = 'T' AND DNI='"+ t.getDni() +"' AND FECHA='" + fecha +"'");
 			
-			i = stm.executeUpdate("UPDATE TARDANZAS SET OBSERVACIONES='" + t.getObservaciones() +"' WHERE TIPO = '" + t.getTipo() +"' AND DNI = "+ t.getDni() + " AND FECHA='" + t.getFecha() +"'");
+			i = stm.executeUpdate("UPDATE TARDANZAS SET OBSERVACIONES='" + t.getObservaciones() +"', INDICADOR =  '" + t.getIndicador() + "' WHERE TIPO = '" + t.getTipo() +"' AND DNI = "+ t.getDni() + " AND FECHA='" + t.getFecha() +"'");
 			stm.close();
 			Conexion.desconectar();
 		}catch(SQLException sqle){

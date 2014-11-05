@@ -5,6 +5,7 @@
 <%@page import="datos.Tardanzas"%>
 <%@page import="conexion.AccionesAlumno"%>
 <%@page import="conexion.AccionesTardanza"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -26,7 +27,11 @@
 <div class="container">
 
 <%
-if(session.getAttribute("usuario")!=null){
+
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "asistencia_list.jsp") != 1){							
+		response.sendRedirect("Login");
+	}
 	
 	Maestro maestro = (Maestro)session.getAttribute("maestro");
 	String nombre = maestro.getNombre();
@@ -119,9 +124,9 @@ if(session.getAttribute("usuario")!=null){
 	
 	for (Tardanza t : tardanzas.getTardanzas()) {		
 		a = AccionesAlumno.getOne(t.getDni());
-		accion = "modificar";
+		accion = "Modificar";
 		
-		if (t.getTipo().equals("V")) accion = "alta";
+		if (t.getTipo().equals("V")) accion = "Alta";
 	%>
 
 	<tr>
@@ -150,11 +155,6 @@ if(session.getAttribute("usuario")!=null){
 	   	<button type="submit" class="btn btn-primary"  value="Seleccionar otro grado/fecha">Seleccionar otro grado/fecha</button> 
 	   </form>
 	</div>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>
