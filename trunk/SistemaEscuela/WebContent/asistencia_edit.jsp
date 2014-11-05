@@ -5,6 +5,7 @@
 <%@page import="conexion.AccionesAlumno"%>
 <%@page import="datos.Alumno"%>
 <%@page import="datos.Alumnos"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -25,14 +26,16 @@
 <div class="container">
 
 <%
-	if (session.getAttribute("usuario") != null) {
-
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "asistencia_edit.jsp") != 1){							
+		response.sendRedirect("Login");
+	}
 	Maestro maestro = (Maestro)session.getAttribute("maestro");
 	String nombre = maestro.getNombre();
 	String apellido = maestro.getApellido();
 	
-	Tardanza asistencia = (Tardanza) request.getAttribute("asistencia");
-	Alumnos alumnos = (Alumnos) session.getAttribute("alumnosAltaAsistencia");
+	Tardanza asistencia = (Tardanza) request.getAttribute("asistencia");	
+	Alumno alumno = (Alumno) session.getAttribute("alumnoAltaAsistencia");
 	String fecha = (String) session.getAttribute("fechaDisplayAsistencia");
 	
 	int dia_asistencia = 0;
@@ -43,12 +46,12 @@
 	
 	if (session.getAttribute("error") != null) error = (String) session.getAttribute("error");
 	
-	String accion = "alta";
 	
-	if (asistencia != null) {
+	/*
+	if (asistencia != null) {	
 		
-		accion = "modificar";
 		//recupero la fecha
+
 		String fecha_asistencia = asistencia.getFecha();
 		//separo la fecha (1990-01-01) por el "-"" y almaceno el año, mes y dia en un array
 		String[] fecha_ent = fecha_asistencia.split ("-");
@@ -66,6 +69,7 @@
     		mes_asistencia = "" + mes;
     	}
 	}
+	*/
 	%>
 	
 <!-- Fixed navbar -->
@@ -126,68 +130,40 @@
   
 <div class="page-header">
 <%
+	String accion = "Alta";
+
 	if(asistencia != null){
 		
-		Alumno a = AccionesAlumno.getOne(asistencia.getDni());
+		accion = "Modificar";
 %>
-<h1>Edición de asistencia - <%=a.getNombre() + " " + a.getApellido() + " - " + fecha %></h1>
+<h1>Edición de asistencia - <%=alumno.getNombre() + " " + alumno.getApellido() + " - " + fecha %></h1>
 <%}else{%>
-<h1>Alta de asistencia </h1>
+<h1>Alta de asistencia - <%=alumno.getNombre() + " " + alumno.getApellido() + " - " + fecha %></h1>
 <%}%>
 </div>
 	<div class="form-group">	
 	<form action="AsistenciaEdit" method="post">
 	<input type="hidden" name=do value="<%=accion%>">
-	<%if(asistencia != null){%>
-	<input type="hidden" class="form-control" name="alumno_asistencia"value=<%=asistencia.getDni()%>>	
-	<%}%>
-		 <table class="table table-hover table-bordered">
-		    <tr> <%= error %>
-		    <%if(asistencia == null){%>
-				<td>Fecha </td>
-				<td><select name="dia_asistencia" class="form-control" >   
-					<%  
-					for (int i = 1; i <= 31; i++){			  	
-		 			%>
-					 	<option <%=dia_asistencia==i ? "selected" : ""%>><%=i%></option>		 	
-		   			<%
-					}	
-					%>
-		 			 </select>
-		  			 <select id="mes" name="mes_asistencia" class="form-control">
-		  			 <option value="03" <%=mes_asistencia.equals("03") ? "selected" : ""%>>Marzo</option>
-					 <option value="04" <%=mes_asistencia.equals("04") ? "selected" : ""%>>Abril</option>
-					 <option value="05" <%=mes_asistencia.equals("05") ? "selected" : ""%>>Mayo</option>
-					 <option value="06" <%=mes_asistencia.equals("06") ? "selected" : ""%>>Junio</option>
-					 <option value="07" <%=mes_asistencia.equals("07") ? "selected" : ""%>>Julio</option>
-					 <option value="08" <%=mes_asistencia.equals("08") ? "selected" : ""%>>Agosto</option>
-					 <option value="09" <%=mes_asistencia.equals("09") ? "selected" : ""%>>Septiembre</option>
-					 <option value="10" <%=mes_asistencia.equals("10") ? "selected" : ""%>>Octubre</option>
-					 <option value="11" <%=mes_asistencia.equals("11") ? "selected" : ""%>>Noviembre</option>
-					 <option value="12" <%=mes_asistencia.equals("12") ? "selected" : ""%>>Diciembre</option>	   			 		
-		 			 </select>		  
-		  		</td>
-		  	</tr>
-		  	<tr>		  		
-		  		<th>ALUMNO</th>
-		  		<td>
-		  			<select name="alumno_asistencia" class="form-control" >   
-		  			<%
-					for (Alumno a : alumnos.getLista()){		 		
-		 			%>
-		 			<option value=<%=a.getDni() %>><%= a.getNombre() + " " + a.getApellido() %></option>
-		 			<%} %>		 		
-		 			</select>
-		 		</td>		 		
-		 	<%}%>
-		 	</tr>
+	<input type="hidden" class="form-control" name="alumno_asistencia" value=<%=alumno.getDni()%>>	
+		<table class="table table-hover table-bordered">
+		    <tr> <%= error %></tr>
 		    <tr>
 		      <th>OBSERVACIONES:</th>
 		      <td><textarea name="observaciones" cols="40" rows="4" class="form-control" placeholder="Observaciones"><%=asistencia!=null?asistencia.getObservaciones():"" %></textarea></td>
 		    </tr>
 		    <tr>
 		      <th>CONDICION:</th>		      
-		      <td><input type="text" class="form-control" name="condicion" placeholder="Condicion" value=<%=asistencia!=null?asistencia.getIndicador():"" %>></td>
+		      <td>		     
+		      <select class="form-control" name="condicion">
+		      <%if(asistencia!=null){%>
+		      <option value="Ausente" <%=asistencia.getIndicador().equals("Ausente") ? "selected" : ""%>>Ausente</option>
+		      <option value="Presente" <%=asistencia.getIndicador().equals("Presente") ? "selected" : ""%>>Presente</option>
+		      <%}else{ %>
+		      <option value="Ausente" selected >Ausente</option>
+		      <option value="Presente" >Presente</option>
+		      <%}%>		      	      
+		      </select>		      	      
+		      </td>
 		    </tr>
 		    <tr>
 		      <td></td>
@@ -206,13 +182,7 @@
 			<input type="hidden" name="accion" value="listarAsistencias">
 			<button type="submit" class="btn btn-primary"  value="Volver al Listado de asistencias">Volver al Listado de asistencias</button>
 			</form>
-			</div>		  		  		  
-
-<%
-} else {
-	response.sendRedirect("login.jsp");
-}
-%> 
+			</div> 
 </div>
 </body>
 </html>
