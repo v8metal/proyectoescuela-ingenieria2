@@ -21,6 +21,12 @@
 <script src="js/jquery-1.7.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
+<!--<link rel="stylesheet" href="style/jquery-ui.css">  con ese no se ven las flechitas-->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/asistencias.js"></script> <!-- DatePic para entrevistas -->
+
 </head>
 <body>
 <div class="container">
@@ -55,6 +61,7 @@
 		
 	}
 	
+	/*
 	int dia_asistencia = Integer.valueOf((String)session.getAttribute("dia_sys"));
 	int mes= Integer.parseInt((String) session.getAttribute("mes_sys"));
 	String mes_asistencia = "";
@@ -64,6 +71,7 @@
 	}else{
 		mes_asistencia = "" + mes;
 	}
+	*/
 	
 %>
 
@@ -136,9 +144,12 @@
     
     <div class="form-group">
 	<form action="AsistenciaList" method="get">
+	<input name="año" id="año" type="hidden" value="<%=añoAsistencia%>">
+		
 	<%if(añoAsistencia == null){ %>
     	<input type="hidden" name="accion" value="solicitarGrados">
-	<%}else{%>      
+	<%}else{%>
+	    <input name="fecha" id="fecha" type="hidden" value="0">
 		<input type="hidden" name="accion" value="listarAsistencias">
 	<%}%>
 
@@ -147,7 +158,9 @@
 	<%if(añoAsistencia == null){ %>
 	  <tr>
 	    <td><label for="input">Seleccionar año:</label></td>	    
-	    <td><select class="form-control" name="año_asistencia">
+	    <td>
+	    <div class="col-xs-5">
+	    	<select class="form-control" name="año_asistencia">
 	      		<%
 	      		    int año = (Integer)session.getAttribute("añoc");
 	      			for(int i=año; i>año-20;i--){
@@ -157,6 +170,7 @@
 	      			}
 	      		%>
 	        </select>
+	      </div>
 	     </td>         	     
 	     <td>
 	     	<input type="hidden" name="accion" value="solicitarGrados">
@@ -166,34 +180,20 @@
 	  <tr>
 	    <td><label for="input">Año Seleccionado:</label></td>	    
 	     <td>
+	     	<div class="col-xs-5">
 	     	<input class="form-control" type="text" size=4 readonly name="anio" value="<%=añoAsistencia%>">
+	     	</div>
 	     </td> 
 	  </tr>
 	  <tr>
-	  <td><label for="input">Fecha: </label></td>	  
-	  <td><select name="dia_asistencia" class="form-control" >   
-			<%  
-				for (int i = 1; i <= 31; i++){			  	
-		 		%>
-			<option <%=dia_asistencia==i ? "selected" : ""%>><%=i%></option>		 	
-		   	<%
-			}	
-			%>
-		 	</select>
-		  		 <select id="mes" name="mes_asistencia" class="form-control">		  		 
-				 <option value="03" <%=mes_asistencia.equals("03") ? "selected" : ""%>>Marzo</option>
-				 <option value="04" <%=mes_asistencia.equals("04") ? "selected" : ""%>>Abril</option>
-				 <option value="05" <%=mes_asistencia.equals("05") ? "selected" : ""%>>Mayo</option>
-				 <option value="06" <%=mes_asistencia.equals("06") ? "selected" : ""%>>Junio</option>
-				 <option value="07" <%=mes_asistencia.equals("07") ? "selected" : ""%>>Julio</option>
-				 <option value="08" <%=mes_asistencia.equals("08") ? "selected" : ""%>>Agosto</option>
-				 <option value="09" <%=mes_asistencia.equals("09") ? "selected" : ""%>>Septiembre</option>
-				 <option value="10" <%=mes_asistencia.equals("10") ? "selected" : ""%>>Octubre</option>
-				 <option value="11" <%=mes_asistencia.equals("11") ? "selected" : ""%>>Noviembre</option>
-				 <option value="12" <%=mes_asistencia.equals("12") ? "selected" : ""%>>Diciembre</option>	   			 		
-		 		 </select>
-		</td>
-		</tr> 	
+	  <tr>
+		<th><label for="input">Fecha:</label></th>			
+		<td>
+		<div class="col-xs-5">
+		<input class="form-control" type="text" id="datepicker" required autofocus name="fecha_asistencia">
+		</div>
+		</td>			
+	  </tr>	
 	  <%if (grados.getLista().isEmpty()) { %>
 	  <tr>	  	
 	  	<td><label for="input">Seleccionar grado-turno:</label></td>
@@ -203,12 +203,14 @@
 	  <tr>
 	      <td><label for="input">Seleccionar grado-turno:</label></td>
 	      <td>
+	        <div class="col-xs-10">
 	      	<select class="form-control" name="grado_anio">
 	      	<%for (Grado g : grados.getLista()) { %>	            
 	            <option value="<%=g.getGrado() + " - " + g.getTurno()%>"><%=g.getGrado() + " - " + g.getTurno()%></option>            
 	          
 	      	<%}%>
 	      	</select>
+	      	</div>
 	      </td>
 	    </tr>
 	   <%}%>

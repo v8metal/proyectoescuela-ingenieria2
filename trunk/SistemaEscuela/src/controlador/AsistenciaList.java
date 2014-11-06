@@ -101,10 +101,7 @@ public class AsistenciaList extends HttpServlet {
 				
 			String string = "";
 			String[] parts;
-			String grado="", turno="";
-			int dia = 0;
-			String mes = "";
-			String relleno="";
+			String grado="", turno="";			
 			String fecha ="";
 			
 			año = (Integer) sesion.getAttribute("añoAsistencia");
@@ -125,15 +122,11 @@ public class AsistenciaList extends HttpServlet {
 				}
 				
 				sesion.setAttribute("gradoAltaAsistencia", AccionesGrado.getOne(grado, turno));
+								
+				fecha = (String) request.getParameter("fecha_asistencia");
+				fecha = año + "-"+ fecha.substring(3,5) +"-"+ fecha.substring(0,2);
 				
-				dia = Integer.parseInt(request.getParameter("dia_asistencia"));
-				mes = request.getParameter("mes_asistencia");	
-				
-				if (dia < 10) relleno ="0";
-				
-				fecha = año + "-" + mes + "-" + relleno + dia;
-				
-				sesion.setAttribute("fechaDisplayAsistencia", relleno + dia + "/" + mes + "/" + año);
+				sesion.setAttribute("fechaDisplayAsistencia",  fecha.substring(8,10) + "/" + fecha.substring(5,7) + "/" + año);
 				sesion.setAttribute("fechaAsistencia", fecha);
 				
 			}else{

@@ -37,39 +37,10 @@
 	Tardanza asistencia = (Tardanza) request.getAttribute("asistencia");	
 	Alumno alumno = (Alumno) session.getAttribute("alumnoAltaAsistencia");
 	String fecha = (String) session.getAttribute("fechaDisplayAsistencia");
-	
-	int dia_asistencia = 0;
-	String mes_asistencia = "";
-	int año_asistencia = 0;
-	
+		
 	String error = "";
 	
 	if (session.getAttribute("error") != null) error = (String) session.getAttribute("error");
-	
-	
-	/*
-	if (asistencia != null) {	
-		
-		//recupero la fecha
-
-		String fecha_asistencia = asistencia.getFecha();
-		//separo la fecha (1990-01-01) por el "-"" y almaceno el año, mes y dia en un array
-		String[] fecha_ent = fecha_asistencia.split ("-");
-		//obtengo el dia, mes y año respectivamente
-		dia_asistencia = Integer.parseInt(fecha_ent[fecha_ent.length - 1]);
-		mes_asistencia = fecha_ent[fecha_ent.length - 2];
-		año_asistencia = Integer.parseInt(fecha_ent[fecha_ent.length - 3]);
-	}else{	
-	
-    	dia_asistencia = Integer.valueOf((String)session.getAttribute("dia_sys"));
-    	int mes= Integer.parseInt((String) session.getAttribute("mes_sys"));
-    	if (mes < 10){
-    		mes_asistencia = "0" + mes;	
-    	}else{
-    		mes_asistencia = "" + mes;
-    	}
-	}
-	*/
 	%>
 	
 <!-- Fixed navbar -->
@@ -132,11 +103,14 @@
 <%
 	String accion = "Alta";
 
+	Alumno a = null;
+	
 	if(asistencia != null){
 		
+		a = AccionesAlumno.getOne(asistencia.getDni());
 		accion = "Modificar";
 %>
-<h1>Edición de asistencia - <%=alumno.getNombre() + " " + alumno.getApellido() + " - " + fecha %></h1>
+<h1>Edición de asistencia - <%=a.getNombre() + " " + a.getApellido() + " - " + fecha %></h1>
 <%}else{%>
 <h1>Alta de asistencia - <%=alumno.getNombre() + " " + alumno.getApellido() + " - " + fecha %></h1>
 <%}%>
@@ -144,7 +118,7 @@
 	<div class="form-group">	
 	<form action="AsistenciaEdit" method="post">
 	<input type="hidden" name=do value="<%=accion%>">
-	<input type="hidden" class="form-control" name="alumno_asistencia" value=<%=alumno.getDni()%>>	
+	<input type="hidden" class="form-control" name="alumno_asistencia" value=<%=asistencia!=null?asistencia.getDni():alumno.getDni()%>>	
 		<table class="table table-hover table-bordered">
 		    <tr> <%= error %></tr>
 		    <tr>
