@@ -238,31 +238,32 @@ public class CuotaList extends HttpServlet {
 				año = (Integer) sesion.getAttribute("añoPlan");
 				grados = (Grados) sesion.getAttribute("gradosPlan");
 				
-				int dia = Integer.parseInt(request.getParameter("dia_consulta"));
-				String mes_pago = (String) request.getParameter("mes_consulta"); 
+				String fecha = (String) request.getParameter("fecha_pagos");
+				fecha = fecha.substring(6,10) +"-"+ fecha.substring(3,5) +"-"+ fecha.substring(0,2);
 				
-				
-				request.setAttribute(("dia_consulta"), dia);
-				
-				
-				String relleno = "";
-				
-				
-				if (dia < 10){
-					relleno = "0";
-				}
-				
+				request.setAttribute("fecha_dia", fecha);
+							
 				try {
 					
 					if (AccionesUsuario.validarAcceso(tipo, "AccionesCuota") != 1){							
 						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 					}
 					
-					d = AccionesCuota.getPagosDia(año + "-" + mes_pago + "-" + relleno + dia);
+					double total = 0.0;
+					
+					d = AccionesCuota.getPagosDia(fecha);
+					total = total + d;
 					request.setAttribute("totalcuotas", ""+d);
 					
-					d = AccionesCuota.getInscripcionesDia(año + "-" + mes_pago + "-" + relleno + dia);
+					d = AccionesCuota.getPlanesDia(fecha);
+					total = total + d;
+					request.setAttribute("totalplanes", ""+d);
+					
+					d = AccionesCuota.getInscripcionesDia(fecha);
+					total = total + d;
 					request.setAttribute("totalinscripciones", ""+d);
+					
+					request.setAttribute("totaldia", ""+total);
 					
 					dispatcher = getServletContext().getRequestDispatcher("/pagos_dia.jsp");
 					dispatcher.forward(request, response);
