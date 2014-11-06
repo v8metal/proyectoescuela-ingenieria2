@@ -18,6 +18,12 @@
 <script src="js/jquery-1.7.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script src="js/entrevista.js"></script>
+
 </head>
 <body>
 <div class="container">
@@ -188,11 +194,11 @@
 			  </div>
 			  
 			  <div class="form-group">
-			   			
+			  			  			  
 			  <form action="EntrevistaEdit" method="post" id="formEditar" onsubmit="return validarEditar()">
 			    
 			    <table class="table table-hover table-bordered"> 
-			        
+
 			    <tr>
 				    <td><label for="input">Nombre del Alumno</label></td>
          			<td>
@@ -317,7 +323,9 @@
 		<%}%>
 		
 		<input id="mesbase" type="hidden" value="<%=mes_entrevista%>">
-				
+		
+		<p>Date: <input type="text" id="datepicker"></p>
+		
 		<table id="TablaEntrevistas" class="table table-hover table-bordered">
 			<tr>
 				<td><label for="input">Fecha</label></td>
