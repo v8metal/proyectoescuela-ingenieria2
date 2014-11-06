@@ -26,7 +26,7 @@
 		 		   //changeYear: true,
  		 		   changeMonth: true,
 		 		   dateFormat: "dd/mm/yy",		 		   
-		 		   showOn: "both",
+		// 		   showOn: "both",
 		 		   buttonText: "Seleccionar Fecha",		 		   		 		   
 		 		   beforeShowDay: $.datepicker.noWeekends,
 		 		   minDate:'0',

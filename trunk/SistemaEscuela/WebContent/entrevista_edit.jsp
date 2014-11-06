@@ -327,8 +327,8 @@
 			<tr>
 			<td><label for="input">Fecha:</label></td>			
 				<td>
-				<div class="col-xs-5">
-				<input class="form-control" type="text" id="datepicker" required name="fecha_entrevista">
+				<div class="col-xs-2">
+					<input class="form-control" type="text" id="datepicker" required autofocus name="fecha_entrevista">
 				</div>
 				</td>			
 		  	</tr>
