@@ -21,6 +21,12 @@
 <script src="js/jquery-1.7.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>		
 
+<!--<link rel="stylesheet" href="style/jquery-ui.css">  con ese no se ven las flechitas-->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/tardanzas.js"></script> <!-- DatePic para entrevistas -->
+
 </head>
 <body>
 <div class="container">
@@ -128,24 +134,8 @@
 	if (tardanza != null) {
 		
 		accion = "modificar";
-		//recupero la fecha
-		String fecha_tardanza = tardanza.getFecha();
-		//separo la fecha (1990-01-01) por el "-"" y almaceno el año, mes y dia en un array
-		String[] fecha_ent = fecha_tardanza.split ("-");
-		//obtengo el dia, mes y año respectivamente
-		dia_tardanza = Integer.parseInt(fecha_ent[fecha_ent.length - 1]);
-		mes_tardanza = fecha_ent[fecha_ent.length - 2];
-		año_tardanza = Integer.parseInt(fecha_ent[fecha_ent.length - 3]);
-	}else{	
-	
-    	dia_tardanza = Integer.valueOf((String)session.getAttribute("dia_sys"));
-    	int mes= Integer.parseInt((String) session.getAttribute("mes_sys"));
-    	if (mes < 10){
-    		mes_tardanza = "0" + mes;	
-    	}else{
-    		mes_tardanza = "" + mes;
-    	}
-	}
+		
+	}	
 
 	if(tardanza != null){
 		Alumno a = AccionesAlumno.getOne(tardanza.getDni());
@@ -156,57 +146,45 @@
 <%}%>
 </div>
 	<div class="form-group">	
-	<form action="TardanzaEdit" method="post">
+	<form action="TardanzaEdit" method="post">	
 	<input type="hidden" name=do value="<%=accion%>">
+	<input name="fecha" id="fecha" type="hidden" value="<%=tardanza!=null? tardanza.getFecha() : "0"%>">
+	<%if(tardanza != null){%>					 		
+		<input type="hidden" class="form-control" name="alumno_tardanza"value=<%=tardanza.getDni()%>>
+	<%}%>	
 		 <table class="table table-hover table-bordered">
-		    <tr> 
-				<th>Fecha </th>
-				<td><select name="dia_tardanza" class="form-control" autofocus>   
-					<%  
-					for (int i = 1; i <= 31; i++){			  	
-		 			%>
-					 	<option <%=dia_tardanza==i ? "selected" : ""%>><%=i%></option>		 	
-		   			<%
-					}	
-					%>
-		 			 </select>
-		  			 <select id="mes" name="mes_tardanza" class="form-control">
-		  			 <option value="01" <%=mes_tardanza.equals("01") ? "selected" : ""%>>Enero</option>
-					 <option value="02" <%=mes_tardanza.equals("02") ? "selected" : ""%>>Febrero</option>
-					 <option value="03" <%=mes_tardanza.equals("03") ? "selected" : ""%>>Marzo</option>
-					 <option value="04" <%=mes_tardanza.equals("04") ? "selected" : ""%>>Abril</option>
-					 <option value="05" <%=mes_tardanza.equals("05") ? "selected" : ""%>>Mayo</option>
-					 <option value="06" <%=mes_tardanza.equals("06") ? "selected" : ""%>>Junio</option>
-					 <option value="07" <%=mes_tardanza.equals("07") ? "selected" : ""%>>Julio</option>
-					 <option value="08" <%=mes_tardanza.equals("08") ? "selected" : ""%>>Agosto</option>
-					 <option value="09" <%=mes_tardanza.equals("09") ? "selected" : ""%>>Septiembre</option>
-					 <option value="10" <%=mes_tardanza.equals("10") ? "selected" : ""%>>Octubre</option>
-					 <option value="11" <%=mes_tardanza.equals("11") ? "selected" : ""%>>Noviembre</option>
-					 <option value="12" <%=mes_tardanza.equals("12") ? "selected" : ""%>>Diciembre</option>	   			 		
-		 			 </select>		  
-		  		</td>
+		    <tr>
+				<th><label for="input">Fecha:</label></th>			
+				<td>
+				<div class="col-xs-2">
+					<input class="form-control" type="text" id="datepicker" required autofocus name="fecha_tardanza">
+				</div>
+				</td>			
 		  	</tr>
-		  	<tr>		  		
-		  		<%if(tardanza ==null){%>
-		  		<th>Alumno</th>
+		  	<tr>
+		  		<%if(tardanza == null){%>
+		  		<th><label for="input">Alumno:</label></th>
 		  		<td>
+		  		<div class="col-xs-5">
 		  			<select name="alumno_tardanza" class="form-control" required>   
 		  			<%
 					for (Alumno a : alumnos.getLista()){		 		
 		 			%>
-		 			<option value=<%=a.getDni() %>><%= a.getNombre() + " " + a.getApellido() %></option>
+		 			<option class="form-control" value=<%=a.getDni() %>><%= a.getNombre() + " " + a.getApellido() %></option>
 		 			<%} %>		 		
 		 			</select>
-		 		</td>
-		 		<%}else{%>		 		
-		 		<td><input type="hidden" class="form-control" name="alumno_tardanza"value=<%=tardanza.getDni()%>></td>
-		 		<td><input type="hidden" class="form-control" name="fecha_tardanza"value=<%=tardanza.getFecha()%>></td>
-		 		<%}%>
+		 		</div>
+		 		</td>	
+		 		<%}%>	 		
 		 	</tr>
-		    <tr>
-		      <th>Observaciones</th>
-		      <td><textarea name="observaciones" cols="40" rows="4"><%=tardanza!=null?tardanza.getObservaciones():"" %></textarea></td>
-		    </tr>
+		 	<tr>
+		        <th><label for="input">Observaciones:</label></th>
+         		<td>
+         			<div class="col-xs-10">
+         			<textarea class="form-control" cols="40" rows="4" name="observaciones" placeholder="Descripción"><%=tardanza!=null?tardanza.getObservaciones():"" %></textarea>
+         			</div>
+         		</td>
+         	</tr>
 		  </table>
 		  
 		 		<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');">Guardar</button>

@@ -114,7 +114,10 @@
 	if (AccionesUsuario.validarAcceso(tipo, "tardanza_list.jsp") != 1){							
 		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 	}
-		
+	
+	int año_tardanza= (Integer) session.getAttribute("añoTardanza");
+	int año_sys = Integer.parseInt((String) session.getAttribute("año_sys"));
+	
 	Tardanzas tardanzas = (Tardanzas)session.getAttribute("tardanzas");
 
 	if (tardanzas.getTardanzas().isEmpty()){
@@ -165,9 +168,11 @@
 	}
  %>
 </table>
+<%if (año_tardanza == año_sys){%>
 <br>
 <p><strong><a href="TardanzaEdit?do=alta">Agregar Tardanza</a></strong></p>
 <br>
+<%}%>
 <%
 	}
  %>

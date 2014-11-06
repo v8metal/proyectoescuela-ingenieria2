@@ -39,14 +39,10 @@ public class TardanzaEdit extends HttpServlet {
 		
 		int tipo = (Integer) sesion.getAttribute("tipoUsuario");		
 		if (AccionesUsuario.validarAcceso(tipo, "TardanzaEdit") != 1){							
-			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			response.sendRedirect("Login");						
 		}
-
-		//System.out.println("Tardanza doGet");
-			
-		String accion = (String) request.getParameter("do");
-			
-		//System.out.println("accion= " + accion);			
+		
+		String accion = (String) request.getParameter("do");			
 		
 		switch(accion){
 			
@@ -81,7 +77,7 @@ public class TardanzaEdit extends HttpServlet {
 			case "modificar":
 				
 				if (AccionesUsuario.validarAcceso(tipo, "tardanza_edit.jsp") != 1){							
-					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					response.sendRedirect("Login");						
 				}
 				
 				int dni = Integer.parseInt(request.getParameter("dni"));
@@ -90,7 +86,7 @@ public class TardanzaEdit extends HttpServlet {
 				try {
 								
 					if (AccionesUsuario.validarAcceso(tipo, "AccionesTardanza") != 1){							
-						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						response.sendRedirect("Login");						
 					}
 					
 					Tardanza t = AccionesTardanza.getOneTardanza(dni, fecha);					
@@ -108,7 +104,7 @@ public class TardanzaEdit extends HttpServlet {
 			case "borrar":			
 			
 				if (AccionesUsuario.validarAcceso(tipo, "TardanzaList") != 1){							
-					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					response.sendRedirect("Login");						
 				}
 			
 				dni = Integer.parseInt(request.getParameter("dni"));
@@ -147,40 +143,33 @@ public class TardanzaEdit extends HttpServlet {
 		
 		int tipo = (Integer) sesion.getAttribute("tipoUsuario");		
 		if (AccionesUsuario.validarAcceso(tipo, "TardanzaEdit") != 1){							
-			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			response.sendRedirect("Login");						
 		}
 
-		//System.out.println("Tardanza doGet");
-			
 		String accion = (String) request.getParameter("do");
 			
-		//System.out.println("accion= " + accion);
-			
-		int dia = Integer.parseInt(request.getParameter("dia_tardanza"));
-		String mes = (String) request.getParameter("mes_tardanza");
-		int año = (Integer) sesion.getAttribute("añoTardanza");
+				
 		int dni = Integer.parseInt(request.getParameter("alumno_tardanza"));				
-		String obs = (String) request.getParameter("observaciones");
-								
-		String relleno = "";
-			
-		if (dia < 10) relleno = "0";
-			
-			Tardanza t = new Tardanza(dni, año + "-" + mes + "-" + relleno + dia, obs, "T", "");				
-											
+		String obs = (String) request.getParameter("observaciones");		
+		String fecha = (String) request.getParameter("fecha");		
+		String fecha_update = (String) request.getParameter("fecha_tardanza");		
+		fecha_update = fecha_update.substring(6,10) +"-"+ fecha_update.substring(3,5) +"-"+ fecha_update.substring(0,2);
+														
 		switch(accion){
 			
 			case "alta":				
 				
 				if (AccionesUsuario.validarAcceso(tipo, "TardanzaList") != 1){							
-					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					response.sendRedirect("Login");						
 				}
 				
 				try {
 					
 					if (AccionesUsuario.validarAcceso(tipo, "AccionesTardanza") != 1){							
-						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						response.sendRedirect("Login");						
 					}
+					
+					Tardanza t = new Tardanza(dni, fecha_update, obs, "T", "");
 					
 					AccionesTardanza.altaTardanza(t);												
 					
@@ -203,18 +192,18 @@ public class TardanzaEdit extends HttpServlet {
 			case "modificar":
 				
 				if (AccionesUsuario.validarAcceso(tipo, "TardanzaList") != 1){							
-					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					response.sendRedirect("Login");						
 				}
-				
-				String fecha = (String) request.getParameter("fecha_tardanza");
 				
 				try {
 					
 					if (AccionesUsuario.validarAcceso(tipo, "AccionesTardanza") != 1){							
-						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						response.sendRedirect("Login");						
 					}
 					
-					AccionesTardanza.modificarTardanza(t, fecha);												
+					Tardanza t = new Tardanza(dni, fecha, obs, "T", "");
+					
+					AccionesTardanza.modificarTardanza(t, fecha_update);												
 					
 					request.setAttribute("accion","listarTardanzas");
 					

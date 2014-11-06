@@ -188,12 +188,19 @@
 	   <%}%>
 	<%}%>	    	      
   	        
-	  </table>
-	  
-			<input type="hidden" name="accion" value="listarTardanzas">
-	  
+	  </table>	 
+			<input type="hidden" name="accion" value="listarTardanzas">	  
+	<%if(añoTardanza == null){ %>
 			<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave">Aceptar</button>
 			<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave">Cancelar</button>
+	<%}%>
+	
+	<%if(añoTardanza != null){ %>
+		<%if(!grados.getLista().isEmpty()){%>
+			<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave">Aceptar</button>
+			<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave">Cancelar</button>
+		<%}%>
+	<%}%>	
 		
 	</form>
 	</div>	
