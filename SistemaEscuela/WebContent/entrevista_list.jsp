@@ -204,8 +204,10 @@ if (entrevistas.getLista().isEmpty()){
 		<th>Fecha</th>
 		<th>Hora</th>
 		<th>Maestro</th>
-		<th>Nombre Alumno</th>		
-		<th>Descripción</th>		
+		<th>Nombre Alumno</th>
+	<%if(session.getAttribute("dni_maestro") != null){%>		
+		<th>Descripción</th>
+	<%}%>
 		<th>&nbsp;</th>
 		<th>&nbsp;</th>
 	</tr>
@@ -227,8 +229,10 @@ if (entrevistas.getLista().isEmpty()){
 		<td><%= dia +"/" + mes + "/" + año %></td>		
 		<td><%= e.getHora().substring(0,5)%></td>
 		<td><%= m.getNombre() + " " + m.getApellido() %></td>
-		<td><%= e.getNombre() %></td>	
-		<td><%= e.getDescripcion() %></td>		
+		<td><%= e.getNombre() %></td>
+	<%if(session.getAttribute("dni_maestro") != null){%>		
+		<td><%= e.getDescripcion() %></td>
+	<%}%>				
 		<td><strong><a href="EntrevistaEdit?do=modificar&fecha=<%=e.getFecha()%>&nombre=<%=e.getNombre()%>&hora=<%=e.getHora()%>">Modificar</a></strong></td>		
 		<td><strong><a href="EntrevistaEdit?do=borrar&fecha=<%=e.getFecha()%>&nombre=<%=e.getNombre()%>&hora=<%=e.getHora()%>"  onclick="return confirm('Esta seguro que desea borrar la entrevista?');">Borrar</a></strong></td>				
 	</tr>

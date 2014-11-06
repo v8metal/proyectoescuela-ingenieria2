@@ -220,6 +220,11 @@ import conexion.AccionesUsuario;
 				
 				String accion = request.getParameter("action");
 				
+				String fecha = request.getParameter("fecha_entrevista");
+				fecha = fecha.substring(6,10) +"-"+ fecha.substring(3,5) +"-"+ fecha.substring(0,2);
+				
+				String hora = request.getParameter("hora_entrevista");
+				
 				//System.out.println("doPost accion= " + accion);
 				
 				if(accion.equals("alta")){
@@ -229,15 +234,11 @@ import conexion.AccionesUsuario;
 					}
 					
 					//System.out.println("alta");
-				
-					String dia = (String) request.getParameter("dia_entrevista");					
-					String mes = (String) request.getParameter("mes_entrevista");			
-					String año = (String) sesion.getAttribute("año_sys");			
-					String hora = (String) request.getParameter("hora_entrevista");
+							
 					int maestro = Integer.valueOf(request.getParameter("maestro_entrevista"));
-					String nombre = (String) request.getParameter("nombre_entrevista");
-											
-					Entrevista ent = new Entrevista(año +"-"+ mes +"-"+ dia, hora, maestro, nombre, "");
+					String nombre = (String) request.getParameter("nombre_entrevista");				
+								
+					Entrevista ent = new Entrevista(fecha, hora, maestro, nombre, "");
 							
 					try {
 					
@@ -265,11 +266,6 @@ import conexion.AccionesUsuario;
 					}
 					
 					Entrevista et = (Entrevista) sesion.getAttribute("entrevista_edit");		
-
-					String dia = request.getParameter("dia_entrevista");
-					String mes = request.getParameter("mes_entrevista");
-					String año = request.getParameter("año_entrevista");
-					String hora = request.getParameter("hora_entrevista");
 					
 					try {
 						
@@ -277,7 +273,7 @@ import conexion.AccionesUsuario;
 							response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 						}
 												
-						AccionesEntrevista.updateOne(año +"-"+ mes +"-"+ dia, hora, et.getFecha(), et.getHora(), et.getdniMaestro());
+						AccionesEntrevista.updateOne(fecha, hora, et.getFecha(), et.getHora(), et.getdniMaestro());						
 						
 						response.sendRedirect("EntrevistaList");
 					
