@@ -160,7 +160,6 @@
 		 </div> 
 	     	<input type="hidden" name="accion" value="solicitarGrados">
 	     	<br>
-	     	<br>
 
 	<%}else{ %>
 
@@ -196,6 +195,9 @@
 	
 	<br>
 	<br>
+	
+	<p><strong><a href="pagos_dia.jsp">Ver Total de Pagos por día</a></strong></p>
+	
 	<%if(añoCuota == null){ %>
 
 <!-- 		
@@ -208,7 +210,6 @@
  
 	<%}else{ %>	
 	
-	<p><strong><a href="pagos_dia.jsp">Ver Total de Pagos por día</a></strong></p>
 	<br>
 	<br>
 	<br>
