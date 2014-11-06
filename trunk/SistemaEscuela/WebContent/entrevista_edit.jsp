@@ -14,15 +14,13 @@
 
 <!-- Bootstrap core CSS -->
 <link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
-
-<script src="js/jquery-1.7.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
-
+<!--<link rel="stylesheet" href="style/jquery-ui.css">  con ese no se ven las flechitas-->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-<script src="js/entrevista.js"></script>
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/entrevista.js"></script> <!-- DatePic para entrevistas -->
 
 </head>
 <body>
@@ -323,54 +321,17 @@
 		<%}%>
 		
 		<input id="mesbase" type="hidden" value="<%=mes_entrevista%>">
-		
-		<p>Date: <input type="text" id="datepicker"></p>
+		<input name="fecha" id="fecha" type="hidden" value="<%=entrevista!=null? entrevista.getFecha() : "0"%>">
 		
 		<table id="TablaEntrevistas" class="table table-hover table-bordered">
 			<tr>
-				<td><label for="input">Fecha</label></td>
+			<td><label for="input">Fecha:</label></td>			
 				<td>
-				<div class="col-xs-2">
-				<select name="dia_entrevista" class="form-control" autofocus>   
-					<%  
-					for (int i = dia_entrevista; i <= 31; i++){			  	
-		 			%>
-					 	<option <%=dia_entrevista==i ? "selected" : ""%>><%=i%></option>		 	
-		   			<%
-					}	
-					%>
-		 			 </select>
-		 			 </div>
-		 			 <div class="col-xs-3">
-		  			 <select id="mes" name="mes_entrevista" class="form-control">
-		  			 <option value="01" <%=mes_entrevista.equals("01") ? "selected" : ""%>>Enero</option>
-					 <option value="02" <%=mes_entrevista.equals("02") ? "selected" : ""%>>Febrero</option>
-					 <option value="03" <%=mes_entrevista.equals("03") ? "selected" : ""%>>Marzo</option>
-					 <option value="04" <%=mes_entrevista.equals("04") ? "selected" : ""%>>Abril</option>
-					 <option value="05" <%=mes_entrevista.equals("05") ? "selected" : ""%>>Mayo</option>
-					 <option value="06" <%=mes_entrevista.equals("06") ? "selected" : ""%>>Junio</option>
-					 <option value="07" <%=mes_entrevista.equals("07") ? "selected" : ""%>>Julio</option>
-					 <option value="08" <%=mes_entrevista.equals("08") ? "selected" : ""%>>Agosto</option>
-					 <option value="09" <%=mes_entrevista.equals("09") ? "selected" : ""%>>Septiembre</option>
-					 <option value="10" <%=mes_entrevista.equals("10") ? "selected" : ""%>>Octubre</option>
-					 <option value="11" <%=mes_entrevista.equals("11") ? "selected" : ""%>>Noviembre</option>
-					 <option value="12" <%=mes_entrevista.equals("12") ? "selected" : ""%>>Diciembre</option>	   			 		
-		 			 </select>
-		 			 </div>
-		<%if(entrevista != null){%>
-					 <div class="col-xs-2">
-					 <select name="año_entrevista" class="form-control">
-					<%
-					for (int i = 1900; i < 2090; i++){
-		 			 %>
-		 			 	<option <%=año_entrevista==i ? "selected" : ""%>><%=i%></option>
-					<%
-					 }
-					 %>
-		  			 </select>
-		  			 </div>
-		  <%}%>
-		  		</td>
+				<div class="col-xs-5">
+				<input class="form-control" type="text" id="datepicker" required name="fecha_entrevista">
+				</div>
+				</td>			
+		  	</tr>
 		  	<tr>
 				<td><label for="input">Hora</label></td>
 				<td>
@@ -462,5 +423,5 @@
 		}
 		%>
 </div>
-</body>
+</body> 
 </html>
