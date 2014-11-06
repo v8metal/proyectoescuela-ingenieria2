@@ -60,9 +60,9 @@ public class AccionesTardanza {
 		try{
 			Statement stm = Conexion.conectar().createStatement();
 			
-			//System.out.println("UPDATE TARDANZAS SET FECHA='"+ t.getFecha()+ "',OBSERVACIONES='"+t.getObservaciones() +"' WHERE TIPO = 'T' AND DNI='"+ t.getDni() +"' AND FECHA='" + fecha +"'");
+			//System.out.println("UPDATE TARDANZAS SET FECHA='"+ fecha + "', OBSERVACIONES='"+t.getObservaciones() +"' WHERE TIPO = 'T' AND DNI='"+ t.getDni() +"' AND FECHA='" + t.getFecha() +"'");
 			
-			i = stm.executeUpdate("UPDATE TARDANZAS SET FECHA='"+ t.getFecha()+ "',OBSERVACIONES='"+t.getObservaciones() +"' WHERE TIPO = 'T' AND DNI='"+ t.getDni() +"' AND FECHA='" + fecha +"'");
+			i = stm.executeUpdate("UPDATE TARDANZAS SET FECHA='"+ fecha + "',OBSERVACIONES='"+t.getObservaciones() +"' WHERE TIPO = 'T' AND DNI='"+ t.getDni() +"' AND FECHA='" + t.getFecha() +"'");
 			stm.close();
 			Conexion.desconectar();
 		}catch(SQLException sqle){
