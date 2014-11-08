@@ -141,7 +141,7 @@
 </div>
 <table class="table table-hover table-bordered">
 	<thead>
-	<tr>
+	<tr class="active">
 		<th>Alumno</th>
 		<th>Fecha</th>
 		<th>Observaciones</th>			
@@ -153,12 +153,18 @@
 	Alumno a = new Alumno();
 
 	for (Tardanza t : tardanzas.getTardanzas()) {		
-		a = AccionesAlumno.getOne(t.getDni());		
+		a = AccionesAlumno.getOne(t.getDni());	
+		
+		String fecha_entrevista = t.getFecha();		
+		String[] fecha_ent = fecha_entrevista.split ("-");
+		String dia = fecha_ent[fecha_ent.length - 1];
+		String mes = fecha_ent[fecha_ent.length - 2];
+		String año = fecha_ent[fecha_ent.length - 3];
 %>
 	<tbody>
 	<tr>
 		<td><%= a.getNombre() + " " + a.getApellido() %></td>		
-		<td><%= t.getFecha() %></td>
+		<td><%= dia +"/" + mes + "/" + año %></td>
 		<td><%= t.getObservaciones() %></td>				
 		<td><strong><a href="TardanzaEdit?do=modificar&&dni=<%=t.getDni()%>&&fecha=<%=t.getFecha()%>">Modificar</a></strong></td>		
 		<td><strong><a href="TardanzaEdit?do=borrar&&dni=<%=t.getDni()%>&&fecha=<%=t.getFecha()%>>" onclick="return confirm('Esta seguro que desea borrar la tardanza?');">Borrar</a></strong></td>				
@@ -180,7 +186,7 @@
 	<div class="form-group"> 
 	  	<form action="menu_tardanzas.jsp">
 	  	<input type="hidden" name="volver" value="volver">		   
-	   	<button type="submit" class="btn btn-primary"  value="Volver al Menú de Tardanzas">Volver al Menú de Tardanzas</button> 
+	   	<button type="submit" class="btn btn-primary"  value="Volver al Menú de Tardanzas">Seleccionar otro grado</button> 
 	   </form>
 	</div>
 </div>

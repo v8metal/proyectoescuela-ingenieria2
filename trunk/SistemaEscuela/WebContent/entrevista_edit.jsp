@@ -16,6 +16,9 @@
 <link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 <script src="js/bootstrap.min.js"></script>
 
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
 <!--<link rel="stylesheet" href="style/jquery-ui.css">  con ese no se ven las flechitas-->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script src="js/jquery-1.10.2.js"></script>
