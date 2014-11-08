@@ -20,6 +20,13 @@
 <script src="js/jquery-1.7.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
+<!--<link rel="stylesheet" href="style/jquery-ui.css">  con ese no se ven las flechitas-->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/entrevista.js"></script> <!-- DatePic para entrevistas -->
+
+
 </head>
 <body>
 
@@ -109,32 +116,15 @@
 			System.out.println(error);
 			session.setAttribute("error", "");
 		}
-		
-		int dia_sancion = 0;
-		String mes_sancion = "";
-		int año_sancion = 0;
-		
+	
 		Alumno alumno = null;
 		Alumnos alumnos = new Alumnos();
 		Boolean empty = false;
 		
-		if (s != null){			
- 			//separo la fecha (1990-01-01) por el "-"" y almaceno el año, mes y dia en un array
-			String[] fecha_ent = s.getFecha().split ("-");
-			//obtengo el dia, mes y año respectivamente
-			dia_sancion = Integer.parseInt(fecha_ent[fecha_ent.length - 1]);
-			mes_sancion = fecha_ent[fecha_ent.length - 2];
-			año_sancion = Integer.parseInt(fecha_ent[fecha_ent.length - 3]);
-				
-			alumno = AccionesAlumno.getOne(s.getDni());
-		
-		}else{
-			//alta de sancion
-			alumnos = (Alumnos) session.getAttribute("alumnos_sancion");	    	
-			dia_sancion = Integer.valueOf((String)session.getAttribute("dia_sys"));
-			mes_sancion = (String)session.getAttribute("mes_sys");			
-			año_sancion = Integer.valueOf((String)session.getAttribute("año_sys"));
-			//alta de sancion
+		if (s != null){				
+			alumno = AccionesAlumno.getOne(s.getDni());		
+		}else{			
+			alumnos = (Alumnos) session.getAttribute("alumnos_sancion");			
 		}		
 		
 %>
@@ -161,6 +151,7 @@
 <%}%>
 <div class="form-group">
 <form action="SancionEdit" method="post">
+<input name="fecha" id="fecha" type="hidden" value="<%=s!=null?s.getFecha():"0"%>">
 <%if (s != null){ %>
 <input type="hidden" name="action" value="update">
 <%}else{%>
@@ -188,50 +179,14 @@ if (empty == false){
 	</tr>
 <%}%>
 	<tr>
-		<td><label for="input">Fecha</label></td>
-		<td>
-		<div class="col-xs-2">
-		<select name="dia_sancion" class="form-control" autofocus>   
-			<%  
-			for (int i = 1; i <= 31; i++){			  	
- 			%>
-			 	<option <%= dia_sancion ==i ? "selected" : ""%>><%=i%></option>		 	
-   			<%
-			}	
-			 %>
- 			 </select>
- 			 </div>
- 			 <div class="col-xs-3">
-  			 <select name="mes_sancion" class="form-control">
-  			 <option value="01" <%=mes_sancion.equals("1") ? "selected" : ""%>>Enero</option>
-			 <option value="02" <%=mes_sancion.equals("2") ? "selected" : ""%>>Febrero</option>
-			 <option value="03" <%=mes_sancion.equals("3") ? "selected" : ""%>>Marzo</option>
-			 <option value="04" <%=mes_sancion.equals("4") ? "selected" : ""%>>Abril</option>
-			 <option value="05" <%=mes_sancion.equals("5") ? "selected" : ""%>>Mayo</option>
-			 <option value="06" <%=mes_sancion.equals("6") ? "selected" : ""%>>Junio</option>
-			 <option value="07" <%=mes_sancion.equals("7") ? "selected" : ""%>>Julio</option>
-			 <option value="08" <%=mes_sancion.equals("8") ? "selected" : ""%>>Agosto</option>
-			 <option value="09" <%=mes_sancion.equals("9") ? "selected" : ""%>>Septiembre</option>
-			 <option value="10" <%=mes_sancion.equals("10") ? "selected" : ""%>>Octubre</option>
-			 <option value="11" <%=mes_sancion.equals("11") ? "selected" : ""%>>Noviembre</option>
-			 <option value="12" <%=mes_sancion.equals("12") ? "selected" : ""%>>Diciembre</option>	   			 		
- 			 </select>
- 			 </div>
- <%if (s != null){ %>
- 			<div class="col-xs-2">
-			 <select name="año_sancion" class="form-control">
-			<%
-			for (int i = 1900; i < 2090; i++){
- 			 %>
- 			 	<option <%=año_sancion==i ? "selected" : ""%>><%=i%></option>
-			<%
-			 }
-			 %>
-  			 </select>
-  			 </div>
-  <%}%>
-  		</td>
-  	<tr>	
+			<td><label for="input">Fecha:</label></td>			
+			<td>
+			<div class="col-xs-5">
+			<input class="form-control" type="text" id="datepicker" required autofocus name="fecha_sancion">
+			</div>
+			</td>			
+	    </tr>
+	    <tr>	    	
 		<td><label for="input">Hora</label></td>
 		<td>
 		<div class="col-xs-2">

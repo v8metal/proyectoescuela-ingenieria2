@@ -179,9 +179,10 @@ if (sanciones.getLista().isEmpty()){
 	}
  %>
 </table>
-
 <br>
-
+<a href="SancionEdit?do=alta">Agregar nueva Sanción</a>        
+<br>
+<br>
 <form action="<%=volver%>" method="<%=method%>">
 <div class="form-group">
 <%if (b){%> 
