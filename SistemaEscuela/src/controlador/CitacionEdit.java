@@ -33,10 +33,9 @@ import datos.Maestro;
 		
 		HttpSession sesion = request.getSession();
 		
-		// modulo de seguridad
 		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
 		if (AccionesUsuario.validarAcceso(tipo, "CitacionEdit") != 1){							
-			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			response.sendRedirect("Login");						
 		}
 		
 		String accion = request.getParameter("do");
@@ -53,16 +52,14 @@ import datos.Maestro;
 	    	
 			int año = Integer.valueOf((String) sesion.getAttribute("año_sys"));
 			
-			// modulo de seguridad
 			if (AccionesUsuario.validarAcceso(tipo, "AccionesCitacion") != 1){							
-				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				response.sendRedirect("Login");						
 			}
 			
 			sesion.setAttribute("alumnos_citacion", AccionesCitacion.getAlumnos(año, maestro.getDni()));
 			
-			// modulo de seguridad
 			if (AccionesUsuario.validarAcceso(tipo, "citacion_edit.jsp") != 1){							
-				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				response.sendRedirect("Login");						
 			}
 			
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/citacion_edit.jsp");
@@ -75,18 +72,16 @@ import datos.Maestro;
 				String fecha = request.getParameter("fecha_citacion");
 				String hora = request.getParameter("hora_citacion");
 				
-				// modulo de seguridad
 				if (AccionesUsuario.validarAcceso(tipo, "AccionesCitacion") != 1){							
-					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					response.sendRedirect("Login");						
 				}
 							
 				Citacion c = AccionesCitacion.getOne(dni, fecha, hora);			
 				
 				sesion.setAttribute("citacion_edit", c);		
 				
-				// modulo de seguridad
 				if (AccionesUsuario.validarAcceso(tipo, "citacion_edit.jsp") != 1){							
-					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					response.sendRedirect("Login");						
 				}
 				
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/citacion_edit.jsp");				
@@ -99,16 +94,14 @@ import datos.Maestro;
 					String fecha = request.getParameter("fecha_citacion");
 					String hora = request.getParameter("hora_citacion");	
 					
-					// modulo de seguridad
 					if (AccionesUsuario.validarAcceso(tipo, "AccionesCitacion") != 1){							
-						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						response.sendRedirect("Login");						
 					}
 					
 					AccionesCitacion.deleteOne(dni, fecha, hora);	
 					
-					// modulo de seguridad
 					if (AccionesUsuario.validarAcceso(tipo, "citacion_edit.jsp") != 1){							
-						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						response.sendRedirect("Login");						
 					}
 									
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CitacionList");				
@@ -125,40 +118,35 @@ import datos.Maestro;
 		
 		HttpSession sesion = request.getSession();
 		
-		// modulo de seguridad
 		int tipo = (Integer) sesion.getAttribute("tipoUsuario");
 		if (AccionesUsuario.validarAcceso(tipo, "CitacionEdit") != 1){							
-			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+			response.sendRedirect("Login");						
 		}
 	
 		String accion = request.getParameter("action");
+		
+		String fecha = request.getParameter("fecha_citacion");	
+		fecha = fecha.substring(6,10) +"-"+ fecha.substring(3,5) +"-"+ fecha.substring(0,2);
 							
 		if(accion.equals("alta")){		
 			
-			int dni = Integer.valueOf(request.getParameter("alumno_citacion"));
-			
-			String dia = (String) request.getParameter("dia_citacion");
-			String mes = (String) request.getParameter("mes_citacion");
-			String año = (String) sesion.getAttribute("año_sys");
+			int dni = Integer.valueOf(request.getParameter("alumno_citacion"));			
 			String hora = request.getParameter("hora_citacion");
 			String descripcion = request.getParameter("descripcion_citacion");
 						
-			Citacion s = new Citacion(dni, año +"-"+ mes +"-"+ dia, hora, descripcion);		
+			Citacion s = new Citacion(dni, fecha, hora, descripcion);		
 			
 			try {			
-				
-				// modulo de seguridad
 				if (AccionesUsuario.validarAcceso(tipo, "AccionesCitacion") != 1){							
-					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					response.sendRedirect("Login");						
 				}
 				
 				AccionesCitacion.insertOne(s);
 				
 				sesion.setAttribute("exit_alta", "exit");	
 				
-				// modulo de seguridad
 				if (AccionesUsuario.validarAcceso(tipo, "CitacionList") != 1){							
-					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					response.sendRedirect("Login");						
 				}
 
 				response.sendRedirect("CitacionList");
@@ -166,9 +154,8 @@ import datos.Maestro;
 			} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
 				sesion.setAttribute("error", "Ya existe una citacion para el mismo dia y horario");
 				
-				// modulo de seguridad
 				if (AccionesUsuario.validarAcceso(tipo, "citacion_edit.jsp") != 1){							
-					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					response.sendRedirect("Login");						
 				}
 				
 				response.sendRedirect("citacion_edit.jsp");			
@@ -176,9 +163,8 @@ import datos.Maestro;
 			} catch (Exception e) {				
 				sesion.setAttribute("error", e);
 				
-				// modulo de seguridad
 				if (AccionesUsuario.validarAcceso(tipo, "citacion_edit.jsp") != 1){							
-					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					response.sendRedirect("Login");						
 				}
 				
 				response.sendRedirect("citacion_edit.jsp");
@@ -187,38 +173,32 @@ import datos.Maestro;
 		else if (accion.equals("update")){
 			
 			Citacion c = (Citacion) sesion.getAttribute("citacion_edit");			
-						
-			String dia_citacion = request.getParameter("dia_citacion");
-			String mes_citacion = request.getParameter("mes_citacion");
-			String año_citacion = request.getParameter("año_citacion");
+				
 			String hora_update = request.getParameter("hora_citacion");			
 			String descripcion_update = request.getParameter("descripcion_citacion");			
 			
 			try {
 				
-				// modulo de seguridad
 				if (AccionesUsuario.validarAcceso(tipo, "AccionesCitacion") != 1){							
-					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					response.sendRedirect("Login");						
 				}
 				
-				AccionesCitacion.updateOne(c.getDni(), c.getFecha(), c.getHora(), año_citacion+"-"+mes_citacion+"-"+dia_citacion, hora_update, descripcion_update);										
+				AccionesCitacion.updateOne(c.getDni(), c.getFecha(), c.getHora(), fecha, hora_update, descripcion_update);										
 				response.sendRedirect("CitacionList");
 			
 			} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
 				sesion.setAttribute("error", "Ya existe una citacion para el mismo dia y horario");
 				
-				// modulo de seguridad
 				if (AccionesUsuario.validarAcceso(tipo, "citacion_edit.jsp") != 1){							
-					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					response.sendRedirect("Login");						
 				}
 				
 				response.sendRedirect("citacion_edit.jsp");			
 			} catch (Exception e) {				
 				sesion.setAttribute("error", e);
-				
-				// modulo de seguridad
+								
 				if (AccionesUsuario.validarAcceso(tipo, "citacion_edit.jsp") != 1){							
-					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					response.sendRedirect("Login");						
 				}
 				
 				response.sendRedirect("citacion_edit.jsp");

@@ -137,20 +137,20 @@ import datos.Sancion;
 			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 		}
 	
-		String accion = request.getParameter("action");
+		String accion = request.getParameter("action");		
+		String fecha = request.getParameter("fecha_sancion");
+		fecha = fecha.substring(6,10) +"-"+ fecha.substring(3,5) +"-"+ fecha.substring(0,2);
 		
 		switch(accion){
 		
 		case "alta":		
 			
 			int dni = Integer.valueOf(request.getParameter("alumno_sancion"));
-			String dia = request.getParameter("dia_sancion");
-			String mes = request.getParameter("mes_sancion");
-			String año = (String) sesion.getAttribute("año_sys");
+			
 			String hora = request.getParameter("hora_sancion");
 			String motivo = request.getParameter("motivo_sancion");
 			
-			Sancion s = new Sancion(dni, año +"-"+ mes +"-"+ dia, hora, motivo);
+			Sancion s = new Sancion(dni, fecha, hora, motivo);
 			
 			try {
 				
@@ -197,9 +197,6 @@ import datos.Sancion;
 			
 			s = (Sancion) sesion.getAttribute("sancion_edit");
 			
-			String dia_sancion = request.getParameter("dia_sancion");
-			String mes_sancion = request.getParameter("mes_sancion");
-			String año_sancion = request.getParameter("año_sancion");
 			String hora_update = request.getParameter("hora_sancion");
 			String motivo_update = request.getParameter("motivo_sancion");
 						
@@ -210,7 +207,7 @@ import datos.Sancion;
 					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 				}
 				
-				AccionesSancion.updateOne(s.getDni(), s.getFecha(), s.getHora(), año_sancion+"-"+mes_sancion+"-"+dia_sancion, hora_update, motivo_update);
+				AccionesSancion.updateOne(s.getDni(), s.getFecha(), s.getHora(), fecha, hora_update, motivo_update);
 				
 				// modulo de seguridad
 				if (AccionesUsuario.validarAcceso(tipo, "SancionList") != 1){							

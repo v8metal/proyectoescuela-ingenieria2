@@ -179,10 +179,10 @@ if (citaciones.getLista().isEmpty()){
 	}
  %>
 </table>
-
-
 <br>
-
+<a href="CitacionEdit?do=alta">Agregar nueva Citación</a>
+<br>
+<br>
 <form action="<%=volver%>" method="<%=method%>">
 <div class="form-group">
 <%if (b){%> 
