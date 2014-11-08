@@ -129,7 +129,7 @@ if (citaciones.getLista().isEmpty()){
 <!-- MENSAJE ATENCION -->
 	<div class="alert alert-info" role="alert">
 		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	<strong>Atención!</strong> No hay citaciones para el año seleccionado. <a href="citaciones_select.jsp?action=listar" class="alert-link">Volver a selección de año</a>
+     	<strong>Atención!</strong> No hay citaciones para el año seleccionado. <a href="CitacionEdit?do=alta">Agregar nueva Citación</a>
     </div>
 <%	
 }else{
