@@ -180,7 +180,8 @@ if (sanciones.getLista().isEmpty()){
  %>
 </table>
 <br>
-<a href="SancionEdit?do=alta">Agregar nueva Sanción</a>        
+	<strong><a href="SancionEdit?do=alta">Nueva Sanción</a></strong>
+<br>
 <br>
 <br>
 <form action="<%=volver%>" method="<%=method%>">

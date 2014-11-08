@@ -183,9 +183,9 @@ if (c == null){
 	</tr>
 <%}%>
 		<tr>
-			<th><label for="input">Fecha:</label></th>			
+			<th><label for="input">Fecha</label></th>			
 			<td>
-			<div class="col-xs-5">
+			<div class="col-xs-2">
 			<input class="form-control" type="text" id="datepicker" required autofocus name="fecha_citacion">
 			</div>
 			</td>			

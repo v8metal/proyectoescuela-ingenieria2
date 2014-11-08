@@ -180,7 +180,8 @@ if (citaciones.getLista().isEmpty()){
  %>
 </table>
 <br>
-<a href="CitacionEdit?do=alta">Agregar nueva Citación</a>
+	<strong><a href="CitacionEdit?do=alta">Nueva Citación</a></strong>
+<br>
 <br>
 <br>
 <form action="<%=volver%>" method="<%=method%>">
