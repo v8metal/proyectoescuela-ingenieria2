@@ -88,36 +88,50 @@
                 </ul>
               </li>
             </ul>
-             <ul class="nav navbar-nav navbar-right">
-              <li class="active"><a href="CerrarSesion">Salir</a></li>
-            </ul>
-            <ul>
-          		<p class="navbar-text navbar-right"><strong><%= nombre + " " + apellido %></strong></p>
-            </ul> 
+            <ul class="nav navbar-nav navbar-right">
+            <li>
+            	<div class="navbar-collapse collapse">
+        		  <form action="cerrarSesion" method="post" class="navbar-form navbar-right" role="form">
+           		 	<button type="submit" class="btn btn-primary">Salir</button>
+        		  </form>
+        		  <p class="navbar-text navbar-right"><strong><%= nombre + " " + apellido %></strong></p>
+        		</div>
+			</li>
+          </ul>
         </div>
       </div>
     </div>
   
+  <br>
   <br>
   
 <%
 	if (tardanzas.getTardanzas().isEmpty()){
 %>
 <div class="page-header">
-<h1>No hay Asistencias cargadas - Fecha <%=fechaDisplay%></h1>
+<h1>Listado de Asistencias</h1>
 </div>
+<br>
+<div class="alert alert-info fade in" role="alert">
+	   <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	   <strong>Atención!</strong> No hay Asistencias cargadas el día <%=fechaDisplay%>. <a href="menu_asistencias.jsp" class="alert-link">Seleccionar otro grado/fecha</a>
+</div> 
 <%}else{%> 
 <div class="page-header">
-<h1>Listado de Asistencias - Fecha <%=fechaDisplay%></h1>
+<h1>Listado de Asistencias</h1>
 </div>
+<h3>Fecha: <%=fechaDisplay%></h3>
+<br>
 <table class="table table-hover table-bordered">
-	<tr>
+	<thead>
+	<tr class="active">
 		<th>Alumno</th>		
+		<th>Condición</th>	
 		<th>Observaciones</th>
-		<th>Condición</th>			
 		<th>&nbsp;</th>
 		<th>&nbsp;</th>
 	</tr>
+	</thead>
 <%	
 	Alumno a = new Alumno();	
 	String accion = "";
@@ -128,25 +142,24 @@
 		
 		if (t.getTipo().equals("V")) accion = "Alta";
 	%>
-
+	<tbody>
 	<tr>
 		<td><%= a.getNombre() + " " + a.getApellido() %></td>		
-		<td><%= t.getObservaciones() %></td>
-		<td><%= t.getIndicador() %></td>		
-		<td><a href="AsistenciaEdit?do=<%=accion%>&&dni=<%=t.getDni()%>&&fecha=<%=fecha%>"><%=accion%></a></td>
+		<td><%= t.getIndicador() %></td>	
+		<td><%= t.getObservaciones() %></td>	
+		<td><strong><a href="AsistenciaEdit?do=<%=accion%>&&dni=<%=t.getDni()%>&&fecha=<%=fecha%>"><%=accion%></a></strong></td>
 		<%if (t.getTipo().equals("A")){%>		
-		<td><a href="AsistenciaEdit?do=borrar&&dni=<%=t.getDni()%>&&fecha=<%=fecha%>>" onclick="return confirm('Esta seguro que desea borrar la Asistencia?');">Borrar</a></td>
+		<td><strong><a href="AsistenciaEdit?do=borrar&&dni=<%=t.getDni()%>&&fecha=<%=fecha%>>" onclick="return confirm('Esta seguro que desea borrar la Asistencia?');">Borrar</a></strong></td>
 		<%}else{%>
 		<td></td>
 		<%}%>
 	</tr>
+	</tbody>
 <%
 	}
  %>
 </table>
-<%
-	}
- %>
+
  	<br>
 	<br>
 	<div class="form-group"> 
@@ -155,6 +168,11 @@
 	   	<button type="submit" class="btn btn-primary"  value="Seleccionar otro grado/fecha">Seleccionar otro grado/fecha</button> 
 	   </form>
 	</div>
+	
+<%
+	}
+ %>
+
 </div>
 </body>
 </html>

@@ -89,17 +89,21 @@
               </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li class="active"><a href="CerrarSesion">Salir</a></li>
-            </ul>
-            <ul>
-          		<p class="navbar-text navbar-right"><strong><%= nombre + " " + apellido %></strong></p>
-            </ul> 
+            <li>
+            	<div class="navbar-collapse collapse">
+        		  <form action="cerrarSesion" method="post" class="navbar-form navbar-right" role="form">
+           		 	<button type="submit" class="btn btn-primary">Salir</button>
+        		  </form>
+        		  <p class="navbar-text navbar-right"><strong><%= nombre + " " + apellido %></strong></p>
+        		</div>
+			</li>
+          </ul>
         </div>
       </div>
-    </div>  
-  <br>
+    </div>
   
-<div class="page-header">
+  <br>
+  <br>
 <%
 	String accion = "Alta";
 
@@ -110,11 +114,23 @@
 		a = AccionesAlumno.getOne(asistencia.getDni());
 		accion = "Modificar";
 %>
-<h1>Edición de asistencia - <%=a.getNombre() + " " + a.getApellido() + " - " + fecha %></h1>
-<%}else{%>
-<h1>Alta de asistencia - <%=alumno.getNombre() + " " + alumno.getApellido() + " - " + fecha %></h1>
-<%}%>
+<div class="page-header">
+<h1>Edición de asistencia</h1>
 </div>
+
+<h3><%=a.getNombre() + " " + a.getApellido() + " - " + fecha %></h3>
+<br>
+
+<%}else{%>
+<div class="page-header">
+<h1>Alta de asistencia</h1>
+</div>
+
+<h3><%=alumno.getNombre() + " " + alumno.getApellido() + " - " + fecha %></h3>
+<br>
+ 
+<%}%>
+
 	<div class="form-group">	
 	<form action="AsistenciaEdit" method="post">
 	<input type="hidden" name=do value="<%=accion%>">
@@ -122,31 +138,35 @@
 		<table class="table table-hover table-bordered">
 		    <tr> <%= error %></tr>
 		    <tr>
-		      <th>OBSERVACIONES:</th>
-		      <td><textarea name="observaciones" cols="40" rows="4" class="form-control" placeholder="Observaciones"><%=asistencia!=null?asistencia.getObservaciones():"" %></textarea></td>
-		    </tr>
-		    <tr>
-		      <th>CONDICION:</th>		      
-		      <td>		     
-		      <select class="form-control" name="condicion">
-		      <%if(asistencia!=null){%>
-		      <option value="Ausente" <%=asistencia.getIndicador().equals("Ausente") ? "selected" : ""%>>Ausente</option>
-		      <option value="Presente" <%=asistencia.getIndicador().equals("Presente") ? "selected" : ""%>>Presente</option>
-		      <%}else{ %>
-		      <option value="Ausente" selected >Ausente</option>
-		      <option value="Presente" >Presente</option>
-		      <%}%>		      	      
-		      </select>		      	      
-		      </td>
-		    </tr>
-		    <tr>
-		      <td></td>
+		      <th>CONDICION</th>		      
 		      <td>
-		      	  <button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');">Guardar</button>
-		          <button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button> 
+		      <div class="col-xs-3">		     
+		     	 <select class="form-control" name="condicion" autofocus>
+		     	 <%if(asistencia!=null){%>
+		     	 <option value="Ausente" <%=asistencia.getIndicador().equals("Ausente") ? "selected" : ""%>>Ausente</option>
+		     	 <option value="Presente" <%=asistencia.getIndicador().equals("Presente") ? "selected" : ""%>>Presente</option>
+		      	<%}else{ %>
+		     	 <option value="Ausente" selected >Ausente</option>
+		     	 <option value="Presente" >Presente</option>
+		     	 <%}%>		      	      
+		      	</select>	
+		      </div>	      	      
+		      	</td>
+		    </tr>
+		    <tr>
+		      
+		      <th>OBSERVACIONES</th>
+		      <td>
+		      	<div class="col-xs-8">
+		      		<textarea name="observaciones" cols="40" rows="4" class="form-control" placeholder="Observaciones"><%=asistencia!=null?asistencia.getObservaciones():"" %></textarea>
+		      	</div>
 		      </td>
-		    </tr>  
+		    </tr> 
 		  </table>
+		  
+		  		  <button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');">Guardar</button>
+		          <button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button> 
+		          
 		  </form>
 		  </div>
 		  <br>
