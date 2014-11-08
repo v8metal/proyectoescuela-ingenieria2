@@ -180,16 +180,11 @@
         <tr>
           <th>Recargo:</th>
           <td><input type="text" class="form-control" placeholder="Recargo Mensual" name="recargo" value="<%=precio!=null?precio.getRecargo():""%>"></td>
-        </tr>
-        <tr>
-         <td></td>
-         <td>
-             <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');">Aceptar</button>         	 
-             <button type="reset" class="btn btn-primary"   value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button>
-             <input type="hidden" name="error" value="ERROR!!!">
-         </td>
-       </tr>
+        </tr>        
       </table>
+      	<button type="submit" class="btn btn-primary"  value="Aceptar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');">Aceptar</button>         	 
+        <button type="reset" class="btn btn-primary"   value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button>
+        <input type="hidden" name="error" value="ERROR!!!">
     </form>
     </div>
     <br>

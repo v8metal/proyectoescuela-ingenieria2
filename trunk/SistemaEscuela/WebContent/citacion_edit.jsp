@@ -118,8 +118,7 @@
 			session.setAttribute("error", "");
 		}
 		
-		//alta de sancion
-		int dia_alta = 0;
+		//alta de sancion		
 		boolean empty = false;
 		
 		Alumnos alumnos = new Alumnos();

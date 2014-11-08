@@ -18,8 +18,14 @@
 <!-- Bootstrap core CSS -->
 <link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 
-<script src="js/jquery-1.7.2.min.js"></script>
+<!-- <script src="js/jquery-1.7.2.min.js"></script> -->
 <script src="js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="style/jquery-ui.css">
+<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css"> -->
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/entrevista.js"></script> <!-- DatePic para entrevistas -->
 
 </head>
 <body>
@@ -138,6 +144,7 @@
 </div>
  
  <%}
+ 		
  		int dia_plan = 0;
 		String mes_plan = "";
 		int año_plan = 0;
@@ -145,6 +152,7 @@
 		int fin = 0;		
 	
 		if (plan != null) {
+			
 			//recupero la fecha
 			String fecha_pago = plan.getFecha();
 			//separo la fecha (1990-01-01) por el "-"" y almaceno el año, mes y dia en un array
@@ -153,7 +161,6 @@
 			dia_plan = Integer.parseInt(fecha_ent[fecha_ent.length - 1]);
 			mes_plan = fecha_ent[fecha_ent.length - 2];
 			año_plan = Integer.parseInt(fecha_ent[fecha_ent.length - 3]);
-		
 			inicio = plan.getPeriodoini();
 			fin = plan.getPeriodofin();			
 		
@@ -172,7 +179,7 @@
 	   	
 	   		//año_plan = Integer.valueOf((String)session.getAttribute("año_sys"));
 	   		año_plan= año;
-	   	
+	   	 
 	   		inicio = Integer.parseInt(mes_plan);
 	   		fin = inicio;	   		
 	 //Alta de plan  
@@ -202,55 +209,27 @@ if (alumnos.getLista().size() == 0){%>
  	
  	<div class="form-group">
 	<form action="PlanPagoList" method="get">
+	<input name="fecha" id="fecha" type="hidden" value="<%=plan!=null?plan.getFecha():"0"%>">
+	<input name="cod_plan" type="hidden" value="<%=plan!=null?plan.getCod_plan():0%>">
 	<%if (plan != null) { %>
 	<input name=accion type=hidden value ="modificarPlanPago">
 	<%}else{%>
 	<input name=accion type=hidden value ="altaPlanPago">
 	<%}%>	
 	<table class="table table-hover table-bordered">
-	<%if (plan != null){%>
 		<tr>
-			<td>Fecha Alta</td>			
+			<td><label for="input">Fecha:</label></td>			
 			<td>
-				<input readonly size= 2 name="dia_plan" type="text" value="<%=dia_plan %>"> 				 		
-  			 	<input readonly size= 10 name="mes_plan" type="text" value="<%=mesplan%>">	  	 		
-		  	    <input name="año_plan" size= 4  type="text" value="<%=año%>">  
-		  	</td>
-		</tr>
-		
-	<%}else{%>		
-		<tr>
-			<td>Fecha </td>			
-			<td>
-				<select name="dia_plan">			   
-				<% for (int i = 1; i <= 31; i++){%>
-				<option <%=dia_plan==i ? "selected" : ""%>><%=i%></option>		 	
-		   		<%}%>
-		 		</select>
-		 				 		
-  			 	<select name="mes_plan">
-  			 	
-  			 	<option value="03" <%=mes_plan.equals("03") ? "selected" : ""%>>Abril</option>
-			 	<option value="04" <%=mes_plan.equals("04") ? "selected" : ""%>>Abril</option>
-			 	<option value="05" <%=mes_plan.equals("05") ? "selected" : ""%>>Mayo</option>
-			 	<option value="06" <%=mes_plan.equals("06") ? "selected" : ""%>>Junio</option>
-				<option value="07" <%=mes_plan.equals("07") ? "selected" : ""%>>Julio</option>
-			 	<option value="08" <%=mes_plan.equals("08") ? "selected" : ""%>>Agosto</option>
-			 	<option value="09" <%=mes_plan.equals("09") ? "selected" : ""%>>Septiembre</option>
-				<option value="10" <%=mes_plan.equals("10") ? "selected" : ""%>>Octubre</option>
-			 	<option value="11" <%=mes_plan.equals("11") ? "selected" : ""%>>Noviembre</option>
-			 	<option value="12" <%=mes_plan.equals("12") ? "selected" : ""%>>Diciembre</option>	   			 		
- 				</select>
-		  		
-		  	    <input name="año_plan" type="hidden" value="<%=año%>">
-		</tr>
-		
-		<%}%>
-		
+			<div class="col-xs-5">
+			<input <%if(plan!=null){%> readonly <%}%> class="form-control" type="text" id="datepicker" required autofocus name="fecha_pp">
+			</div>			
+			</td>			
+	    </tr>		
 		<%if (plan == null){%>
 		<tr>
 			<td> Alumno </td>		
-			<td>			
+			<td>
+			<div class="col-xs-5">			
 			<select name="dni">
 	      	<%for (Alumno a1 : alumnos.getLista()) { 
 	      		
@@ -261,23 +240,27 @@ if (alumnos.getLista().size() == 0){%>
 	      	<%	}
 	      	}%>	      	
 	     	</select>
+	     	</div>
 	     	<td>
 	    </tr>
 	    <%}else{%>
 	    <tr>
-			<td> ALUMNO </td>		
-			<td> <input readonly size = 40 name="alumno" type="text" value="<%= a.getNombre() + " " + a.getApellido() %>"></td>
-			<td> <input name="cod_plan" type="hidden" value="<%=plan.getCod_plan()%>"></td>
+			<td> Alumno </td>		
+			<td>
+				<div class="col-xs-5">	 
+				<input readonly size = 40 name="alumno" type="text" value="<%= a.getNombre() + " " + a.getApellido() %>">
+				</div>
+			</td>			
 	    </tr>
 	    <%}%>
 		<tr>		
-			<td>AÑO INICIO</td>
+			<td>Año Inicio</td>
 			<td>
+				<div class="col-xs-5">	
 				<select name="añoini">   
 				<%  
 			    int i = 0;				
-				int añop = 0;
-				
+				int añop = 0;				
 				
 				if (plan != null) añop = plan.getAñoini(); else añop= año_plan;
 				
@@ -292,11 +275,13 @@ if (alumnos.getLista().size() == 0){%>
 						<option <%=i==año_plan ? "selected" : ""%>><%=i%></option>
 					<%}%>
 		   		<%}%>			 
-				</select>			
+				</select>
+				</div>	
  			</td>
  		<tr>
-			<td>PERIODO INICIO</td>
+			<td>Periodo Inicio</td>
 			<td>
+				<div class="col-xs-5">	
 			  	<select name="periodo_ini">
   			 	  			 	
 			 	<option value="3" <%=inicio == 3 ? "selected" : ""%>>Marzo</option>
@@ -312,13 +297,14 @@ if (alumnos.getLista().size() == 0){%>
 			 	<option value="13" <%=inicio == 13 ? "selected" : ""%>>Inscripcion</option>			 	
 			 				 		   			 		
  			 	</select>
- 			  			 	
+ 			 	</div> 			  			 	
 		  	</td>	  		
 		</tr>
 		
 		<tr>
-			<td>AÑO FIN</td>
+			<td>Año Fin</td>
 			<td>
+				<div class="col-xs-5">
 				<select name="añofin">   
 					<%				
 					if (plan != null) añop = plan.getAñofin(); else añop= año_plan;				
@@ -327,11 +313,13 @@ if (alumnos.getLista().size() == 0){%>
 					for (; i <= añop; i++){%>
 						<option <%=i==añop? "selected" : ""%>><%=i%></option>		 	
 		   			<%}%>			
-				</select>			
+				</select>
+				</div>			
  			</td>
  		<tr>
-			<td>PERIODO FIN</td>
+			<td>Periodo Fin</td>
 			<td>
+				<div class="col-xs-5">	
 			  	<select name="periodo_fin">
   			 	  			 	
 				<option value="3" <%=fin == 3 ? "selected" : ""%>>Marzo</option>
@@ -347,19 +335,28 @@ if (alumnos.getLista().size() == 0){%>
 			 	<option value="13" <%=fin == 13 ? "selected" : ""%>>Inscripcion</option>
 			 				 		   			 		
  			 	</select>
+ 			 	</div>
  			  			 	
 		  		</td>		  		
 		</tr>
 		
 		<tr>
-			<td>OBSERVACIONES</td>
-			<td><textarea name="obs" cols="40" rows="1"><%=plan!=null?plan.getObservaciones(): ""%></textarea></td>			
+			<td>Observaciones</td>
+			<td>
+				<div class="col-xs-5">	
+				<textarea name="obs" cols="40" rows="1"><%=plan!=null?plan.getObservaciones(): ""%></textarea>
+				</div>
+			</td>			
 		</tr>
 		
 		<%if(plan !=null){%>
 		<tr>
 			<td>TOTAL DE PAGOS</td>
-			<td><input readonly type=text name="total" value= <%=AccionesPlanPago.getTotalPlanPago(plan.getCod_plan())%>></td>			
+			<td>
+				<div class="col-xs-5">	
+				<input readonly type=text name="total" value= <%=AccionesPlanPago.getTotalPlanPago(plan.getCod_plan())%>>
+				</div>
+			</td>			
 		</tr>
 		<%}%>
 		<tr>

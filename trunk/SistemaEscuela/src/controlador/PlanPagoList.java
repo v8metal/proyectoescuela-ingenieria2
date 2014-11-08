@@ -55,6 +55,19 @@ public class PlanPagoList extends HttpServlet {
 		}else{
 			 accion = (String) request.getParameter("accion");
 		}
+		
+		String fecha = "";
+		
+		if (request.getParameter("fecha_ppp") != null){	//pago para plan de pago	
+			fecha = request.getParameter("fecha_ppp");
+			fecha = fecha.substring(6,10) +"-"+ fecha.substring(3,5) +"-"+ fecha.substring(0,2);			
+		}
+		
+		if (request.getParameter("fecha_pp") != null){ //plan de pago			
+			fecha = request.getParameter("fecha_pp");
+			fecha = fecha.substring(6,10) +"-"+ fecha.substring(3,5) +"-"+ fecha.substring(0,2);			
+		}
+		 
 			
 		//System.out.println("accion= " + accion);
 			
@@ -99,9 +112,12 @@ public class PlanPagoList extends HttpServlet {
 				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 			}
 				
+			/*
 			int dia = Integer.parseInt(request.getParameter("dia_plan"));
 			int mes = Integer.parseInt(request.getParameter("mes_plan"));
+			*/
 			int año = (Integer) sesion.getAttribute("añoPlan");
+			
 			
 			int dni = Integer.parseInt(request.getParameter("dni"));
 			int añoini = Integer.parseInt(request.getParameter("añoini"));
@@ -110,18 +126,19 @@ public class PlanPagoList extends HttpServlet {
 			int fin = Integer.parseInt(request.getParameter("periodo_fin"));
 			String obs = (String) request.getParameter("obs");
 			
-			String relleno = "";
-			
+			/*
+			String relleno = "";		
 			
 			if (dia < 10){
 				relleno = "0";
 			}
+			*/
 			
 			//sesion.setAttribute("dni", dni);
 			
 			try {
 				
-				PlanPago plan = new PlanPago(0, dni, añoini, añofin, inicio, fin, año + "-" + mes + "-" + relleno + dia, obs);
+				PlanPago plan = new PlanPago(0, dni, añoini, añofin, inicio, fin, fecha, obs);
 				
 				if (AccionesUsuario.validarAcceso(tipo, "AccionesPlanPago") != 1){							
 					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
@@ -265,20 +282,24 @@ public class PlanPagoList extends HttpServlet {
 					
 			    PlanPago plan = (PlanPago) sesion.getAttribute("planPagos");
 				
+			    /*
 			    dia = Integer.parseInt(request.getParameter("diapp"));
 			    mes = Integer.parseInt(request.getParameter("mespp"));
 			    año = Integer.parseInt(request.getParameter("añopp"));
+			    */
 			    double pago = Double.parseDouble(request.getParameter("pagopp"));
 			    obs = (String) request.getParameter("obspp");
 			    
+			    /*
 			    if (dia < 10){
 					relleno = "0";
 				}
+				*/
 				
 							
 				try {
 					
-					PagoPlanPago pagopp = new PagoPlanPago(plan.getCod_plan(), 0, plan.getDni(), año + "-" + mes + "-" + dia, pago, obs);
+					PagoPlanPago pagopp = new PagoPlanPago(plan.getCod_plan(), 0, plan.getDni(), fecha, pago, obs);
 					
 					if (AccionesUsuario.validarAcceso(tipo, "AccionesPlanPago") != 1){							
 						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
@@ -338,20 +359,24 @@ public class PlanPagoList extends HttpServlet {
 				    
 				    plan = (PlanPago) sesion.getAttribute("planPagos");
 				    
+				    /*
 				    dia = Integer.parseInt(request.getParameter("diapp"));
 				    mes = Integer.parseInt(request.getParameter("mespp"));
 				    año = Integer.parseInt(request.getParameter("añopp"));
+				    */
 				    pago = Double.parseDouble(request.getParameter("pagopp"));
 				    obs = (String) request.getParameter("obspp");
 				    
+				    /*
 				    if (dia < 10){
 						relleno = "0";
 					}
+					*/
 					
 								
 					try {
 						
-						PagoPlanPago pagopp = new PagoPlanPago(plan.getCod_plan(), cod_pago, plan.getDni(), año + "-" + mes + "-" + dia, pago, obs);
+						PagoPlanPago pagopp = new PagoPlanPago(plan.getCod_plan(), cod_pago, plan.getDni(), fecha, pago, obs);
 					
 						if (AccionesUsuario.validarAcceso(tipo, "AccionesPlanPago") != 1){							
 							response.sendRedirect("Login"); //redirecciona al login, sin acceso						

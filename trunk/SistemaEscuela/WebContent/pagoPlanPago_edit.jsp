@@ -22,6 +22,13 @@
 <script src="js/jquery-1.7.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
+<!--<link rel="stylesheet" href="style/jquery-ui.css">  con ese no se ven las flechitas-->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/entrevista.js"></script> <!-- DatePic para entrevistas -->
+
+
 </head>
 <body>
 <div class="container">
@@ -110,7 +117,7 @@
   <br>
   <br>
   
-<center>
+<!--  <center>  -->
  <% 
  	int tipo = (Integer) session.getAttribute("tipoUsuario");						
  	if (AccionesUsuario.validarAcceso(tipo, "pagoPlanPago_edit.jsp") != 1){							
@@ -167,10 +174,13 @@
 	<h2><%= "Plan de pagos - "+ a.getNombre() + " " + a.getApellido()  + " - De " + mesini + " " + plan.getAñoini() + " a "  + mesfin + " " + plan.getAñofin()%></h2>
 </div>
 <%
+	/*
 	int dia_pp = 0;
 	String mes_pp = "";
 	int año_pp = 0;
+	*/
 	
+	/*
 	if (ppp != null) {
 		//recupero la fecha
 		String fecha_pago = ppp.getFecha() ;
@@ -195,58 +205,45 @@
 	   	}
 	   	
 	   	año_pp = Integer.valueOf((String)session.getAttribute("año_sys"));
-	 //Alta de pago  
-	}
+	 //Alta de pago
+	 */
+	//}	
 	
 	//System.out.println("mes= " + mes_ppp);
    	%>
    	<div class="form-group">
 	<form action="PlanPagoList" method="get">
+	<input name="fecha" id="fecha" type="hidden" value="<%=ppp!=null?ppp.getFecha():"0"%>">
 	<%if (ppp != null) { %>
 	<input name=accion type=hidden value ="modificarPagopp2">
 	<%}else{%>
 	<input name=accion type=hidden value ="altaPagopp">
 	<%}%>	
 	<table class="table table-hover table-bordered">
-				<tr>
-				<td>Fecha </td>
-				<td><select name="diapp">   
-					<%  
-					for (int i = 1; i <= 31; i++){			  	
-		 			%>
-					 	<option <%=dia_pp==i ? "selected" : ""%>><%=i%></option>		 	
-		   			<%
-					}	
-					%>
-
-		 		</select>
-		 		
-  			 	<select name="mespp">
-  			 	
-  			 	<option value="01" <%=mes_pp.equals("01") ? "selected" : ""%>>Enero</option>
-			 	<option value="02" <%=mes_pp.equals("02") ? "selected" : ""%>>Febrero</option>
-			 	<option value="03" <%=mes_pp.equals("03") ? "selected" : ""%>>Marzo</option>
-			 	<option value="04" <%=mes_pp.equals("04") ? "selected" : ""%>>Abril</option>
-			 	<option value="05" <%=mes_pp.equals("05") ? "selected" : ""%>>Mayo</option>
-			 	<option value="06" <%=mes_pp.equals("06") ? "selected" : ""%>>Junio</option>
-				<option value="07" <%=mes_pp.equals("07") ? "selected" : ""%>>Julio</option>
-			 	<option value="08" <%=mes_pp.equals("08") ? "selected" : ""%>>Agosto</option>
-			 	<option value="09" <%=mes_pp.equals("09") ? "selected" : ""%>>Septiembre</option>
-				<option value="10" <%=mes_pp.equals("10") ? "selected" : ""%>>Octubre</option>
-			 	<option value="11" <%=mes_pp.equals("11") ? "selected" : ""%>>Noviembre</option>
-			 	<option value="12" <%=mes_pp.equals("12") ? "selected" : ""%>>Diciembre</option>	   			 		
- 			 	</select> 			 	
-		  		</td>
-		  		<td> <input name="añopp" type="hidden" value="<%=año_pp%>">  </td>
-		  	<tr>	
+		<tr>
+			<th><label for="input">Fecha:</label></th>			
+			<td>
+			<div class="col-xs-5">
+			<input class="form-control" type="text" id="datepicker" required autofocus name="fecha_ppp">
+			</div>
+			</td>			
+	    </tr>
 		<tr>
 			<td>PAGO</td>
-			<td><input type="text" class="form-control" placeholder="Importe" name="pagopp" value="<%=ppp!=null?ppp.getPago(): ""%>"></td>
+			<td>
+				<div class="col-xs-5">
+				<input type="text" class="form-control" placeholder="Importe" name="pagopp" value="<%=ppp!=null?ppp.getPago(): ""%>">
+				</div>
+			</td>
 		</tr>
 		
 		<tr>
 			<td>OBSERVACIONES</td>
-			<td><textarea class="form-control" placeholder="Observaciones" name="obspp" cols="40" rows="1"><%=ppp!=null?ppp.getObservaciones(): ""%></textarea></td>			
+			<td>
+				<div class="col-xs-5">
+				<textarea class="form-control" placeholder="Observaciones" name="obspp" cols="40" rows="1"><%=ppp!=null?ppp.getObservaciones(): ""%></textarea>
+				</div>
+			</td>			
 		</tr>
 		
 	</table> 
@@ -262,7 +259,7 @@
 	</div>
 <br>
 <br>
-</center>
+<!--  </center>  -->
 <div class="form-group">
 <form action="PlanPagoList" method="get">
 <input name="accion" type="hidden" value="listarPagosPlan">

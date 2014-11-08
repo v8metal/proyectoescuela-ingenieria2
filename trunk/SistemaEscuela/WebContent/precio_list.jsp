@@ -199,7 +199,7 @@
           %>
             	<tr>
             	  <td><%=precioI.getAño() %></td>            	
-            	  <td><%=precioI.getFecha_max() %></td>
+            	  <td><%= precioI.getFecha_max().substring(8, 10)  + "/" + precioI.getFecha_max().substring(5, 7) + "/" + precioI.getFecha_max().substring(0, 4)%></td>
             	  <td><%=precioI.getPrecio() %></td>
             	  <td><%=precioI.getRecargo() %></td>            	  
             	  <td><a href="PrecioEdit?accion=modificarInscrip&&año=<%=precioI.getAño()%>">Modificar</a></td>

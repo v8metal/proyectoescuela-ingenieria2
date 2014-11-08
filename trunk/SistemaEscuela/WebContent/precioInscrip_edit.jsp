@@ -16,6 +16,12 @@
 <script src="js/jquery-1.7.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
+<!--<link rel="stylesheet" href="style/jquery-ui.css">  con ese no se ven las flechitas-->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/entrevista.js"></script> <!-- DatePic para entrevistas -->
+
 </head>
 <body>
 <div class="container">
@@ -109,35 +115,13 @@
 		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 	}
 	
-	int dia = 0;
-	String mes = "";
+	
 	int año = 0;
 	
 	PrecioInscrip precio = (PrecioInscrip)session.getAttribute("precioInscrip");
+	año = (Integer) session.getAttribute("añoPrecios");
 	
-    if (precio != null){
-    	
-    	String fecha = precio.getFecha_max();
-		
-		String[] fecha_ent = fecha.split ("-");		
-		dia = Integer.parseInt(fecha_ent[fecha_ent.length - 1]);
-		mes = fecha_ent[fecha_ent.length - 2];
-		año = Integer.parseInt(fecha_ent[fecha_ent.length - 3]);
-		
-    }else{
-    	
-		dia = Integer.valueOf((String)session.getAttribute("dia_sys"));
-		
-		int mes_sys = Integer.valueOf((String) session.getAttribute("mes_sys"));
-				
-		if (mes_sys < 10){
-			mes = "0" + mes_sys;	
-		}else{
-			mes = "" + mes_sys;
-		}
-    	
-    	año = (Integer) session.getAttribute("añoPrecios");
-    }%>
+    %>
     
    <div class="page-header">
    <%if (precio == null){%>
@@ -154,69 +138,50 @@
 	<div class="form-group">
 	    
     <form action="PrecioEdit" method="post" id="formPrecio" onsubmit="return validarPrecio()">
+    <input name="fecha" id="fecha" type="hidden" value="<%=precio!=null?precio.getFecha_max() :"0"%>">
     
       <table class="table table-hover table-bordered">
-			<tr>
-				<td>Fecha Maxima</td>				
-				<td>
-					<select name="dia_inscrip">   
-					<%  
-					for (int i = 1; i <= 31; i++){			  	
-		 			%>
-					 	<option <%=dia==i ? "selected" : ""%>><%=i%></option>		 	
-		   			<%
-					}	
-					%>
-		 			 </select>
-		  			 <select name="mes_inscrip">
-		  			 <option value="01" <%=mes.equals("01") ? "selected" : ""%>>Enero</option>
-					 <option value="02" <%=mes.equals("02") ? "selected" : ""%>>Febrero</option>
-					 <option value="03" <%=mes.equals("03") ? "selected" : ""%>>Marzo</option>
-					 <option value="04" <%=mes.equals("04") ? "selected" : ""%>>Abril</option>
-					 <option value="05" <%=mes.equals("05") ? "selected" : ""%>>Mayo</option>
-					 <option value="06" <%=mes.equals("06") ? "selected" : ""%>>Junio</option>
-					 <option value="07" <%=mes.equals("07") ? "selected" : ""%>>Julio</option>
-					 <option value="08" <%=mes.equals("08") ? "selected" : ""%>>Agosto</option>
-					 <option value="09" <%=mes.equals("09") ? "selected" : ""%>>Septiembre</option>
-					 <option value="10" <%=mes.equals("10") ? "selected" : ""%>>Octubre</option>
-					 <option value="11" <%=mes.equals("11") ? "selected" : ""%>>Noviembre</option>
-					 <option value="12" <%=mes.equals("12") ? "selected" : ""%>>Diciembre</option>	   			 		
-		 			 </select>		 		 		 		 		 		 
-				 <input readonly type="text" name="año_inscrip" value="<%=año%>"></td>
-			</tr>
 		<tr>
-          <td>Precio:</td>
-          <td><input type="text" class="form-control" placeholder="Precio Regular" name="regular" value="<%=precio!=null?precio.getPrecio():"" %>"></td>
+			<th><label for="input">Fecha:</label></th>			
+			<td>
+			<div class="col-xs-5">
+			<input class="form-control" type="text" id="datepicker" required autofocus name="fecha_inscrip">
+			</div>
+			</td>			
+	    </tr>
+		<tr>
+          <td>Precio:</td>          
+          <td>
+          <div class="col-xs-5">
+          	<input type="text" class="form-control" placeholder="Precio Regular" name="regular" value="<%=precio!=null?precio.getPrecio():"" %>">
+		   </div>          	
+          </td>
+          
         </tr>
         
         <tr>
           <td>Recargo</td>
-          <td><input type="text" class="form-control" placeholder="Recargo" name="recargo" value="<%=precio!=null?precio.getRecargo():""%>"></td>
-        </tr>
-        <tr></tr>
-        <tr>        
-        <td></td>       
-         <td>
-         	 <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');">Aceptar</button>
-         	 <button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button>         
-             <input type="hidden" name="error" value="ERROR!!!">
-         </td>
-       </tr>
-      </table>
+          <td>
+          <div class="col-xs-5">
+          <input type="text" class="form-control" placeholder="Recargo" name="recargo" value="<%=precio!=null?precio.getRecargo():""%>">
+          </div>
+          </td>
+        </tr>        
+      </table>      
+      <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');">Aceptar</button>
+      <button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button>         
+      <input type="hidden" name="error" value="ERROR!!!">
     </form>
     </div>    
     <br>
-    <br>
-    <center>
+    <br>    
   	<div class="form-group">
 		 <form action="PrecioList" method="get">
 			<button type="submit" class="btn btn-primary"  value="Volver al Menú de Precios">Volver al Menú de Precios</button>
 		</form>
-	</div>
-	</center> 
+	</div>	 
   <%String error = (String)session.getAttribute("error");
-    if(error!=null){
-    	 %>
+    if(error!=null){ %>
     	<center><h3><%=error %></h3></center>
     	 <% 
     	 session.setAttribute("error", null);
