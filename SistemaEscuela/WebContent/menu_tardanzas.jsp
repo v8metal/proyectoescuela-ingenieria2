@@ -137,96 +137,107 @@
 	<div class="page-header">  	  
 		<h1>Menú de Tardanzas</h1>		
     </div>
-    
-    <div class="form-group">
-	<form action="TardanzaList" method="get">
-	
-	<table class="table table-hover table-bordered">
-	
-	<%if(añoTardanza == null){ %>
-	  <tr>
-	    <td><label for="input">Seleccionar año:</label></td>	    
-	    <td><select class="form-control" name="año_tardanza" autofocus>
-	      		<%
-	      		    int año = (Integer)session.getAttribute("añoc");
-	      			for(int i=año; i>año-20;i--){
-	      		%>	
-	      	  <option value="<%=i %>"><%=i %></option>
-	      		<%
-	      			}
-	      		%>
-	        </select>
-	     </td>         	     
-	  </tr>
-	  
-	  <input type="hidden" name="accion" value="solicitarGrados">
+ 
+ 	<form action="TardanzaList" method="get">
+ 
+ 	<%if(añoTardanza == null){ %>
+
+	    <label class="control-label" for="input">Seleccionar año:</label> 
+	    
+ 		<br>
+		<br>
+	        
+	     <div class="row">
+         	   <div class="col-xs-3">
+            	    <div class="input-group">
+            	         <span class="input-group-btn">
+                	        <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnAcept">Buscar</button>
+               	    	 </span>
+                 	   <select class="form-control" name="año_tardanza" autofocus>
+  							 <%  			
+								int año = (Integer)session.getAttribute("añoc");
+  								for(int i=año; i>año-20;i--){					 
+ 							 %>	
+ 							  <option value="<%=i %>"><%=i %></option>		 	
+   							<%
+								}			
+							 %>   			 		
+ 					 	</select>					
+               		</div>
+           	 	</div>
+      	 </div>   
+	 		<input type="hidden" name="accion" value="solicitarGrados">
+	 		<br>
+     	  	<br>
 	  
 	<%}else{ %>
-	  <tr>
-	    <td><label for="input">Seleccionar año:</label></td>	    
-	     <td>
-	     	<input class="form-control" type="text" size=4 readonly name="anio" value="<%=añoTardanza%>">
-	     </td> 
-	  </tr>
-	  <%if (grados.getLista().isEmpty()) { %>
-	  <tr>	  	
-	  	<td><label for="input">Seleccionar grado-turno:</label></td>
-	  	<td><label for="input">No hay grados para el año seleccionado</label></td>	  	
-	  </tr>	  
+
+	    <label class="control-label" for="input">Seleccionar año:</label> 
+		<br>
+		<br>
+		    	
+	    <div class="row">
+         	   <div class="col-xs-3">
+            	    <div class="input-group">
+            	         <span class="input-group-btn">
+                	        <button type="button" class="btn btn-primary" value="Aceptar" name="btnAcept">Buscar</button>
+               	     	 </span>
+ 					 		<input class="form-control" type="text" readonly name="anio" value="<%=añoTardanza%>">			
+               		</div>
+           	 	</div>
+      	 </div>
+		<br> 	
+
+	  <%if (grados.getLista().isEmpty()) { %>  	
+	  
+		<br>
+		<!-- MENSAJE INFORMATIVO -->
+    	 <div class="alert alert-info fade in" role="alert">
+	     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	     	 <strong>Atención!</strong> No hay grados para el año seleccionado <a href="menu_tardanzas.jsp" class="alert-link">Seleccionar otro año</a>
+  	 	 </div>
 	  <%}else{%>
-	  <tr>
-	      <td><label for="input">Seleccionar grado-turno:</label></td>
-	      <td>
-	      	<select class="form-control" name="grado_anio" autofocus>
-	      	<%for (Grado g : grados.getLista()) { %>	            
-	            <option value="<%=g.getGrado() + " - " + g.getTurno()%>"><%=g.getGrado() + " - " + g.getTurno()%></option>            
-	          
-	      	<%}%>
-	      	</select>
-	      </td>
-	    </tr>
+
+	      <label class="control-label" for="input">Seleccionar grado-turno:</label>
+	      	
+	       <br>
+	       <br>
+	      	
+	      <div class="row">
+         	   <div class="col-xs-3">
+            	    <div class="input-group">
+            	         <span class="input-group-btn">
+                	        <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnAcept">Buscar</button>
+               	     </span>
+                 	   <select class="form-control" name="grado_anio" autofocus>
+  							 <%  			
+  								for (Grado g : grados.getLista()) {					 
+ 							 %>	
+ 							  <option value="<%=g.getGrado() + " - " + g.getTurno()%>"><%=g.getGrado() + " - " + g.getTurno()%></option>		 	
+   							<%
+								}			
+							 %>   			 		
+ 					 	</select>					
+               		</div>
+           	 	</div>
+      	  </div>
+      	  
+      	  <br>
+      	  <br>
+      	  	   <input type="hidden" name="accion" value="listarTardanzas">	
+ 
+ 	</form>
+ 	
+ 	<form action="menu_tardanzas.jsp">
+		  	<div class="form-group">
+		  		<input class="btn btn-primary" type="submit" value="Seleccionar otro año"> 
+		  	</div> 
+	</form>
+		  
+		  
 	   <%}%>
-	<%}%>	    	      
-  	        
-	  </table>	 
-			<input type="hidden" name="accion" value="listarTardanzas">	  
-	<%if(añoTardanza == null){ %>
-			<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave">Aceptar</button>
-			<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave">Cancelar</button>
-	<%}%>
-	
-	<%if(añoTardanza != null){ %>
-		<%if(!grados.getLista().isEmpty()){%>
-			<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave">Aceptar</button>
-			<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave">Cancelar</button>
-		<%}%>
-	<%}%>	
-		
-	</form>
-	</div>	
-	<br>
-	<br>
-	<%if(añoTardanza == null){ %>
-<!-- 		
-	<div class="form-group">
-	<form action="menu_admin.jsp">
-	<button type="submit" class="btn btn-primary"  value="Volver al Menú Principal">Volver al Menú Principal</button>
-	</form>
-	</div>
- -->
-	<%}else{ %>	
-	
-		
-	<table>
-		<tr>
-		<td><div class="form-group"> <form action="menu_tardanzas.jsp"> <input class="btn btn-primary" type="submit" value="Seleccionar otro año"> </form></div></td>
-<!-- 		
-		<td><div class="form-group"> <form action="menu_admin.jsp"> <input class="btn btn-primary" type="submit" value="Volver al Menú Principal"> </form></div></td>
- -->		
-		</tr>
-	</table>
-	
-	<%}%>
+	<%}%>	 
+ 	
 </div>
 </body>
 </html>
