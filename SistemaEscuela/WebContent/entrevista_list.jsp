@@ -190,9 +190,11 @@ if (entrevistas.getLista().isEmpty()){
 <h1>Listado de Entrevistas</h1>
 </div>
 <br>
-<div class="alert alert-info" role="alert">
-    <strong>Atención!</strong> No hay entrevistas cargadas
-</div>
+		<!-- MENSAJE INFORMATIVO -->
+    	 <div class="alert alert-info fade in" role="alert">
+	     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	     	 <strong>Atención!</strong> No hay entrevistas cargadas
+  	 	 </div>
 
 <%}else{%> 
 <div class="page-header">

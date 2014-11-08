@@ -196,6 +196,7 @@
 	     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 	     	 <strong>Atención!</strong> No hay grados para el año seleccionado <a href="menu_tardanzas.jsp" class="alert-link">Seleccionar otro año</a>
   	 	 </div>
+  	 	 
 	  <%}else{%>
 
 	      <label class="control-label" for="input">Seleccionar grado-turno:</label>
