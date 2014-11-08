@@ -61,18 +61,6 @@
 		
 	}
 	
-	/*
-	int dia_asistencia = Integer.valueOf((String)session.getAttribute("dia_sys"));
-	int mes= Integer.parseInt((String) session.getAttribute("mes_sys"));
-	String mes_asistencia = "";
-	
-	if (mes < 10){
-		mes_asistencia = "0" + mes;	
-	}else{
-		mes_asistencia = "" + mes;
-	}
-	*/
-	
 %>
 
 <!-- Fixed navbar -->
