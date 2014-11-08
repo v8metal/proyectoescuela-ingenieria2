@@ -240,15 +240,24 @@ public class PrecioEdit extends HttpServlet {
 		sesion.removeAttribute("control");
 		sesion.removeAttribute("ultimoMes");
 			
-		String dia = (String) request.getParameter("dia_inscrip");			
+		//String dia = (String) request.getParameter("dia_inscrip");			
 			
-		String mes;
+		String mes = "";
 			
 		if (request.getParameter("mes") !=  null){
-			mes = request.getParameter("mes");			
-		}else{
-			mes = request.getParameter("mes_inscrip");
+			mes = request.getParameter("mes");
 		}
+		//}else{
+		//	mes = request.getParameter("mes_inscrip");
+		//}
+		
+		String fecha = "";
+		
+		if (request.getParameter("fecha_inscrip") != null){
+			fecha = request.getParameter("fecha_inscrip");
+			fecha = fecha.substring(6,10) +"-"+ fecha.substring(3,5) +"-"+ fecha.substring(0,2);			
+		}
+		
 						
 		int grupo = 0, hijos = 0;
 		
@@ -368,7 +377,7 @@ public class PrecioEdit extends HttpServlet {
 			
 			try {
 				
-				PrecioInscrip precioI =new PrecioInscrip(año, año + "-" + mes + "-" + dia, regular, recargo);
+				PrecioInscrip precioI = new PrecioInscrip(año, fecha, regular, recargo);
 				AccionesPrecio.altaPrecioInscrip(precioI);				
 														
 			} catch (SQLException e) {
@@ -389,7 +398,7 @@ public class PrecioEdit extends HttpServlet {
 			
 			try {
 				
-				PrecioInscrip precioI =new PrecioInscrip(año, año + "-" + mes + "-" + dia, regular, recargo);
+				PrecioInscrip precioI =new PrecioInscrip(año, fecha, regular, recargo);
 				AccionesPrecio.modificarInscrip(precioI);
 				
 				sesion.removeAttribute("inscripModif");

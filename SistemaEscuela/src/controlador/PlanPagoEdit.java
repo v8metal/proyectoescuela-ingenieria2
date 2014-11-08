@@ -63,27 +63,34 @@ public class PlanPagoEdit extends HttpServlet {
 					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 			}
 			
+			/*
 			int dia = Integer.parseInt(request.getParameter("dia_plan"));
 			int mes = Integer.parseInt(request.getParameter("mes_plan"));
+			*/
 			int año = (Integer) sesion.getAttribute("añoPlan");
+			
+			
+			String fecha = request.getParameter("fecha_pp");
+			fecha = fecha.substring(6,10) +"-"+ fecha.substring(3,5) +"-"+ fecha.substring(0,2);
 			
 			int dni = Integer.parseInt(request.getParameter("dni"));
 			int inicio = Integer.parseInt(request.getParameter("periodo_ini"));
 			int fin = Integer.parseInt(request.getParameter("periodo_fin"));
 			String obs = (String) request.getParameter("obs");
 			
-			String relleno = "";
-			
+			/*
+			String relleno = "";			
 			
 			if (dia < 10){
 				relleno = "0";
 			}
+			*/
 			
 			//sesion.setAttribute("dni", dni);
 			
 			try {
 				
-				PlanPago plan = new PlanPago(0, dni, 1,1, inicio, fin, año + "-" + mes + "-" + relleno + dia, obs);
+				PlanPago plan = new PlanPago(0, dni, 1,1, inicio, fin, fecha, obs);
 				
 				if (AccionesUsuario.validarAcceso(tipo, "AccionesPlanPago") != 1){							
 					response.sendRedirect("Login"); //redirecciona al login, sin acceso						

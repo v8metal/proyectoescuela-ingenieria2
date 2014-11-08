@@ -349,8 +349,8 @@ public class AccionesAlumno {
 		
 		try {
 			Statement stmt = Conexion.conectar().createStatement();			
-			
-			ResultSet rs = stmt.executeQuery("SELECT A.DNI, A.NOMBRE, A.APELLIDO, A.DOMICILIO, A.TELEFONO, A.FECHA_NAC, A.LUGAR_NAC, A.DNI_TUTOR, A.DNI_MADRE, A.CANT_HER_MAY, A.CANT_HER_MEN, A.IGLESIA, A.ESC, ASUB.IND_GRUPO, ASUB.IND_SUBSIDIO, IFNULL(M.DNI,0) as MAESTRODNI FROM ALUMNOS A INNER JOIN ALUMNOS_GRADO AG ON AG.DNI = A.DNI AND AG.GRADO = '" + grado + "' AND AG.AÑO = " + año + " AND AG.TURNO = '" + turno + "' INNER JOIN ALUMNOS_SUBSIDIO ASUB ON ASUB.DNI = AG.DNI AND ASUB.AÑO = AG.AÑO LEFT JOIN MAESTROS M ON (M.DNI = A.DNI_TUTOR OR M.DNI = A.DNI_MADRE) ORDER BY A.APELLIDO");
+									
+			ResultSet rs = stmt.executeQuery("SELECT A.DNI, A.NOMBRE, A.APELLIDO, A.DOMICILIO, A.TELEFONO, A.FECHA_NAC, A.LUGAR_NAC, A.DNI_TUTOR, A.DNI_MADRE, A.CANT_HER_MAY, A.CANT_HER_MEN, A.IGLESIA, A.ESC, ASUB.IND_GRUPO, ASUB.IND_SUBSIDIO, IFNULL(M.DNI,0) as MAESTRODNI FROM ALUMNOS A INNER JOIN ALUMNOS_GRADO AG ON AG.DNI = A.DNI AND AG.GRADO = '" + grado + "' AND AG.AÑO = " + año + " AND AG.TURNO = '" + turno + "' INNER JOIN ALUMNOS_SUBSIDIO ASUB ON ASUB.DNI = AG.DNI AND ASUB.AÑO = AG.AÑO LEFT JOIN MAESTROS M ON (M.DNI = A.DNI_TUTOR OR M.DNI = A.DNI_MADRE) GROUP BY A.DNI ORDER BY A.APELLIDO");
 			Alumno tmp;
 			while (rs.next()) {
 				tmp = new Alumno(rs.getInt("dni"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("domicilio"), rs.getString("telefono"), rs.getString("fecha_nac"), rs.getString("lugar_nac"), rs.getInt("dni_tutor"), rs.getInt("dni_madre"), rs.getInt("cant_her_may"), rs.getInt("cant_her_men"), rs.getString("iglesia"), rs.getString("esc"), rs.getBoolean("ind_grupo"), rs.getBoolean("ind_subsidio"));

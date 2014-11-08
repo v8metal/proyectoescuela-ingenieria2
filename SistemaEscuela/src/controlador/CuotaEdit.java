@@ -42,6 +42,13 @@ public class CuotaEdit extends HttpServlet {
 		//System.out.println("CuotaEdit doGet");
 			
 		String accion = (String) request.getParameter("accion");
+		
+		String fecha = "";
+		
+		if (request.getParameter("fecha_pago") != null){				
+			fecha = (String) request.getParameter("fecha_pago");
+			fecha = fecha.substring(6,10) +"-"+ fecha.substring(3,5) +"-"+ fecha.substring(0,2);
+		}
 			
 		int cod_pago = 0;
 			
@@ -59,11 +66,14 @@ public class CuotaEdit extends HttpServlet {
 				
 				String obs = (String) request.getParameter("obs"); //observaciones
 				
+				/*
 				int dia = Integer.parseInt(request.getParameter("dia_pago")); //fecha				
 				int mes = Integer.parseInt(request.getParameter("mes_pago")); //fecha
 				int año = Integer.parseInt(request.getParameter("año_pago")); //fecha
-				
+				*/
+								
 			 	int periodo = (Integer) sesion.getAttribute("mes");
+			 	/*
 				
 				String relleno1 = "";
 				String relleno2 = "";
@@ -75,10 +85,11 @@ public class CuotaEdit extends HttpServlet {
 				if (dia < 10){
 					relleno2 = "0";
 				}
+				*/
 				
 				
-				//int año = (Integer) sesion.getAttribute("año");	 //fecha
-				int añoc = (Integer) sesion.getAttribute("añoCuota");
+				int año = (Integer) sesion.getAttribute("año");	 //fecha
+				//int añoc = (Integer) sesion.getAttribute("añoCuota");
 			    int dni = (Integer) sesion.getAttribute("dni");
 			    
 			    /*
@@ -90,7 +101,7 @@ public class CuotaEdit extends HttpServlet {
 			    System.out.println(obs);
 			    */
 			    
-			    Cuota cuota = new Cuota(1,dni, año, periodo,"" + añoc + "-" + relleno1 + mes + "-" + relleno2 + dia, pago, obs);
+			    Cuota cuota = new Cuota(1,dni, año, periodo, fecha, pago, obs);
 										
 				try {
 					
@@ -188,7 +199,10 @@ public class CuotaEdit extends HttpServlet {
 		}
 	
 		String accion = (String) request.getParameter("accion");
-			
+		
+		String fecha = (String) request.getParameter("fecha_pago");
+		fecha = fecha.substring(6,10) +"-"+ fecha.substring(3,5) +"-"+ fecha.substring(0,2);
+		
 		//System.out.println("accion = " + accion);
 			
 		switch(accion){			
@@ -204,11 +218,14 @@ public class CuotaEdit extends HttpServlet {
 				double pago = Integer.parseInt(request.getParameter("pago"));
 				String obs = (String) request.getParameter("obs"); //observaciones
 				
+				/*
 				int dia = Integer.parseInt(request.getParameter("dia_pago")); //fecha				
 				int mes = Integer.parseInt(request.getParameter("mes_pago")); //fecha
+				*/
 				
 			 	int periodo = (Integer) sesion.getAttribute("mes");
 				
+			 	/*
 				String relleno1 = "";
 				String relleno2 = "";
 				
@@ -219,7 +236,7 @@ public class CuotaEdit extends HttpServlet {
 				if (dia < 10){
 					relleno2 = "0";
 				}
-				
+				*/
 				
 				//int año = (Integer) sesion.getAttribute("año");	 //fecha
 				int año = (Integer) sesion.getAttribute("añoCuota");
@@ -230,7 +247,7 @@ public class CuotaEdit extends HttpServlet {
 			    //System.out.println(año);
 			    //System.out.println(dni);
 			    
-			    Cuota cuota = new Cuota(1,dni, año, periodo,""+año + "-"+ relleno1 + mes + "-" + relleno2 + dia, pago, obs);			 
+			    Cuota cuota = new Cuota(1,dni, año, periodo,fecha, pago, obs);			 
 										
 				try {
 					
@@ -275,10 +292,11 @@ public class CuotaEdit extends HttpServlet {
 				
 				cuota = AccionesCuota.getOnePago(cuota.getCod_pago());
 				
+				/*
 				dia = Integer.parseInt(request.getParameter("dia_pago")); //fecha				
 				mes = Integer.parseInt(request.getParameter("mes_pago")); //fecha
-				año = (Integer) sesion.getAttribute("añoCuota"); //año fecha
-				
+				*/
+				año = (Integer) sesion.getAttribute("añoCuota"); //año fecha				
 				pago = Double.parseDouble(request.getParameter("pago")); //pago
 				obs = (String) request.getParameter("obs"); //observaciones
 				
@@ -288,7 +306,8 @@ public class CuotaEdit extends HttpServlet {
 			    System.out.println(año);		    
 			    System.out.println(obs);
 			    */
-							
+				
+				/*							
 				relleno1 = "";
 				relleno2 = "";
 				
@@ -299,8 +318,9 @@ public class CuotaEdit extends HttpServlet {
 				if (dia < 10){
 					relleno2 = "0";
 				}
+				*/
 				
-				Cuota c = new Cuota(cuota.getCod_pago(), cuota.getDni(),cuota.getAño(),cuota.getPeriodo(), año + "-" + relleno1 + mes + "-" + relleno2 + dia, pago, obs);
+				Cuota c = new Cuota(cuota.getCod_pago(), cuota.getDni(),cuota.getAño(),cuota.getPeriodo(), fecha, pago, obs);
 				
 				if (AccionesUsuario.validarAcceso(tipo, "AccionesCuota") != 1){							
 					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
