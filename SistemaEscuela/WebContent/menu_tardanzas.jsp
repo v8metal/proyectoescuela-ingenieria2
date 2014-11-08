@@ -180,7 +180,7 @@
          	   <div class="col-xs-3">
             	    <div class="input-group">
             	         <span class="input-group-btn">
-                	        <button type="button" class="btn btn-primary" value="Aceptar" name="btnAcept">Buscar</button>
+                	        <button type="button" disabled="disabled" class="btn btn-primary" value="Aceptar" name="btnAcept">Buscar</button>
                	     	 </span>
  					 		<input class="form-control" type="text" readonly name="anio" value="<%=añoTardanza%>">			
                		</div>

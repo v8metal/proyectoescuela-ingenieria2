@@ -179,9 +179,9 @@ if (empty == false){
 	</tr>
 <%}%>
 	<tr>
-			<td><label for="input">Fecha:</label></td>			
+			<td><label for="input">Fecha</label></td>			
 			<td>
-			<div class="col-xs-5">
+			<div class="col-xs-2">
 			<input class="form-control" type="text" id="datepicker" required autofocus name="fecha_sancion">
 			</div>
 			</td>			
