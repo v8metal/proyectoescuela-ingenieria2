@@ -391,7 +391,13 @@ public static int getCurrentYear(Grado g) {
 	public static void promAlumnoGrado(String grado, String turno, int dni, int año) throws SQLException, Exception {
 	
 	Statement stmt = Conexion.conectar().createStatement();
+	
 	stmt.executeUpdate("INSERT INTO ALUMNOS_GRADO VALUES ('"+ grado + "','"+ turno + "'," + año +", " + dni + ")");
+	
+	//se insertan los mismos subsidios que el año en curso para el siguiente año
+	stmt.executeUpdate("INSERT INTO ALUMNOS_SUBSIDIO SELECT AÑO+1, DNI, IND_GRUPO, IND_SUBSIDIO FROM ALUMNOS_SUBSIDIO WHERE DNI = " + dni + " AND AÑO = " + año);
+	
+	AccionesCertificado.insertOne(dni, año);	
 		
 	stmt.close();
 	Conexion.desconectar();				

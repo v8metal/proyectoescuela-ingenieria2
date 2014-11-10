@@ -1,4 +1,5 @@
 <%@page import="datos.*"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -103,7 +104,10 @@
   <br>
   <br>
 <%
-	if (session.getAttribute("admin") != null) {
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "alumno_edit.jsp") != 1){							
+		response.sendRedirect("Login");						
+	}	
 %>
 <div class="page-header"> 
 <h1>Ficha identificatoria del alumno</h1>
@@ -557,11 +561,6 @@
 <button type="submit" class="btn btn-primary" value="Volver">Volver</button>
 </form>
 </div>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>

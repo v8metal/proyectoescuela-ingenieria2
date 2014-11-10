@@ -235,7 +235,7 @@ public class AccionesAlumno {
 		
 			Statement stmt = Conexion.conectar().createStatement();
 			
-			System.out.println("SELECT A.DNI, A.NOMBRE, A.APELLIDO, A.DOMICILIO, A.TELEFONO, A.FECHA_NAC, A.LUGAR_NAC, A.DNI_TUTOR, A.DNI_MADRE, A.CANT_HER_MAY, A.CANT_HER_MEN, A.IGLESIA, A.ESC, ASUB.IND_GRUPO, ASUB.IND_SUBSIDIO FROM ALUMNOS A INNER JOIN ALUMNOS_SUBSIDIO ASUB ON ASUB.DNI = A.DNI AND ASUB.AÑO = " + año + " WHERE A.DNI = " + dni );
+			//System.out.println("SELECT A.DNI, A.NOMBRE, A.APELLIDO, A.DOMICILIO, A.TELEFONO, A.FECHA_NAC, A.LUGAR_NAC, A.DNI_TUTOR, A.DNI_MADRE, A.CANT_HER_MAY, A.CANT_HER_MEN, A.IGLESIA, A.ESC, ASUB.IND_GRUPO, ASUB.IND_SUBSIDIO FROM ALUMNOS A INNER JOIN ALUMNOS_SUBSIDIO ASUB ON ASUB.DNI = A.DNI AND ASUB.AÑO = " + año + " WHERE A.DNI = " + dni );
 			
 			ResultSet rs = stmt.executeQuery("SELECT A.DNI, A.NOMBRE, A.APELLIDO, A.DOMICILIO, A.TELEFONO, A.FECHA_NAC, A.LUGAR_NAC, A.DNI_TUTOR, A.DNI_MADRE, A.CANT_HER_MAY, A.CANT_HER_MEN, A.IGLESIA, A.ESC, ASUB.IND_GRUPO, ASUB.IND_SUBSIDIO FROM ALUMNOS A INNER JOIN ALUMNOS_SUBSIDIO ASUB ON ASUB.DNI = A.DNI AND ASUB.AÑO = " + año + " WHERE A.DNI = " + dni );
 			
@@ -368,6 +368,64 @@ public class AccionesAlumno {
 		return lista;
 	}
 	//devuelve solo alumnos sin subsidio, para el alta de planes de pago
+	
+	public static int checkPromocion(int dni, int año) throws Exception{
+		
+		int i = 0;
+		
+		try{
+			Statement stm = Conexion.conectar().createStatement();
+			
+			//System.out.println("SELECT IFNULL(GB1.ORDEN, 0) - GB.ORDEN AS DIFERENCIA FROM ALUMNOS_GRADO AG  INNER JOIN GRADOS_BASE GB ON AG.GRADO = GB.GRADO AND AG.TURNO = GB.TURNO LEFT JOIN ALUMNOS_GRADO AG1 ON AG1.DNI = AG.DNI AND AG1.TURNO = AG.TURNO AND AG1.AÑO = '" + (año+1) + "' LEFT JOIN GRADOS_BASE GB1 ON AG1.GRADO = GB1.GRADO AND AG1.TURNO = GB1.TURNO WHERE AG.AÑO = '" + año + "' AND AG.DNI = " + dni );
+			
+			ResultSet rs = stm.executeQuery("SELECT IFNULL(GB1.ORDEN, 0) - GB.ORDEN AS DIFERENCIA FROM ALUMNOS_GRADO AG  INNER JOIN GRADOS_BASE GB ON AG.GRADO = GB.GRADO AND AG.TURNO = GB.TURNO LEFT JOIN ALUMNOS_GRADO AG1 ON AG1.DNI = AG.DNI AND AG1.TURNO = AG.TURNO AND AG1.AÑO = '" + (año+1) + "' LEFT JOIN GRADOS_BASE GB1 ON AG1.GRADO = GB1.GRADO AND AG1.TURNO = GB1.TURNO WHERE AG.AÑO = '" + año + "' AND AG.DNI = " + dni );
+			
+			while(rs.next()){
+				i = rs.getInt("DIFERENCIA");
+			}
+			
+			stm.close();
+			rs.close();
+			Conexion.desconectar();
+			
+		}catch(SQLException sqle){
+			System.out.println(sqle);
+		}
+		return i;
+	}
+	
+	public static void promGrado(int dni, int año) throws SQLException, Exception {
+		
+	Statement stmt = Conexion.conectar().createStatement();
+	
+	//inserta el alumno para el grado/año siguiente
+	stmt.executeUpdate("INSERT INTO ALUMNOS_GRADO SELECT GB1.GRADO, AG.TURNO, AG.AÑO+1, AG.DNI FROM ALUMNOS_GRADO AG INNER JOIN GRADOS_BASE GB ON GB.GRADO = AG.GRADO AND GB.TURNO = AG.TURNO INNER JOIN GRADOS_BASE GB1 ON GB1.TURNO = GB.TURNO AND GB1.ORDEN = GB.ORDEN + 2 WHERE DNI = " + dni + " AND AG.AÑO = " + año);
+
+	//insertan los mismos subsidios que el año en curso para el siguiente año
+	stmt.executeUpdate("INSERT INTO ALUMNOS_SUBSIDIO SELECT AÑO+1, DNI, IND_GRUPO, IND_SUBSIDIO FROM ALUMNOS_SUBSIDIO WHERE DNI = " + dni + " AND AÑO = " + año);
+	
+	AccionesCertificado.insertOne(dni, año+1);
+			
+	stmt.close();
+	Conexion.desconectar();				
+	}
+	
+	public static void repetirGrado(int dni, int año) throws SQLException, Exception {
+		
+	Statement stmt = Conexion.conectar().createStatement();
+	
+	//inserta el alumno para el mismo grado y el año siguiente
+	stmt.executeUpdate("INSERT INTO ALUMNOS_GRADO SELECT AG.GRADO, AG.TURNO, AG.AÑO+1, AG.DNI FROM ALUMNOS_GRADO AG WHERE DNI = " + dni + " AND AG.AÑO = " + año);
+
+	//insertan los mismos subsidios que el año en curso para el siguiente año
+	stmt.executeUpdate("INSERT INTO ALUMNOS_SUBSIDIO SELECT AÑO+1, DNI, IND_GRUPO, IND_SUBSIDIO FROM ALUMNOS_SUBSIDIO WHERE DNI = " + dni + " AND AÑO = " + año);
+	
+	AccionesCertificado.insertOne(dni, año+1);
+			
+	stmt.close();
+	Conexion.desconectar();				
+	}
+
 
 	public static void main(String[] args) {	// getAll(), getOne(), insertOne(), updateOne() y deleteOne()  probadas correctamente
 	

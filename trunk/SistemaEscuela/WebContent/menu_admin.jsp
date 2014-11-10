@@ -49,7 +49,7 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Alumnos <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="menu_listado_alum.jsp">Listado</a></li>
+                  <li><a href="menu_alumnos.jsp">Listado</a></li>
                   <li><a href="alumno_edit.jsp">Nuevo alumno</a></li>          
                   <li class="divider"></li>
                   <li class="dropdown-header">Nav header</li>
