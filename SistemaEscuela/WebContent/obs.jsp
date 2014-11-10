@@ -1,4 +1,5 @@
 <%@page import="datos.*"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -109,7 +110,10 @@
 </div>
 
 <%
-	if (session.getAttribute("admin") != null) {
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "obs.jsp") != 1){							
+		response.sendRedirect("Login");						
+	}
 		
 	//	Alumno a = (Alumno)session.getAttribute("alumno");
 		Observaciones o = (Observaciones)session.getAttribute("observaciones");
@@ -167,11 +171,6 @@ Ingrese nueva observación:
 <form action="certificado_list.jsp" method="post">
 <button type="submit" class="btn btn-primary"  value="Volver" name="btnBack">Volver</button>
 </form>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>

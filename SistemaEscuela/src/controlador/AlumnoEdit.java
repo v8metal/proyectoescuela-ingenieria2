@@ -14,6 +14,7 @@ import conexion.AccionesCertificado;
 import conexion.AccionesEstado;
 import conexion.AccionesGrado;
 import conexion.AccionesPadre;
+import conexion.AccionesUsuario;
 import datos.Alumno;
 import datos.Padre;
 
@@ -35,93 +36,119 @@ public class AlumnoEdit extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//get session of the request
+
 		HttpSession sesion = request.getSession();
+		
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");						
+		if (AccionesUsuario.validarAcceso(tipo, "AlumnoEdit") != 1){							
+			response.sendRedirect("Login");						
+		}
 		
 		try {
 			
-			//get parameter do of the request
-			String accion = request.getParameter("do");			    
+			String accion = request.getParameter("do");
 			
-			//get dnis of the request
-			Integer dni_tutor = null;
-			Integer dni_madre = null;
-			Integer dni_alum = null;
-			if(request.getParameter("dni_tutor") != null) {
-				dni_tutor = Integer.valueOf(request.getParameter("dni_tutor"));
-			}			
-			if(request.getParameter("dni_madre") != null) {
-				dni_madre = Integer.valueOf(request.getParameter("dni_madre"));
-			}				
-			if(request.getParameter("dni_alum") != null) {
-				dni_alum = Integer.valueOf(request.getParameter("dni_alum"));
-			}				
+			//System.out.println("AlumnoEdit goGet= " + accion);
+			
+			int año = (Integer) sesion.getAttribute("añoAlumno");
+			Integer dni_alum = Integer.valueOf(request.getParameter("dni_alum"));
+			
+			Alumno alumno = AccionesAlumno.getOne(dni_alum.intValue(),año);			
+							
+			switch(accion){
+			
+			case "alta":
 				
-			//add / edit
-			if(accion.equals("alta")){	//nunca entra en este if, directamente entra al post cuando se da de alta
+				if (AccionesUsuario.validarAcceso(tipo, "alumno_edit.jsp") != 1){							
+					response.sendRedirect("Login");						
+				}
 				
-				//get the request dispatcher
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/alumno_edit.jsp");
+				dispatcher.forward(request, response);
 				
-				//forward to the jsp file to display the alumno list
-				dispatcher.forward(request, response);	
+				break;
 			
-			}  else if(accion.equals("modificar")){
-	
-				//get the tutor from simulated DB
-				Padre tutor = new Padre();
-				if(dni_tutor != null){
-					tutor = AccionesPadre.getOne(dni_tutor.intValue());
+			case "modificar":
+				
+				if (AccionesUsuario.validarAcceso(tipo, "AlumnoEdit") != 1){							
+					response.sendRedirect("Login");						
 				}
-				//get the madre from simulated DB
-				Padre madre = new Padre();
-				if(dni_madre != null){
-					madre = AccionesPadre.getOne(dni_madre.intValue());
+				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesPadre") != 1){							
+					response.sendRedirect("Login");						
 				}
-				//get the alumno from simulated DB
-				Alumno alumno = new Alumno();
-				if(dni_alum != null){
-					//int año = Integer.parseInt((String) sesion.getAttribute("año")); //modificado Ale
-					int año = (Integer) sesion.getAttribute("año"); //modificado Ale
-					alumno = AccionesAlumno.getOne(dni_alum.intValue(),año);//modificado Ale
-				}
-
-				//set the tutor object in the request
-				request.setAttribute("tutor", tutor);
-				//set the madre object in the request
+				
+				Padre tutor = AccionesPadre.getOne(alumno.getDni_tutor());								
+				Padre madre = AccionesPadre.getOne(alumno.getDni_madre());
+									
+				request.setAttribute("tutor", tutor);				
 				request.setAttribute("madre", madre);
-				//set the alumno object in the request
 				request.setAttribute("alumno", alumno);  
 				
-				//get the request dispatcher
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/alumno_edit.jsp");
-				
-				//forward to the jsp file to display the alumno list
+				dispatcher = getServletContext().getRequestDispatcher("/alumno_edit.jsp");
 				dispatcher.forward(request, response);	
 				
-		 
-			//delete
-			} else if(accion.equals("baja")){
+				break;
+			
+			case "baja":
+							
+				if (AccionesUsuario.validarAcceso(tipo, "AlumnoList") != 1){							
+					response.sendRedirect("Login");						
+				}
 				
-	/*			//delete alumno by dni
-				AccionesCertificado.deleteObservaciones(dni_alum.intValue());
-				AccionesCertificado.deleteOne(dni_alum.intValue());
-				AccionesAlumno.deleteAlumnoFromGrado(dni_alum.intValue());
-				AccionesEstado.deleteEstado(dni_alum.intValue());
-				AccionesAlumno.deleteOne(dni_alum.intValue());				*/
 				
-				// baja logica
-				
-				//recupero de la sesion la fecha del sistema
 				String año_sys = (String)sesion.getAttribute("año_sys");
 				String mes_sys = (String)sesion.getAttribute("mes_sys");
 				String dia_sys = (String)sesion.getAttribute("dia_sys");
 				String fecha_sys = año_sys + "-" + mes_sys + "-" + dia_sys;
 				
-				AccionesEstado.desactivarAlumno(dni_alum, fecha_sys);
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesEstado") != 1){							
+					response.sendRedirect("Login");						
+				}
 				
-				//redirect to the alumno list servlet 
-				response.sendRedirect(request.getContextPath() + "/alumnoList");
+				AccionesEstado.desactivarAlumno(dni_alum, fecha_sys);				
+				
+				request.setAttribute("accion","listarAlumnos");
+				dispatcher = getServletContext().getRequestDispatcher("/AlumnoList");
+				dispatcher.forward(request, response);
+				
+				break;
+				
+			case "promocion":
+				
+				if (AccionesUsuario.validarAcceso(tipo, "AlumnoList") != 1){							
+					response.sendRedirect("Login");						
+				}
+				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesAlumno") != 1){							
+					response.sendRedirect("Login");						
+				}
+				
+				AccionesAlumno.promGrado(dni_alum, año);
+				
+				request.setAttribute("accion","listarAlumnos");
+				dispatcher = getServletContext().getRequestDispatcher("/AlumnoList");
+				dispatcher.forward(request, response);
+				
+				break;
+
+			case "repeticion":
+				
+				if (AccionesUsuario.validarAcceso(tipo, "AlumnoList") != 1){							
+					response.sendRedirect("Login");						
+				}
+				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesAlumno") != 1){							
+					response.sendRedirect("Login");						
+				}
+				
+				AccionesAlumno.repetirGrado(dni_alum, año);
+			
+				request.setAttribute("accion","listarAlumnos");
+				dispatcher = getServletContext().getRequestDispatcher("/AlumnoList");
+				dispatcher.forward(request, response);
+			
+				break;
 
 			} 
 			
@@ -142,14 +169,31 @@ public class AlumnoEdit extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//get session of the request
+		
 		HttpSession sesion = request.getSession();
-			
+		
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");						
+		if (AccionesUsuario.validarAcceso(tipo, "AlumnoEdit") != 1){							
+			response.sendRedirect("Login");						
+		}
+		
+		if (AccionesUsuario.validarAcceso(tipo, "AlumnoList") != 1){							
+			response.sendRedirect("Login");						
+		}
+		
 		try {
 			
-			//int año = Integer.parseInt((String) sesion.getAttribute("año")); //modificado Ale
-			int año = (Integer) sesion.getAttribute("año"); //modificado Ale
-			//get dni_alum properties from the request
+			if (AccionesUsuario.validarAcceso(tipo, "AccionesAlumno") != 1 &&
+				AccionesUsuario.validarAcceso(tipo, "AccionesGrado")  != 1 &&
+				AccionesUsuario.validarAcceso(tipo, "AccionesCertificado") != 1 &&
+				AccionesUsuario.validarAcceso(tipo, "AccionesEstado") != 1 &&
+				AccionesUsuario.validarAcceso(tipo, "AccionesPadre")  != 1){
+				
+				response.sendRedirect("Login");						
+			}
+			
+						
+			int año = (Integer) sesion.getAttribute("añoAlumno");			
 			int dni_alum = Integer.parseInt((String)request.getParameter("dni_alum"));
 						
 			// DATOS ALUMNO
@@ -245,6 +289,7 @@ public class AlumnoEdit extends HttpServlet {
 			//save the alumno to DB
 			if (!AccionesAlumno.esAlumno(dni_alum)){	//Si no esta en el sistema los datos del alumno. Es un insert
 				
+				
 				//INGRESO
 				String dia_insc = request.getParameter("dia_insc");
 				String mes_insc = request.getParameter("mes_insc"); 
@@ -270,7 +315,7 @@ public class AlumnoEdit extends HttpServlet {
 				//lo activo
 				AccionesEstado.activarAlumno(dni_alum, fecha_insc);
 				//creo su lista de certificados (todos como false como valor por defecto)
-				AccionesCertificado.insertOne(alumno.getDni());
+				AccionesCertificado.insertOne(alumno.getDni(), año);
 				//y le asigno un grado
 				AccionesGrado.insertAlumnoEnGrado(grado, turno, dni_alum, Integer.parseInt(año_ing));
 				
@@ -280,6 +325,7 @@ public class AlumnoEdit extends HttpServlet {
 				sesion.setAttribute("año", Integer.parseInt(año_ing));
 										
 			} else {	//Si ya estan los datos del alumno, que lo modifique
+				
 				//update tutor
 				AccionesPadre.updateOne(dni_tutor, nombre_tutor, apellido_tutor, lugar_nac_tutor, fecha_nac_tutor,
 						domicilio_tutor, telefono_tutor, ocupacion_tutor, dom_lab_tutor, telefono_lab_tutor, est_civil_tutor);
@@ -292,20 +338,39 @@ public class AlumnoEdit extends HttpServlet {
 						iglesia, esc, año, ind_grupo.equals("si"), ind_subsidio.equals("si"));
 			}   
 			
-			//redirect to the alumno list servlet
-			response.sendRedirect(request.getContextPath() + "/alumnoList");	
+			request.setAttribute("accion","listarAlumnos");
+			
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/AlumnoList");
+			dispatcher.forward(request, response);
 			
 		} catch (java.lang.NumberFormatException e) {
+			
+			if (AccionesUsuario.validarAcceso(tipo, "alumno_edit.jsp") != 1){							
+				response.sendRedirect("Login");						
+			}	
+			
 			e.printStackTrace();
 			sesion.setAttribute("error", "Se ha producido un error. Debe completar todos los campos del alumno para poder registrarlo. Exception: " + e.toString());
+					
 			response.sendRedirect("alumno_edit.jsp");
 			
 		} catch (java.lang.NullPointerException e) {
+			
+			if (AccionesUsuario.validarAcceso(tipo, "alumno_edit.jsp") != 1){							
+				response.sendRedirect("Login");						
+			}
+			
 			e.printStackTrace();
 			sesion.setAttribute("error", "Se ha producido un error. Debe completar los campos \"Escolaridad\", \"Grupo Familiar\" y \"Subsidio\". Exception: " + e.toString());
+				
 			response.sendRedirect("alumno_edit.jsp");
 			
 		} catch (Exception e) {
+			
+			if (AccionesUsuario.validarAcceso(tipo, "alumno_edit.jsp") != 1){							
+				response.sendRedirect("Login");						
+			}
+			
 			e.printStackTrace();
 			sesion.setAttribute("error", e.toString());
 			response.sendRedirect("alumno_edit.jsp");

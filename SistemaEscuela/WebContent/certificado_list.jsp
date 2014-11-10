@@ -1,6 +1,7 @@
 <%@page import="conexion.AccionesCertificado"%>
 <%@page import="datos.*"%>
 <%@page import="java.util.*"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -8,8 +9,12 @@
 <head>
 <meta name="viewport" content="width=device-width; initial-scale=1.0"> 
 <%
-	if (session.getAttribute("admin") != null) {
-		String titulo = (String)session.getAttribute("titulo");
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "alumno_list.jsp") != 1){							
+		response.sendRedirect("Login");						
+	}
+	
+	String titulo = (String) session.getAttribute("titulo_alumno");
 %>
 <title><%="Certificados - " + titulo%></title>
 
@@ -132,13 +137,11 @@
 	<thead>	
 <% 
 	int i = 0;
-	//recuero el año seleccionado desde la sesion
-	int año = Integer.parseInt((String)session.getAttribute("año"));
-	Alumnos alumnos = (Alumnos)session.getAttribute("alumnos");
-	for (Alumno a : alumnos.getLista()) {
-		//por cada alumno, recupero la lista de certificados correspondiente al año lectivo vigente
+	int año = (Integer) session.getAttribute("año");
+	Alumnos alumnos = (Alumnos)session.getAttribute("alumnos_alumno");
+	
+	for (Alumno a : alumnos.getLista()) {	
 		Certificado c = AccionesCertificado.getOneByDniYAño(a.getDni(), año);
-	//	Observaciones o = AccionesCertificado.getObservacionesByDni(a.getDni());
 		i++;
 %>
 	<tbody>
@@ -167,11 +170,6 @@
 <form action="alumno_list.jsp" method="post">
 <button type="submit" class="btn btn-primary"  value="Volver">Volver</button>
 </form>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>

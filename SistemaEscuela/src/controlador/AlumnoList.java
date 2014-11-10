@@ -2,6 +2,7 @@ package controlador;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesAlumno;
+import conexion.AccionesGrado;
+import conexion.AccionesUsuario;
 import datos.Alumnos;
+import datos.Grado;
+import datos.Grados;
 
 /**
  * Servlet implementation class AlumnoList
@@ -29,78 +34,241 @@ public class AlumnoList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
+		
+		HttpSession sesion = request.getSession();
+		
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");						
+		if (AccionesUsuario.validarAcceso(tipo, "AlumnoList") != 1){							
+			response.sendRedirect("Login");						
+		}
+		
+		String accion = "";
+		
+		if (request.getParameter("accion") != null){
+			accion = (String) request.getParameter("accion");
+		}else{
+			accion = (String) request.getAttribute("accion");
+		}
+		
+		//System.out.println("accion doGet = " + accion);
+		
+		switch(accion){			
+
+		case "solicitarGrados":
+			
+			if (AccionesUsuario.validarAcceso(tipo, "menu_alumnos.jsp") != 1){							
+				response.sendRedirect("Login");						
+			}
+			
+			sesion.removeAttribute("gradosAlumno");
+			sesion.removeAttribute("añoAlumno");
+						
+			int año = Integer.parseInt(request.getParameter("año_alumno"));			
+									
+			try {
+				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesGrado") != 1){							
+					response.sendRedirect("Login");						
+				}
+				
+				Grados grados = AccionesGrado.getAñoGradosCuota(año);
+				
+				request.setAttribute("gradosAlumno", grados);				
+				request.setAttribute("añoAlumno", año);
+								
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/menu_alumnos.jsp");
+				dispatcher.forward(request, response);				
+				
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}
+			
+			break;
+			
+		case "listarAlumnos":
+			
+			if (AccionesUsuario.validarAcceso(tipo, "alumno_list.jsp") != 1){							
+				response.sendRedirect("Login");						
+			}
+			
+			String string = "";
+			String[] parts;
+			String grado="", turno="";
+			
+			
+			año = (Integer) sesion.getAttribute("añoAlumno");
+			
+			Grado g = null;
+			
+			if(request.getParameter("grado_turno") != null){
+				
+				string = request.getParameter("grado_turno");				
+				parts = string.split(" - ");				
+				grado = parts[0];
+				turno = parts[1];
+				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesGrado") != 1){							
+					response.sendRedirect("Login");						
+				}
+				
+				sesion.setAttribute("gradoAlumno", AccionesGrado.getOne(grado, turno));
+			
+			}else{
+				
+				 g = (Grado) sesion.getAttribute("gradoAlumno");
+				 
+				 grado = g.getGrado();
+				 turno = g.getTurno();
+				
+			}	
+			
+			sesion.setAttribute("grado_alumno",grado);
+			sesion.setAttribute("turno_alumno",turno);
+			
+			sesion.setAttribute("titulo_alumno",  grado + " " + turno + " - " + año);
+						
+			try {
+					
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesAlumno") != 1){							
+					response.sendRedirect("Login");						
+				}
+				
+				Alumnos alumnos = AccionesAlumno.getAllByGradoTurnoYAño(grado, turno, año);					
+				sesion.setAttribute("alumnos_alumno", alumnos);					
+				
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}
+			
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/alumno_list.jsp");
+			dispatcher.forward(request, response);			
+			
+			
+			break;
+							
+			} //fin del case
+				
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		HttpSession sesion = request.getSession();
 		
-		String from = request.getParameter("from"); 	// nombre de la pagina que llamo al servlet(este param solo se manda desde "nota_menu")	
-		if (from == null) {	
-			from = 	"otro_lado";
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");						
+		if (AccionesUsuario.validarAcceso(tipo, "AlumnoList") != 1){							
+			response.sendRedirect("Login");						
 		}
 		
-		String grado = request.getParameter("grado");
-		if (grado == null) { //llega de alumno_edit (alta/modificar)			
-			grado = (String)sesion.getAttribute("grado");
-		} else { //llega de menu_listado_alum
-			sesion.setAttribute("grado", grado);
-		}
+		String accion = "";
 		
-		String turno = request.getParameter("turno");
-		if (turno == null) { //llega de alumno_edit (alta/modificar)		
-			turno = (String)sesion.getAttribute("turno");
-		} else { //llega de menu_listado_alum
-			sesion.setAttribute("turno", turno);
-		}
-	
-		//String año = request.getParameter("año");
-		Integer año = 0;
-		
-		if(request.getParameter("año") != null){
-			año = Integer.parseInt(request.getParameter("año"));
+		if (request.getParameter("accion") != null){
+			accion = (String) request.getParameter("accion");
 		}else{
-			año = (Integer) sesion.getAttribute("año");
-			año = (Integer) sesion.getAttribute("año");
+			accion = (String) request.getAttribute("accion");
 		}
 		
-		//System.out.println("grado= " + grado);
-		//System.out.println("turno= " + turno);
-		//System.out.println("año= " + año);
+		//System.out.println("accion doPost = " + accion);
 		
-		/*
-		if (año == 0) { //llega de alumno_edit (alta/modificar)	
-			año = (Integer) sesion.getAttribute("año");
-		} else { //llega de menu_listado_alum
-			sesion.setAttribute("año", año);
-		}*/
-		
-			if (grado.equals("todos")) {
-				Alumnos alumno_list = AccionesAlumno.getAllByTurnoYAño(turno, año);
-				sesion.setAttribute("alumnos", alumno_list);
-				sesion.setAttribute("titulo", "TURNO " + turno + " - " + año);
-			} else {
-				Alumnos alumno_list = AccionesAlumno.getAllByGradoTurnoYAño(grado, turno, año);
+		switch(accion){			
+
+		case "solicitarGrados":
+			
+			if (AccionesUsuario.validarAcceso(tipo, "menu_alumnos.jsp") != 1){							
+				response.sendRedirect("Login");						
+			}
+			
+			sesion.removeAttribute("gradosAlumno");
+			sesion.removeAttribute("añoAlumno");
+						
+			int año = Integer.parseInt(request.getParameter("año_alumno"));			
+									
+			try {
 				
-				sesion.setAttribute("alumnos", alumno_list);
-				
-				if (turno.equals("MAÑANA")) {
-					turno = "TM";
-				} else {
-					turno = "TT";
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesGrado") != 1){							
+					response.sendRedirect("Login");						
 				}
-				sesion.setAttribute("titulo",  grado + " " + turno + " - " + año);
+				
+				Grados grados = AccionesGrado.getAñoGradosCuota(año);
+				
+				request.setAttribute("gradosAlumno", grados);				
+				request.setAttribute("añoAlumno", año);
+								
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/menu_alumnos.jsp");
+				dispatcher.forward(request, response);				
+				
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}
+			
+			break;
+			
+		case "listarAlumnos":
+			
+			if (AccionesUsuario.validarAcceso(tipo, "alumno_list.jsp") != 1){							
+				response.sendRedirect("Login");						
+			}
+			
+			String string = "";
+			String[] parts;
+			String grado="", turno="";
+			
+			
+			año = (Integer) sesion.getAttribute("añoAlumno");
+			
+			Grado g = null;
+			
+			if(request.getParameter("grado_turno") != null){
+				
+				string = request.getParameter("grado_turno");				
+				parts = string.split(" - ");				
+				grado = parts[0];
+				turno = parts[1];
+				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesGrado") != 1){							
+					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+				}
+				
+				sesion.setAttribute("gradoAlumno", AccionesGrado.getOne(grado, turno));
+			
+			}else{
+				
+				 g = (Grado) sesion.getAttribute("gradoAlumno");
+				 
+				 grado = g.getGrado();
+				 turno = g.getTurno();
+				
 			}			
-		
-		if (from.equals("nota_menu")) {		
-			response.sendRedirect("nota_lista_alum.jsp");
-		} else if (from.equals("otro_lado")){
-			response.sendRedirect("alumno_list.jsp");
-		}
-	
+			
+			sesion.setAttribute("grado_alumno",grado);
+			sesion.setAttribute("turno_alumno",turno);
+			
+			sesion.setAttribute("titulo_alumno",  grado + " " + turno + " - " + año);
+						
+			try {
+					
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesAlumno") != 1){							
+					response.sendRedirect("Login");						
+				}
+				
+				Alumnos alumnos = AccionesAlumno.getAllByGradoTurnoYAño(grado, turno, año);
+				
+				sesion.setAttribute("alumnos_alumno", alumnos);					
+				
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}			
+			
+									
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/alumno_list.jsp");
+			dispatcher.forward(request, response);			
+			
+			
+			break;
+							
+			} //fin del case	
 	}
 
 }

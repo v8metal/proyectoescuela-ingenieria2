@@ -174,19 +174,22 @@ public class AccionesCertificado {
 			Conexion.desconectar();
 	}
 	
-	public static void insertOne(int dni) throws SQLException, Exception { //inserta los valores por defecto (0) de los indicadores de certificados
-		Statement stmt = Conexion.conectar().createStatement();
-		stmt.executeUpdate("INSERT INTO CERTIFICADOS (DNI, AÑO) VALUES ('" + dni + "', YEAR(current_date))");
+	public static void insertOne(int dni, int año) throws SQLException, Exception { //inserta los valores por defecto (0) de los indicadores de certificados
+		Statement smt = Conexion.conectar().createStatement();
 		
-		stmt.close();
+		System.out.println("INSERT INTO CERTIFICADOS (DNI, AÑO) VALUES (" + dni + "," + año + " )");
+		
+		smt.executeUpdate("INSERT INTO CERTIFICADOS (DNI, AÑO) VALUES (" + dni + "," + año + " )");
+		
+		smt.close();
 		Conexion.desconectar();
 }
 	
-	public static int deleteOne(int dni) {
+	public static int deleteOne(int dni, int año) {
 		int i = 0;
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			i = stmt.executeUpdate("DELETE FROM CERTIFICADOS WHERE DNI = '" + dni + "'");
+			i = stmt.executeUpdate("DELETE FROM CERTIFICADOS WHERE DNI = " + dni + " AND AÑO = " + año);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

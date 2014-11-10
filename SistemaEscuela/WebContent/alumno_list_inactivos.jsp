@@ -3,6 +3,7 @@
 <%@page import="datos.EstadoAlumno"%>
 <%@page import="datos.EstadoAlumnos"%>
 <%@page import="java.util.*"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -10,13 +11,16 @@
 <head>
 <meta name="viewport" content="width=device-width; initial-scale=1.0"> 
 <%
-	if (session.getAttribute("admin") != null) {
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "alumno_list_inactivos.jsp") != 1){							
+		response.sendRedirect("Login");						
+	}	
 		
-		String error = "";
-		if (session.getAttribute("error") != null) {
-			error = (String)session.getAttribute("error");
-			session.setAttribute("error", "");
-		}
+	String error = "";
+	if (session.getAttribute("error") != null) {
+		error = (String)session.getAttribute("error");
+		session.setAttribute("error", "");
+	}
 %>
 <title>Alumnos dados de baja</title>
 
@@ -175,13 +179,7 @@
 			}
  %>
 </table>
-<%
-		}
-		
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
+<%}%>
 </div>
 </body>
 </html>

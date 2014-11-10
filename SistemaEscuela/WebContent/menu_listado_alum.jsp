@@ -1,3 +1,4 @@
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -17,16 +18,19 @@
 </head>
 <body>
 <%
-	if (session.getAttribute("admin") != null) {
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "menu_listado_alum.jsp") != 1){							
+		response.sendRedirect("Login");						
+	}
 		
-		String error = "";
-		if (session.getAttribute("error") != null) {
-			error = (String)session.getAttribute("error");
-			session.setAttribute("error", "");
-		}
-		
-		// recupero de la sesion el año actual
-		int año = Integer.parseInt((String)session.getAttribute("año_sys"));
+	String error = "";
+	if (session.getAttribute("error") != null) {
+		error = (String)session.getAttribute("error");
+		session.setAttribute("error", "");
+	}
+	
+	// recupero de la sesion el año actual
+	int año = Integer.parseInt((String)session.getAttribute("año_sys"));
 %>
 <div class="container">  
 
@@ -176,11 +180,6 @@
 <br>
 <br>
 <br>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>

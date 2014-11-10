@@ -1,7 +1,9 @@
 <%@page import="conexion.AccionesEstado"%>
+<%@page import="conexion.AccionesAlumno"%>
 <%@page import="datos.EstadoAlumno"%>
 <%@page import="datos.Alumno"%>
 <%@page import="datos.Alumnos"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -10,15 +12,20 @@
 <head>
 <meta name="viewport" content="width=device-width; initial-scale=1.0"> 
 <%
-	if (session.getAttribute("admin") != null) {
+
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "alumno_list.jsp") != 1){							
+		response.sendRedirect("Login");						
+	}		
+	
+	String error = "";
+	if (session.getAttribute("error") != null) {
+		error = (String)session.getAttribute("error");
+		session.setAttribute("error", "");
+	}
+	
+	String titulo = (String) session.getAttribute("titulo_alumno");
 		
-		String error = "";
-		if (session.getAttribute("error") != null) {
-			error = (String)session.getAttribute("error");
-			session.setAttribute("error", "");
-		}
-		
-		String titulo = (String)session.getAttribute("titulo");
 %>
 <title><%=titulo%></title>
 
@@ -119,13 +126,14 @@
   <br>
   
 <%
-		Alumnos alumnos = (Alumnos)session.getAttribute("alumnos");
+		Alumnos alumnos = (Alumnos)session.getAttribute("alumnos_alumno");
+		
+		String grado = (String)session.getAttribute("grado_alumno");
+		String turno = (String)session.getAttribute("turno_alumno");
+		int año = (Integer) session.getAttribute("añoAlumno");
 
 		if (alumnos.getLista().isEmpty()){
-			String grado = (String)session.getAttribute("grado");
-			String turno = (String)session.getAttribute("turno");
-			String año = String.valueOf((Integer)session.getAttribute("año"));
-			
+						
 			String rta = "No hay alumnos cargados en " + grado + ", turno " + turno.toLowerCase() + ", año " + año;
 			
 %>
@@ -150,76 +158,64 @@
 <table class="table table-hover table-bordered">
 	<thead>
 	<tr>
-		<th>Nº</th>
 		<th>Apellido y Nombres</th>
 		<th>D.N.I.</th>
 		<th>Domicilio</th>
 		<th>Teléfono</th>
-<!--	<th>Fecha nac.</th>			-->
 		<th>Lugar nac.</th>
-<!--		<th>D.N.I. padre</th>	-->
-<!--		<th>D.N.I. madre</th>	-->
-<!--		<th>Her. may.</th>		-->
-<!--		<th>Her. men.</th>		-->
 		<th>Iglesia</th>
-<!--		<th>Escolaridad</th>	-->
-		<th>Grupo flia.</th>
-		<th>Sub.</th>
+		<th>Grupo</th>
+		<th>Subsidio</th>
 		<th>Estado</th>
 		<th>Cert.</th>	
-<!--		<th>&nbsp;</th>			-->
 		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>		
 	</tr>
 	<thead>
-<% 			int i = 0;
+<% 			int prom = 0;
 			for (Alumno a : alumnos.getLista()) {
 				EstadoAlumno ea = AccionesEstado.getOne(a.getDni());
-				i++;
+			//valida si el alumno está promocionado, repite o si está en condiciones de ambas cosas
+			    prom = AccionesAlumno.checkPromocion(a.getDni(), año);  
 %>
 	<tbody>
 	<tr>
-		<td><center><%=i%></center></td>
-<!-- 		<td><%= a.getApellido() + ", " + a.getNombre() %></td>		 -->
-		<td><a href="alumnoEdit?do=modificar&dni_alum=<%=a.getDni()%>&dni_tutor=<%=a.getDni_tutor()%>&dni_madre=<%=a.getDni_madre()%>"><%= a.getApellido() + ", " + a.getNombre() %></a></td>
+		<td><a href="alumnoEdit?do=modificar&dni_alum=<%=a.getDni()%>"><%= a.getApellido() + ", " + a.getNombre() %></a></td>
 		<td><%= a.getDni() %></td>
 		<td><%= a.getDomicilio() %></td>
 		<td><%= a.getTelefono() %></td>
-<!--		<td><%= a.getFecha_nac() %></td>		-->
 		<td><%= a.getLugar_nac() %></td>
-<!--		<td><%= a.getDni_tutor() == 0 ? "" : a.getDni_tutor() %></td>	-->		<!-- En caso de que el dni sea 0 (no tiene padre) muestra un string vacio -->
-<!--		<td><%= a.getDni_madre() == 0 ? "" : a.getDni_madre() %></td>	-->
-<!--		<td><%= a.getCant_her_may() %></td>		-->
-<!--		<td><%= a.getCant_her_men() %></td>		-->
 		<td><%= a.getIglesia() %></td>
-<!--		<td><%= a.getEsc() %></td>		-->
-		<td><center><input type="checkbox" name="ind_grupo" disabled 
-			<%= a.isInd_grupo() ? "checked" : "" %> /></center></td>
-		<td><center><input type="checkbox" name="ind_sub" disabled 
-			<%= a.isInd_subsidio() ? "checked" : "" %> /></center></td>
-			<%
-				if (ea.isActivo()) {
-			%>
-		<td>ACTIVO</td>	
-			<%
-				} else {
-			%>
-		<td><a href="alumnoInactivo?do=listar">INACTIVO</a></td>
-			<%
-				}
-			%>	
-		<td><a href="certificadoEdit?do=modificar&dni=<%= a.getDni() %>">Ver</a></td>	
-<!-- 	<td><a href="alumnoEdit?do=modificar&dni_alum=<%=a.getDni()%>&dni_tutor=<%=a.getDni_tutor()%>&dni_madre=<%=a.getDni_madre()%>">Modificar</a></td>		 -->
-		<%
-				if (ea.isActivo()) {	
-		%>	
-		<td><a name="delete-link" href="alumnoEdit?do=baja&dni_alum=<%= a.getDni() %>" >DAR DE BAJA</a></td>
-		<%
-				} else {
- 		%>
- 		<td>&nbsp;</td>
- 		<%
-				}
- 		%>
+		<td><input type="checkbox" name="ind_grupo" disabled <%= a.isInd_grupo() ? "checked" : "" %>/></td>
+		<td><input type="checkbox" name="ind_sub" disabled <%= a.isInd_subsidio() ? "checked" : "" %>/></td>
+		<%if (ea.isActivo()){%><td>ACTIVO</td><%} else {%><td><a href="alumnoInactivo?do=listar">INACTIVO</a></td><%}%>	
+		<td><a href="certificadoEdit?do=modificar&dni=<%= a.getDni() %>">Ver</a></td>		
+		<% 	
+		  if (ea.isActivo()){ //verifica si el alumno está activo
+				
+			boolean menor= false, mayor=false, cero = false;			
+			if (prom > 0)  mayor = true;
+			if (prom < 0)  menor = true;
+			if (prom == 0) cero  = true;
+			
+			if (cero){%>
+				<td>REPITE AÑO</td>
+		  <%}
+			if (menor){%> <!--esta en condiciones de repetir o promocionar-->
+			
+				<td><a name="delete-link" href="alumnoEdit?do=baja&dni_alum=<%= a.getDni() %>">BAJA</a></td>
+			
+				<%if(!grado.equals("7° Grado")){%>							
+					<td><a href="AlumnoEdit?do=promocion&dni_alum=<%=a.getDni()%>">PROM</a></td>											
+			   <%}%>
+					<td><a href="AlumnoEdit?do=repeticion&dni_alum=<%=a.getDni()%>">REPETIR</a></td>
+			<%}
+			if (mayor){%>			    
+				<td>PROMOCIONADO</td>
+			<%}%>
+			
+		<%}%>	
 	</tr>
 	<tbody>
 <%
@@ -247,11 +243,7 @@
 </form>
 </div>
 <%
-		}
-		
-	} else {
-		response.sendRedirect("login.jsp");
-	}
+}	
 %>
 </div>
 </body>

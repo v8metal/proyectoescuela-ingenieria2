@@ -1,4 +1,5 @@
 <%@page import="datos.*"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -18,18 +19,21 @@
 </head>
 <body>
 <%
-	if (session.getAttribute("admin") != null) {
+	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	if (AccionesUsuario.validarAcceso(tipo, "certificado_edit.jsp") != 1){							
+		response.sendRedirect("Login");						
+	}
 
-		String error = "";
-		if (session.getAttribute("error") != null) {
-			error = (String)session.getAttribute("error");
-			session.setAttribute("error", "");
-		}
+	String error = "";
+	if (session.getAttribute("error") != null) {
+		error = (String)session.getAttribute("error");
+		session.setAttribute("error", "");
+	}
 	
-		Alumno a = (Alumno)session.getAttribute("alumno");
-		Certificado c = (Certificado)session.getAttribute("certificado");
-		Observaciones o = (Observaciones)session.getAttribute("observaciones");
-		String titulo = (String)session.getAttribute("titulo");
+	Alumno a = (Alumno)session.getAttribute("alumno");
+	Certificado c = (Certificado)session.getAttribute("certificado");
+	Observaciones o = (Observaciones)session.getAttribute("observaciones");
+	String titulo = (String)session.getAttribute("titulo");
 %>
 <%= error %>
 
@@ -163,11 +167,6 @@
 <form action="alumno_list.jsp" method="post">
 <button type="submit" class="btn btn-primary"  value="Volver" name="btnBack">Volver</button>
 </form>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
 </div>
 </body>
 </html>
