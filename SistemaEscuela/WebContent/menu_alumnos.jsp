@@ -5,6 +5,7 @@
 <%@page import="datos.Grados"%>
 <%@page import="conexion.AccionesTardanza"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesAlumno"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -30,13 +31,16 @@
 <body>
 <% 
 
-	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	int tipo = (Integer) session.getAttribute("tipoUsuario");
+
 	if (AccionesUsuario.validarAcceso(tipo, "menu_alumnos.jsp") != 1){							
 		response.sendRedirect("Login");
 	}
 	
 	Integer añoAlumno = null;
 	Grados grados = null;
+	
+	//session.removeAttribute("añoAlumno"); //para que funcione volver de "alumno_edit"
 			
 	if (request.getAttribute("añoAlumno") != null){
 		
@@ -169,13 +173,10 @@
                  	   <select class="form-control" name="año_alumno" autofocus>
   							 <%  			
 								int año = (Integer)session.getAttribute("añoc");
-  							 %>
-  							 	<option value="<%=año+1 %>"><%=año+1 %></option>
-  								<option selected value="<%=año %>"><%=año %></option>
-  							<% 
-  								for(int i=año-11; i>año-20;i--){
+  							  
+  								for(int i= AccionesAlumno.getAñoAlumnos("MAX"); i>=AccionesAlumno.getAñoAlumnos("MIN");i--){
   							%> 							  	 
- 							  <option value="<%=i %>"><%=i %></option>		 	
+ 							  <option <%if(i==año){%> selected <%}else{%><%}%>value="<%=i %>"><%=i %></option>		 	
    							<%
    								}							 		
 							 %>   			 		

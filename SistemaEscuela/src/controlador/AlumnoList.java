@@ -62,6 +62,7 @@ public class AlumnoList extends HttpServlet {
 			
 			sesion.removeAttribute("gradosAlumno");
 			sesion.removeAttribute("añoAlumno");
+			sesion.removeAttribute("turno_alumno");
 						
 			int año = Integer.parseInt(request.getParameter("año_alumno"));			
 									
@@ -244,7 +245,7 @@ public class AlumnoList extends HttpServlet {
 			
 			sesion.setAttribute("grado_alumno",grado);
 			sesion.setAttribute("turno_alumno",turno);
-			
+	
 			sesion.setAttribute("titulo_alumno",  grado + " " + turno + " - " + año);
 						
 			try {

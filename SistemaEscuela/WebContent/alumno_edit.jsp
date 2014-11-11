@@ -38,7 +38,7 @@
               <li class="active" class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Alumnos <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="menu_listado_alum.jsp">Listado</a></li>
+                  <li><a href="menu_alumnos.jsp">Listado</a></li>
                   <li><a href="alumno_edit.jsp">Nuevo alumno</a></li>          
                   <li class="divider"></li>
                   <li class="dropdown-header">Nav header</li>
@@ -108,6 +108,19 @@
 	if (AccionesUsuario.validarAcceso(tipo, "alumno_edit.jsp") != 1){							
 		response.sendRedirect("Login");						
 	}	
+	
+	
+	//Datos del grado cuando se accede desde el listado por grado
+	String grado = (String) session.getAttribute("grado_alta");
+	String turno = (String) session.getAttribute("turno_alta");
+	Integer año = (Integer) session.getAttribute("añoAlta");	
+	//Datos del grado cuando se accede desde el listado por grado
+	//se remueven los atributos para que no queden colgados
+	session.removeAttribute("grado_alta");
+	session.removeAttribute("turno_alta");
+	session.removeAttribute("añoAlta");
+	//se remueven los atributos para que no queden colgados
+	
 %>
 <div class="page-header"> 
 <h1>Ficha identificatoria del alumno</h1>
@@ -120,7 +133,42 @@
 
   	Padre tutor = (Padre)request.getAttribute("tutor");
     Padre madre = (Padre)request.getAttribute("madre");
-	Alumno alumno = (Alumno)request.getAttribute("alumno");
+    Alumno alumno = null;
+    Alumno hermano = null;
+    
+	Integer ind = null;
+	
+    if (request.getAttribute("alumno") != null){
+    	
+    	alumno = (Alumno)request.getAttribute("alumno");
+    	ind = 0;
+    }
+	
+	
+	//para la carga de un hermano
+	if(tutor != null){
+		session.setAttribute("tutor", tutor);
+		session.setAttribute("madre", madre);
+		session.setAttribute("alumno", alumno);
+	}
+	
+		
+	if(alumno == null && session.getAttribute("tutor") != null){
+	
+		ind = 1; //para cargar los datos de apellido, direccion, telefono
+		
+		tutor = (Padre)session.getAttribute("tutor");
+		madre = (Padre)session.getAttribute("madre");
+		alumno = (Alumno)session.getAttribute("alumno");
+		
+		hermano = alumno;
+	
+		session.removeAttribute("tutor");
+		session.removeAttribute("madre");
+		session.removeAttribute("alumno");
+		
+	}
+	//para la carga de un hermano
 	
 	// necesito las variables como globales para que lleguen hasta el select
 	int dia_nac_alum = 0;
@@ -180,7 +228,7 @@
 	</tr>
 	<tr>
 		<td>Nombres: </td>
-		<td><input type="text" class="form-control" size="29" name="nombre_alum" required value="<%=alumno!=null? alumno.getNombre() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="nombre_alum" required value="<%=(alumno!=null&&ind==0)? alumno.getNombre() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Lugar de nacimiento: </td>
@@ -224,7 +272,7 @@
 	</tr>
 	<tr>
 		<td>D.N.I.: </td>
-		<td><input type="text" class="form-control" size="29" name="dni_alum" required value="<%=alumno!=null? alumno.getDni() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="dni_alum" required value="<%=alumno!=null&&ind==0? alumno.getDni() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Domicilio: </td>
@@ -361,15 +409,15 @@
 <table>	
 	<tr>
 		<td>Apellido: </td>
-		<td><input type="text" class="form-control" size="29" name="apellido_madre" required value="<%=madre!=null && madre.getDni()!=0 ? madre.getApellido() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="apellido_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getApellido() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Nombres: </td>
-		<td><input type="text" class="form-control" size="29" name="nombre_madre" required value="<%=madre!=null && madre.getDni()!=0 ? madre.getNombre() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="nombre_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getNombre() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Lugar de nacimiento: </td>
-		<td><input type="text" class="form-control" size="29" name="lugar_nac_madre" required value="<%=madre!=null && madre.getDni()!=0 ? madre.getLugar_nac() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="lugar_nac_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getLugar_nac() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Fecha de nacimiento: </td>
@@ -409,11 +457,11 @@
 	</tr>
 	<tr>
 		<td>D.N.I.: </td>
-		<td><input type="text" class="form-control" size="29" name="dni_madre" required value="<%=madre!=null && madre.getDni()!=0 ? madre.getDni() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="dni_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getDni() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Domicilio: </td>
-		<td><input type="text" class="form-control" size="29" name="domicilio_madre" required value="<%=madre!=null && madre.getDni()!=0 ? madre.getDomicilio() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="domicilio_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getDomicilio() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Teléfono: </td>
@@ -421,7 +469,7 @@
 	</tr>
 	<tr>
 		<td>Ocupación: </td>
-		<td><input type="text" class="form-control" size="29" name="ocupacion_madre" required value="<%=madre!=null && madre.getDni()!=0 ? madre.getOcupacion() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="ocupacion_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getOcupacion() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Dom. Lab.: </td>
@@ -448,9 +496,9 @@
 <table>	
 	<tr>
 		<td>Mayores: </td>
-		<td><input type="text" class="form-control" size="1" name="cant_her_may" value="<%=alumno!=null? alumno.getCant_her_may() : "0"%>"></td>	
+		<td><input type="text" class="form-control" size="1" name="cant_her_may" required value="<%=alumno!=null? alumno.getCant_her_may() : "0"%>"></td>	
 		<td>Menores: </td>
-		<td><input type="text" class="form-control" size="1" name="cant_her_men" value="<%=alumno!=null? alumno.getCant_her_men() : "0"%>"></td>
+		<td><input type="text" class="form-control" size="1" name="cant_her_men" required value="<%=alumno!=null? alumno.getCant_her_men() : "0"%>"></td>
 	</tr>
 </table>
 <br>
@@ -464,7 +512,8 @@
 <br>
 <br>
 <%
-		if (alumno==null) {		//la fecha de inscripcion, el grado y el año en que arrancar aparece solo si es un alumno nuevo, no si es una modificacion de uno existente
+		//if (alumno==null) {		//la fecha de inscripcion, el grado y el año en que arrancar aparece solo si es un alumno nuevo, no si es una modificacion de uno existente
+		if (alumno==null || ind==1) {		//la fecha de inscripcion, el grado y el año en que arrancar aparece solo si es un alumno nuevo, no si es una modificacion de uno existente
 %>
 <table>	
 	<tr>
@@ -505,7 +554,11 @@
 	</tr>
 	<tr>
 		<td>Grado:</td>
-		<td><select name="grado">
+		<td>
+		<%if(grado != null){%>
+		<input readonly type="text" class="form-control" name="grado" value="<%=grado%>">
+		<%}else{%>
+		<select name="grado">
 			<option value="Sala 4">Sala 4</option>
 			<option value="Sala 5">Sala 5</option>
 			<option value="1° Grado">1° Grado</option>
@@ -515,19 +568,28 @@
 			<option value="5° Grado">5° Grado</option>
 			<option value="6° Grado">6° Grado</option>
 			<option value="7° Grado">7° Grado</option>
-			</select>
+		</select>
+		<%}%>		
 		</td>
 	<tr>	
 		<td>Turno:</td>
-		<td><select name="turno">
+		<td>
+		<%if(turno != null){%>
+			<input readonly type="text" class="form-control" name="turno" value="<%=turno%>">
+		<%}else{%>		
+			<select name="turno">
 			<option value="MAÑANA">Mañana</option>
 			<option value="TARDE">Tarde</option>
 			</select>
-		</td>
+		<%}%>
+		</td>		
 	</tr>		
 	<tr>
 		<td>Ingreso Escolar: </td>
 		<td>
+		<%if(año != null){%>
+			<input readonly type="text" class="form-control" name="año_ing" value="<%=año%>">
+		<%}else{%>
 			<select name="año_ing">
 			 <%
 			 	for (int i = año_sys+1; i >= año_sys; i--){
@@ -537,6 +599,7 @@
 			 	}
 			 %>
   			 </select>
+  		<%}%>
 		</td>
 	</tr>
 </table>
@@ -550,17 +613,21 @@
 </form>
 </div>
 <br>
-<% 
-	String volver = "menu_alumnos.jsp";
-	if (alumno!=null) { 
-	  volver = "alumno_list.jsp";
-	}
-%>
+<br>
+<%if(alumno != null && hermano == null){%>
+<a href="alumno_edit.jsp">Cargar Hermano</a>
+<br>
+<br>
+<br>
+<%}
+if (año != null || hermano != null){%>
 <div class="form-group">
-<form action="<%= volver %>" method="post">
+<form action="AlumnoList" method="post">
+<input type="hidden" name="accion" value="listarAlumnos">
 <button type="submit" class="btn btn-primary" value="Volver">Volver</button>
 </form>
 </div>
 </div>
+<%}%>
 </body>
 </html>
