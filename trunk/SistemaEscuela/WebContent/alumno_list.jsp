@@ -130,8 +130,15 @@
 		
 		String grado = (String)session.getAttribute("grado_alumno");
 		String turno = (String)session.getAttribute("turno_alumno");
-		int año = (Integer) session.getAttribute("añoAlumno");
-
+		Integer año = (Integer) session.getAttribute("añoAlumno");
+		
+		//para alumno_edit, que aparezcan los mismos datos de grado del listado	
+		session.setAttribute("grado_alta",grado);
+		session.setAttribute("turno_alta",turno);
+		session.setAttribute("añoAlta",año);
+		//para alumno_edit, que aparezcan los mismos datos de grado del listado
+		
+		
 		if (alumnos.getLista().isEmpty()){
 						
 			String rta = "No hay alumnos cargados en " + grado + ", turno " + turno.toLowerCase() + ", año " + año;
@@ -158,9 +165,9 @@
 <table class="table table-hover table-bordered">
 	<thead>
 	<tr>
-		<th>Apellido y Nombres</th>
+		<th>Apellido y Nombres</th>	
 		<th>D.N.I.</th>
-		<th>Domicilio</th>
+		<th>Domicilio</th>		
 		<th>Teléfono</th>
 		<th>Lugar nac.</th>
 		<th>Iglesia</th>
@@ -182,8 +189,8 @@
 	<tbody>
 	<tr>
 		<td><a href="alumnoEdit?do=modificar&dni_alum=<%=a.getDni()%>"><%= a.getApellido() + ", " + a.getNombre() %></a></td>
-		<td><%= a.getDni() %></td>
-		<td><%= a.getDomicilio() %></td>
+		<td><%= a.getDni() %></td>		
+		<td><%= a.getDomicilio() %></td>		
 		<td><%= a.getTelefono() %></td>
 		<td><%= a.getLugar_nac() %></td>
 		<td><%= a.getIglesia() %></td>
@@ -204,18 +211,18 @@
 		  <%}
 			if (menor){%> <!--esta en condiciones de repetir o promocionar-->
 			
-				<td><a name="delete-link" href="alumnoEdit?do=baja&dni_alum=<%= a.getDni() %>">BAJA</a></td>
+				<td><a name="delete-link" href="alumnoEdit?do=baja&dni_alum=<%= a.getDni() %>" onclick="return confirm('Esta seguro que desea dar de baja');">BAJA</a></td>
 			
 				<%if(!grado.equals("7° Grado")){%>							
-					<td><a href="AlumnoEdit?do=promocion&dni_alum=<%=a.getDni()%>">PROM</a></td>											
+					<td><a href="AlumnoEdit?do=promocion&dni_alum=<%=a.getDni()%>" onclick="return confirm('Esta seguro que desea promocionar');">PROMOCION</a></td>											
 			   <%}%>
-					<td><a href="AlumnoEdit?do=repeticion&dni_alum=<%=a.getDni()%>">REPETIR</a></td>
+					<td><a href="AlumnoEdit?do=repeticion&dni_alum=<%=a.getDni()%>" onclick="return confirm('Esta seguro que desea repetir año');">REPETICION</a></td>
 			<%}
 			if (mayor){%>			    
 				<td>PROMOCIONADO</td>
 			<%}%>
 			
-		<%}%>	
+		<%}%>			
 	</tr>
 	<tbody>
 <%
@@ -234,11 +241,17 @@
 			}
 %> 
 <br>
+<%if(año == AccionesAlumno.getAñoAlumnos("MAX")){%>
+ <a href="alumno_edit.jsp">Alta de Alumno</a>
+<br>
+<br>
+<%}%>
+<br>
 <a href="certificado_list.jsp"><%= "VER CERTIFICADOS DE " + titulo.toUpperCase() %></a>
 <br>
 <br>
 <div class="form-group">
-<form action="menu_listado_alum.jsp" method="post">
+<form action="menu_alumnos.jsp" method="post">
 <button type="submit" class="btn btn-primary" value="Volver">Volver</button>
 </form>
 </div>

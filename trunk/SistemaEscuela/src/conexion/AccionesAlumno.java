@@ -425,6 +425,29 @@ public class AccionesAlumno {
 	stmt.close();
 	Conexion.desconectar();				
 	}
+	
+	public static int getAñoAlumnos(String tipo) throws Exception{
+		
+		int año = 0;
+		
+		try{
+			
+			Statement stm = Conexion.conectar().createStatement();
+								
+			ResultSet rs = stm.executeQuery("SELECT "+ tipo +"(AÑO) AS AÑO FROM ALUMNOS_GRADO");
+							
+			while(rs.next()){
+				año = rs.getInt("AÑO");				
+			}
+			
+			stm.close();
+			rs.close();
+			Conexion.desconectar();
+		}catch(SQLException sqle){
+			System.out.println("ERROR SQL!!!");
+		}
+		return año;
+	}
 
 
 	public static void main(String[] args) {	// getAll(), getOne(), insertOne(), updateOne() y deleteOne()  probadas correctamente
