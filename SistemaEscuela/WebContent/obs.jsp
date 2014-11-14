@@ -25,9 +25,6 @@
 <div class="container"> 
 
 <div id="divmenu"></div>
- 
-<br>
-<br>
   
 <div class="page-header">
 <h1>Observaciones</h1>

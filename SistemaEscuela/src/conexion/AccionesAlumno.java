@@ -396,18 +396,79 @@ public class AccionesAlumno {
 	
 	public static void promGrado(int dni, int año) throws SQLException, Exception {
 		
-	Statement stmt = Conexion.conectar().createStatement();
+		Statement stmt = Conexion.conectar().createStatement();
 	
-	//inserta el alumno para el grado/año siguiente
-	stmt.executeUpdate("INSERT INTO ALUMNOS_GRADO SELECT GB1.GRADO, AG.TURNO, AG.AÑO+1, AG.DNI FROM ALUMNOS_GRADO AG INNER JOIN GRADOS_BASE GB ON GB.GRADO = AG.GRADO AND GB.TURNO = AG.TURNO INNER JOIN GRADOS_BASE GB1 ON GB1.TURNO = GB.TURNO AND GB1.ORDEN = GB.ORDEN + 2 WHERE DNI = " + dni + " AND AG.AÑO = " + año);
+		//inserta el alumno para el grado/año siguiente
+		stmt.executeUpdate("INSERT INTO ALUMNOS_GRADO SELECT GB1.GRADO, AG.TURNO, AG.AÑO+1, AG.DNI FROM ALUMNOS_GRADO AG INNER JOIN GRADOS_BASE GB ON GB.GRADO = AG.GRADO AND GB.TURNO = AG.TURNO INNER JOIN GRADOS_BASE GB1 ON GB1.TURNO = GB.TURNO AND GB1.ORDEN = GB.ORDEN + 2 WHERE DNI = " + dni + " AND AG.AÑO = " + año);
 
-	//insertan los mismos subsidios que el año en curso para el siguiente año
-	stmt.executeUpdate("INSERT INTO ALUMNOS_SUBSIDIO SELECT AÑO+1, DNI, IND_GRUPO, IND_SUBSIDIO FROM ALUMNOS_SUBSIDIO WHERE DNI = " + dni + " AND AÑO = " + año);
+		//insertan los mismos subsidios que el año en curso para el siguiente año
+		stmt.executeUpdate("INSERT INTO ALUMNOS_SUBSIDIO SELECT AÑO+1, DNI, IND_GRUPO, IND_SUBSIDIO FROM ALUMNOS_SUBSIDIO WHERE DNI = " + dni + " AND AÑO = " + año);
 	
-	AccionesCertificado.insertOne(dni, año+1);
+		//AccionesCertificado.insertOne(dni, año+1);
+		stmt.executeUpdate("INSERT INTO CERTIFICADOS (DNI, AÑO) VALUES (" + dni + "," + (año+1) + " )");
+
+		
+		String gradoprom = "", turnoprom= "";
+		String gradoact = "",  turnoact= "";
+		
+		//obtengo maestros del grado promocional, para el año+1
+		System.out.println("SELECT GRADO, TURNO FROM ALUMNOS_GRADO WHERE DNI = " + dni + " AND AÑO = " + (año+1));
+		
+		ResultSet rs = stmt.executeQuery("SELECT GRADO, TURNO FROM ALUMNOS_GRADO WHERE DNI = " + dni + " AND AÑO = " + (año+1));
+	
+		while(rs.next()){
+			gradoprom = rs.getString("GRADO");
+			turnoprom = rs.getString("TURNO");
+		}
+		
+		//System.out.println("gradoprom = " + gradoprom);
+		//System.out.println("turnoprom = " + turnoprom);
+		
+		//Obtengo maestros del grado actual para el año en curso
+		rs = stmt.executeQuery("SELECT GRADO, TURNO FROM ALUMNOS_GRADO WHERE DNI = " + dni + " AND AÑO = " + año); 	
+		while(rs.next()){
+			gradoact = rs.getString("GRADO");
+			turnoact = rs.getString("TURNO");
+		}
+
+		//obtengo maestros del grado a promocionar, del año promocional
+		Integer titular = AccionesGrado.getTitular(gradoprom, turnoprom, año+1);
+		Integer paralelo = AccionesGrado.getParalelo(gradoprom, turnoprom, año+1);
+		
+		//System.out.println("titular1 =" + titular);
+		//System.out.println("paralelo1 =" + paralelo);
+		
+		if (titular == 0 && paralelo == 0){						
+			//obtengo maestros del grado promocional y el año en curso
+			titular = AccionesGrado.getTitular(gradoprom, turnoprom, año);
+			paralelo = AccionesGrado.getParalelo(gradoprom, turnoprom, año);
 			
-	stmt.close();
-	Conexion.desconectar();				
+			//System.out.println("titular2 =" + titular);
+			//System.out.println("paralelo2 =" + paralelo);
+			
+			if (titular == 0 && paralelo == 0){
+				
+				titular = AccionesGrado.getTitular(gradoact, turnoact, año);
+				paralelo = AccionesGrado.getParalelo(gradoact, turnoact, año);
+				
+				//System.out.println("titular3 =" + titular);
+				//System.out.println("paralelo3 =" + paralelo);
+				
+			}
+			
+			//AccionesGrado.insertMaestroGrado(grado, turno, año+1, titular, paralelo);
+			Statement stmt1 = Conexion.conectar().createStatement();		
+			
+			//System.out.println("INSERT INTO MAESTROS_GRADO VALUES ('" + gradoprom + "', '" + turnoprom +"', " + (año+1) + ", " + titular + ", " + paralelo + ")");
+
+			stmt1.executeUpdate("INSERT INTO MAESTROS_GRADO VALUES ('" + gradoprom + "', '" + turnoprom +"', " + (año+1) + ", " + titular + ", " + paralelo + ")");
+			stmt1.close();
+		}
+	
+		stmt.close();		
+		rs.close();
+		Conexion.desconectar();
+	
 	}
 	
 	public static void repetirGrado(int dni, int año) throws SQLException, Exception {

@@ -44,10 +44,7 @@
 <div class="container">  
 
 <div id="divmenu"></div>
-  
-<br>
-<br>
-  
+
 <%
 		Alumnos alumnos = (Alumnos)session.getAttribute("alumnos_alumno");
 		

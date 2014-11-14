@@ -44,9 +44,6 @@
 
 <div id="divmenu"></div>
  
- <br>
- <br>
-
 <div class="page-header">
 <h1>Editar Certificados</h1>
 </div>

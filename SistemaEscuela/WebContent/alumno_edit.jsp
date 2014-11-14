@@ -28,8 +28,6 @@
 <body>
 <div class="container"> 	
  <div id="divmenu"></div> 	 
- <br>
- <br>
 <%
 	int tipo = (Integer) session.getAttribute("tipoUsuario");						
 	if (AccionesUsuario.validarAcceso(tipo, "alumno_edit.jsp") != 1){							
