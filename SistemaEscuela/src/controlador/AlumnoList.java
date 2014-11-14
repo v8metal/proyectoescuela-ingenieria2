@@ -88,6 +88,8 @@ public class AlumnoList extends HttpServlet {
 			
 		case "listarAlumnos":
 			
+			sesion.removeAttribute("tutor");
+			
 			if (AccionesUsuario.validarAcceso(tipo, "alumno_list.jsp") != 1){							
 				response.sendRedirect("Login");						
 			}
@@ -157,7 +159,7 @@ public class AlumnoList extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession sesion = request.getSession();
-		
+				
 		int tipo = (Integer) sesion.getAttribute("tipoUsuario");						
 		if (AccionesUsuario.validarAcceso(tipo, "AlumnoList") != 1){							
 			response.sendRedirect("Login");						
@@ -207,6 +209,8 @@ public class AlumnoList extends HttpServlet {
 			break;
 			
 		case "listarAlumnos":
+			
+			sesion.removeAttribute("tutor");
 			
 			if (AccionesUsuario.validarAcceso(tipo, "alumno_list.jsp") != 1){							
 				response.sendRedirect("Login");						
