@@ -42,9 +42,6 @@
 
 <div id="divmenu"></div>
   
- <br>
- <br>
-  
 <%
 		EstadoAlumnos alumnos_inactivos = (EstadoAlumnos)session.getAttribute("alumnos_inactivos");
 

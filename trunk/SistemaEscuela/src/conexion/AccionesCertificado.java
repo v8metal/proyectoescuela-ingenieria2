@@ -175,13 +175,13 @@ public class AccionesCertificado {
 	}
 	
 	public static void insertOne(int dni, int año) throws SQLException, Exception { //inserta los valores por defecto (0) de los indicadores de certificados
-		Statement smt = Conexion.conectar().createStatement();
+		Statement smt1 = Conexion.conectar().createStatement();
 		
 		//System.out.println("INSERT INTO CERTIFICADOS (DNI, AÑO) VALUES (" + dni + "," + año + " )");
 		
-		smt.executeUpdate("INSERT INTO CERTIFICADOS (DNI, AÑO) VALUES (" + dni + "," + año + " )");
+		smt1.executeUpdate("INSERT INTO CERTIFICADOS (DNI, AÑO) VALUES (" + dni + "," + año + " )");
 		
-		smt.close();
+		smt1.close();
 		Conexion.desconectar();
 }
 	

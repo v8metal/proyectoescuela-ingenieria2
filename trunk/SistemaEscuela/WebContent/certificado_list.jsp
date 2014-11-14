@@ -35,9 +35,6 @@
 <div class="container"> 
 
 <div id="divmenu"></div>
- 
- <br>
- <br>
 
 <div class="page-header">
 <h1>Certificados</h1>
