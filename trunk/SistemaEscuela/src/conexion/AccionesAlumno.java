@@ -449,7 +449,15 @@ public class AccionesAlumno {
 		return año;
 	}
 
-
+	public static void updateAlumnoGrado(int dni,int año, String grado, String turno) throws SQLException, Exception {
+			Statement stmt = Conexion.conectar().createStatement();
+			
+			stmt.executeUpdate("UPDATE ALUMNOS_GRADO SET GRADO = '" + grado + "', TURNO = '" + turno + "' WHERE DNI = " + dni + " AND AÑO = " + año);
+			
+			stmt.close();
+			Conexion.desconectar();
+	
+	}
 	public static void main(String[] args) {	// getAll(), getOne(), insertOne(), updateOne() y deleteOne()  probadas correctamente
 	
 		try {

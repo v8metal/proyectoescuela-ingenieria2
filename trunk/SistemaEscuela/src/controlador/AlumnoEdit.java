@@ -1,6 +1,7 @@
 package controlador;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import conexion.AccionesGrado;
 import conexion.AccionesPadre;
 import conexion.AccionesUsuario;
 import datos.Alumno;
+import datos.EstadoAlumno;
 import datos.Padre;
 
 /**
@@ -80,11 +82,36 @@ public class AlumnoEdit extends HttpServlet {
 				
 				Padre tutor = AccionesPadre.getOne(alumno.getDni_tutor());								
 				Padre madre = AccionesPadre.getOne(alumno.getDni_madre());
-									
+				
+				EstadoAlumno estado = AccionesEstado.getOne(alumno.getDni());
+				
+				String año_sys = (String)sesion.getAttribute("año_sys");
+				String mes_sys = (String)sesion.getAttribute("mes_sys");
+				String dia_sys = (String)sesion.getAttribute("dia_sys");
+				
+		        // Crear 2 instancias de Calendar
+				Calendar fecha_dia = Calendar.getInstance();
+				Calendar fecha_alumno = Calendar.getInstance();
+												 
+				// Establecer las fechas
+				fecha_dia.set(Integer.parseInt(año_sys),Integer.parseInt(mes_sys),Integer.parseInt(dia_sys));
+				fecha_alumno.set(Integer.parseInt(estado.getFecha().substring(0,4)), Integer.parseInt(estado.getFecha().substring(5,7)),Integer.parseInt(estado.getFecha().substring(8,10)));
+			
+				// calcular la diferencia en milisengundos
+				long milis1 = fecha_dia.getTimeInMillis();
+				long milis2 = fecha_alumno.getTimeInMillis();
+					 
+				// calcular la diferencia en milisengundos
+				long diff = milis1 - milis2;
+				
+		        // calcular la diferencia en dias
+				Integer diffDays = (int) (diff / (24 * 60 * 60 * 1000));
+				
 				request.setAttribute("tutor", tutor);				
 				request.setAttribute("madre", madre);
-				request.setAttribute("alumno", alumno);  
-				
+				request.setAttribute("alumno", alumno);
+				request.setAttribute("diasAlta", diffDays);
+											
 				dispatcher = getServletContext().getRequestDispatcher("/alumno_edit.jsp");
 				dispatcher.forward(request, response);	
 				
@@ -97,9 +124,9 @@ public class AlumnoEdit extends HttpServlet {
 				}
 				
 				
-				String año_sys = (String)sesion.getAttribute("año_sys");
-				String mes_sys = (String)sesion.getAttribute("mes_sys");
-				String dia_sys = (String)sesion.getAttribute("dia_sys");
+				año_sys = (String)sesion.getAttribute("año_sys");
+				mes_sys = (String)sesion.getAttribute("mes_sys");
+				dia_sys = (String)sesion.getAttribute("dia_sys");
 				String fecha_sys = año_sys + "-" + mes_sys + "-" + dia_sys;
 				
 				if (AccionesUsuario.validarAcceso(tipo, "AccionesEstado") != 1){							
@@ -325,6 +352,15 @@ public class AlumnoEdit extends HttpServlet {
 				sesion.setAttribute("año", Integer.parseInt(año_ing));
 										
 			} else {	//Si ya estan los datos del alumno, que lo modifique
+				
+				//en caso de modificar el grado/turno
+				
+				if (request.getParameter("grado") != null){
+					String grado = request.getParameter("grado");
+					String turno = request.getParameter("turno");
+					//String año_ing = request.getParameter("año_ing");				
+					AccionesAlumno.updateAlumnoGrado(dni_alum, año, grado, turno);
+				}
 				
 				//update tutor
 				AccionesPadre.updateOne(dni_tutor, nombre_tutor, apellido_tutor, lugar_nac_tutor, fecha_nac_tutor,
