@@ -75,6 +75,25 @@ public class AccionesEstado {
 		return lista;
 	}
 	
+	//recupera la fecha de alta del alumno
+	public static String getFechaIngreso(int dni) throws SQLException, Exception {
+		
+			String fecha = "";
+			
+			Statement stmt = Conexion.conectar().createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT DNI, MIN(FECHA) AS FECHA FROM ESTADO_ALUMNO WHERE DNI = " + dni );
+			
+			while (rs.next()) {
+				fecha = rs.getString("fecha");				
+			}
+			
+			stmt.close();
+			Conexion.desconectar();
+	
+		return fecha;
+	}
+	
+	
 	public static void main(String[] args) {
 		try {
 			//DesactivarAlumno(37041734, "2015-9-24");

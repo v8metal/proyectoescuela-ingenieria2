@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import datos.Grado;
 import datos.Grados; //alta de grados
+import conexion.AccionesEstado;
 import conexion.AccionesGrado;
 import conexion.AccionesUsuario;
 import datos.Maestro;
@@ -181,8 +182,10 @@ import conexion.AccionesMaestro;
 			Alumnos alumnos = AccionesGrado.getAlumnosGrado(grado, turno, año);				
 				
 			for (Alumno  a: alumnos.getLista()){	
-					
-				AccionesGrado.promAlumnoGrado(grado_prom, turno, a.getDni(), año+1);
+				
+				if (AccionesEstado.getOne(a.getDni()).isActivo()){ //verifica que el alumno este activo
+					AccionesGrado.promAlumnoGrado(grado_prom, turno, a.getDni(), año+1);
+				}
 					
 			}			
 				

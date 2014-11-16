@@ -1,5 +1,6 @@
 <%@page import="datos.*"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesAlumno"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -19,11 +20,11 @@
 <script src="js/jquery-1.10.2.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
-<link rel="stylesheet" href="style/jquery-ui.css">
-<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css"> -->
+<!-- <link rel="stylesheet" href="style/jquery-ui.css"> --> 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script src="js/jquery-ui.js"></script>
+<script src="js/alumnos.js"></script><!-- DatePic para Alumno -->
 <script src="js/menu_admin.js"></script>
-<script src="js/alumno.js"></script><!-- DatePic para entrevistas -->
 </head>
 <body>
 <div class="container"> 	
@@ -40,17 +41,14 @@
 	String turno = (String) session.getAttribute("turno_alta");
 	Integer año = (Integer) session.getAttribute("añoAlta");	
 	//Datos del grado cuando se accede desde el listado por grado
+	
 	//se remueven los atributos para que no queden colgados
 	session.removeAttribute("grado_alta");
 	session.removeAttribute("turno_alta");
 	//session.removeAttribute("añoAlta"); //ver si esta ok comentarlo o no
 	//se remueven los atributos para que no queden colgados
-	
-%>
-<div class="page-header"> 
-<h1>Ficha identificatoria del alumno</h1>
-</div>
-<%	String error = "";
+
+	String error = "";
 	if (session.getAttribute("error") != null) {
 		error = (String)session.getAttribute("error");
 		session.setAttribute("error", "");
@@ -60,16 +58,22 @@
     Padre madre = (Padre)request.getAttribute("madre");
     Alumno alumno = null;
     Alumno hermano = null;
-    Integer dias = -1;
+    Integer dias = 8;
     
 	Integer ind = null;
 	
 	String mensaje = "";
+	String fecha_ing = null;
 	
     if (request.getAttribute("alumno") != null){
     	 
     	alumno = (Alumno) request.getAttribute("alumno");
-    	dias = (Integer) request.getAttribute("diasAlta");
+    	fecha_ing = (String) request.getAttribute("fecha_ingreso");
+    	
+    	if (request.getAttribute("diasAlta") != null){
+    		dias = (Integer) request.getAttribute("diasAlta");
+    	}
+    	
     	ind = 0;
     }
 	
@@ -146,9 +150,43 @@
 	String mes_sys = (String)session.getAttribute("mes_sys");
 	int dia_sys = Integer.parseInt((String)session.getAttribute("dia_sys"));
 	
+	String reingreso = null;
+	reingreso = (String) session.getAttribute("reingreso");
+	
+	String cabecera = "";
+	int ind_reingreso = 0;
+	
+	if(ind != null){ 
+
+		if(reingreso == null){
+			cabecera = "Edición de Alumno";
+		}else{
+			ind_reingreso = 1;
+			cabecera = "Reingreso de Alumno";
+
+		}	
+
+	}else{
+
+		cabecera = "Alta de Alumno";
+
+	}
+	
   %>
+<div class="page-header"> 
+<h1>Ficha identificatoria del alumno - <%=cabecera%></h1>
+</div>
+
 <div class="form-group">  
 <form action="alumnoEdit" method="post" class="alumno-alta">
+<input name="fecha1" id="fecha1" type="hidden" value="<%=alumno!=null? alumno.getFecha_nac() : "0"%>">
+<input name="fecha2" id="fecha2" type="hidden" value="<%=alumno!=null?tutor.getFecha_nac() : "0"%>">
+<input name="fecha3" id="fecha3" type="hidden" value="<%=alumno!=null?madre.getFecha_nac() : "0"%>">
+<input name="fecha4" id="fecha4" type="hidden" value="<%=fecha_ing!=null?fecha_ing: "0"%>">
+<%if(ind_reingreso == 1){
+	session.removeAttribute("reingreso");%>
+<input type="hidden" name="reingreso" value="reingreso">
+<%}%>
 <h2>Datos personales:</h2>
 <table>
 	<tr>
@@ -164,41 +202,13 @@
 		<td><input type="text" class="form-control" size="29" name="lugar_nac_alum" required value="<%=alumno!=null? alumno.getLugar_nac() : ""%>"></td>
 	</tr>
 	<tr>
-		<td>Fecha de nacimiento: </td>
-				 		
-			<td><select name="dia_nac_alum">   
-			<%  
-				for (int i = 1; i <= 31; i++){			  	
- 			 %>
-			 <option <%=alumno!=null && dia_nac_alum==i ? "selected" : ""%>><%=i%></option>		 	
-   			<%
-				}	
-			 %>
- 			 </select>
-  			 <select name="mes_nac_alum">
-  			 <option value="01" <%=alumno!=null && mes_nac_alum.equals("01") ? "selected" : ""%>>Enero</option>
-			 <option value="02" <%=alumno!=null && mes_nac_alum.equals("02") ? "selected" : ""%>>Febrero</option>
-			 <option value="03" <%=alumno!=null && mes_nac_alum.equals("03") ? "selected" : ""%>>Marzo</option>
-			 <option value="04" <%=alumno!=null && mes_nac_alum.equals("04") ? "selected" : ""%>>Abril</option>
-			 <option value="05" <%=alumno!=null && mes_nac_alum.equals("05") ? "selected" : ""%>>Mayo</option>
-			 <option value="06" <%=alumno!=null && mes_nac_alum.equals("06") ? "selected" : ""%>>Junio</option>
-			 <option value="07" <%=alumno!=null && mes_nac_alum.equals("07") ? "selected" : ""%>>Julio</option>
-			 <option value="08" <%=alumno!=null && mes_nac_alum.equals("08") ? "selected" : ""%>>Agosto</option>
-			 <option value="09" <%=alumno!=null && mes_nac_alum.equals("09") ? "selected" : ""%>>Septiembre</option>
-			 <option value="10" <%=alumno!=null && mes_nac_alum.equals("10") ? "selected" : ""%>>Octubre</option>
-			 <option value="11" <%=alumno!=null && mes_nac_alum.equals("11") ? "selected" : ""%>>Noviembre</option>
-			 <option value="12" <%=alumno!=null && mes_nac_alum.equals("12") ? "selected" : ""%>>Diciembre</option>	   			 		
- 			 </select>
-			 <select name="año_nac_alum">
-			<%
-			 	for (int i = año_sys; i >= 1905; i--){
- 			 %>
- 			 <option <%=alumno!=null && año_nac_alum==i ? "selected" : ""%>><%=i%></option>
-			<%
-			 	}
-			 %>
-  			 </select>			 
-	</tr>
+		<td><label for="input">Fecha de Nacimiento:</label></td>			
+			<td>
+			<!-- <div class="col-xs-2"> -->
+				<input class="form-control" type="text" id="datepicker" required autofocus name="fecha_nac_alum">
+			<!-- </div> -->
+			</td>			
+	  	</tr>
 	<tr>
 		<td>D.N.I.: </td>
 		<td><input type="text" class="form-control" size="29" name="dni_alum" required value="<%=alumno!=null&&ind==0? alumno.getDni() : ""%>"></td>
@@ -262,41 +272,13 @@
 		<td><input type="text" class="form-control" size="29" name="lugar_nac_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getLugar_nac() : ""%>"></td>
 	</tr>
 	<tr>
-		<td>Fecha de nacimiento: </td>
-		<td><select name="dia_nac_tutor">
-   			 <%
-			 	for (int i = 1; i <= 31; i++){
- 			 %>
- 			 <option <%=tutor!=null && dia_nac_tutor==i ? "selected" : ""%>><%=i%></option>
-   			  <%
-			 	}
-			 %>
- 			 </select>
-  			 <select name="mes_nac_tutor">
-  			 <option value="01" <%=tutor!=null && mes_nac_tutor.equals("01") ? "selected" : ""%>>Enero</option>
-			 <option value="02" <%=tutor!=null && mes_nac_tutor.equals("02") ? "selected" : ""%>>Febrero</option>
-			 <option value="03" <%=tutor!=null && mes_nac_tutor.equals("03") ? "selected" : ""%>>Marzo</option>
-			 <option value="04" <%=tutor!=null && mes_nac_tutor.equals("04") ? "selected" : ""%>>Abril</option>
-			 <option value="05" <%=tutor!=null && mes_nac_tutor.equals("05") ? "selected" : ""%>>Mayo</option>
-			 <option value="06" <%=tutor!=null && mes_nac_tutor.equals("06") ? "selected" : ""%>>Junio</option>
-			 <option value="07" <%=tutor!=null && mes_nac_tutor.equals("07") ? "selected" : ""%>>Julio</option>
-			 <option value="08" <%=tutor!=null && mes_nac_tutor.equals("08") ? "selected" : ""%>>Agosto</option>
-			 <option value="09" <%=tutor!=null && mes_nac_tutor.equals("09") ? "selected" : ""%>>Septiembre</option>
-		 	 <option value="10" <%=tutor!=null && mes_nac_tutor.equals("10") ? "selected" : ""%>>Octubre</option>
-			 <option value="11" <%=tutor!=null && mes_nac_tutor.equals("11") ? "selected" : ""%>>Noviembre</option>
-		     <option value="12" <%=tutor!=null && mes_nac_tutor.equals("12") ? "selected" : ""%>>Diciembre</option>
- 			 </select>
-			 <select name="año_nac_tutor">
-			 <%
-			 	for (int i = año_sys; i >= 1905; i--){
- 			 %>
- 			 <option <%=tutor!=null && año_nac_tutor==i ? "selected" : ""%>><%=i%></option>
-			 <%
-			 	}
-			 %>
-  			 </select>
-		</td>
-	</tr>
+		<td><label for="input">Fecha de Nacimiento:</label></td>			
+		<td>
+			<!-- <div class="col-xs-2"> -->
+			<input class="form-control" type="text" id="datepicker2" required autofocus name="fecha_nac_tutor">
+			<!-- </div>-->
+		</td>			
+ 	</tr>
 	<tr>
 		<td>D.N.I.: </td>
 		<td><input type="text" class="form-control" size="29" name="dni_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getDni() : ""%>"></td>
@@ -349,41 +331,13 @@
 		<td><input type="text" class="form-control" size="29" name="lugar_nac_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getLugar_nac() : ""%>"></td>
 	</tr>
 	<tr>
-		<td>Fecha de nacimiento: </td>
-			<td><select name="dia_nac_madre">
-   			 <%
-			 	for (int i = 1; i <= 31; i++){
- 			 %>
-   			 <option <%=madre!=null && dia_nac_madre==i ? "selected" : ""%>><%=i%></option>
-   			  <%
-			 	}
-			 %>
- 			 </select>
-  			 <select name="mes_nac_madre">
-  			 <option value="01" <%=madre!=null && mes_nac_madre.equals("01") ? "selected" : ""%>>Enero</option>
-			 <option value="02" <%=madre!=null && mes_nac_madre.equals("02") ? "selected" : ""%>>Febrero</option>
-			 <option value="03" <%=madre!=null && mes_nac_madre.equals("03") ? "selected" : ""%>>Marzo</option>
-			 <option value="04" <%=madre!=null && mes_nac_madre.equals("04") ? "selected" : ""%>>Abril</option>
-			 <option value="05" <%=madre!=null && mes_nac_madre.equals("05") ? "selected" : ""%>>Mayo</option>
-			 <option value="06" <%=madre!=null && mes_nac_madre.equals("06") ? "selected" : ""%>>Junio</option>
-			 <option value="07" <%=madre!=null && mes_nac_madre.equals("07") ? "selected" : ""%>>Julio</option>
-			 <option value="08" <%=madre!=null && mes_nac_madre.equals("08") ? "selected" : ""%>>Agosto</option>
-			 <option value="09" <%=madre!=null && mes_nac_madre.equals("09") ? "selected" : ""%>>Septiembre</option>
-			 <option value="10" <%=madre!=null && mes_nac_madre.equals("10") ? "selected" : ""%>>Octubre</option>
-			 <option value="11" <%=madre!=null && mes_nac_madre.equals("11") ? "selected" : ""%>>Noviembre</option>
-			 <option value="12" <%=madre!=null && mes_nac_madre.equals("12") ? "selected" : ""%>>Diciembre</option>
- 			 </select>
-			 <select name="año_nac_madre">
-			 <%
-			 	for (int i = año_sys; i >= 1905; i--){
- 			 %>
-			 <option <%=madre!=null && año_nac_madre==i ? "selected" : ""%>><%=i%></option>
-			 <%
-			 	}
-			 %>
-  			 </select>
-		</td>
-	</tr>
+		<td><label for="input">Fecha de Nacimiento:</label></td>			
+		<td>
+			<!-- <div class="col-xs-2"> -->
+			<input class="form-control" type="text" id="datepicker3" required autofocus name="fecha_nac_madre">
+			<!-- </div>-->
+		</td>			
+ 	</tr>
 	<tr>
 		<td>D.N.I.: </td>
 		<td><input type="text" class="form-control" size="29" name="dni_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getDni() : ""%>"></td>
@@ -445,50 +399,24 @@
 			mensaje = "Se puede modificar grado/tuno de ingreso hasta 7 dias después del alta";
 		}
 
-		if (alumno==null || ind==1 || (alumno!=null && dias <= 7)) {		//la fecha de inscripcion, el grado y el año en que arrancar aparece solo si es un alumno nuevo, no si es una modificacion de uno existente
+		//la fecha de inscripcion, el grado y el año en que arrancar aparece solo si es un alumno nuevo,
+		//o si es una modificación de un alumno existente 7 días después del alta
+		if (alumno==null || ind==1 || (alumno!=null && dias <= 7)) {		
 		
 %>
 <table>	
 	<tr>
-		<td>Fecha de ingreso: </td>
-			<td><select name="dia_insc">
-   			 <%
-			 	for (int i = 1; i <= 31; i++){
- 			 %>
-   			 <option <%=dia_sys==i ? "selected" : ""%>><%=i%></option>
-   			  <%
-			 	}
-			 %>
- 			 </select>
-  			 <select name="mes_insc">
-  			 <option value="01" <%=mes_sys.equals("1") ? "selected" : ""%>>Enero</option>
-			 <option value="02" <%=mes_sys.equals("2") ? "selected" : ""%>>Febrero</option>
-			 <option value="03" <%=mes_sys.equals("3") ? "selected" : ""%>>Marzo</option>
-			 <option value="04" <%=mes_sys.equals("4") ? "selected" : ""%>>Abril</option>
-			 <option value="05" <%=mes_sys.equals("5") ? "selected" : ""%>>Mayo</option>
-			 <option value="06" <%=mes_sys.equals("6") ? "selected" : ""%>>Junio</option>
-			 <option value="07" <%=mes_sys.equals("7") ? "selected" : ""%>>Julio</option>
-			 <option value="08" <%=mes_sys.equals("8") ? "selected" : ""%>>Agosto</option>
-			 <option value="09" <%=mes_sys.equals("9") ? "selected" : ""%>>Septiembre</option>
-			 <option value="10" <%=mes_sys.equals("10") ? "selected" : ""%>>Octubre</option>
-			 <option value="11" <%=mes_sys.equals("11") ? "selected" : ""%>>Noviembre</option>
-			 <option value="12" <%=mes_sys.equals("12") ? "selected" : ""%>>Diciembre</option>
- 			 </select>
-			 <select name="año_insc">
-			 <%
-			 	for (int i = año_sys; i >= 1990; i--){
- 			 %>
-			 <option <%=año_sys==i ? "selected" : ""%>><%=i%></option>
-			 <%
-			 	}
-			 %>
-  			 </select>
-		</td>
-	</tr>
+		<td><label for="input">Fecha de Ingreso:</label></td>			
+		<td>
+			<!-- <div class="col-xs-2"> -->
+			<input class="form-control" type="text" id="datepicker4" required autofocus name="fecha_ing_alum">
+			<!-- </div>-->
+		</td>			
+ 	</tr>
 	<tr>
 		<td>Grado:</td>
-		<td>
-		<%if(grado != null && dias > 7){%>
+		<td>		
+		<%if(alumno != null && dias > 7 && ind == 0){%>
 		<input readonly type="text" class="form-control" name="grado" value="<%=grado%>">
 		<%}else{%>		
 		<select name="grado">
@@ -506,8 +434,8 @@
 		</td>
 	<tr>	
 		<td>Turno:</td>
-		<td>
-		<%if(turno != null && dias > 7){%>
+		<td>		
+		<%if((alumno != null && dias > 7 && ind == 0)){%>
 			<input readonly type="text" class="form-control" name="turno" value="<%=turno%>">
 		<%}else{%>		
 			<select name="turno">
@@ -520,14 +448,17 @@
 	<tr>
 		<td>Ingreso Escolar: </td>
 		<td>
-		<%if(año != null){%>
+		<%if(año != null && ind_reingreso == 0){%>
 			<input readonly type="text" class="form-control" name="año_ing" value="<%=año%>">
 		<%}else{%>
 			<select name="año_ing">
 			 <%
-			 	for (int i = año_sys+1; i >= año_sys; i--){
+			  int año_max = AccionesAlumno.getAñoAlumnos("MAX");
+			  if (año_max == año_sys); año_max = año_max + 1;
+			  if (año_max > año_sys); año_max = año_max - 1;
+			 	for (int i = año_max; i >= (año_max-1); i--){
  			 %>
-			 <option <%=año_sys==i ? "selected" : ""%>><%=i%></option>
+			 <option <%=año_max==i ? "selected" : ""%>><%=i%></option>
 			 <%
 			 	}
 			 %>
@@ -548,15 +479,19 @@
 </div>
 <br>
 <br>
-<%if(alumno != null && hermano == null){%>
+<%if(alumno != null && hermano == null && ind_reingreso == 0){%>
 <a href="alumno_edit.jsp">Cargar Hermano</a>
 <br>
 <br>
 <br>
 <%}
-if (año != null || hermano != null){%>
+String volver = "AlumnoList";
+if (ind_reingreso == 1){
+	volver  = "alumnoInactivo?do=listar";	
+}
+if (año != null || hermano != null || ind_reingreso == 1){%>
 <div class="form-group">
-<form action="AlumnoList" method="post">
+<form action="<%=volver%>" method="post">
 <input type="hidden" name="accion" value="listarAlumnos">
 <button type="submit" class="btn btn-primary" value="Volver">Volver</button>
 </form>

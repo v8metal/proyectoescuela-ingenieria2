@@ -17,7 +17,7 @@ import conexion.AccionesGrado;
 import conexion.AccionesPadre;
 import conexion.AccionesUsuario;
 import datos.Alumno;
-import datos.EstadoAlumno;
+//import datos.EstadoAlumno;
 import datos.Padre;
 
 /**
@@ -83,8 +83,8 @@ public class AlumnoEdit extends HttpServlet {
 				Padre tutor = AccionesPadre.getOne(alumno.getDni_tutor());								
 				Padre madre = AccionesPadre.getOne(alumno.getDni_madre());
 				
-				EstadoAlumno estado = AccionesEstado.getOne(alumno.getDni());
-				
+				String fecha = AccionesEstado.getFechaIngreso(alumno.getDni());
+											
 				String año_sys = (String)sesion.getAttribute("año_sys");
 				String mes_sys = (String)sesion.getAttribute("mes_sys");
 				String dia_sys = (String)sesion.getAttribute("dia_sys");
@@ -95,7 +95,7 @@ public class AlumnoEdit extends HttpServlet {
 												 
 				// Establecer las fechas
 				fecha_dia.set(Integer.parseInt(año_sys),Integer.parseInt(mes_sys),Integer.parseInt(dia_sys));
-				fecha_alumno.set(Integer.parseInt(estado.getFecha().substring(0,4)), Integer.parseInt(estado.getFecha().substring(5,7)),Integer.parseInt(estado.getFecha().substring(8,10)));
+				fecha_alumno.set(Integer.parseInt(fecha.substring(0,4)), Integer.parseInt(fecha.substring(5,7)),Integer.parseInt(fecha.substring(8,10)));
 			
 				// calcular la diferencia en milisengundos
 				long milis1 = fecha_dia.getTimeInMillis();
@@ -111,7 +111,8 @@ public class AlumnoEdit extends HttpServlet {
 				request.setAttribute("madre", madre);
 				request.setAttribute("alumno", alumno);
 				request.setAttribute("diasAlta", diffDays);
-											
+				request.setAttribute("fecha_ingreso", fecha);
+																		
 				dispatcher = getServletContext().getRequestDispatcher("/alumno_edit.jsp");
 				dispatcher.forward(request, response);	
 				
@@ -208,6 +209,8 @@ public class AlumnoEdit extends HttpServlet {
 			response.sendRedirect("Login");						
 		}
 		
+		String redirect = "/AlumnoList";
+		
 		try {
 			
 			if (AccionesUsuario.validarAcceso(tipo, "AccionesAlumno") != 1 &&
@@ -219,24 +222,28 @@ public class AlumnoEdit extends HttpServlet {
 				response.sendRedirect("Login");						
 			}
 			
-						
-			int año = (Integer) sesion.getAttribute("añoAlumno");			
+			int año = 0;
+			
+			if (sesion.getAttribute("añoAlumno") != null){
+				año = (Integer) sesion.getAttribute("añoAlumno");	//año desde menu_alumno	
+			}else{				
+				año = AccionesAlumno.getAñoAlumnos("MAX");	//año para nuevo alumno directo
+				
+				if(año == 0){
+					año = (Integer) sesion.getAttribute("año"); //año de sistema
+				}	
+			}
+				
 			int dni_alum = Integer.parseInt((String)request.getParameter("dni_alum"));
 						
 			// DATOS ALUMNO
 			String apellido_alum = request.getParameter("apellido_alum");
 			String nombre_alum = request.getParameter("nombre_alum");
 			String lugar_nac_alum = request.getParameter("lugar_nac_alum");				
-			// Recupero el dia, mes y año por separado
-
-			String dia_nac_alum = request.getParameter("dia_nac_alum");
-			String mes_nac_alum = request.getParameter("mes_nac_alum"); 
-			String año_nac_alum = request.getParameter("año_nac_alum"); 
-						
-			// Luego los uno como String en el formato aceptado por MySQL (YYYY-MM-DD)
-
-			String fecha_nac_alum = año_nac_alum + "-" + mes_nac_alum + "-" + dia_nac_alum;	
-			
+		
+			String fecha_nac_alum = request.getParameter("fecha_nac_alum");			
+			fecha_nac_alum = fecha_nac_alum.substring(6,10) +"-"+ fecha_nac_alum.substring(3,5) +"-"+ fecha_nac_alum.substring(0,2);
+		
 			
 			String domicilio_alum = request.getParameter("domicilio_alum");
 			String telefono_alum = request.getParameter("telefono_alum");
@@ -247,11 +254,10 @@ public class AlumnoEdit extends HttpServlet {
 			//DATOS PADRE O TUTOR
 			String apellido_tutor = request.getParameter("apellido_tutor");
 			String nombre_tutor = request.getParameter("nombre_tutor");
-			String lugar_nac_tutor = request.getParameter("lugar_nac_tutor");		
-			String dia_nac_tutor = request.getParameter("dia_nac_tutor");
-			String mes_nac_tutor = request.getParameter("mes_nac_tutor"); 
-			String año_nac_tutor = request.getParameter("año_nac_tutor"); 			
-			String fecha_nac_tutor = año_nac_tutor + "-" + mes_nac_tutor + "-" + dia_nac_tutor;		
+			String lugar_nac_tutor = request.getParameter("lugar_nac_tutor");
+			
+			String fecha_nac_tutor = request.getParameter("fecha_nac_tutor");			
+			fecha_nac_tutor = fecha_nac_tutor.substring(6,10) +"-"+ fecha_nac_tutor.substring(3,5) +"-"+ fecha_nac_tutor.substring(0,2);
 			
 			String dni_tutor_st = request.getParameter("dni_tutor");
 			// en caso de no pasar un dni, se le asigna un 0 (para solucionar el problema de la pk con la tabla padres)
@@ -271,11 +277,10 @@ public class AlumnoEdit extends HttpServlet {
 			//DATOS MADRE
 			String apellido_madre = request.getParameter("apellido_madre");
 			String nombre_madre = request.getParameter("nombre_madre");
-			String lugar_nac_madre = request.getParameter("lugar_nac_madre");		
-			String dia_nac_madre = request.getParameter("dia_nac_madre");
-			String mes_nac_madre = request.getParameter("mes_nac_madre"); 
-			String año_nac_madre = request.getParameter("año_nac_madre"); 			
-			String fecha_nac_madre = año_nac_madre + "-" + mes_nac_madre + "-" + dia_nac_madre;	
+			String lugar_nac_madre = request.getParameter("lugar_nac_madre");
+			
+			String fecha_nac_madre = request.getParameter("fecha_nac_madre");			
+			fecha_nac_madre = fecha_nac_madre.substring(6,10) +"-"+ fecha_nac_madre.substring(3,5) +"-"+ fecha_nac_madre.substring(0,2);
 			
 			String dni_madre_st = request.getParameter("dni_madre");
 			// en caso de no pasar un dni, se le asigna un 0 (para solucionar el problema de la pk con la tabla padres)
@@ -316,18 +321,14 @@ public class AlumnoEdit extends HttpServlet {
 			//save the alumno to DB
 			if (!AccionesAlumno.esAlumno(dni_alum)){	//Si no esta en el sistema los datos del alumno. Es un insert
 				
-				
-				//INGRESO
-				String dia_insc = request.getParameter("dia_insc");
-				String mes_insc = request.getParameter("mes_insc"); 
-				String año_insc = request.getParameter("año_insc");
-				String fecha_insc = año_insc + "-" + mes_insc + "-" + dia_insc;
+				String fecha_insc = request.getParameter("fecha_ing_alum");				
+				fecha_insc = fecha_insc.substring(6,10) +"-"+ fecha_insc.substring(3,5) +"-"+ fecha_insc.substring(0,2);
 			
 				
 				//GRADO Y TURNO AL QUE VA A INGRESAR Y AÑO ESCOLAR
 				String grado = request.getParameter("grado");
 				String turno = request.getParameter("turno");
-				String año_ing = request.getParameter("año_ing");
+				String año_ing = request.getParameter("año_ing");				
 				
 				//insert tutor
 				if (!AccionesPadre.esPadre(dni_tutor)) {	//Si no esta en el sistema los datos del tutor lo inserta. Si ya estan sus datos no hace nada.
@@ -356,11 +357,32 @@ public class AlumnoEdit extends HttpServlet {
 				//en caso de modificar el grado/turno
 				
 				if (request.getParameter("grado") != null){
+					
 					String grado = request.getParameter("grado");
 					String turno = request.getParameter("turno");
-					//String año_ing = request.getParameter("año_ing");				
-					AccionesAlumno.updateAlumnoGrado(dni_alum, año, grado, turno);
+					String año_ing = request.getParameter("año_ing");
+			
+					if (request.getParameter("reingreso") != null){//reingreso						
+						
+						AccionesGrado.insertAlumnoEnGrado(grado, turno, dni_alum, Integer.parseInt(año_ing));
+						
+						String año_sys = (String)sesion.getAttribute("año_sys");
+						String mes_sys = (String)sesion.getAttribute("mes_sys");
+						String dia_sys = (String)sesion.getAttribute("dia_sys");
+						String fecha_sys = año_sys + "-" + mes_sys + "-" + dia_sys;
+						
+						AccionesAlumno.subsidioReing(dni_alum, Integer.parseInt(año_ing));
+						AccionesCertificado.insertOne(dni_alum, Integer.parseInt(año_ing));
+						AccionesEstado.activarAlumno(dni_alum, fecha_sys);
+						
+						redirect = "/alumnoInactivo?do=listar";
+						
+					}else{ //Actualización de grado/turno
+						AccionesAlumno.updateAlumnoGrado(dni_alum, año, grado, turno);
+					}
+					
 				}
+				
 				
 				//update tutor
 				AccionesPadre.updateOne(dni_tutor, nombre_tutor, apellido_tutor, lugar_nac_tutor, fecha_nac_tutor,
@@ -376,7 +398,7 @@ public class AlumnoEdit extends HttpServlet {
 			
 			request.setAttribute("accion","listarAlumnos");
 			
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/AlumnoList");
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirect);
 			dispatcher.forward(request, response);
 			
 		} catch (java.lang.NumberFormatException e) {

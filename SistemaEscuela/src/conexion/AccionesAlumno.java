@@ -519,6 +519,19 @@ public class AccionesAlumno {
 			Conexion.desconectar();
 	
 	}
+	
+	public static void subsidioReing(int dni, int año) throws SQLException, Exception {
+		
+		Statement stmt = Conexion.conectar().createStatement();
+	
+		//inserta los ultimos subsidios que tenía el alumno el año de baja, para el año de reingreso
+		stmt.executeUpdate("INSERT INTO ALUMNOS_SUBSIDIO SELECT "+ año + ", A.DNI, A.IND_GRUPO, A.IND_SUBSIDIO FROM (SELECT AÑO, DNI, IND_GRUPO, IND_SUBSIDIO FROM ALUMNOS_SUBSIDIO WHERE DNI =" + dni + " ORDER BY AÑO DESC LIMIT 1) As A");
+		
+		stmt.close();
+		Conexion.desconectar();
+		
+	}
+	
 	public static void main(String[] args) {	// getAll(), getOne(), insertOne(), updateOne() y deleteOne()  probadas correctamente
 	
 		try {
