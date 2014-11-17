@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-<% String pagina = (String) session.getAttribute("pagina");%>
+<% String modulo = (String) session.getAttribute("modulo");%>
 							 
       <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -23,7 +23,7 @@
           
             <li><a href="menu_admin.jsp">Menú</a></li>
             
-              <li <%if(pagina.equals("alumnos")){%> class=active <%}%> class="dropdown">
+              <li <%if(modulo.equals("alumnos")){%> class=active <%}%> class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Alumnos <span class="caret"></span></a>                
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="menu_alumnos.jsp">Listado</a></li>
@@ -33,7 +33,7 @@
                 </ul>
               </li>
               
-              <li <%if(pagina.equals("grados")){%> class=active <%}%> class="dropdown">
+              <li <%if(modulo.equals("grados")){%> class=active <%}%> class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Grados <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="GradoList?listar=mañana">Turno mañana</a></li>                 
@@ -41,7 +41,7 @@
                 </ul>
               </li>
               
-              <li <%if(pagina.equals("maestros")){%> class=active <%}%> class="dropdown">
+              <li <%if(modulo.equals("maestros")){%> class=active <%}%> class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Maestros <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="maestroList">Listado</a></li>
@@ -51,7 +51,7 @@
                 </ul>
               </li>
               
-              <li <%if(pagina.equals("materias")){%> class=active <%}%> class="dropdown">
+              <li <%if(modulo.equals("materias")){%> class=active <%}%> class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Materias <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="materiaList?from=menu_admin">Listado</a></li>
@@ -63,7 +63,7 @@
               
               <li><a href="menu_tardanzas.jsp">Tardanzas</a></li>
               
-              <li <%if(pagina.equals("entrevistas")){%> class=active <%}%> class="dropdown">
+              <li <%if(modulo.equals("entrevistas")){%> class=active <%}%> class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Entrevistas <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="EntrevistaList">Listado</a></li>
@@ -75,7 +75,7 @@
               
               <li><a href="UsuarioList">Usuarios</a></li>
               
-              <li <%if(pagina.equals("cuenta")){%> class=active <%}%> class="dropdown">
+              <li <%if(modulo.equals("cuenta")){%> class=active <%}%> class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cuenta <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="admin_user.jsp">Cambiar usuario</a></li>

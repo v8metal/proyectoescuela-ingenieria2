@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%session.setAttribute("pagina", "alumnos");%>
+<%session.setAttribute("modulo", "alumnos");%>
 
 <meta name="viewport" content="width=device-width; initial-scale=1.0"> 
 <%
@@ -27,14 +27,18 @@
 
 <script src="js/jquery-1.7.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/menu_admin.js"></script>
+
+<!-- menú superior -->
+<script src="js/menu_admin.js"></script> 
 
 </head>
 <body>	
 
 <div class="container"> 
 
-<div id="divmenu"></div>
+  <div id="divmenu">
+  	<!-- sirve para visualizar el menú superior -->
+  </div>
 
 <div class="page-header">
 <h1>Certificados</h1>
@@ -44,7 +48,7 @@
 <br>
 <table class="table table-hover table-bordered">
 	<thead>
-	<tr>
+	<tr class="active">
 		<th>Nº</th>
 		<th>Apellido y Nombres</th>
 		<th>Salud</th>

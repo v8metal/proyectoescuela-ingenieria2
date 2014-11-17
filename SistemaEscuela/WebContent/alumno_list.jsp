@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%session.setAttribute("pagina", "alumnos");%>
+<%session.setAttribute("modulo", "alumnos");%>
 <meta name="viewport" content="width=device-width; initial-scale=1.0"> 
 <%
 
@@ -37,13 +37,17 @@
 
 <script src="js/jquery-1.7.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/menu_admin.js"></script>
+
+<!-- menú superior -->
+<script src="js/menu_admin.js"></script> 
 
 </head>
 <body>
 <div class="container">  
 
-<div id="divmenu"></div>
+  <div id="divmenu">
+  	<!-- sirve para visualizar el menú superior -->
+  </div>
 
 <%
 		Alumnos alumnos = (Alumnos)session.getAttribute("alumnos_alumno");
@@ -84,7 +88,7 @@
 
 <table class="table table-hover table-bordered">
 	<thead>
-	<tr>
+	<tr class="active">
 		<th>Apellido y Nombres</th>	
 		<th>D.N.I.</th>
 		<th>Domicilio</th>		
@@ -117,7 +121,7 @@
 		<td><input type="checkbox" name="ind_grupo" disabled <%= a.isInd_grupo() ? "checked" : "" %>/></td>
 		<td><input type="checkbox" name="ind_sub" disabled <%= a.isInd_subsidio() ? "checked" : "" %>/></td>
 		<%if (ea.isActivo()){%><td>ACTIVO</td><%} else {%><td><a href="alumnoInactivo?do=listar">INACTIVO</a></td><%}%>	
-		<td><a href="certificadoEdit?do=modificar&dni=<%= a.getDni() %>">Ver</a></td>		
+		<td><strong><a href="certificadoEdit?do=modificar&dni=<%= a.getDni() %>">Ver</a></strong></td>		
 		<% 	
 		  if (ea.isActivo()){ //verifica si el alumno está activo
 				
@@ -131,12 +135,12 @@
 		  <%}
 			if (menor){%> <!--esta en condiciones de repetir o promocionar-->
 			
-				<td><a name="delete-link" href="alumnoEdit?do=baja&dni_alum=<%= a.getDni() %>" onclick="return confirm('Esta seguro que desea dar de baja');">BAJA</a></td>
+				<td><strong><a name="delete-link" href="alumnoEdit?do=baja&dni_alum=<%= a.getDni() %>" onclick="return confirm('Esta seguro que desea dar de baja');">BAJA</a></strong></td>
 			
 				<%if(!grado.equals("7° Grado")){%>							
-					<td><a href="AlumnoEdit?do=promocion&dni_alum=<%=a.getDni()%>" onclick="return confirm('Esta seguro que desea promocionar');">PROMOCION</a></td>											
+					<td><strong><a href="AlumnoEdit?do=promocion&dni_alum=<%=a.getDni()%>" onclick="return confirm('Esta seguro que desea promocionar');">PROMOCION</a></strong></td>											
 			   <%}%>
-					<td><a href="AlumnoEdit?do=repeticion&dni_alum=<%=a.getDni()%>" onclick="return confirm('Esta seguro que desea repetir año');">REPETICION</a></td>
+					<td><strong><a href="AlumnoEdit?do=repeticion&dni_alum=<%=a.getDni()%>" onclick="return confirm('Esta seguro que desea repetir año');">REPETICION</a></strong></td>
 			<%}
 			if (mayor){%>			    
 				<td>PROMOCIONADO</td>
@@ -167,7 +171,7 @@
 <br>
 <%}%>
 <br>
-<a href="certificado_list.jsp"><%= "VER CERTIFICADOS DE " + titulo.toUpperCase() %></a>
+<strong><a href="certificado_list.jsp"><%= "VER CERTIFICADOS DE " + titulo.toUpperCase() %></a></strong>
 <br>
 <br>
 <div class="form-group">

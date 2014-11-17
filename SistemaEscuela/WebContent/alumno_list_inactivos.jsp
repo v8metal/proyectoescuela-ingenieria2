@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%session.setAttribute("pagina", "alumnos");%>
+<%session.setAttribute("modulo", "alumnos");%>
 
 <meta name="viewport" content="width=device-width; initial-scale=1.0"> 
 <%
@@ -33,6 +33,8 @@
 
 <script src="js/jquery-1.7.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+
+<!-- menú superior -->
 <script src="js/menu_admin.js"></script>
 
 </head>
@@ -40,7 +42,9 @@
 
 <div class="container"> 
 
-<div id="divmenu"></div>
+  <div id="divmenu">
+  	<!-- sirve para visualizar el menú superior -->
+  </div>
   
 <%
 		EstadoAlumnos alumnos_inactivos = (EstadoAlumnos)session.getAttribute("alumnos_inactivos");
@@ -74,7 +78,7 @@
 %> 	
 <table class="table table-hover table-bordered">
 	<thead>
-	<tr>
+	<tr class="active">
 		<th>Nº</th>
 		<th>APELLIDO Y NOMBRES</th>
 		<th>D.N.I.</th>
@@ -93,7 +97,7 @@
 		<td><%= a.getApellido() + ", " + a.getNombre() %></td>
 		<td><%= ea.getDni() %></td>
 		<td><center><%= ea.getFecha() %></center></td>
-		<td><a name="activate-link" href="alumnoInactivo?do=activar&dni_alum=<%= a.getDni() %>" >ACTIVAR</a></td>	
+		<td><strong><a name="activate-link" href="alumnoInactivo?do=activar&dni_alum=<%= a.getDni() %>" >ACTIVAR</a></strong></td>	
 	</tr>
 	</tbody>
 <%

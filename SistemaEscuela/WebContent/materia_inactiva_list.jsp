@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%session.setAttribute("modulo", "materias");%>
 <meta name="viewport" content="width=device-width; initial-scale=1.0"> 
 <title>Listado de Materias</title>
 
@@ -16,6 +17,9 @@
 
 <script src="js/jquery-1.7.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+
+<!-- menú superior -->
+<script src="js/menu_admin.js"></script> 
 
 </head>
 <body>
@@ -29,6 +33,10 @@
 %>
 
 <div class="container">
+
+  <div id="divmenu">
+  	<!-- sirve para visualizar el menú superior -->
+  </div> 
 
 <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">

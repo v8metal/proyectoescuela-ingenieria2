@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>			
 <head>
-<%session.setAttribute("pagina", "alumnos");%>
+<%session.setAttribute("modulo", "alumnos");%>
 <meta name="viewport" content="width=device-width; initial-scale=1.0"> 
 <title>Menú de Alumnos</title>
 
@@ -27,7 +27,9 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script src="js/jquery-1.10.2.js"></script>
 <script src="js/jquery-ui.js"></script>
-<script src="js/menu_admin.js"></script>
+
+<!-- menú superior -->
+<script src="js/menu_admin.js"></script> 
 
 </head>
 <body>
@@ -65,7 +67,9 @@
 
 <div class="container">  
  
-  <div id="divmenu"></div>
+  <div id="divmenu">
+  	<!-- sirve para visualizar el menú superior -->
+  </div>
   
   	<div class="page-header">  	  
 		<h1>Menú de Alumnos</h1>		
@@ -154,7 +158,7 @@
             	         <span class="input-group-btn">
                 	        <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnAcept">Buscar</button>
                	         </span>
-                 	   <select class="form-control" name="grado_turno">
+                 	   <select class="form-control" name="grado_turno" autofocus>
   							 <%  			
   								for (Grado g : grados.getLista()) { 				 
  							 %>	
@@ -177,7 +181,7 @@
 				<input class="btn btn-primary" type="submit" value="Seleccionar otro año">
 			</div>
 		 </form>	
-
+	</div>
 	   <%}%>
 	<%}%> 
   

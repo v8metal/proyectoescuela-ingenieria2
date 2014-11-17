@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%session.setAttribute("pagina", "grados");%>
+<%session.setAttribute("modulo", "grados");%>
 
 <meta name="viewport" content="width=device-width; initial-scale=1.0"> 
 <title>Listado de Grados</title>
@@ -21,7 +21,9 @@
 
 <script src="js/jquery-1.7.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/menu_admin.js"></script>
+
+<!-- menú superior -->
+<script src="js/menu_admin.js"></script> 
 
 </head>
 <body>
@@ -39,7 +41,9 @@
 
 <div class="container">
 
-<div id="divmenu"></div>
+  <div id="divmenu">
+  	<!-- sirve para visualizar el menú superior -->
+  </div>
   
 <div class="page-header"> 
 	<h1>Listado de Grados Turno Mañana</h1>

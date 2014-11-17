@@ -1,7 +1,7 @@
 <%@ page import="datos.*"%>
+<%@page import="conexion.AccionesUsuario"%> 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@page import="conexion.AccionesUsuario"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +19,7 @@
 </head>
 <body>
 <%
+	//modulo seguridad
 	int tipo = (Integer) session.getAttribute("tipoUsuario");						
 	if (AccionesUsuario.validarAcceso(tipo, "menu_user.jsp") != 1){							
 		response.sendRedirect("Login"); //redirecciona al login, sin acceso						

@@ -129,7 +129,7 @@ if (sanciones.getLista().isEmpty()){
 <!-- MENSAJE ATENCION -->
 	<div class="alert alert-info" role="alert">
 		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	<strong>Atención!</strong> No hay sanciones para el año seleccionado. <a href="SancionEdit?do=alta">Agregar nueva Sanción</a>
+     	<strong>Atención!</strong> No hay sanciones para el año seleccionado. <a href="SancionEdit?do=alta" class="alert-link">Agregar nueva Sanción</a>
     </div>
 <%	
 }else{
