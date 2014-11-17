@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%session.setAttribute("pagina", "grados");%>
+<%session.setAttribute("modulo", "grados");%>
 
 <link rel="icon" href="icono/favicon.ico">
 
@@ -18,14 +18,18 @@
 
 <script src="js/jquery-1.7.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/menu_admin.js"></script>
+
+<!-- menú superior -->
+<script src="js/menu_admin.js"></script> 
 
 <title>Grados</title>
 </head>
 <body>
 <div class="container">
 
-<div id="divmenu"></div>
+  <div id="divmenu">
+  	<!-- sirve para visualizar el menú superior -->
+  </div>
    
 <%
 	int tipo = (Integer) session.getAttribute("tipoUsuario");						

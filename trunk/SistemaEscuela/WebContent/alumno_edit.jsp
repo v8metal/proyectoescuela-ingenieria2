@@ -7,7 +7,7 @@
 <html>
 <head>
 
-<%session.setAttribute("pagina", "alumnos");%>
+<%session.setAttribute("modulo", "alumnos");%>
 			
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
 <title>Editar Alumno</title>
@@ -24,11 +24,19 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script src="js/jquery-ui.js"></script>
 <script src="js/alumnos.js"></script><!-- DatePic para Alumno -->
-<script src="js/menu_admin.js"></script>
+
+<!-- menú superior -->
+<script src="js/menu_admin.js"></script> 
+
 </head>
 <body>
+
 <div class="container"> 	
- <div id="divmenu"></div> 	 
+
+  <div id="divmenu">
+  	<!-- sirve para visualizar el menú superior -->
+  </div>	 
+  
 <%
 	int tipo = (Integer) session.getAttribute("tipoUsuario");						
 	if (AccionesUsuario.validarAcceso(tipo, "alumno_edit.jsp") != 1){							
@@ -191,7 +199,7 @@
 <table>
 	<tr>
 		<td>Apellido: </td>
-		<td><input type="text" class="form-control" size="29" name="apellido_alum" required value="<%=alumno!=null? alumno.getApellido() : ""%>"></td><td><%= error %></td>
+		<td><input type="text" class="form-control" size="29" name="apellido_alum" required autofocus value="<%=alumno!=null? alumno.getApellido() : ""%>"></td><td><%= error %></td>
 	</tr>
 	<tr>
 		<td>Nombres: </td>
@@ -205,7 +213,7 @@
 		<td><label for="input">Fecha de Nacimiento:</label></td>			
 			<td>
 			<!-- <div class="col-xs-2"> -->
-				<input class="form-control" type="text" id="datepicker" required autofocus name="fecha_nac_alum">
+				<input class="form-control" type="text" id="datepicker" required name="fecha_nac_alum">
 			<!-- </div> -->
 			</td>			
 	  	</tr>
@@ -261,7 +269,7 @@
 <table>	
 	<tr>
 		<td>Apellido: </td>
-		<td><input type="text" class="form-control" size="29" name="apellido_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getApellido() : ""%>"></td>
+		<td><input type="text" class="form-control" size="29" name="apellido_tutor" required autofocus value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getApellido() : ""%>"></td>
 	</tr>
 	<tr>
 		<td>Nombres: </td>
@@ -275,7 +283,7 @@
 		<td><label for="input">Fecha de Nacimiento:</label></td>			
 		<td>
 			<!-- <div class="col-xs-2"> -->
-			<input class="form-control" type="text" id="datepicker2" required autofocus name="fecha_nac_tutor">
+			<input class="form-control" type="text" id="datepicker2" required name="fecha_nac_tutor">
 			<!-- </div>-->
 		</td>			
  	</tr>
@@ -334,7 +342,7 @@
 		<td><label for="input">Fecha de Nacimiento:</label></td>			
 		<td>
 			<!-- <div class="col-xs-2"> -->
-			<input class="form-control" type="text" id="datepicker3" required autofocus name="fecha_nac_madre">
+			<input class="form-control" type="text" id="datepicker3" required name="fecha_nac_madre">
 			<!-- </div>-->
 		</td>			
  	</tr>

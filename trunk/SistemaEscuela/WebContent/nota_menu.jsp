@@ -1,5 +1,6 @@
 <%@page import="conexion.AccionesMaestro"%>
 <%@ page import="datos.*"%>
+<%@page import="conexion.AccionesUsuario"%> 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -18,9 +19,13 @@
 
 </head>
 <body>
-<%
-	if (session.getAttribute("usuario") != null) {
-		
+<%	
+		//modulo seguridad
+		int tipo = (Integer) session.getAttribute("tipoUsuario");						
+		if (AccionesUsuario.validarAcceso(tipo, "nota_menu.jsp") != 1){							
+			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		}		
+
 		// recupero el año_sys de la sesion y lo utilizo como año lectivo
 		int año = Integer.parseInt((String)session.getAttribute("año_sys"));
 		
@@ -111,22 +116,26 @@
 			} else {
 %>
 <table class="table table-hover table-bordered">
-	<tr>
+	<thead>
+	<tr class="active">
 		<th>Grado</th>
 		<th>Turno</th>
 		<th>Salón</th>
 		<th>&nbsp;</th>
 	</tr>
+	</thead>
 <% 	int i = 0;
 	for (Grado g : grados.getLista()) {
 		i++;
 %>
+	<tbody>
 	<tr>
 		<td><%= g.getGrado() %></td>
 		<td><%= g.getTurno() %></td>		
 		<td><%= g.getSalon() %></td>	
-		<td><a href="alumnoList?from=nota_menu&grado=<%= g.getGrado()%>&turno=<%= g.getTurno()%>&año=<%=año%>">Ver alumnos</a></td>
+		<td><strong><a href="alumnoList?from=nota_menu&grado=<%= g.getGrado()%>&turno=<%= g.getTurno()%>&año=<%=año%>">Ver alumnos</a></strong></td>
 	</tr>
+	</tbody>
 <%
 	}
  %>
@@ -134,11 +143,6 @@
 <br>
 <%
 			}
-%>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
 %>
 </div>
 </body>
