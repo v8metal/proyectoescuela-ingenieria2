@@ -20,16 +20,8 @@
 <!-- Bootstrap core CSS -->
 <link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 
-<script src="js/jquery-1.7.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-
 <!--<link rel="stylesheet" href="style/jquery-ui.css">  con ese no se ven las flechitas-->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<script src="js/jquery-1.10.2.js"></script>
-<script src="js/jquery-ui.js"></script>
-
-<!-- menú superior -->
-<script src="js/menu_admin.js"></script> 
 
 </head>
 <body>
@@ -197,5 +189,19 @@
  -->		
 <%}%>
 </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+	<script src="js/jquery-1.7.2.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>	
+	
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+    
+    <script src="js/jquery-1.10.2.js"></script>
+	<script src="js/jquery-ui.js"></script>
+
+	<!-- menú superior -->
+	<script src="js/menu_admin.js"></script>  
 </body>
 </html>

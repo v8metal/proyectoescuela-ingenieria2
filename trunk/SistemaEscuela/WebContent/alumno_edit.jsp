@@ -17,16 +17,8 @@
 <!-- Bootstrap core CSS -->
 <link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 
-<script src="js/jquery-1.10.2.js"></script>
-<script src="js/bootstrap.min.js"></script>
-
 <!-- <link rel="stylesheet" href="style/jquery-ui.css"> --> 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<script src="js/jquery-ui.js"></script>
-<script src="js/alumnos.js"></script><!-- DatePic para Alumno -->
-
-<!-- menú superior -->
-<script src="js/menu_admin.js"></script> 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css"> 
 
 </head>
 <body>
@@ -488,7 +480,7 @@
 <br>
 <br>
 <%if(alumno != null && hermano == null && ind_reingreso == 0){%>
-<a href="alumno_edit.jsp">Cargar Hermano</a>
+<strong><a href="alumno_edit.jsp">Cargar Hermano</a></strong>
 <br>
 <br>
 <br>
@@ -506,5 +498,21 @@ if (año != null || hermano != null || ind_reingreso == 1){%>
 </div>
 </div>
 <%}%>
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery-1.10.2.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+	
+	<script src="js/jquery-ui.js"></script>
+	
+	<!-- DatePic para Alumno -->
+	<script src="js/alumnos.js"></script>
+
+	<!-- menú superior -->
+	<script src="js/menu_admin.js"></script>
 </body>
 </html>

@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%session.setAttribute("modulo", "citaciones");%>
 <meta name="viewport" content="width=device-width; initial-scale=1.0"> 
 <title>Editar Citación</title>
 
@@ -17,14 +18,8 @@
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="style/bootstrap.min.css">
 
-<script src="js/jquery-1.7.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-
 <!--<link rel="stylesheet" href="style/jquery-ui.css">  con ese no se ven las flechitas-->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<script src="js/jquery-1.10.2.js"></script>
-<script src="js/jquery-ui.js"></script>
-<script src="js/entrevista.js"></script> <!-- DatePic para entrevistas -->
 
 </head>
 <body>
@@ -44,67 +39,10 @@
 
 <div class="container">
 
-<!-- Fixed navbar -->
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Sistema</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-              <li><a href="menu_user.jsp">Menú</a></li>
-              <li> <a href="menu_asistencias.jsp">Asistencias</a></li>
-              <li class="active" class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Citaciones <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="citaciones_select.jsp?action=listar">Listado</a></li>                 
-                  <li><a href="CitacionEdit?do=alta">Nueva citación</a></li>          
-                </ul>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sanciones <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="sanciones_select.jsp?action=listar">Listado</a></li>
-                  <li><a href="SancionEdit?do=alta">Nueva sanción</a></li>          
-                </ul>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Entrevistas <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="EntrevistaList">Listado</a></li>
-                </ul>
-              </li>
-              <li><a href="nota_menu.jsp">Notas</a></li>
-               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cuenta <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="admin_user.jsp">Cambiar usuario</a></li>
-                  <li><a href="admin_pass.jsp">Cambiar contraseña</a></li>          
-                </ul>
-              </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-            <li>
-            	<div class="navbar-collapse collapse">
-        		  <form action="cerrarSesion" method="post" class="navbar-form navbar-right" role="form">
-           		 	<button type="submit" class="btn btn-primary">Salir</button>
-        		  </form>
-        		  <p class="navbar-text navbar-right"><strong><%= nombre + " " + apellido %></strong></p>
-        		</div>
-			</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+  <div id="divmenu">
+  	<!-- sirve para visualizar el menú superior -->
+  </div>
   
-  <br>
-  <br>
 <%
 		//update de sancion
 		Citacion c = (Citacion) session.getAttribute("citacion_edit");
@@ -267,5 +205,20 @@ if (c != null){
 </form>
 </div>
 </div>
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+	<script src="js/jquery-1.7.2.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+
+	<!-- menú superior -->
+	<script src="js/menu_user.js"></script> 
+	
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="js/jquery-ui.js"></script>
+	<script src="js/entrevista.js"></script> <!-- DatePic para entrevistas -->
 </body>
 </html>
