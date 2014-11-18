@@ -19,12 +19,6 @@
 <!-- Bootstrap core CSS -->
 <link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 
-<script src="js/jquery-1.7.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-
-<!-- menú superior -->
-<script src="js/menu_admin.js"></script> 
-
 </head>
 <body>
 <%
@@ -146,5 +140,16 @@ if (grados.getListaTM().isEmpty()){
 <br>
 <br>
 </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+	<script src="js/jquery-1.7.2.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+
+	<!-- menú superior -->
+	<script src="js/menu_admin.js"></script> 
 </body>
 </html>

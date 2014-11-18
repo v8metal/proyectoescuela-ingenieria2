@@ -16,12 +16,6 @@
 <!-- Bootstrap core CSS -->
 <link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 
-<script src="js/jquery-1.7.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-
-<!-- menú superior -->
-<script src="js/menu_admin.js"></script> 
-
 <title>Grados</title>
 </head>
 <body>
@@ -277,10 +271,22 @@ if (grado != null){
 </div>
 </div>
 </body>
-<script language = "JavaScript">
-function pru(){
-p=document.anio_grado.selectedIndex;
-alert(p);
-}
-</script>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+	<script src="js/jquery-1.7.2.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+
+	<!-- menú superior -->
+	<script src="js/menu_admin.js"></script> 
+	
+    <script language = "JavaScript">
+		function pru(){
+		p=document.anio_grado.selectedIndex;
+		alert(p);
+		}	
+	</script>
 </html>

@@ -35,12 +35,6 @@
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="style/bootstrap.min.css">
 
-<script src="js/jquery-1.7.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-
-<!-- menú superior -->
-<script src="js/menu_admin.js"></script> 
-
 </head>
 <body>
 <div class="container">  
@@ -120,7 +114,7 @@
 		<td><%= a.getIglesia() %></td>
 		<td><input type="checkbox" name="ind_grupo" disabled <%= a.isInd_grupo() ? "checked" : "" %>/></td>
 		<td><input type="checkbox" name="ind_sub" disabled <%= a.isInd_subsidio() ? "checked" : "" %>/></td>
-		<%if (ea.isActivo()){%><td>ACTIVO</td><%} else {%><td><a href="alumnoInactivo?do=listar">INACTIVO</a></td><%}%>	
+		<%if (ea.isActivo()){%><td>ACTIVO</td><%} else {%><td><strong><a href="alumnoInactivo?do=listar">INACTIVO</a></strong></td><%}%>	
 		<td><strong><a href="certificadoEdit?do=modificar&dni=<%= a.getDni() %>">Ver</a></strong></td>		
 		<% 	
 		  if (ea.isActivo()){ //verifica si el alumno está activo
@@ -184,5 +178,16 @@
 }	
 %>
 </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+	<script src="js/jquery-1.7.2.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+
+	<!-- menú superior -->
+	<script src="js/menu_admin.js"></script> 
 </body>
 </html>

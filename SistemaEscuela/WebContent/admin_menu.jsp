@@ -16,7 +16,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Sistema</a>
+          <a class="navbar-brand" href="#">NNNNN</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -61,7 +61,7 @@
                 </ul>
               </li>
               
-              <li><a href="menu_tardanzas.jsp">Tardanzas</a></li>
+              <li <%if(modulo.equals("tardanzas")){%> class=active <%}%>><a href="menu_tardanzas.jsp">Tardanzas</a></li>
               
               <li <%if(modulo.equals("entrevistas")){%> class=active <%}%> class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Entrevistas <span class="caret"></span></a>
@@ -71,9 +71,9 @@
                 </ul>
               </li>
               
-              <li><a href="menu_cuotas.jsp">Cuotas</a></li>
+              <li <%if(modulo.equals("cuotas")){%> class=active <%}%>><a href="menu_cuotas.jsp">Cuotas</a></li>
               
-              <li><a href="UsuarioList">Usuarios</a></li>
+              <li <%if(modulo.equals("usuarios")){%> class=active <%}%>><a href="UsuarioList">Usuarios</a></li>
               
               <li <%if(modulo.equals("cuenta")){%> class=active <%}%> class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cuenta <span class="caret"></span></a>
