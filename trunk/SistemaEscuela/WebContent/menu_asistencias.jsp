@@ -209,7 +209,7 @@
 
     	 <div class="alert alert-info fade in" role="alert">
 	     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	     	 <strong>Atención!</strong> No hay grados para el año seleccionado. <a href="menu_asistencias.jsp" class="alert-link">Seleccionar otro año</a>
+	     	 <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Atención!</strong> No hay grados para el año seleccionado. <a href="menu_asistencias.jsp" class="alert-link"> Seleccionar otro año <i class="glyphicon glyphicon-pushpin"></i></a>
   	 	 </div>  	
 
 	  <%}else{%>

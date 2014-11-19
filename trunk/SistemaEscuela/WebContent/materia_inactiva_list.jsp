@@ -58,7 +58,7 @@ if (materias.getLista().isEmpty()){ %>
 <br>	
 <!--  MENSAJE INFORMATIVO -->
 <div class="alert alert-info" role="alert">
-    <strong>Atención!</strong> No hay materias en estado de baja. <a href="materiaList?from=menu_admin" class="alert-link">Volver al listado principal</a>
+    <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Atención!</strong> No hay materias en estado de baja. <a href="materiaList?from=menu_admin" class="alert-link"><i class="glyphicon glyphicon-share-alt"></i> Volver al listado principal</a>
 </div>
 	
 <%}else{%>
@@ -75,7 +75,7 @@ if (materias.getLista().isEmpty()){ %>
 	<tbody>
 	<tr>
 		<td><%= m.getMateria() %></td>
-		<td><strong><a href="materiaEdit?do=activar&materia=<%= m.getMateria() %>" onclick="return confirm('Esta seguro que desea activar la materia?');"><i class="glyphicon glyphicon-ok"></i> Activar Materia</a></strong></td>	
+		<td><strong><a href="materiaEdit?do=activar&materia=<%= m.getMateria() %>" onclick="return confirm('¿Está seguro que desea activar la materia?');"><i class="glyphicon glyphicon-ok"></i> Activar Materia</a></strong></td>	
 	</tr>
 	<tbody>
 <%

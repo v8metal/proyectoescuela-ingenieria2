@@ -202,7 +202,7 @@ if (grado != null){
 <%}else{%>
 		<td class="warning">
 			<div class="col-xs-6">
-				<strong><p><i class="glyphicon glyphicon-warning-sign"></i> Asignar alumnos antes</p></strong>
+				<strong> Asignar alumnos antes <i class="glyphicon glyphicon-warning-sign"></i></strong>
 			</div>
 		</td>
 <%}%>	
@@ -236,7 +236,7 @@ if (grado != null){
 <%}else{%>
 		<td class="warning">
 			<div class="col-xs-6">
-				<strong><p><i class="glyphicon glyphicon-warning-sign"></i> Asignar alumnos antes</p></strong>
+				<strong> Asignar alumnos antes <i class="glyphicon glyphicon-warning-sign"></i></strong>
 			</div>
 		</td>
 <%}%>		 
@@ -244,16 +244,16 @@ if (grado != null){
 </table>
 
 <%
-	String mensaje= "return confirm('Esta seguro que desea realizar el alta?');"; 
+	String mensaje= "return confirm('¿Está seguro que desea realizar el alta?');"; 
 	  
 	if (grado != null){
 			
-		mensaje = "return confirm('Esta seguro que desea modificar?');"; 
+		mensaje = "return confirm('¿Está seguro que desea editar?');"; 
 	}
 		 
 %>
 	<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="<%=mensaje%>"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
-	<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>	
+	<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('¿Está seguro que desea cancelar?');"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>	
 </form>
 </div>
 <br>
@@ -261,7 +261,7 @@ if (grado != null){
 <!-- MENSAJE DE WARNING -->
 	<div class="alert alert-warning" role="alert">
 	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <strong> Cuidado!</strong> No hay alumnos asignados. <a href="GradoEdit?do=baja" class="alert-link"> Borrar grado</a>
+      <strong><i class="glyphicon glyphicon-warning-sign"></i> Cuidado!</strong> No hay alumnos asignados. <a href="GradoEdit?do=baja" class="alert-link"> Borrar grado <i class="glyphicon glyphicon-trash"></i></a>
     </div>
 <br>
 <%}%>
