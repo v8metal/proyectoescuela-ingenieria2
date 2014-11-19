@@ -46,7 +46,7 @@
  <!-- MENSAJE DE WARNING -->
 	<div class="alert alert-warning" role="alert">
 	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <strong>Cuidado!</strong> No hay materias asignadas. <a href="materiaEdit?do=alta" class="alert-link">Agregar materia</a>
+      <strong><i class="glyphicon glyphicon-warning-sign"></i> Cuidado!</strong> No hay materias asignadas. <a href="materiaEdit?do=alta" class="alert-link">Agregar materia <i class="glyphicon glyphicon-edit"></i></a>
     </div>	
     
 <%}else{%>
@@ -83,7 +83,7 @@ if(materiasbaja.getLista().size() != 0){%>
   <!-- MENSAJE INFORMATIVO -->
 	<div class="alert alert-info" role="alert">
 	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <strong>Atención!</strong> Se encuentran materias en estado inactivo. <a href="materiaList?from=materia_inactiva_list" class="alert-link">Ver listado</a>
+      <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Atención!</strong> Se encuentran materias en estado inactivo. <a href="materiaList?from=materia_inactiva_list" class="alert-link">Ver listado <i class="glyphicon glyphicon-list-alt"></i></a>
     </div> 
 <br>
 <%}%>
@@ -98,7 +98,7 @@ if(materiasbaja.getLista().size() != 0){%>
    <div class="bs-example">
     	 <div class="alert alert-danger fade in" role="alert">
      	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong>Ups!</strong> <%= error %>
+     	 <strong><i class="glyphicon glyphicon-remove"></i> Ups!</strong> <%= error %>
   	  </div>
   </div><!-- /example -->
  <% } %>

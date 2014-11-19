@@ -48,7 +48,7 @@
    <div class="bs-example">
     	 <div class="alert alert-info fade in" role="alert">
      	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong>Atención!</strong> No hay tandanzas cargadas. <a href="TardanzaEdit?do=alta" class="alert-link">Agregar tardanza</a>
+     	 <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Atención!</strong> No hay tandanzas cargadas. <a href="TardanzaEdit?do=alta" class="alert-link">Agregar tardanza <i class="glyphicon glyphicon-edit"></i></a>
   	  </div>
   </div><!-- /example -->
   

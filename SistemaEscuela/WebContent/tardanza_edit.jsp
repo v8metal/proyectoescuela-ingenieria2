@@ -109,8 +109,8 @@
          	</tr>
 		  </table>
 		  
-		 		<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
-		  		<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');"><i class="glyphicon glyphicon-remove"></i> Cancelar</button> 
+		 		<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('¿Está seguro que desea guardar?');"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+		  		<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('¿Está seguro que desea cancelar?');"><i class="glyphicon glyphicon-remove"></i> Cancelar</button> 
 		  </form>
 		  </div>
 		  <br>
@@ -126,7 +126,7 @@
 		  <div class="bs-example">
     	 	<div class="alert alert-danger fade in" role="alert">
      	 		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     			<strong>Ups!</strong> <%= error %>
+     			<strong><i class="glyphicon glyphicon-remove"></i> Ups!</strong> <%= error %>
   	 		 </div>
   		  </div><!-- /example -->
   		  

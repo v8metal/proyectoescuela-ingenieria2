@@ -53,7 +53,7 @@
 <br>
 <div class="alert alert-info fade in" role="alert">
 	   <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	   <strong>Atención!</strong> No hay Asistencias cargadas el día <%=fechaDisplay%>. <a href="menu_asistencias.jsp" class="alert-link">Seleccionar otro grado/fecha</a>
+	   <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Atención!</strong> No hay Asistencias cargadas el día <%=fechaDisplay%>. <a href="menu_asistencias.jsp" class="alert-link">Seleccionar otro grado/fecha <i class="glyphicon glyphicon-pushpin"></i></a>
 </div> 
 <%}else{%> 
 <div class="page-header">
@@ -88,7 +88,7 @@
 		<td><%= t.getObservaciones() %></td>	
 		<td><strong><a href="AsistenciaEdit?do=<%=accion%>&&dni=<%=t.getDni()%>&&fecha=<%=fecha%>"><i class="glyphicon glyphicon-pencil"></i> <%=accion%></a></strong></td>
 		<%if (t.getTipo().equals("A")){%>		
-		<td><strong><a href="AsistenciaEdit?do=borrar&&dni=<%=t.getDni()%>&&fecha=<%=fecha%>>" onclick="return confirm('Esta seguro que desea borrar la Asistencia?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
+		<td><strong><a href="AsistenciaEdit?do=borrar&&dni=<%=t.getDni()%>&&fecha=<%=fecha%>>" onclick="return confirm('¿Está seguro que desea borrar la asistencia?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
 		<%}else{%>
 		<td></td>
 		<%}%>

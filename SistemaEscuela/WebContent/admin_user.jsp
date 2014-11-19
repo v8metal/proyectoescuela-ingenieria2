@@ -83,8 +83,8 @@
 	</tr>
 </table>
 <br>
-<button type="submit" class="btn btn-primary"  value="Guardar" onclick="return confirm('Esta seguro que desea modificar?');"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
-<button type="reset" class="btn btn-primary"  value="Cancelar" onclick="return confirm('Esta seguro que desea cancelar?');"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
+<button type="submit" class="btn btn-primary"  value="Guardar" onclick="return confirm('¿Está seguro que desea editar?');"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+<button type="reset" class="btn btn-primary"  value="Cancelar" onclick="return confirm('¿Está seguro que desea cancelar?');"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
 </form>
 </div>
 <br>
@@ -99,7 +99,7 @@
    <div class="bs-example">
     	 <div class="alert alert-warning fade in" role="alert">
      	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong>Cuidado!</strong> <%= error %>
+     	 <strong><i class="glyphicon glyphicon-warning-sign"></i> Cuidado!</strong> <%= error %>
   	  </div>
   </div><!-- /example -->
 <br>

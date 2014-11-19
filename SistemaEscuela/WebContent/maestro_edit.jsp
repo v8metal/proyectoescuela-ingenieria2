@@ -129,11 +129,11 @@
 		</table>
 		<!-- MENSAJE DE CONFIRMACION -->
 		<%
-		String mensaje= "return confirm('Esta seguro que desea realizar el alta?');"; 
+		String mensaje= "return confirm('¿Está seguro que desea realizar el alta?');"; 
 		  
 		if (maestro != null){
 			
-			mensaje = "return confirm('Esta seguro que desea modificar?');"; 
+			mensaje = "return confirm('¿Está seguro que desea editar?');"; 
 		}
 		 
 		%>
@@ -154,7 +154,7 @@
    <div class="bs-example">
     	 <div class="alert alert-danger fade in" role="alert">
      	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong>Ups!</strong> <%= error %>
+     	 <strong><i class="glyphicon glyphicon-remove"></i> Ups!</strong> <%= error %>
   	  </div>
   </div><!-- /example -->
 <br> 	

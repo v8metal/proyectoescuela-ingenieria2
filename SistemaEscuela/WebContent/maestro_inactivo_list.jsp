@@ -56,7 +56,7 @@ if (maestros.getLista().size() == 0){
 <br>	
 <!-- MENSAJE INFORMATIVO -->
 <div class="alert alert-info" role="alert">
-    <strong>Atención!</strong> No hay maestros inactivos. <a href="maestroList" class="alert-link">Volver al listado principal</a>
+    <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Atención!</strong> No hay maestros inactivos. <a href="maestroList" class="alert-link"><i class="glyphicon glyphicon-share-alt"></i> Volver al listado principal </a>
 </div>
 <br>
 <%}else{%>

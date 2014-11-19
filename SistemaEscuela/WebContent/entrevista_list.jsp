@@ -58,7 +58,7 @@ if (entrevistas.getLista().isEmpty()){
 		<!-- MENSAJE INFORMATIVO -->
     	 <div class="alert alert-info fade in" role="alert">
 	     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	     	 <strong>Atención!</strong> No hay entrevistas cargadas
+	     	 <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Atención!</strong> No hay entrevistas cargadas. <%if(session.getAttribute("dni_maestro") == null){%><a href="EntrevistaEdit?do=alta" class="alert-link"> Nueva Entrevista <i class="glyphicon glyphicon-edit"></i></a><%}%>
   	 	 </div>
 
 <%}else{%> 
@@ -104,18 +104,20 @@ if (entrevistas.getLista().isEmpty()){
 		<td><strong><a href="EntrevistaEdit?do=borrar&fecha=<%=e.getFecha()%>&nombre=<%=e.getNombre()%>&hora=<%=e.getHora()%>"  onclick="return confirm('Esta seguro que desea borrar la entrevista?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>				
 	</tr>
 	</tbody>
+	</table>
 <%
 	}
+	
+	if(session.getAttribute("dni_maestro") == null){
  %>
-</table>
-<%}
-if(session.getAttribute("dni_maestro") == null){
-	%>
-	<br>
+ 	<br>
 	<p><strong><a href="EntrevistaEdit?do=alta"><i class="glyphicon glyphicon-edit"></i> Nueva Entrevista</a></strong></p>
 	<br>
 	<br>
-<%}%>
+<%
+	}
+  }
+%>
 </div>
 	<!-- Bootstrap core JavaScript
     ================================================== -->

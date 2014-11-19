@@ -49,7 +49,7 @@ if (grados.getListaTM().isEmpty()){
   	<!-- MENSAJE ATENCION -->
 	<div class="alert alert-info" role="alert">
 		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	<strong>Atención!</strong> No hay grados para el turno mañana. <a href="GradoEdit?do=alta" class="alert-link">Ingresar nuevo grado</a>
+     	<strong><i class="glyphicon glyphicon-exclamation-sign"></i> Atención!</strong> No hay grados para el turno mañana. <a href="GradoEdit?do=alta" class="alert-link">Ingresar nuevo grado</a>
     </div>	
 <%}else{%>
 <table class="table table-hover table-bordered">
@@ -92,27 +92,27 @@ if (grados.getListaTM().isEmpty()){
 		<%if (m1 != null){ %> 
 		<td><%= m1.getNombre() + " " + m1.getApellido() %></td>
 		<%}else{%>
-		<td class="warning"><i class="glyphicon glyphicon-warning-sign"></i> No hay maestro asignado</td>
+		<td class="warning"> No hay maestro asignado <i class="glyphicon glyphicon-warning-sign"></i></td>
 		<%}%>
 		<%if (m2 != null){ %> 
 		<td><%= m2.getNombre() + " " + m2.getApellido() %></td>
 		<%}else{%>
-		<td class="warning"><i class="glyphicon glyphicon-warning-sign"></i> No hay maestro asignado</td>
+		<td class="warning"> No hay maestro asignado <i class="glyphicon glyphicon-warning-sign"></i></td>
 		<%}%>
 		<td><%= ciclo %></td>		
 		<%if(g.getGrado().equals("Sala 4") || g.getGrado().equals("Sala 5")){%>
-		<td class="info">Grado con áreas de trabajo</td>
+		<td class="info">Grado con áreas de trabajo <i class="glyphicon glyphicon-exclamation-sign"></i></td>
 		<%}else{
 		 if (año == 0){%>		
-		<td class="warning"><i class="glyphicon glyphicon-warning-sign"></i> Debe asignar alumnos primero</td>
+		<td class="warning"> Debe asignar alumnos primero <i class="glyphicon glyphicon-warning-sign"></i></td>
 		<%}else{ 
 		if(dni1 == 1){%>
-		<td class="warning"><i class="glyphicon glyphicon-warning-sign"></i> Debe asignar Maestro titular primero</td>
+		<td class="warning"> Debe asignar Maestro titular primero <i class="glyphicon glyphicon-warning-sign"></i></td>
 		<%}else{%>		
 		<td><strong><a href="MateriaGradoList?do=listar&grado_list=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>&grado_año=<%=año%>" ><i class="glyphicon glyphicon-eye-open"></i> Ver Materias</a></strong></td>
 		<%}}}%>
 		<% if ((g.getGrado().equals("7mo") || año == 0) || m1 == null){%>
-		<td class="warning"><i class="glyphicon glyphicon-warning-sign"></i> No se puede promocionar</td>
+		<td class="warning"> No se puede promocionar <i class="glyphicon glyphicon-warning-sign"></i></td>
 		<%}else{ %>
 		<td><a href="GradoEdit?do=promocion&grado_modif=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>&año=<%=año%>" onclick="<%="return confirm('Esta seguro que desea promocionar "+  g.getGrado() + "-" + g.getTurno()  +"?');"%>"><strong>Promocionar</strong></a></td>		
 		<% } %>	
@@ -129,11 +129,11 @@ if (grados.getListaTM().isEmpty()){
     <p><strong><a href="GradoEdit?do=alta"><i class="glyphicon glyphicon-edit"></i> Nuevo Grado</a></strong></p>
 <%}else if (gradosp.getLista().isEmpty() && !grados.getListaTM().isEmpty() ){%>
 <br>
-	<!-- MENSAJE DE ALERTA -->
+	<!-- MENSAJE INFORMATIVO -->
    <div class="bs-example">
     	<div class="alert alert-info fade in" role="alert">
      	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong>Atención!</strong> No quedan grados para dar de alta
+     	 <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Atención!</strong> No quedan grados para dar de alta
   	  	</div>
   </div><!-- /example -->
 <%}%>
