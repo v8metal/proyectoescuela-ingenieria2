@@ -112,8 +112,8 @@ if (citaciones.getLista().isEmpty()){
 		<td><%= dia +"/" + mes + "/" + año %></td>
 		<td><%= c.getHora().substring(0,5) %></td>
 		<td><%= c.getDescripcion() %></td>						
-		<td><strong><a href="CitacionEdit?do=modificar&dni_citacion=<%=c.getDni()%>&fecha_citacion=<%=c.getFecha()%>&hora_citacion=<%=c.getHora()%>&exit=<%=exit%>">Modificar</a></strong></td>
-		<td><strong><a href="CitacionEdit?do=baja&dni_citacion=<%=c.getDni()%>&fecha_citacion=<%=c.getFecha()%>&hora_citacion=<%=c.getHora()%>&exit=<%=exit%>" onclick="return confirm('Esta seguro que desea borrar?');">Borrar</a></strong></td>
+		<td><strong><a href="CitacionEdit?do=modificar&dni_citacion=<%=c.getDni()%>&fecha_citacion=<%=c.getFecha()%>&hora_citacion=<%=c.getHora()%>&exit=<%=exit%>"><i class="glyphicon glyphicon-pencil"></i> Modificar</a></strong></td>
+		<td><strong><a href="CitacionEdit?do=baja&dni_citacion=<%=c.getDni()%>&fecha_citacion=<%=c.getFecha()%>&hora_citacion=<%=c.getHora()%>&exit=<%=exit%>" onclick="return confirm('Esta seguro que desea borrar?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
 	</tr>
 	</tbody>
 <%
@@ -121,7 +121,7 @@ if (citaciones.getLista().isEmpty()){
  %>
 </table>
 <br>
-	<strong><a href="CitacionEdit?do=alta">Nueva Citación</a></strong>
+	<strong><a href="CitacionEdit?do=alta"><i class="glyphicon glyphicon-edit"></i> Nueva Citación</a></strong>
 <br>
 <br>
 <br>
@@ -130,7 +130,7 @@ if (citaciones.getLista().isEmpty()){
 <%if (b){%> 
 <input type="hidden" name="accion" value="alta">
 <%}%>
-<button type="submit" class="btn btn-primary"  value="Volver">Volver a selección de año</button>
+<button type="submit" class="btn btn-primary"  value="Volver"><i class="glyphicon glyphicon-share-alt"></i> Volver a selección de año</button>
 </div>
 </form>
 

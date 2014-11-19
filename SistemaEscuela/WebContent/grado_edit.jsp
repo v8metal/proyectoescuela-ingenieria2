@@ -107,12 +107,12 @@ if (grado != null){
 			 	
 			 %>
 			 <div class="col-xs-6">
-			<label class="radio-inline"> 
-			<input type="radio" name="bimestral" value="si" <%=ck_bim%> /> Bimestral
-			</label>
-			<label class="radio-inline">
-			<input type="radio" name="bimestral" value="no" <%=ck_tri%>/> Trimestral
-			</label>
+				<label class="radio-inline"> 
+					<input type="radio" name="bimestral" value="si" <%=ck_bim%> /> Bimestral
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="bimestral" value="no" <%=ck_tri%>/> Trimestral
+				</label>
 			</div>
 		</td>
 	</tr>
@@ -202,7 +202,7 @@ if (grado != null){
 <%}else{%>
 		<td class="warning">
 			<div class="col-xs-6">
-				<strong><p>Asignar alumnos antes</p></strong>
+				<strong><p><i class="glyphicon glyphicon-warning-sign"></i> Asignar alumnos antes</p></strong>
 			</div>
 		</td>
 <%}%>	
@@ -236,7 +236,7 @@ if (grado != null){
 <%}else{%>
 		<td class="warning">
 			<div class="col-xs-6">
-				<strong><p>Asignar alumnos antes</p></strong>
+				<strong><p><i class="glyphicon glyphicon-warning-sign"></i> Asignar alumnos antes</p></strong>
 			</div>
 		</td>
 <%}%>		 
@@ -252,21 +252,22 @@ if (grado != null){
 	}
 		 
 %>
-	<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="<%=mensaje%>">Guardar</button>
-	<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button>	
+	<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="<%=mensaje%>"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+	<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>	
 </form>
 </div>
 <br>
 <%if (año == 0 && grado != null){%>
 <!-- MENSAJE DE WARNING -->
 	<div class="alert alert-warning" role="alert">
-      <strong>Cuidado!</strong> No hay alumnos asignados. <a href="GradoEdit?do=baja" class="alert-link">Borrar grado</a>
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong> Cuidado!</strong> No hay alumnos asignados. <a href="GradoEdit?do=baja" class="alert-link"> Borrar grado</a>
     </div>
 <br>
 <%}%>
 <div class="form-group">
 <form action="GradoList" method="get">
-<button type="submit" class="btn btn-primary"  value="Volver al Listado">Volver al Listado</button>
+<button type="submit" class="btn btn-primary"  value="Volver al Listado"><i class="glyphicon glyphicon-share-alt"></i> Volver al Listado</button>
 </form>
 </div>
 </div>

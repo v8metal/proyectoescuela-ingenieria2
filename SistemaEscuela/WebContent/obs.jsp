@@ -41,15 +41,16 @@
 <%
 	if (o.getLista().isEmpty()) {
 %>
-<div class="alert alert-info" role="alert">
-   <strong>Atención!</strong> No hay observaciones cargadas
-</div>
+ 		<div class="alert alert-info fade in" role="alert">
+     	 	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 	<strong>Atención!</strong> No hay observaciones cargadas
+  	  	</div>
 <%
 	} else {
 %>
 <table class="table table-hover table-bordered">
 	<thead>
-	<tr>
+	<tr class="active">
 		<th>Nº</th>
 		<th>OBSERVACIONES</th>
 		<th>&nbsp;</th>
@@ -63,7 +64,7 @@
 	<tr>
 		<td><center><%=i%></center></td>
 		<td><%= ob.getObservaciones() %></td>
-		<td><a href="certificadoEdit?from=obs&do=eliminar&obs=<%= ob.getObservaciones() %>" >Eliminar</a></td>
+		<td><strong><a href="certificadoEdit?from=obs&do=eliminar&obs=<%= ob.getObservaciones() %>" ><i class="glyphicon glyphicon-trash"></i> Eliminar</a></strong></td>
 	</tr>
 	</tbody>
 <%	
@@ -74,21 +75,21 @@
 	}	
 %>
 <br>
-Ingrese nueva observación:
+<label for="input">Ingrese nueva observación:</label>
 <br>
 <br>
 <form action="certificadoEdit?from=obs" method="post">
-<textarea name="obs_nueva" rows="4" cols="50"></textarea>
+<textarea name="obs_nueva" rows="4" cols="50" class="form-control"></textarea>
 <br>
 <br>
-<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave">Guardar</button>
+<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
 </form>
 <br>
 <br>
 <br>
 <br>
 <form action="certificado_list.jsp" method="post">
-<button type="submit" class="btn btn-primary"  value="Volver" name="btnBack">Volver</button>
+<button type="submit" class="btn btn-primary"  value="Volver" name="btnBack"><i class="glyphicon glyphicon-share-alt"></i> Volver</button>
 </form>
 </div>
 	<!-- Bootstrap core JavaScript

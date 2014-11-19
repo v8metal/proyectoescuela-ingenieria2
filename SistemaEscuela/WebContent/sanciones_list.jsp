@@ -112,8 +112,8 @@ if (sanciones.getLista().isEmpty()){
 		<td><%= dia +"/" + mes + "/" + año %></td>
 		<td><%= s.getHora().substring(0,5) %></td>
 		<td><%= s.getMotivo() %></td>		
-		<td><strong><a href="SancionEdit?do=modificar&dni_sancion=<%=s.getDni()%>&fecha_sancion=<%=s.getFecha()%>&hora_sancion=<%=s.getHora()%>&exit=<%=exit%>">Modificar</a></strong></td>
-		<td><strong><a href="SancionEdit?do=baja&dni_sancion=<%=s.getDni()%>&fecha_sancion=<%=s.getFecha()%>&hora_sancion=<%=s.getHora()%>&exit=<%=exit%>" onclick="return confirm('Esta seguro que desea borrar?');">Borrar</a></strong></td>
+		<td><strong><a href="SancionEdit?do=modificar&dni_sancion=<%=s.getDni()%>&fecha_sancion=<%=s.getFecha()%>&hora_sancion=<%=s.getHora()%>&exit=<%=exit%>"><i class="glyphicon glyphicon-pencil"></i> Modificar</a></strong></td>
+		<td><strong><a href="SancionEdit?do=baja&dni_sancion=<%=s.getDni()%>&fecha_sancion=<%=s.getFecha()%>&hora_sancion=<%=s.getHora()%>&exit=<%=exit%>" onclick="return confirm('Esta seguro que desea borrar?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
 	</tr>
 	</tbody>
 <%
@@ -121,7 +121,7 @@ if (sanciones.getLista().isEmpty()){
  %>
 </table>
 <br>
-	<strong><a href="SancionEdit?do=alta">Nueva Sanción</a></strong>
+	<strong><a href="SancionEdit?do=alta"><i class="glyphicon glyphicon-edit"></i> Nueva Sanción</a></strong>
 <br>
 <br>
 <br>
@@ -130,7 +130,7 @@ if (sanciones.getLista().isEmpty()){
 <%if (b){%> 
 <input type="hidden" name="accion" value="alta">
 <%}%>
-<input type="submit" class="btn btn-primary" value="Volver a selección de año">
+<button type="submit" class="btn btn-primary"  value="Volver a selección de año"><i class="glyphicon glyphicon-share-alt"></i> Volver a selección de año</button> 
 </div>
 </form>
 

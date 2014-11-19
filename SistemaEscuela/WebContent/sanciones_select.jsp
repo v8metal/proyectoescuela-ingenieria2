@@ -66,7 +66,7 @@
             <div class="col-xs-3">
                 <div class="input-group">
                      <span class="input-group-btn">
-                        <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnAcept">Buscar</button>
+                        <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnAcept"><i class="glyphicon glyphicon-search"></i> Buscar</button>
                     </span>
                     <select class="form-control" name="año_sancion_selected" autofocus>
   						 <%  			

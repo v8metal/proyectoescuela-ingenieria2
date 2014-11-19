@@ -24,7 +24,7 @@
 		session.setAttribute("error", "");
 	}
 %>
-<title>Alumnos dados de baja</title>
+<title>Alumnos - Registro de bajas</title>
 
 <link rel="icon" href="icono/favicon.ico">
 
@@ -47,7 +47,7 @@
 		
 %>
 <div class="page-header">
-<h1>Alumnos Inactivos</h1>
+	<h1>Registro de bajas</h1>
 </div>
 
 <br>
@@ -58,7 +58,9 @@
 <%		
 		} else {
 %>
-<h1>Alumnos dados de baja</h1>
+<div class="page-header">
+	<h1>Registro de bajas</h1>
+</div>	
 <% 
 			if (!error.equals("")) {
 %>
@@ -91,7 +93,7 @@
 		<td><%= a.getApellido() + ", " + a.getNombre() %></td>
 		<td><%= ea.getDni() %></td>
 		<td><center><%= ea.getFecha() %></center></td>
-		<td><strong><a name="activate-link" href="alumnoInactivo?do=activar&dni_alum=<%= a.getDni() %>" >ACTIVAR</a></strong></td>	
+		<td><strong><a name="activate-link" href="alumnoInactivo?do=activar&dni_alum=<%= a.getDni() %>" ><i class="glyphicon glyphicon-arrow-up"></i> Dar de alta</a></strong></td>	
 	</tr>
 	</tbody>
 <%

@@ -48,12 +48,6 @@
 	//session.removeAttribute("añoAlta"); //ver si esta ok comentarlo o no
 	//se remueven los atributos para que no queden colgados
 
-	String error = "";
-	if (session.getAttribute("error") != null) {
-		error = (String)session.getAttribute("error");
-		session.setAttribute("error", "");
-	}
-
   	Padre tutor = (Padre)request.getAttribute("tutor");
     Padre madre = (Padre)request.getAttribute("madre");
     Alumno alumno = null;
@@ -187,71 +181,138 @@
 	session.removeAttribute("reingreso");%>
 <input type="hidden" name="reingreso" value="reingreso">
 <%}%>
+
+ <!-- MENSAJE DE ERROR -->
+ <%	String error = "";
+	
+	if (session.getAttribute("error") != null) {
+		error = (String)session.getAttribute("error");
+		session.setAttribute("error", null);		
+	
+ %>
+   <div class="bs-example">
+    	 <div class="alert alert-danger fade in" role="alert">
+     	 	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 	<strong>Ups!</strong> <%= error %>
+  	  	</div>
+  </div><!-- /example -->
+ 	
+ <% } %>   
+ 
 <h2>Datos personales:</h2>
 <table>
 	<tr>
-		<td>Apellido: </td>
-		<td><input type="text" class="form-control" size="29" name="apellido_alum" required autofocus value="<%=alumno!=null? alumno.getApellido() : ""%>"></td><td><%= error %></td>
+		<td>
+			<label for="input">Apellido: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="apellido_alum" required autofocus value="<%=alumno!=null? alumno.getApellido() : ""%>">
+			</div>	
+		</td>
+	<tr>
+		<td>
+			<label for="input">Nombres: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="nombre_alum" required value="<%=(alumno!=null&&ind==0)? alumno.getNombre() : ""%>">
+			</div>
+		</td>
 	</tr>
 	<tr>
-		<td>Nombres: </td>
-		<td><input type="text" class="form-control" size="29" name="nombre_alum" required value="<%=(alumno!=null&&ind==0)? alumno.getNombre() : ""%>"></td>
+		<td>
+			<label for="input">Lugar de nacimiento: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="lugar_nac_alum" required value="<%=alumno!=null? alumno.getLugar_nac() : ""%>">
+			</div>	
+		</td>
 	</tr>
 	<tr>
-		<td>Lugar de nacimiento: </td>
-		<td><input type="text" class="form-control" size="29" name="lugar_nac_alum" required value="<%=alumno!=null? alumno.getLugar_nac() : ""%>"></td>
-	</tr>
-	<tr>
-		<td><label for="input">Fecha de Nacimiento:</label></td>			
-			<td>
-			<!-- <div class="col-xs-2"> -->
+		<td>
+			<label for="input">Fecha de Nacimiento:</label>
+		</td>			
+		<td>
+			<div class="col-xs-10"> 
 				<input class="form-control" type="text" id="datepicker" required name="fecha_nac_alum">
-			<!-- </div> -->
-			</td>			
-	  	</tr>
-	<tr>
-		<td>D.N.I.: </td>
-		<td><input type="text" class="form-control" size="29" name="dni_alum" required value="<%=alumno!=null&&ind==0? alumno.getDni() : ""%>"></td>
+			</div>
+		</td>			
 	</tr>
 	<tr>
-		<td>Domicilio: </td>
-		<td><input type="text" class="form-control" size="29" name="domicilio_alum" required value="<%=alumno!=null? alumno.getDomicilio() : ""%>"></td>
-	</tr>
-	<tr>
-		<td>Teléfono: </td>
-		<td><input type="text" class="form-control" size="29" name="telefono_alum" value="<%=alumno!=null? alumno.getTelefono() : ""%>"></td>
-	</tr>
-	<tr>
-		<td>Escolaridad: </td>
-		<td>	 
-			<label class="radio-inline"> 
-			<input type="radio"  name="esc" value="Inicial" required <%=alumno!=null && alumno.getEsc().equals("Inicial") ? "checked" : ""%> /> Inicial
-			</label>
-			<label class="radio-inline"> 
-			</label>
-			<input type="radio"  name="esc" value="Primaria" required <%=alumno!=null && alumno.getEsc().equals("Primaria") ? "checked" : ""%>/> Primaria
+		<td>
+			<label for="input">D.N.I.: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="dni_alum" required value="<%=alumno!=null&&ind==0? alumno.getDni() : ""%>">
+			</div>	
 		</td>
 	</tr>
 	<tr>
-		<td>Grupo Familiar: </td>
 		<td>
-			<label class="radio-inline"> 
-			<input type="radio"  name="ind_grupo" value="si" required <%=alumno!=null && alumno.isInd_grupo() ? "checked" : ""%>/> Si
-			</label>
-			<label class="radio-inline"> 
-			<input type="radio"  name="ind_grupo" value="no" required <%=alumno!=null && !alumno.isInd_grupo() ? "checked" : ""%>/> No 
-			</label>		
+			<label for="input">Domicilio: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="domicilio_alum" required value="<%=alumno!=null? alumno.getDomicilio() : ""%>">
+			</div>
 		</td>
 	</tr>
 	<tr>
-		<td>Subsidio: </td>
 		<td>
-			<label class="radio-inline"> 
-			<input type="radio" name="ind_subsidio" value="si" required <%=alumno!=null && alumno.isInd_subsidio() ? "checked" : ""%>/> Si
-			</label>
-			<label class="radio-inline"> 
-			<input type="radio" name="ind_subsidio" value="no" required <%=alumno!=null && !alumno.isInd_subsidio() ? "checked" : ""%>/> No
-			</label>
+			<label for="input">Teléfono: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="telefono_alum" value="<%=alumno!=null? alumno.getTelefono() : ""%>">
+			</div>	
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="input">Escolaridad: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">	 
+				<label class="radio-inline"> 
+					<input type="radio"  name="esc" value="Inicial" required <%=alumno!=null && alumno.getEsc().equals("Inicial") ? "checked" : ""%> /> Inicial
+				</label>
+				<label class="radio-inline"> 		
+					<input type="radio"  name="esc" value="Primaria" required <%=alumno!=null && alumno.getEsc().equals("Primaria") ? "checked" : ""%>/> Primaria
+				</label>
+			</div>	
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="input">Grupo Familiar: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">	
+				<label class="radio-inline"> 
+					<input type="radio"  name="ind_grupo" value="si" required <%=alumno!=null && alumno.isInd_grupo() ? "checked" : ""%>/> Si
+				</label>
+				<label class="radio-inline"> 
+					<input type="radio"  name="ind_grupo" value="no" required <%=alumno!=null && !alumno.isInd_grupo() ? "checked" : ""%>/> No 
+				</label>	
+			</div>		
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="input">Subsidio: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<label class="radio-inline"> 
+					<input type="radio" name="ind_subsidio" value="si" required <%=alumno!=null && alumno.isInd_subsidio() ? "checked" : ""%>/> Si
+				</label>
+				<label class="radio-inline"> 
+					<input type="radio" name="ind_subsidio" value="no" required <%=alumno!=null && !alumno.isInd_subsidio() ? "checked" : ""%>/> No
+				</label>
+			</div>	
 		</td>
 	</tr>
 </table>
@@ -260,58 +321,119 @@
 <h3>Padre o Tutor:</h3>
 <table>	
 	<tr>
-		<td>Apellido: </td>
-		<td><input type="text" class="form-control" size="29" name="apellido_tutor" required autofocus value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getApellido() : ""%>"></td>
-	</tr>
-	<tr>
-		<td>Nombres: </td>
-		<td><input type="text" class="form-control" size="29" name="nombre_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getNombre() : ""%>"></td>
-	</tr>
-	<tr>
-		<td>Lugar de nacimiento: </td>
-		<td><input type="text" class="form-control" size="29" name="lugar_nac_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getLugar_nac() : ""%>"></td>
-	</tr>
-	<tr>
-		<td><label for="input">Fecha de Nacimiento:</label></td>			
 		<td>
-			<!-- <div class="col-xs-2"> -->
-			<input class="form-control" type="text" id="datepicker2" required name="fecha_nac_tutor">
-			<!-- </div>-->
+			<label for="input">Apellido: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="apellido_tutor" required autofocus value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getApellido() : ""%>">
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="input">Nombres: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="nombre_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getNombre() : ""%>">
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="input">Lugar de nacimiento: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="lugar_nac_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getLugar_nac() : ""%>">
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="input">Fecha de Nacimiento:</label>
+		</td>			
+		<td>
+			<div class="col-xs-10">
+				<input class="form-control" type="text" id="datepicker2" required name="fecha_nac_tutor">
+			</div>
 		</td>			
  	</tr>
 	<tr>
-		<td>D.N.I.: </td>
-		<td><input type="text" class="form-control" size="29" name="dni_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getDni() : ""%>"></td>
+		<td>
+			<label for="input">D.N.I.: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="dni_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getDni() : ""%>">
+			</div>
+		</td>
 	</tr>
 	<tr>
-		<td>Domicilio: </td>
-		<td><input type="text" class="form-control" size="29" name="domicilio_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getDomicilio() : ""%>"></td>
+		<td>
+			<label for="input">Domicilio: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="domicilio_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getDomicilio() : ""%>">
+			</div>
+		</td>
 	</tr>
 	<tr>
-		<td>Teléfono: </td>
-		<td><input type="text" class="form-control" size="29" name="telefono_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getTelefono() : ""%>"></td>
+		<td>
+			<label for="input">Teléfono: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="telefono_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getTelefono() : ""%>">
+			</div>
+		</td>
 	</tr>
 	<tr>
-		<td>Ocupación: </td>
-		<td><input type="text" class="form-control" size="29" name="ocupacion_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getOcupacion() : ""%>"></td>
+		<td>
+			<label for="input">Ocupación: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="ocupacion_tutor" required value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getOcupacion() : ""%>">
+			</div>
+		</td>
 	</tr>
 	<tr>
-		<td>Dom. Lab.: </td>
-		<td><input type="text" class="form-control" size="29" name="dom_lab_tutor" value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getDom_lab() : ""%>"></td>
+		<td>
+			<label for="input">Dom. Lab.: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="dom_lab_tutor" value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getDom_lab() : ""%>">
+			</div>
+		</td>
 	</tr>
 	<tr>
-		<td>Teléfono Lab.: </td>
-		<td><input type="text" class="form-control" size="29" name="telefono_lab_tutor" value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getTel_lab() : ""%>"></td>
+		<td>
+			<label for="input">Teléfono Lab.: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="telefono_lab_tutor" value="<%=tutor!=null && tutor.getDni()!=0 ? tutor.getTel_lab() : ""%>">
+			</div>
+		</td>
 	</tr>
 	<tr>
-		<td>Estado Civil: </td>
-		<td><select class="form-control" name="est_civil_tutor" required>
-			<option <%=tutor!=null && tutor.getEst_civil().equals("Soltero/a")? "selected" : ""%>>Soltero/a</option>
-			<option <%=tutor!=null && tutor.getEst_civil().equals("Casado/a")? "selected" : ""%>>Casado/a</option>
-			<option <%=tutor!=null && tutor.getEst_civil().equals("Divorsiado/a")? "selected" : ""%>>Divorciado/a</option>
-			<option <%=tutor!=null && tutor.getEst_civil().equals("Viudo/a")? "selected" : ""%>>Viudo/a</option>
-			<option <%=tutor!=null && tutor.getEst_civil().equals("Separado/a")? "selected" : ""%>>Separado/a</option>
-			</select>
+		<td>
+			<label for="input">Estado Civil: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<select class="form-control" name="est_civil_tutor">
+					<option <%=tutor!=null && tutor.getEst_civil().equals("Soltero/a")? "selected" : ""%>>Soltero/a</option>
+					<option <%=tutor!=null && tutor.getEst_civil().equals("Casado/a")? "selected" : ""%>>Casado/a</option>
+					<option <%=tutor!=null && tutor.getEst_civil().equals("Divorsiado/a")? "selected" : ""%>>Divorciado/a</option>
+					<option <%=tutor!=null && tutor.getEst_civil().equals("Viudo/a")? "selected" : ""%>>Viudo/a</option>
+					<option <%=tutor!=null && tutor.getEst_civil().equals("Separado/a")? "selected" : ""%>>Separado/a</option>
+				</select>
+			</div>	
 		</td>
 	</tr>
 </table>
@@ -319,58 +441,119 @@
 <h3>Madre:</h3>
 <table>	
 	<tr>
-		<td>Apellido: </td>
-		<td><input type="text" class="form-control" size="29" name="apellido_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getApellido() : ""%>"></td>
-	</tr>
-	<tr>
-		<td>Nombres: </td>
-		<td><input type="text" class="form-control" size="29" name="nombre_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getNombre() : ""%>"></td>
-	</tr>
-	<tr>
-		<td>Lugar de nacimiento: </td>
-		<td><input type="text" class="form-control" size="29" name="lugar_nac_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getLugar_nac() : ""%>"></td>
-	</tr>
-	<tr>
-		<td><label for="input">Fecha de Nacimiento:</label></td>			
 		<td>
-			<!-- <div class="col-xs-2"> -->
-			<input class="form-control" type="text" id="datepicker3" required name="fecha_nac_madre">
-			<!-- </div>-->
+			<label for="input">Apellido: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="apellido_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getApellido() : ""%>">
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="input">Nombres: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="nombre_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getNombre() : ""%>">
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="input">Lugar de nacimiento: </label>
+		</td>
+		<td>	
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="lugar_nac_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getLugar_nac() : ""%>">
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="input">Fecha de Nacimiento:</label>
+		</td>			
+		<td>
+			<div class="col-xs-10">
+				<input class="form-control" type="text" id="datepicker3" required name="fecha_nac_madre">
+			</div>
 		</td>			
  	</tr>
 	<tr>
-		<td>D.N.I.: </td>
-		<td><input type="text" class="form-control" size="29" name="dni_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getDni() : ""%>"></td>
+		<td>
+			<label for="input">D.N.I.: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="dni_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getDni() : ""%>">
+			</div>
+		</td>
 	</tr>
 	<tr>
-		<td>Domicilio: </td>
-		<td><input type="text" class="form-control" size="29" name="domicilio_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getDomicilio() : ""%>"></td>
+		<td>
+			<label for="input">Domicilio: </label>
+		</td>
+		<td>	
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="domicilio_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getDomicilio() : ""%>">
+			</div>
+		</td>
 	</tr>
 	<tr>
-		<td>Teléfono: </td>
-		<td><input type="text" class="form-control" size="29" name="telefono_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getTelefono() : ""%>"></td>
+		<td>
+			<label for="input">Teléfono: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="telefono_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getTelefono() : ""%>">
+			</div>
+		</td>
 	</tr>
 	<tr>
-		<td>Ocupación: </td>
-		<td><input type="text" class="form-control" size="29" name="ocupacion_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getOcupacion() : ""%>"></td>
+		<td>
+			<label for="input">Ocupación: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="ocupacion_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getOcupacion() : ""%>">
+			</div>
+		</td>
 	</tr>
 	<tr>
-		<td>Dom. Lab.: </td>
-		<td><input type="text" class="form-control" size="29" name="dom_lab_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getDom_lab() : ""%>"></td>
+		<td>
+			<label for="input">Dom. Lab.: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="dom_lab_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getDom_lab() : ""%>">
+			</div>
+		</td>
 	</tr>
 	<tr>
-		<td>Teléfono Lab.: </td>
-		<td><input type="text" class="form-control" size="29" name="telefono_lab_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getTel_lab() : ""%>"></td>
+		<td>
+			<label for="input">Teléfono Lab.: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="telefono_lab_madre" value="<%=madre!=null && madre.getDni()!=0 ? madre.getTel_lab() : ""%>">
+			</div>
+		</td>
 	</tr>
 	<tr>
-		<td>Estado Civil: </td>
-		<td><select class="form-control" name="est_civil_madre" required>
-			<option <%=madre!=null && madre.getEst_civil().equals("Soltero/a")? "selected" : ""%>>Soltero/a</option>
-			<option <%=madre!=null && madre.getEst_civil().equals("Casado/a")? "selected" : ""%>>Casado/a</option>
-			<option <%=madre!=null && madre.getEst_civil().equals("Divorsiado/a")? "selected" : ""%>>Divorciado/a</option>
-			<option <%=madre!=null && madre.getEst_civil().equals("Viudo/a")? "selected" : ""%>>Viudo/a</option>
-			<option <%=madre!=null && madre.getEst_civil().equals("Separado/a")? "selected" : ""%>>Separado/a</option>
-			</select>
+		<td>
+			<label for="input">Estado Civil: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<select class="form-control" name="est_civil_madre">
+					<option <%=madre!=null && madre.getEst_civil().equals("Soltero/a")? "selected" : ""%>>Soltero/a</option>
+					<option <%=madre!=null && madre.getEst_civil().equals("Casado/a")? "selected" : ""%>>Casado/a</option>
+					<option <%=madre!=null && madre.getEst_civil().equals("Divorsiado/a")? "selected" : ""%>>Divorciado/a</option>
+					<option <%=madre!=null && madre.getEst_civil().equals("Viudo/a")? "selected" : ""%>>Viudo/a</option>
+					<option <%=madre!=null && madre.getEst_civil().equals("Separado/a")? "selected" : ""%>>Separado/a</option>
+				</select>
+			</div>	
 		</td>
 	</tr>
 </table>
@@ -378,18 +561,36 @@
 <h3>Hermanos:</h3>
 <table>	
 	<tr>
-		<td>Mayores: </td>
-		<td><input type="text" class="form-control" size="1" name="cant_her_may" required value="<%=alumno!=null? alumno.getCant_her_may() : "0"%>"></td>	
-		<td>Menores: </td>
-		<td><input type="text" class="form-control" size="1" name="cant_her_men" required value="<%=alumno!=null? alumno.getCant_her_men() : "0"%>"></td>
+		<td>
+			<label for="input">Mayores: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="1" name="cant_her_may" required value="<%=alumno!=null? alumno.getCant_her_may() : "0"%>">
+			</div>	
+		</td>	
+		<td>
+			<label for="input">Menores: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="1" name="cant_her_men" required value="<%=alumno!=null? alumno.getCant_her_men() : "0"%>">
+			</div>	
+		</td>
 	</tr>
 </table>
 <br>
 <h2>Iglesia</h2>
 <table>	
 	<tr>
-		<td>Nombre: </td>
-		<td><input type="text" class="form-control" size="29" name="iglesia" value="<%=alumno!=null? alumno.getIglesia() : ""%>"></td>
+		<td>
+			<label for="input">Nombre: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" size="29" name="iglesia" value="<%=alumno!=null? alumno.getIglesia() : ""%>">
+			</div>	
+		</td>
 	</tr>							
 </table>
 <br>
@@ -406,63 +607,76 @@
 %>
 <table>	
 	<tr>
-		<td><label for="input">Fecha de Ingreso:</label></td>			
 		<td>
-			<!-- <div class="col-xs-2"> -->
-			<input class="form-control" type="text" id="datepicker4" required autofocus name="fecha_ing_alum">
-			<!-- </div>-->
+			<label for="input">Fecha de Ingreso:</label>
+		</td>			
+		<td>
+			<div class="col-xs-10">
+				<input class="form-control" type="text" id="datepicker4" required autofocus name="fecha_ing_alum">
+			</div>
 		</td>			
  	</tr>
 	<tr>
-		<td>Grado:</td>
-		<td>		
+		<td>
+			<label for="input">Grado:</label>
+		</td>
+		<td>
+			<div class="col-xs-10">		
 		<%if(alumno != null && dias > 7 && ind == 0){%>
-		<input readonly type="text" class="form-control" name="grado" value="<%=grado%>">
+				<input readonly type="text" class="form-control" name="grado" value="<%=grado%>">
 		<%}else{%>		
-		<select name="grado">
-			<option value="Sala 4">Sala 4</option>
-			<option value="Sala 5">Sala 5</option>
-			<option value="1° Grado">1° Grado</option>
-			<option value="2° Grado">2° Grado</option>
-			<option value="3° Grado">3° Grado</option>
-			<option value="4° Grado">4° Grado</option>
-			<option value="5° Grado">5° Grado</option>
-			<option value="6° Grado">6° Grado</option>
-			<option value="7° Grado">7° Grado</option>
-		</select>
-		<%}%>		
+				<select name="grado" class="form-control">
+					<option value="Sala 4">Sala 4</option>
+					<option value="Sala 5">Sala 5</option>
+					<option value="1° Grado">1° Grado</option>
+					<option value="2° Grado">2° Grado</option>
+					<option value="3° Grado">3° Grado</option>
+					<option value="4° Grado">4° Grado</option>
+					<option value="5° Grado">5° Grado</option>
+					<option value="6° Grado">6° Grado</option>
+					<option value="7° Grado">7° Grado</option>
+				</select>
+		<%}%>
+			</div>		
 		</td>
 	<tr>	
-		<td>Turno:</td>
-		<td>		
+		<td>
+			<label for="input">Turno:</label>
+		</td>
+		<td>	
+			<div class="col-xs-10">	
 		<%if((alumno != null && dias > 7 && ind == 0)){%>
-			<input readonly type="text" class="form-control" name="turno" value="<%=turno%>">
+				<input readonly type="text" class="form-control" name="turno" value="<%=turno%>">
 		<%}else{%>		
-			<select name="turno">
-			<option value="MAÑANA">Mañana</option>
-			<option value="TARDE">Tarde</option>
-			</select>
+				<select name="turno" class="form-control">
+					<option value="MAÑANA">Mañana</option>
+					<option value="TARDE">Tarde</option>
+				</select>
 		<%}%>
+			</div>
 		</td>		
 	</tr>		
 	<tr>
-		<td>Ingreso Escolar: </td>
 		<td>
+			<label for="input">Ingreso Escolar: </label>
+		</td>
+		<td>
+			<div class="col-xs-10">
 		<%if(año != null && ind_reingreso == 0){%>
-			<input readonly type="text" class="form-control" name="año_ing" value="<%=año%>">
+				<input readonly type="text" class="form-control" name="año_ing" value="<%=año%>">
 		<%}else{%>
-			<select name="año_ing">
+				<select name="año_ing" class="form-control">
 			 <%
 			  int año_max = AccionesAlumno.getAñoAlumnos("MAX");
 			  if (año_max == año_sys); año_max = año_max + 1;
 			  if (año_max > año_sys); año_max = año_max - 1;
 			 	for (int i = año_max; i >= (año_max-1); i--){
  			 %>
-			 <option <%=año_max==i ? "selected" : ""%>><%=i%></option>
+				 <option <%=año_max==i ? "selected" : ""%>><%=i%></option>
 			 <%
 			 	}
 			 %>
-  			 </select>
+  			 	</select>
   		<%}%>
 		</td>
 	</tr>
@@ -473,8 +687,8 @@
 }				
 %>
 
-<button id=guardar title="<%=mensaje%>" type="submit" class="btn btn-primary" value="Guardar">Guardar</button>
-<button type="reset" class="btn btn-primary" value="Cancelar">Cancelar</button>
+<button id=guardar title="<%=mensaje%>" type="submit" class="btn btn-primary" value="Guardar"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+<button type="reset" class="btn btn-primary" value="Cancelar"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
 </form>
 </div>
 <br>
@@ -493,7 +707,7 @@ if (año != null || hermano != null || ind_reingreso == 1){%>
 <div class="form-group">
 <form action="<%=volver%>" method="post">
 <input type="hidden" name="accion" value="listarAlumnos">
-<button type="submit" class="btn btn-primary" value="Volver">Volver</button>
+<button type="submit" class="btn btn-primary" value="Volver"><i class="glyphicon glyphicon-share-alt"></i> Volver</button>
 </form>
 </div>
 </div>

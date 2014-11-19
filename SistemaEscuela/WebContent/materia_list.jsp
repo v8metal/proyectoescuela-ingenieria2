@@ -65,8 +65,8 @@
 	<tbody>
 	<tr>
 		<td><%= m.getMateria() %></td>
-		<td><strong><a href="materiaEdit?do=baja&materia=<%= m.getMateria() %>" onclick="return confirm('Esta seguro que desea dar de baja?');">Baja de Materia</a></strong></td>		
-		<td><strong><a href="materiaEdit?do=borrar&materia=<%= m.getMateria() %>"  onclick="return confirm('Esta seguro que desea borrar?');" >Borrar Materia</a></strong></td>
+		<td><strong><a href="materiaEdit?do=baja&materia=<%= m.getMateria() %>" onclick="return confirm('Esta seguro que desea dar de baja?');"><i class="glyphicon glyphicon-ban-circle"></i> Volver inactiva</a></strong></td>		
+		<td><strong><a href="materiaEdit?do=borrar&materia=<%= m.getMateria() %>"  onclick="return confirm('Esta seguro que desea borrar?');" ><i class="glyphicon glyphicon-trash"></i> Borrar Materia</a></strong></td>
 	</tr>
 	<tbody>	
 <%
@@ -75,8 +75,7 @@
 </table>
 
 <br>
-  	<p><strong><a href="materiaEdit?do=alta">Agregar materia</a></strong></p>
-<br>
+  	<p><strong><a href="materiaEdit?do=alta"><i class="glyphicon glyphicon-edit"></i> Nueva materia</a></strong></p>
 <br>
 <br>
 <%}

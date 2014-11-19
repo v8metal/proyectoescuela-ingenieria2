@@ -86,9 +86,9 @@
 		<td><%= a.getNombre() + " " + a.getApellido() %></td>		
 		<td><%= t.getIndicador() %></td>	
 		<td><%= t.getObservaciones() %></td>	
-		<td><strong><a href="AsistenciaEdit?do=<%=accion%>&&dni=<%=t.getDni()%>&&fecha=<%=fecha%>"><%=accion%></a></strong></td>
+		<td><strong><a href="AsistenciaEdit?do=<%=accion%>&&dni=<%=t.getDni()%>&&fecha=<%=fecha%>"><i class="glyphicon glyphicon-pencil"></i> <%=accion%></a></strong></td>
 		<%if (t.getTipo().equals("A")){%>		
-		<td><strong><a href="AsistenciaEdit?do=borrar&&dni=<%=t.getDni()%>&&fecha=<%=fecha%>>" onclick="return confirm('Esta seguro que desea borrar la Asistencia?');">Borrar</a></strong></td>
+		<td><strong><a href="AsistenciaEdit?do=borrar&&dni=<%=t.getDni()%>&&fecha=<%=fecha%>>" onclick="return confirm('Esta seguro que desea borrar la Asistencia?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
 		<%}else{%>
 		<td></td>
 		<%}%>
@@ -104,7 +104,7 @@
 	<div class="form-group"> 
 	  	<form action="menu_asistencias.jsp">
 	  	<input type="hidden" name="volver" value="volver">		   
-	   	<button type="submit" class="btn btn-primary"  value="Seleccionar otro grado/fecha">Seleccionar otro grado/fecha</button> 
+	   	<button type="submit" class="btn btn-primary"  value="Seleccionar otro grado/fecha"><i class="glyphicon glyphicon-pushpin"></i> Seleccionar otro grado/fecha</button> 
 	   </form>
 	</div>
 	

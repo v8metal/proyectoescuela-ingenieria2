@@ -79,7 +79,7 @@
 		<table class="table table-hover table-bordered">
 		    <tr> <%= error %></tr>
 		    <tr>
-		      <th>CONDICION</th>		      
+		      <th>Condición</th>		      
 		      <td>
 		      <div class="col-xs-3">		     
 		     	 <select class="form-control" name="condicion" autofocus>
@@ -96,7 +96,7 @@
 		    </tr>
 		    <tr>
 		      
-		      <th>OBSERVACIONES</th>
+		      <th>Observaciones</th>
 		      <td>
 		      	<div class="col-xs-8">
 		      		<textarea name="observaciones" cols="40" rows="4" class="form-control" placeholder="Observaciones"><%=asistencia!=null?asistencia.getObservaciones():"" %></textarea>
@@ -105,8 +105,8 @@
 		    </tr> 
 		  </table>
 		  
-		  		  <button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');">Guardar</button>
-		          <button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button> 
+		  		  <button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+		          <button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');"><i class="glyphicon glyphicon-remove"></i> Cancelar</button> 
 		          
 		  </form>
 		  </div>
@@ -115,7 +115,7 @@
 		 	<div class="form-group">
 			<form action="AsistenciaList" method="get">
 			<input type="hidden" name="accion" value="listarAsistencias">
-			<button type="submit" class="btn btn-primary"  value="Volver al Listado de asistencias">Volver al Listado de asistencias</button>
+			<button type="submit" class="btn btn-primary"  value="Volver al Listado de asistencias"><i class="glyphicon glyphicon-share-alt"></i> Volver al Listado de asistencias</button>
 			</form>
 			</div> 
 </div>

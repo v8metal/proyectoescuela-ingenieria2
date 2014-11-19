@@ -7,7 +7,7 @@
 <head>
 <%session.setAttribute("modulo", "cuenta");%>
 <meta name="viewport" content="width=device-width; initial-scale=1.0"> 
-<title>Login</title>
+<title>Administración de contraseña</title>
 
 <link rel="icon" href="icono/favicon.ico">
 
@@ -50,46 +50,49 @@
 </div>
 <div class="form-group">
 <form action="AdminUser?do=pass" method="post">
+
+
 <table class="table table-hover table-bordered">
-	
 	<tr>
 		<td>
-			<label for="input">Contraseña Actual:</label>
+			<label for="input">Actual:</label>
 		</td>
 		<td>
 			<div class="col-xs-6">
-				<input type="password" class="form-control" placeholder="Contraseña Actual" name="contraseña_actual" required autofocus>
+				<input type="password" class="form-control" name="contraseña_actual" required autofocus>
 			</div>
 		</td> 
 	</tr>
 	<tr>
 		<td>
-			<label for="input">Nueva Contraseña:</label>
+			<label for="input">Nueva:</label>
 		</td>
 		<td>
 			<div class="col-xs-6">
-				<input type="password" class="form-control" placeholder="Contraseña Nueva" name="contraseña_nueva" required>
+				<input type="password" class="form-control"  name="contraseña_nueva" required>
 			</div>
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<label for="input">Repetir Nueva Contraseña:</label>
+			<label for="input">Vuelve a escribir la contraseña nueva:</label>
 		</td>
 		<td>
 			<div class="col-xs-6">
-				<input type="password" class="form-control" placeholder="Contraseña Nueva" name="contraseña_nueva_r" required>
+				<input type="password" class="form-control" name="contraseña_nueva_r" required>
 			</div>
 		</td>
 	</tr>
 </table>
+
+ 
 <br>
-<button type="submit" class="btn btn-primary"  value="Guardar" onclick="return confirm('Esta seguro que desea modificar?');">Guardar</button>
-<button type="reset" class="btn btn-primary"  value="Cancelar" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button>
+<button type="submit" class="btn btn-primary"  value="Guardar" onclick="return confirm('Esta seguro que desea modificar?');"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+<button type="reset" class="btn btn-primary"  value="Cancelar" onclick="return confirm('Esta seguro que desea cancelar?');"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
 </form>
 </div>
 <br>
-<!-- MENSAJE DE ERROR -->
+<!-- MENSAJE DE WARNING -->
 <%	
 	String error = "";
 	if (session.getAttribute("error") != null) {
@@ -100,7 +103,7 @@
    <div class="bs-example">
     	 <div class="alert alert-warning fade in" role="alert">
      	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong>Cuidado!</strong> <%= error %>
+     	 <strong><i class="glyphicon glyphicon-warning-sign"></i> Cuidado!</strong> <%= error %>
   	  </div>
   </div><!-- /example -->
 <br>
@@ -119,7 +122,7 @@
    <div class="bs-example">
     	 <div class="alert alert-success fade in" role="alert">
      	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong>Bien Hecho!</strong> <%= success %>
+     	 <strong><i class="glyphicon glyphicon-ok"></i> Bien Hecho!</strong> <%= success %>
   	  </div>
   </div><!-- /example -->
 <br>

@@ -81,8 +81,8 @@
 			    </table>
 			    
 			    
-			    <button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');">Guardar</button>
-				<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave">Cancelar</button>
+			    <button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+				<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
 				
 			  
 			  </form>
@@ -94,7 +94,7 @@
 			  
 			  <div class="form-group">
 				<form action="EntrevistaList" method="post">
-				<button type="submit" class="btn btn-primary"  value="Volver al Listado">Volver al Listado</button>
+				<button type="submit" class="btn btn-primary"  value="Volver al Listado"><i class="glyphicon glyphicon-share-alt"></i> Volver al Listado</button>
 				</form>
 			</div>
 			 		    
@@ -261,8 +261,8 @@
 		 
 		%>
 	
-		<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="<%=mensaje%>">Guardar</button>
-		<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave">Cancelar</button>
+		<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="<%=mensaje%>"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+		<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
 		
 		</form>
 		</div>		
@@ -279,7 +279,7 @@
 		<%}%>		
 		<div class="form-group">
 		<form action="EntrevistaList" method="post">
-		<button type="submit" class="btn btn-primary"  value="Volver al Listado">Volver al Listado</button>
+		<button type="submit" class="btn btn-primary"  value="Volver al Listado"><i class="glyphicon glyphicon-share-alt"></i> Volver al Listado</button>
 		</form>
 		</div>
 		<% 

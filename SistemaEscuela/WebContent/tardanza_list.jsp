@@ -83,8 +83,8 @@
 		<td><%= a.getNombre() + " " + a.getApellido() %></td>		
 		<td><%= dia +"/" + mes + "/" + año %></td>
 		<td><%= t.getObservaciones() %></td>				
-		<td><strong><a href="TardanzaEdit?do=modificar&&dni=<%=t.getDni()%>&&fecha=<%=t.getFecha()%>">Modificar</a></strong></td>		
-		<td><strong><a href="TardanzaEdit?do=borrar&&dni=<%=t.getDni()%>&&fecha=<%=t.getFecha()%>>" onclick="return confirm('Esta seguro que desea borrar la tardanza?');">Borrar</a></strong></td>				
+		<td><strong><a href="TardanzaEdit?do=modificar&&dni=<%=t.getDni()%>&&fecha=<%=t.getFecha()%>"><i class="glyphicon glyphicon-pencil"></i> Modificar</a></strong></td>		
+		<td><strong><a href="TardanzaEdit?do=borrar&&dni=<%=t.getDni()%>&&fecha=<%=t.getFecha()%>>" onclick="return confirm('Esta seguro que desea borrar la tardanza?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>				
 	</tr>
 	</tbody>
 <%
@@ -93,7 +93,7 @@
 </table>
 <%if (año_tardanza == año_sys){%>
 <br>
-<p><strong><a href="TardanzaEdit?do=alta">Agregar Tardanza</a></strong></p>
+<p><strong><a href="TardanzaEdit?do=alta"><i class="glyphicon glyphicon-edit"></i> Nueva Tardanza</a></strong></p>
 <br>
 <%}%>
 <%
@@ -103,7 +103,7 @@
 	<div class="form-group"> 
 	  	<form action="menu_tardanzas.jsp">
 	  	<input type="hidden" name="volver" value="volver">		   
-	   	<button type="submit" class="btn btn-primary"  value="Volver al Menú de Tardanzas">Seleccionar otro grado</button> 
+	   	<button type="submit" class="btn btn-primary"  value="Volver al Menú de Tardanzas"><i class="glyphicon glyphicon-pushpin"></i> Seleccionar otro grado</button> 
 	   </form>
 	</div>
 </div>

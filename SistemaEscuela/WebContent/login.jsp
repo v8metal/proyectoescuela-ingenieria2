@@ -14,12 +14,10 @@
 
 <!-- Bootstrap core CSS -->
 <link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 	
 <!-- Custom styles for this template -->
 <link href="style/signin-style.css" rel="stylesheet" media="screen">
-
-<script src="js/jquery-1.7.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
 	
 </head>
 <body>
@@ -43,7 +41,7 @@
                 <form class="form-signin" role="form" action="login" method="post">
                 <input type="text" class="form-control" name=usuario placeholder="Usuario" required autofocus>	<!-- required que nos permite comprobar que el campo ha sido rellenado antes incluso de pulsar ese botón de envío -->
                 <input type="password" class="form-control" name="contraseña" placeholder="Contraseña" required>		<!-- autofocus es un atributo booleano para los campos de un formulario que hace que el foco del explorador esté fijado sobre uno de ellos cuando se carga la web -->
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit"><i class="glyphicon glyphicon-log-in"></i> Ingresar</button>
                 <label class="checkbox pull-left">
                     <input type="checkbox" value="remember-me">Recordarme</label>
                 	<a href="#" class="pull-right need-help" data-toggle="modal" data-target=".bs-example-modal-sm">¿Necesita ayuda? </a><span class="clearfix"></span>
@@ -81,13 +79,21 @@
  %>
    <div class="bs-example">
     	 <div class="alert alert-danger fade in" role="alert">
-     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong>Ups!</strong> <%= error %>
-  	  </div>
+     	 	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 	<strong>Ups!</strong> <%= error %>
+  	  	</div>
   </div><!-- /example -->
  	
  <% } %>   
     
 </div>
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+	<script src="js/jquery-1.7.2.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>

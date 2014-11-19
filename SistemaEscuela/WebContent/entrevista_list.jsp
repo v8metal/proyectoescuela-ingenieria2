@@ -100,8 +100,8 @@ if (entrevistas.getLista().isEmpty()){
 	<%if(session.getAttribute("dni_maestro") != null){%>		
 		<td><%= e.getDescripcion() %></td>
 	<%}%>				
-		<td><strong><a href="EntrevistaEdit?do=modificar&fecha=<%=e.getFecha()%>&nombre=<%=e.getNombre()%>&hora=<%=e.getHora()%>">Modificar</a></strong></td>		
-		<td><strong><a href="EntrevistaEdit?do=borrar&fecha=<%=e.getFecha()%>&nombre=<%=e.getNombre()%>&hora=<%=e.getHora()%>"  onclick="return confirm('Esta seguro que desea borrar la entrevista?');">Borrar</a></strong></td>				
+		<td><strong><a href="EntrevistaEdit?do=modificar&fecha=<%=e.getFecha()%>&nombre=<%=e.getNombre()%>&hora=<%=e.getHora()%>"><i class="glyphicon glyphicon-pencil"></i> Modificar</a></strong></td>		
+		<td><strong><a href="EntrevistaEdit?do=borrar&fecha=<%=e.getFecha()%>&nombre=<%=e.getNombre()%>&hora=<%=e.getHora()%>"  onclick="return confirm('Esta seguro que desea borrar la entrevista?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>				
 	</tr>
 	</tbody>
 <%
@@ -112,7 +112,7 @@ if (entrevistas.getLista().isEmpty()){
 if(session.getAttribute("dni_maestro") == null){
 	%>
 	<br>
-	<p><strong><a href="EntrevistaEdit?do=alta">Agregar Entrevista</a></strong></p>
+	<p><strong><a href="EntrevistaEdit?do=alta"><i class="glyphicon glyphicon-edit"></i> Nueva Entrevista</a></strong></p>
 	<br>
 	<br>
 <%}%>

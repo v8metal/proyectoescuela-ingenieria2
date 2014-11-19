@@ -59,9 +59,12 @@
 <%		
 if(mat_grado.getLista().isEmpty()){
 %>
-<div class="page-header">  
-	<h2>No hay materias asignadas</h2>
-</div>	
+<!-- MENSAJE DE INFORMATIVO -->
+	<div class="alert alert-info" role="alert">
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong> Atención!</strong> No hay materias asignadas
+    </div>	
+	
 <%}else{%>
 <div class="page-header">
 	<h2>Listado de Materias</h2>
@@ -76,17 +79,23 @@ if(mat_grado.getLista().isEmpty()){
 			}
 %>
 <table class="table table-hover table-bordered">
-	<tr>
-		<th>Materia</th>		
+	<thead>
+	<tr class="active">
+		<th>
+			<label for="input">Materia</label>
+		</th>		
 		<th>&nbsp;</th>
 	</tr>
+	</thead>
 <%	
 	for (Materia m : mat_grado.getLista()) {	
 %>
+	<tbody>
 	<tr>
 		<td><%= m.getMateria() %></td>	
-		<td><a href="MateriaGradoList?do=desasignar&materia=<%=m.getMateria()%>" onclick="return confirm('Esta seguro que desea desasignar?');"> Desasignar</a></td>
+		<td><strong><a href="MateriaGradoList?do=desasignar&materia=<%=m.getMateria()%>" onclick="return confirm('Esta seguro que desea desasignar?');"> Desasignar</a></strong></td>
 	</tr>
+	</tbody>
 	
 <%
 	}
@@ -103,22 +112,26 @@ if ((materias.getLista().size() - mat_grado.getLista().size()) == 0){
 <form action="MateriaGradoList" method="post">
 <table class="table table-hover table-bordered">
 	<tr>		
-		<td>Asignar Materia</td>
 		<td>
-		<select name="materia_asignar" class="form-control">
-			<%
-			for (Materia m : materias.getLista()){
-				
-				if (!mat_grado.contains(m)){ //evita que se muestren las materias ya asignadas				
+			<label for="input">Asignar Materia</label>
+		</td>
+		<td>
+			<div class="col-xs-6">
+				<select name="materia_asignar" class="form-control">
+					<%
+					for (Materia m : materias.getLista()){
+						
+						if (!mat_grado.contains(m)){ //evita que se muestren las materias ya asignadas				
 					
-			%>	 			  
-		   		<option value="<%= m.getMateria()%>"><%= m.getMateria() %> </option>   			  
-		   	<%				
-				}
+					%>	 			  
+		   				<option value="<%= m.getMateria()%>"><%= m.getMateria() %> </option>   			  
+		   			<%				
+						}
 			 				    			
-			}			
-			%>
-		 </select>
+					}			
+					%>
+		 		</select>
+		 	</div>	
 		</td>					
 	</tr>
 </table>
@@ -130,7 +143,7 @@ if ((materias.getLista().size() - mat_grado.getLista().size()) == 0){
 <br>
 <div class="form-group">
 <form action="GradoList" method="get">
-<button type="submit" class="btn btn-primary"  value="Volver al Listado">Volver al Listado</button>
+<button type="submit" class="btn btn-primary"  value="Volver al Listado"><i class="glyphicon glyphicon-share-alt"></i> Volver al Listado</button>
 </form>
 </div>
 </div>

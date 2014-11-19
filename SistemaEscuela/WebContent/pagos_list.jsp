@@ -99,7 +99,7 @@
 	<div class="form-group">
 		<form action="CuotaList">
 		<input name="accion" type="hidden" value="listarGrado">
-		<button type="submit" class="btn btn-primary"  value="Volver al listado de Pagos">Volver al listado de Pagos</button>
+		<button type="submit" class="btn btn-primary"  value="Volver al listado de Pagos"><i class="glyphicon glyphicon-share-alt"></i> Volver al listado de Pagos</button>
 		</form>
 	</div>
 </div>

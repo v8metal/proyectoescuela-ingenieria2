@@ -99,8 +99,8 @@
     </tr>	
 </table>
 <br>
-<button type="submit" class="btn btn-primary"  value="Aceptar" name="btnSave" onclick="return confirm('Esta seguro que desea realizar el alta?');">Aceptar</button>
-<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnCancel" onclick="return confirm('Esta seguro que desea borrar los campos?');">Cancelar</button>
+<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea realizar el alta?');"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnCancel" onclick="return confirm('Esta seguro que desea borrar los campos?');"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
 </form>
 </div>
 <!-- MENSAJE DE ERROR -->
@@ -125,7 +125,7 @@
 <br>
 	<form action="gest_user_menu.jsp" method="post">
 		<div class="form-group">
-			<button type="submit" class="btn btn-primary"  value="Volver al Listado">Volver al Listado</button>
+			<button type="submit" class="btn btn-primary"  value="Volver al Listado"><i class="glyphicon glyphicon-share-alt"></i> Volver al Listado</button>
 		</div>
 	</form>
 </div>
