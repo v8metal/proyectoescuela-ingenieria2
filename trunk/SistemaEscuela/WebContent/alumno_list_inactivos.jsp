@@ -75,24 +75,21 @@
 <table class="table table-hover table-bordered">
 	<thead>
 	<tr class="active">
-		<th>Nº</th>
-		<th>APELLIDO Y NOMBRES</th>
+		<th>Apellido y Nombres</th>
 		<th>D.N.I.</th>
-		<th>FECHA DE BAJA</th>
+		<th>Fecha de baja</th>
 		<th>&nbsp;</th>
 	</tr>
 	<thead>
-<% 			int i = 0;
+<% 
 			for (EstadoAlumno ea : alumnos_inactivos.getLista()) {
 				Alumno a = AccionesAlumno.getOne(ea.getDni());
-				i++;
 %>
 	<tbody>
 	<tr>
-		<td><center><%=i%></center></td>
 		<td><%= a.getApellido() + ", " + a.getNombre() %></td>
 		<td><%= ea.getDni() %></td>
-		<td><center><%= ea.getFecha() %></center></td>
+		<td><%= ea.getFecha() %></td>
 		<td><strong><a name="activate-link" href="alumnoInactivo?do=activar&dni_alum=<%= a.getDni() %>" ><i class="glyphicon glyphicon-arrow-up"></i> Dar de alta</a></strong></td>	
 	</tr>
 	</tbody>

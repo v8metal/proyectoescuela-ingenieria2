@@ -62,9 +62,9 @@ if (grados.getListaTT().isEmpty()){
 		<th>Maestro Titular</th>
 		<th>Maestro Paralelo</th>
 		<th>Ciclo Lectivo</th>
-		<th>Modificar</th>
 		<th>Materias</th>
 		<th>Promoción</th>
+		<th>&nbsp;</th>
 	</tr>
 	<thead>
 <% 
@@ -100,7 +100,6 @@ if (grados.getListaTT().isEmpty()){
 		<td class="warning"><i class="glyphicon glyphicon-warning-sign"></i> No hay maestro asignado</td>
 		<%}%>
 		<td><%= ciclo %></td>		
-		<td><strong><a href="GradoEdit?do=modificar&grado_modif=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>"><i class="glyphicon glyphicon-pencil"></i> Modificar</a></strong></td>
 		<%if(g.getGrado().equals("Sala 4") || g.getGrado().equals("Sala 5")){%>
 		<td class="info">Grado con áreas de trabajo</td>
 		<%}else{
@@ -116,7 +115,8 @@ if (grados.getListaTT().isEmpty()){
 		<td class="warning"><i class="glyphicon glyphicon-warning-sign"></i> No se puede promocionar</td>
 		<%}else{ %>		
 		<td><a href="GradoEdit?do=promocion&grado_modif=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>&año=<%=año%>" onclick="<%="return confirm('Esta seguro que desea promocionar "+  g.getGrado() + "-" + g.getTurno()  +"?');"%>">Promocionar</a></td>		
-		<% } %>				
+		<% } %>	
+		<td><strong><a href="GradoEdit?do=modificar&grado_modif=<%=g.getGrado()%>&grado_turno=<%=g.getTurno()%>"><i class="glyphicon glyphicon-pencil"></i> Editar</a></strong></td>			
 	</tr>
 	<tbody>	
 <%	 

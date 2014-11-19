@@ -48,7 +48,7 @@
 	
 <%}else{%>
 	  
-	<h1>Modificación de Precios Mensuales - <%=año%></h1>
+	<h1>Edición de Precios Mensuales - <%=año%></h1>
 			
 <%}%> 
 	</div>
@@ -120,15 +120,15 @@
        	  </td>	
         </tr>        
       </table>
-      	<button type="submit" class="btn btn-primary"  value="Aceptar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');">Aceptar</button>         	 
-        <button type="reset" class="btn btn-primary"   value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button>
+      	<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('¿Está seguro que desea guardar?');"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>         	 
+        <button type="reset" class="btn btn-primary"   value="Cancelar" name="btnSave" onclick="return confirm('¿Está seguro que desea cancelar?');"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
         <input type="hidden" name="error" value="ERROR!!!">
     </form>
     </div>
     <br>
     <div class="form-group">
 		<form action="PrecioList" method="get">
-		<button type="submit" class="btn btn-primary"  value="Volver al Menú de precios">Volver al Menú de precios</button>
+		<button type="submit" class="btn btn-primary"  value="Volver al Menú de precios"><i class="glyphicon glyphicon-share-alt"></i> Volver al Menú de precios</button>
 		</form>
 	</div>
   <%String error = (String)session.getAttribute("error");

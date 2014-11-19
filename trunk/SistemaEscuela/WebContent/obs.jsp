@@ -52,7 +52,7 @@
 	<thead>
 	<tr class="active">
 		<th>Nº</th>
-		<th>OBSERVACIONES</th>
+		<th>Observaciones</th>
 		<th>&nbsp;</th>
 	</tr>
 	<thead>
@@ -62,7 +62,7 @@
 %>	
 	<tbody>
 	<tr>
-		<td><center><%=i%></center></td>
+		<td><%=i%></td>
 		<td><%= ob.getObservaciones() %></td>
 		<td><strong><a href="certificadoEdit?from=obs&do=eliminar&obs=<%= ob.getObservaciones() %>" ><i class="glyphicon glyphicon-trash"></i> Eliminar</a></strong></td>
 	</tr>

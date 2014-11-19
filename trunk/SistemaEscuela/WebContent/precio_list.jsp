@@ -88,7 +88,7 @@
             	  <td><%=precioM.getGrupo()%></td>
             	  <td><%=precioM.getHijos() %></td>
             	  <td><%=precioM.getRecargo() %></td>
-            	  <td><strong><a href="PrecioEdit?accion=modificarMes&&año=<%=precioM.getAño()%>&&mes=<%=precioM.getMes()%>"><i class="glyphicon glyphicon-pencil"></i> Modificar</a></strong></td>
+            	  <td><strong><a href="PrecioEdit?accion=modificarMes&&año=<%=precioM.getAño()%>&&mes=<%=precioM.getMes()%>"><i class="glyphicon glyphicon-pencil"></i> Editar</a></strong></td>
             	  <td><strong><a href="PrecioEdit?accion=bajaMes&&año=<%=precioM.getAño() %>&&mes=<%=precioM.getMes() %>" onclick="return confirm('Esta seguro que desea borrar?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
             	</tr>
             </tbody>	
@@ -133,7 +133,7 @@
             	  <td><%= precioI.getFecha_max().substring(8, 10)  + "/" + precioI.getFecha_max().substring(5, 7) + "/" + precioI.getFecha_max().substring(0, 4)%></td>
             	  <td><%=precioI.getPrecio() %></td>
             	  <td><%=precioI.getRecargo() %></td>            	  
-            	  <td><strong><a href="PrecioEdit?accion=modificarInscrip&&año=<%=precioI.getAño()%>"><i class="glyphicon glyphicon-pencil"></i> Modificar</a></strong></td>
+            	  <td><strong><a href="PrecioEdit?accion=modificarInscrip&&año=<%=precioI.getAño()%>"><i class="glyphicon glyphicon-pencil"></i> Editar</a></strong></td>
             	  <td><strong><a href="PrecioEdit?accion=bajaInscrip&&año=<%=precioI.getAño() %>" onclick="return confirm('Esta seguro que desea borrar?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
             	</tr>
             </tbody>	

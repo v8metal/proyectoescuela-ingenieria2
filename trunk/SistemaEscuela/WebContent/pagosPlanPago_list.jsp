@@ -82,9 +82,9 @@
 	  <table class="table table-hover table-bordered">
 	  <thead>
 	  <tr class="active">	  	    
-	    <th>FECHA</th>
-	    <th>PAGO</th>
-	    <th>OBSERVACIONES</th>
+	    <th>Fecha</th>
+	    <th>Pago</th>
+	    <th>Observaciones</th>
 	    <th>&nbsp;</th>	    
 	    <th>&nbsp;</th>	    	    
 	  </tr>	 
@@ -104,14 +104,14 @@
 	    <td><%= dia_pago + "/" + mes_pago + "/" + año_pago %></td>
 	    <td><%="$" + p.getPago()%></td>
 	    <td><%= p.getObservaciones() %></td>
-	    <td><strong><a href="PlanPagoList?accion=modificarPagopp&&cod_pago=<%=p.getCod_pago() %>"> Modificar pago </a></strong></td>	  
-	    <td><strong><a href="PlanPagoList?accion=borrarPagopp&&cod_pago=<%=p.getCod_pago()%>" onclick="return confirm('Esta seguro que desea borrar?');"> Borrar pago </a></strong></td>	    
+	    <td><strong><a href="PlanPagoList?accion=modificarPagopp&&cod_pago=<%=p.getCod_pago() %>"><i class="glyphicon glyphicon-pencil"></i> Editar </a></strong></td>	  
+	    <td><strong><a href="PlanPagoList?accion=borrarPagopp&&cod_pago=<%=p.getCod_pago()%>" onclick="return confirm('Esta seguro que desea borrar?');"><i class="glyphicon glyphicon-trash"></i> Borrar </a></strong></td>	    
 	  </tr>  
 	  </tbody>
 	  <%}%>
 	  </table>
 	  <br>
-	  <strong><a href="pagoPlanPago_edit.jsp"> Agregar pago </a></strong>
+	  <strong><a href="pagoPlanPago_edit.jsp"><i class="glyphicon glyphicon-edit"></i> Nuevo pago </a></strong>
 	  <br>
 	  <br>
 	 <%}%>
@@ -121,7 +121,7 @@
 		<form action="PlanPagoList">
 		<input name="accion" type="hidden" value="visualizarPlan">
 	    <input name="codplan" type="hidden" value="<%=plan.getCod_plan()%>">
-		<button type="submit" class="btn btn-primary"  value="Volver al al Plan de Pagos">Volver al Plan de Pagos</button>
+		<button type="submit" class="btn btn-primary"  value="Volver al al Plan de Pagos"><i class="glyphicon glyphicon-share-alt"></i> Volver al Plan de Pagos</button>
 		</form>
 	</div>
 	</div>

@@ -112,7 +112,7 @@ if (sanciones.getLista().isEmpty()){
 		<td><%= dia +"/" + mes + "/" + año %></td>
 		<td><%= s.getHora().substring(0,5) %></td>
 		<td><%= s.getMotivo() %></td>		
-		<td><strong><a href="SancionEdit?do=modificar&dni_sancion=<%=s.getDni()%>&fecha_sancion=<%=s.getFecha()%>&hora_sancion=<%=s.getHora()%>&exit=<%=exit%>"><i class="glyphicon glyphicon-pencil"></i> Modificar</a></strong></td>
+		<td><strong><a href="SancionEdit?do=modificar&dni_sancion=<%=s.getDni()%>&fecha_sancion=<%=s.getFecha()%>&hora_sancion=<%=s.getHora()%>&exit=<%=exit%>"><i class="glyphicon glyphicon-pencil"></i> Editar</a></strong></td>
 		<td><strong><a href="SancionEdit?do=baja&dni_sancion=<%=s.getDni()%>&fecha_sancion=<%=s.getFecha()%>&hora_sancion=<%=s.getHora()%>&exit=<%=exit%>" onclick="return confirm('Esta seguro que desea borrar?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
 	</tr>
 	</tbody>

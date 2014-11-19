@@ -110,7 +110,7 @@
 	<tbody>
 	<tr>
 		<td><%=i%></td>
-		<td><a href="alumnoEdit?do=modificar&dni_alum=<%=a.getDni()%>"><%= a.getApellido() + ", " + a.getNombre() %></a></td>
+		<td><strong><a href="alumnoEdit?do=modificar&dni_alum=<%=a.getDni()%>"><%= a.getApellido() + ", " + a.getNombre() %></a></strong></td>
 		<td><%= a.getDni() %></td>		
 		<td><%= a.getDomicilio() %></td>		
 		<td><%= a.getTelefono() %></td>
