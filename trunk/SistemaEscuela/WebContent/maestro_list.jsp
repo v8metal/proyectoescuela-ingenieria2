@@ -73,9 +73,9 @@ if (maestros.getLista().size() == 0){
 		<td><%= m.getDni() %></td>
 		<td><%= m.getDomicilio() %></td>
 		<td><%= m.getTelefono() %></td>		
-		<td><strong><a href="maestroEdit?accion=modificar&dni=<%= m.getDni() %>">Modificar Maestro</a></strong></td>		
-		<td><strong><a href="maestroEdit?accion=baja&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea dar de baja?');">Baja de Maestro</a></strong></td>		
-		<td><strong><a href="maestroEdit?accion=borrar&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea borrar?');">Borrar Maestro</a></strong></td>		
+		<td><strong><a href="maestroEdit?accion=modificar&dni=<%= m.getDni() %>"><i class="glyphicon glyphicon-pencil"></i> Modificar</a></strong></td>		
+		<td><strong><a href="maestroEdit?accion=baja&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea dar de baja?');"><i class="glyphicon glyphicon-arrow-down"></i> Dar de baja</a></strong></td>		
+		<td><strong><a href="maestroEdit?accion=borrar&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea borrar?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>		
 	</tr>
 	<tbody>
 <%
@@ -83,7 +83,7 @@ if (maestros.getLista().size() == 0){
  %>
 </table>
 <br>
-    <p><strong><a href="maestroEdit?accion=alta"> Agregar Maestro</a></strong></p>
+    <p><strong><a href="maestroEdit?accion=alta"><i class="glyphicon glyphicon-edit"></i> Nuevo Maestro</a></strong></p>
 <br>
 <br>	
  <%}%>

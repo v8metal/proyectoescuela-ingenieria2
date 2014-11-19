@@ -75,7 +75,7 @@ if (materias.getLista().isEmpty()){ %>
 	<tbody>
 	<tr>
 		<td><%= m.getMateria() %></td>
-		<td><strong><a href="materiaEdit?do=activar&materia=<%= m.getMateria() %>" onclick="return confirm('Esta seguro que desea activar la materia?');">Activar Materia</a></strong></td>	
+		<td><strong><a href="materiaEdit?do=activar&materia=<%= m.getMateria() %>" onclick="return confirm('Esta seguro que desea activar la materia?');"><i class="glyphicon glyphicon-ok"></i> Activar Materia</a></strong></td>	
 	</tr>
 	<tbody>
 <%
@@ -86,7 +86,7 @@ if (materias.getLista().isEmpty()){ %>
 <br>
 <div class="form-group">
 <form action="materiaList?from=menu_admin" method="post">
-<button type="submit" class="btn btn-primary"  value="Volver al listado principal">Volver al listado principal</button>
+<button type="submit" class="btn btn-primary"  value="Volver al listado principal"><i class="glyphicon glyphicon-share-alt"></i> Volver al listado principal</button>
 </form>
 </div>
 <%}%>

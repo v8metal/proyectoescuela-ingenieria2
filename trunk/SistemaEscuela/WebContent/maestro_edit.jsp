@@ -137,8 +137,8 @@
 		}
 		 
 		%>
-		<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="<%=mensaje%>">Guardar</button>
-		<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnCancel">Cancelar</button>	
+		<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="<%=mensaje%>"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+		<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnCancel"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>	
 	</form> 
 	</div>
  <br>
@@ -159,7 +159,7 @@
   </div><!-- /example -->
 <br> 	
  <% } %>
-<strong><a href="maestroList" class="alert-link">Volver al listado</a></strong>
+<strong><a href="maestroList" class="alert-link"><i class="glyphicon glyphicon-share-alt"></i> Volver al listado</a></strong>
 </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->

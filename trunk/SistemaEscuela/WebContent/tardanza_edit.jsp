@@ -30,7 +30,7 @@
   	<!-- sirve para visualizar el menú superior -->
   </div>
 
-<div class="page-header">
+
 <%
 	int tipo = (Integer) session.getAttribute("tipoUsuario");						
 	if (AccionesUsuario.validarAcceso(tipo, "tardanza_edit.jsp") != 1){							
@@ -56,11 +56,17 @@
 	if(tardanza != null){
 		Alumno a = AccionesAlumno.getOne(tardanza.getDni());
 %>
-<h1>Edición de Tardanza - <%=a.getNombre() + " " + a.getApellido() %></h1>
-<%}else{%>
-<h1>Alta de Tardanza </h1>
-<%}%>
+<div class="page-header">
+	<h1>Edición de Tardanza</h1>
 </div>
+<h3><%=a.getNombre() + " " + a.getApellido() %></h3>
+<br>
+<%}else{%>
+<div class="page-header">
+	<h1>Alta de Tardanza </h1>
+</div>
+<%}%>
+
 	<div class="form-group">	
 	<form action="TardanzaEdit" method="post">	
 	<input type="hidden" name=do value="<%=accion%>">
@@ -103,8 +109,8 @@
          	</tr>
 		  </table>
 		  
-		 		<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');">Guardar</button>
-		  		<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button> 
+		 		<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+		  		<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');"><i class="glyphicon glyphicon-remove"></i> Cancelar</button> 
 		  </form>
 		  </div>
 		  <br>
@@ -130,7 +136,7 @@
 		 <div class="form-group">
 			<form action="TardanzaList" method="get">
 				<input type="hidden" name="accion" value="listarTardanzas">
-				<button type="submit" class="btn btn-primary"  value="Volver al Listado de Tardanzas">Volver al Listado de Tardanzas</button>
+				<button type="submit" class="btn btn-primary"  value="Volver al Listado de Tardanzas"><i class="glyphicon glyphicon-share-alt"></i> Volver al Listado de Tardanzas</button>
 			</form>
 		</div>
 </div>

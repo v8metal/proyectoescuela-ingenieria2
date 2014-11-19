@@ -69,7 +69,7 @@
          	   <div class="col-xs-3">
             	    <div class="input-group">
             	         <span class="input-group-btn">
-                	        <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnAcept">Buscar</button>
+                	        <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnAcept"><i class="glyphicon glyphicon-search"></i> Buscar</button>
                	    	 </span>
                  	   <select class="form-control" name="año_tardanza" autofocus>
   							 <%  			
@@ -98,7 +98,7 @@
          	   <div class="col-xs-3">
             	    <div class="input-group">
             	         <span class="input-group-btn">
-                	        <button type="button" disabled="disabled" class="btn btn-primary" value="Aceptar" name="btnAcept">Buscar</button>
+                	        <button type="button" disabled="disabled" class="btn btn-primary" value="Aceptar" name="btnAcept"><i class="glyphicon glyphicon-search"></i> Buscar</button>
                	     	 </span>
  					 		<input class="form-control" type="text" readonly name="anio" value="<%=añoTardanza%>">			
                		</div>
@@ -126,7 +126,7 @@
          	   <div class="col-xs-3">
             	    <div class="input-group">
             	         <span class="input-group-btn">
-                	        <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnAcept">Buscar</button>
+                	        <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnAcept"><i class="glyphicon glyphicon-search"></i> Buscar</button>
                	     </span>
                  	   <select class="form-control" name="grado_anio" autofocus>
   							 <%  			
@@ -149,7 +149,7 @@
  	
  	<form action="menu_tardanzas.jsp">
 		  	<div class="form-group">
-		  		<input class="btn btn-primary" type="submit" value="Seleccionar otro año"> 
+		  		<button type="submit" class="btn btn-primary"  value="Seleccionar otro año"><i class="glyphicon glyphicon-pushpin"></i> Seleccionar otro año</button> 
 		  	</div> 
 	</form>
 		  

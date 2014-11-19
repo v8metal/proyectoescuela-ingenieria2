@@ -83,12 +83,13 @@
 <table class="table table-hover table-bordered">
 	<thead>
 	<tr class="active">
+		<th>&nbsp;</th>
 		<th>Apellido y Nombres</th>	
 		<th>D.N.I.</th>
 		<th>Domicilio</th>		
 		<th>Teléfono</th>
-		<th>Lugar nac.</th>
-		<th>Iglesia</th>
+<!-- 	<th>Lugar nac.</th>	 -->
+<!--	<th>Iglesia</th>	-->
 		<th>Grupo</th>
 		<th>Subsidio</th>
 		<th>Estado</th>
@@ -98,24 +99,27 @@
 		<th>&nbsp;</th>		
 	</tr>
 	<thead>
-<% 			int prom = 0;
+<%			int i = 0;
+ 			int prom = 0;
 			for (Alumno a : alumnos.getLista()) {
 				EstadoAlumno ea = AccionesEstado.getOne(a.getDni());
 			//valida si el alumno está promocionado, repite o si está en condiciones de ambas cosas
 			    prom = AccionesAlumno.checkPromocion(a.getDni(), año);  
+			i++;
 %>
 	<tbody>
 	<tr>
+		<td><%=i%></td>
 		<td><a href="alumnoEdit?do=modificar&dni_alum=<%=a.getDni()%>"><%= a.getApellido() + ", " + a.getNombre() %></a></td>
 		<td><%= a.getDni() %></td>		
 		<td><%= a.getDomicilio() %></td>		
 		<td><%= a.getTelefono() %></td>
-		<td><%= a.getLugar_nac() %></td>
-		<td><%= a.getIglesia() %></td>
+<!--	<td><%= a.getLugar_nac() %></td>	-->
+<!--	<td><%= a.getIglesia() %></td>	-->
 		<td><input type="checkbox" name="ind_grupo" disabled <%= a.isInd_grupo() ? "checked" : "" %>/></td>
 		<td><input type="checkbox" name="ind_sub" disabled <%= a.isInd_subsidio() ? "checked" : "" %>/></td>
 		<%if (ea.isActivo()){%><td>ACTIVO</td><%} else {%><td><strong><a href="alumnoInactivo?do=listar">INACTIVO</a></strong></td><%}%>	
-		<td><strong><a href="certificadoEdit?do=modificar&dni=<%= a.getDni() %>">Ver</a></strong></td>		
+		<td><strong><a href="certificadoEdit?do=modificar&dni=<%= a.getDni() %>"><i class="glyphicon glyphicon-eye-open"></i> Ver</a></strong></td>		
 		<% 	
 		  if (ea.isActivo()){ //verifica si el alumno está activo
 				
@@ -129,7 +133,7 @@
 		  <%}
 			if (menor){%> <!--esta en condiciones de repetir o promocionar-->
 			
-				<td><strong><a name="delete-link" href="alumnoEdit?do=baja&dni_alum=<%= a.getDni() %>" onclick="return confirm('Esta seguro que desea dar de baja');">BAJA</a></strong></td>
+				<td><strong><a name="delete-link" href="alumnoEdit?do=baja&dni_alum=<%= a.getDni() %>" onclick="return confirm('Esta seguro que desea dar de baja');"><i class="glyphicon glyphicon-arrow-down"></i> BAJA</a></strong></td>
 			
 				<%if(!grado.equals("7° Grado")){%>							
 					<td><strong><a href="AlumnoEdit?do=promocion&dni_alum=<%=a.getDni()%>" onclick="return confirm('Esta seguro que desea promocionar');">PROMOCION</a></strong></td>											
@@ -171,7 +175,7 @@
 <div class="form-group">
 <form action="menu_alumnos.jsp" method="post">
 <input type="hidden" name="volver" value="volver">
-<button type="submit" class="btn btn-primary" value="Volver">Volver</button>
+<button type="submit" class="btn btn-primary" value="Volver"><i class="glyphicon glyphicon-share-alt"></i> Volver</button>
 </form>
 </div>
 <%

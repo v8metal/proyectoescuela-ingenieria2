@@ -177,8 +177,8 @@ if (c == null){
 //		}
 		 
 		%>
-<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="<%=mensaje%>">Guardar</button>
-<button type="reset" class="btn btn-primary"  value="Cancelar">Cancelar</button>
+<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="<%=mensaje%>"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+<button type="reset" class="btn btn-primary"  value="Cancelar"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
 <%}%>
 </form>
 </div>
@@ -201,7 +201,7 @@ if (c != null){
 %>
 <div class="form-group">
 <form action="<%=volver%>" method="post">
-<button type="submit" class="btn btn-primary"  value="Volver">Volver</button>
+<button type="submit" class="btn btn-primary"  value="Volver"><i class="glyphicon glyphicon-share-alt"></i> Volver</button>
 </form>
 </div>
 </div>

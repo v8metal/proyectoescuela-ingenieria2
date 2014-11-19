@@ -71,7 +71,7 @@
 		<td><%= m.getApellido() + ", " + m.getNombre() %></td>
 		<td><%= u.getUsuario() %></td>
 		<td><%= u.getContraseña() %></td>
-		<td><strong><a name="delete-link" href="registroUser?do=baja&dni=<%= u.getDni() %>" onclick="return confirm('Esta seguro que desea borrar?');">Borrar</a></strong></td>
+		<td><strong><a name="delete-link" href="registroUser?do=baja&dni=<%= u.getDni() %>" onclick="return confirm('Esta seguro que desea borrar?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
 	</tr>
 	</tbody>
 <%
@@ -86,7 +86,7 @@
   <!-- MENSAJE DE WARNING -->
 	<div class="alert alert-warning" role="alert">
 	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <strong>Cuidado!</strong> No todos los maestros están registrados. <a href="registro_user.jsp?" class="alert-link">Registrar nuevo usuario</a>
+      <strong><i class="glyphicon glyphicon-warning-sign"></i> Cuidado!</strong> No todos los maestros están registrados. <a href="registro_user.jsp?" class="alert-link">Registrar nuevo usuario</a>
     </div>
 <%}else if ((usuarios.getLista().size() >= maestros.getLista().size()))
 
@@ -95,7 +95,7 @@
   		 <div class="bs-example">
     			 <div class="alert alert-success fade in" role="alert">
      			 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     			 <strong>Bien Hecho!</strong> Todos los maestros están registrados
+     			 <strong><i class="glyphicon glyphicon-ok"></i> Bien Hecho!</strong> Todos los maestros están registrados
   	  		</div>
   		</div><!-- /example -->
 <%}%>

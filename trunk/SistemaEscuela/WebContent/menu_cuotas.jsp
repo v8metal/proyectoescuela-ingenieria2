@@ -137,7 +137,7 @@
 				
 	<form action="menu_cuotas.jsp">
 		<div class="form-group">
-			<input class="btn btn-primary" type="submit" value="Seleccionar otro año">
+			<button type="submit" class="btn btn-primary"  value="Seleccionar otro año"><i class="glyphicon glyphicon-pushpin"></i> Seleccionar otro año</button>
 		</div>
 	</form>
 	

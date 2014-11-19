@@ -43,7 +43,7 @@
 <table class="table table-hover table-bordered">
 	<thead>
 	<tr class="active">
-		<th>Nº</th>
+		<th>&nbsp;</th>
 		<th>Apellido y Nombres</th>
 		<th>Salud</th>
 		<th>Bucal</th>
@@ -64,7 +64,8 @@
 		i++;
 %>
 	<tbody>
-	<tr><td><%=i%></td>
+	<tr>
+		<td><%=i%></td>
 		<td><%= a.getApellido() + ", " + a.getNombre() %></td>
 		<td><input type="checkbox" name="ind_salud" disabled 
 			<%= c.isInd_salud() ? "checked" : "" %> /></td>
@@ -78,7 +79,7 @@
 			<%= c.isInd_vacunas() ? "checked" : "" %> /></td>	
 		<td><input type="checkbox" name="ind_dni" disabled 
 			<%= c.isInd_dni() ? "checked" : "" %> /></td>
-		<td><a href="certificadoEdit?from=certificado_list&do=modificar&dni=<%= a.getDni() %>">Ver</a></td>				
+		<td><strong><a href="certificadoEdit?from=certificado_list&do=modificar&dni=<%= a.getDni() %>"><i class="glyphicon glyphicon-eye-open"></i> Ver</a></strong></td>				
 	</tr>
 	<tbody>
 <%	
@@ -87,7 +88,7 @@
 </table>
 <br>
 <form action="alumno_list.jsp" method="post">
-<button type="submit" class="btn btn-primary"  value="Volver">Volver</button>
+<button type="submit" class="btn btn-primary"  value="Volver"><i class="glyphicon glyphicon-share-alt"></i> Volver</button>
 </form>
 </div>
 	<!-- Bootstrap core JavaScript

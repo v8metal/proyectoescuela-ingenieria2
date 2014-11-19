@@ -270,12 +270,12 @@
 	<br>
 		<p><strong><a href="planPago_edit.jsp"> Armar plan de pagos</a></strong></p>
 	<br>
-		<p><strong><a href="PrecioList?año=<%=año%>">Ver Precios <%=año%></a></strong></p>
+		<p><strong><a href="PrecioList?año=<%=año%>"><i class="glyphicon glyphicon-usd"></i> Ver Precios <%=año%></a></strong></p>
 	<br>
 	<br>	
 	<div class="form-group"> 
 	  <form action="menu_cuotas.jsp">		   
-	   	<button type="submit" class="btn btn-primary"  value="Volver al Menú de Cuotas">Volver al Menú de Cuotas</button> 
+	   	<button type="submit" class="btn btn-primary"  value="Volver al Menú de Cuotas"><i class="glyphicon glyphicon-share-alt"></i> Volver al Menú de Cuotas</button> 
 	   </form>
 	</div> 
 </div>

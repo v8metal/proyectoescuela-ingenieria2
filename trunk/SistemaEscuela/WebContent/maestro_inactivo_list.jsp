@@ -14,7 +14,7 @@
 <!-- Bootstrap core CSS -->
 <link href="style/bootstrap.min.css" rel="stylesheet" media="screen">
 
-<title>Listado de maestros</title>
+<title>Maestros - Registro de bajas</title>
 </head>
 <body>
 
@@ -33,7 +33,7 @@
   
   
   <div class="page-header"> 
-	<h1>Listado de Maestros Inactivos</h1>
+	<h1>Registro de bajas</h1>
   </div>
 <%		
 		Maestros maestros = (Maestros)session.getAttribute("maestros");
@@ -80,8 +80,8 @@ if (maestros.getLista().size() == 0){
 		<td><%= m.getDni() %></td>
 		<td><%= m.getDomicilio() %></td>
 		<td><%= m.getTelefono() %></td>		
-		<td><strong><a href="maestroEdit?accion=activar&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea activar?');">Activar</a></strong></td>
-		<td><strong><a name="delete-link" href="maestroEdit?accion=borrar&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea borrar?');">Borrar</a></strong></td>
+		<td><strong><a href="maestroEdit?accion=activar&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea activar?');"><i class="glyphicon glyphicon-arrow-up"></i> Dar de alta</a></strong></td>
+		<td><strong><a name="delete-link" href="maestroEdit?accion=borrar&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea borrar?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
 	</tr>
 	<tbody>
 <%
@@ -91,7 +91,7 @@ if (maestros.getLista().size() == 0){
 <br>
 <div class="form-group">
 <form action="maestroList" method="post">
-<button type="submit" class="btn btn-primary"  value="Volver al listado principal">Volver al listado principal</button>
+<button type="submit" class="btn btn-primary"  value="Volver al listado principal"><i class="glyphicon glyphicon-share-alt"></i> Volver al listado principal</button>
 </form>
 </div>
 <%}%>

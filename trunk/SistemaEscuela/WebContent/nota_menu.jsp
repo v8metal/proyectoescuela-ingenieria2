@@ -73,7 +73,7 @@
 		<td><%= g.getGrado() %></td>
 		<td><%= g.getTurno() %></td>		
 		<td><%= g.getSalon() %></td>	
-		<td><strong><a href="alumnoList?from=nota_menu&grado=<%= g.getGrado()%>&turno=<%= g.getTurno()%>&año=<%=año%>">Ver alumnos</a></strong></td>
+		<td><strong><a href="alumnoList?from=nota_menu&grado=<%= g.getGrado()%>&turno=<%= g.getTurno()%>&año=<%=año%>"><i class="glyphicon glyphicon-eye-open"></i> Ver alumnos</a></strong></td>
 	</tr>
 	</tbody>
 <%

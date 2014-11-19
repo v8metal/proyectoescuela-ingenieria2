@@ -78,13 +78,13 @@
 	</tbody>
 </table>
 <br>
-<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave">Guardar</button>
+<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
 </form>
 <br>
 <br>
 <br>
 <form action="alumno_list.jsp" method="post">
-<button type="submit" class="btn btn-primary"  value="Volver" name="btnBack">Volver</button>
+<button type="submit" class="btn btn-primary"  value="Volver" name="btnBack"><i class="glyphicon glyphicon-share-alt"></i> Volver</button>
 </form>
 </div>
 	<!-- Bootstrap core JavaScript
