@@ -83,7 +83,7 @@
 		<td><%= a.getNombre() + " " + a.getApellido() %></td>		
 		<td><%= dia +"/" + mes + "/" + año %></td>
 		<td><%= t.getObservaciones() %></td>				
-		<td><strong><a href="TardanzaEdit?do=modificar&&dni=<%=t.getDni()%>&&fecha=<%=t.getFecha()%>"><i class="glyphicon glyphicon-pencil"></i> Modificar</a></strong></td>		
+		<td><strong><a href="TardanzaEdit?do=modificar&&dni=<%=t.getDni()%>&&fecha=<%=t.getFecha()%>"><i class="glyphicon glyphicon-pencil"></i> Editar</a></strong></td>		
 		<td><strong><a href="TardanzaEdit?do=borrar&&dni=<%=t.getDni()%>&&fecha=<%=t.getFecha()%>>" onclick="return confirm('Esta seguro que desea borrar la tardanza?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>				
 	</tr>
 	</tbody>

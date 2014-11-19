@@ -112,7 +112,7 @@ if (citaciones.getLista().isEmpty()){
 		<td><%= dia +"/" + mes + "/" + año %></td>
 		<td><%= c.getHora().substring(0,5) %></td>
 		<td><%= c.getDescripcion() %></td>						
-		<td><strong><a href="CitacionEdit?do=modificar&dni_citacion=<%=c.getDni()%>&fecha_citacion=<%=c.getFecha()%>&hora_citacion=<%=c.getHora()%>&exit=<%=exit%>"><i class="glyphicon glyphicon-pencil"></i> Modificar</a></strong></td>
+		<td><strong><a href="CitacionEdit?do=modificar&dni_citacion=<%=c.getDni()%>&fecha_citacion=<%=c.getFecha()%>&hora_citacion=<%=c.getHora()%>&exit=<%=exit%>"><i class="glyphicon glyphicon-pencil"></i> Editar</a></strong></td>
 		<td><strong><a href="CitacionEdit?do=baja&dni_citacion=<%=c.getDni()%>&fecha_citacion=<%=c.getFecha()%>&hora_citacion=<%=c.getHora()%>&exit=<%=exit%>" onclick="return confirm('Esta seguro que desea borrar?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
 	</tr>
 	</tbody>

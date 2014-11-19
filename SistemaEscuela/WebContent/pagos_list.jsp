@@ -84,14 +84,14 @@
 	    <td><%= dia_pago + "/" + mes_pago + "/" + año_pago %></td>
 	    <td><%="$" + c.getPago()%></td>
 	    <td><%= c.getObservaciones() %></td>
-	    <td><strong><a href="CuotaEdit?accion=modificarPago&&cod_pago=<%=c.getCod_pago()%>" > Modificar pago </a></strong></td>	  
-	    <td><strong><a href="CuotaEdit?accion=borrarPago&&cod_pago=<%=c.getCod_pago()%>" onclick="return confirm('Esta seguro que desea borrar el pago?');"> Borrar pago </a></strong></td>	    
+	    <td><strong><a href="CuotaEdit?accion=modificarPago&&cod_pago=<%=c.getCod_pago()%>" ><i class="glyphicon glyphicon-pencil"></i> Editar </a></strong></td>	  
+	    <td><strong><a href="CuotaEdit?accion=borrarPago&&cod_pago=<%=c.getCod_pago()%>" onclick="return confirm('Esta seguro que desea borrar el pago?');"><i class="glyphicon glyphicon-trash"></i> Borrar </a></strong></td>	    
 	  </tr>  
 	  </tbody>
 	  <%}%>
 	  </table>
 	  <br>
-	  <strong><a href="pago_edit.jsp"> Agregar pago </a></strong>
+	  <strong><a href="pago_edit.jsp"><i class="glyphicon glyphicon-edit"></i> Nuevo pago </a></strong>
 	  <br>
 	 <%}%>
 	<br>

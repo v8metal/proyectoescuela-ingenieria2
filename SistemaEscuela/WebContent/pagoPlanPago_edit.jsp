@@ -176,7 +176,7 @@
 <form action="PlanPagoList" method="get">
 <input name="accion" type="hidden" value="listarPagosPlan">
 <input name="codplan" type="hidden" value="<%=plan.getCod_plan()%>">
-<button type="submit" class="btn btn-primary"  value="Volver atrás">Volver atrás</button>
+<button type="submit" class="btn btn-primary"  value="Volver atrás"><i class="glyphicon glyphicon-share-alt"></i> Volver atrás</button>
 </form>
 </div>
 </div>
