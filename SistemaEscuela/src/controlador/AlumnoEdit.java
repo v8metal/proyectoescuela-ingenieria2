@@ -112,6 +112,8 @@ public class AlumnoEdit extends HttpServlet {
 				request.setAttribute("alumno", alumno);
 				request.setAttribute("diasAlta", diffDays);
 				request.setAttribute("fecha_ingreso", fecha);
+				
+				//System.out.println("diffDays= " + diffDays);
 																		
 				dispatcher = getServletContext().getRequestDispatcher("/alumno_edit.jsp");
 				dispatcher.forward(request, response);	
