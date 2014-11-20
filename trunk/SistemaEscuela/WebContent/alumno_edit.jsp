@@ -37,9 +37,12 @@
 	
 	
 	//Datos del grado cuando se accede desde el listado por grado
-	String grado = (String) session.getAttribute("grado_alta");
-	String turno = (String) session.getAttribute("turno_alta");
-	Integer año = (Integer) session.getAttribute("añoAlta");	
+	String grado = null;
+	String turno = null;
+	Integer año = null;
+	grado = (String) session.getAttribute("grado_alta");
+	turno = (String) session.getAttribute("turno_alta");
+	año = (Integer) session.getAttribute("añoAlta");	
 	//Datos del grado cuando se accede desde el listado por grado
 	
 	//se remueven los atributos para que no queden colgados
@@ -602,7 +605,8 @@
 
 		//la fecha de inscripcion, el grado y el año en que arrancar aparece solo si es un alumno nuevo,
 		//o si es una modificación de un alumno existente 7 días después del alta
-		if (alumno==null || ind==1 || (alumno!=null && dias <= 7)) {		
+		//o si es un reingreso
+		if (alumno==null || ind==1 || (alumno!=null && dias <= 7) || ind_reingreso == 1) {		
 		
 %>
 <table>	
@@ -610,19 +614,16 @@
 		<td>
 			<label for="input">Fecha de Ingreso:</label>
 		</td>			
-		<td>
-			<div class="col-xs-10">
-				<input class="form-control" type="text" id="datepicker4" required autofocus name="fecha_ing_alum">
-			</div>
+		<td>			
+			<input class="form-control" type="text" id="datepicker4" required autofocus name="fecha_ing_alum">		
 		</td>			
  	</tr>
 	<tr>
 		<td>
 			<label for="input">Grado:</label>
 		</td>
-		<td>
-			<div class="col-xs-10">		
-		<%if(alumno != null && dias > 7 && ind == 0){%>
+		<td>					
+		<%if((grado != null && alumno == null) || (alumno != null && dias > 7 && ind == 0 && ind_reingreso != 1)){%>
 				<input readonly type="text" class="form-control" name="grado" value="<%=grado%>">
 		<%}else{%>		
 				<select name="grado" class="form-control">
@@ -636,32 +637,28 @@
 					<option value="6° Grado">6° Grado</option>
 					<option value="7° Grado">7° Grado</option>
 				</select>
-		<%}%>
-			</div>		
+		<%}%>					
 		</td>
 	<tr>	
 		<td>
 			<label for="input">Turno:</label>
 		</td>
-		<td>	
-			<div class="col-xs-10">	
-		<%if((alumno != null && dias > 7 && ind == 0)){%>
+		<td>				
+		<%if((grado != null && alumno == null) || (alumno != null && dias > 7 && ind == 0 && ind_reingreso != 1)){%>
 				<input readonly type="text" class="form-control" name="turno" value="<%=turno%>">
 		<%}else{%>		
 				<select name="turno" class="form-control">
 					<option value="MAÑANA">Mañana</option>
 					<option value="TARDE">Tarde</option>
 				</select>
-		<%}%>
-			</div>
+		<%}%>			
 		</td>		
 	</tr>		
 	<tr>
 		<td>
 			<label for="input">Ingreso Escolar: </label>
 		</td>
-		<td>
-			<div class="col-xs-10">
+		<td>			
 		<%if(año != null && ind_reingreso == 0){%>
 				<input readonly type="text" class="form-control" name="año_ing" value="<%=año%>">
 		<%}else{%>
