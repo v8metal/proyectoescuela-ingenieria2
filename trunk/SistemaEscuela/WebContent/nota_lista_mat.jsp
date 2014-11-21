@@ -1,5 +1,6 @@
 <%@page import="conexion.AccionesNota"%>
 <%@page import="conexion.AccionesAlumno"%>
+<%@page import="conexion.AccionesUsuario"%>
 <%@page import="datos.*"%>
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -9,20 +10,18 @@
 <head>
 <meta name="viewport" content="width=device-width; initial-scale=1.0"> 
 <%
-	if (session.getAttribute("usuario") != null) {
-		String titulo = (String)session.getAttribute("titulo");
+
+	int tipo = (Integer) session.getAttribute("tipoUsuario");
+	if (AccionesUsuario.validarAcceso(tipo, "nota_lista_mat.jsp") != 1){							
+		response.sendRedirect("Login");						
+	}
 		
-		// recupero los atributos para seleccionar la nota
-		String grado  = (String)session.getAttribute("grado");
-		String turno = (String)session.getAttribute("turno");
-		int año = Integer.parseInt((String)session.getAttribute("año_sys"));
-		int dni = Integer.parseInt((String)session.getAttribute("dni_alum"));
-		String periodo = (String)session.getAttribute("periodo");
-		
-		// traigo el objeto alumno para usar su apellido y nombre
-		Alumno a = AccionesAlumno.getOne(dni);
+	Grado grado = (Grado) session.getAttribute("grado_notas");
+	Alumnos alumnos = (Alumnos) session.getAttribute("alumnos_notas");
+	MateriasGrado materias = (MateriasGrado) session.getAttribute("materias_notas");
+	int año = (Integer) session.getAttribute("añoNotas");
 %>
-<title><%=titulo%></title>
+<title>Notas por grado</title>
 
 <link rel="icon" href="icono/favicon.ico">
 
@@ -33,61 +32,53 @@
 <script src="js/bootstrap.min.js"></script>
 
 </head>
-<body>	
-<table border="2" bordercolor="666">
-	<tr>
-		<th><%=titulo%></th><th><%= periodo %></th><th>MATERIAS Y NOTAS</th>
-	</tr>
-</table>
-<br>
-<b>Alumno: </b><%=a.getApellido() + ", " + a.getNombre() %>
-<br>
-<br>
-<table border="2" bordercolor="666">
-	<tr>
-		<th>Nº</th>
-		<th>Materia</th>
-		<th>Nota</th>
-		<th>&nbsp;</th>
-	</tr>	
-<% 
-	Materias mat_grado = (Materias)session.getAttribute("materias_grado");
+<body>
+<div class="container">
 
-	int i = 0;
-	for (Materia m : mat_grado.getLista()) {
-		i++;
-%>
+  <div id="divmenu">
+  	<!-- sirve para visualizar el menú superior -->
+  </div>
+  
+<br>
+
+<div class="page-header">
+<h1><%=grado.getGrado() + " - Turno " + grado.getTurno() + " - Año " + año%></h1>
+</div>
+
+<table class="table table-hover table-bordered">
 	<tr>
-		<td><center><%=i%></center></td>
-		<td><%= m.getMateria() %></td>
-			 <%
-				if (AccionesNota.estaCargada(grado, turno, año, dni, m.getMateria(), periodo)) {
-					Nota nota = AccionesNota.getOne(grado, turno, año, dni, m.getMateria(), periodo);
- 			 %>
-		<td><center><%= nota.getCalific() == 0 ? "S/C" : nota.getCalific() %></center></td>
-			 <%
-			 	} else {
-			  %>	
-		<td><center>S/C</center></td>
-			 <%			 
-			 	}
-			  %>
-		<td><a href="notaEdit?cod_materia=<%=m.getCod_materia()%>">Modificar</a></td>
+		<th><center>Alumno</center></th>
+		<th colspan="<%=materias.getLista().size()%>"><center>Materias</center></th>	
+	</tr>	
+<% for (Alumno a : alumnos.getLista()){%>
+	<tr>	
+		<td><%=a.getApellido() + ", " + a.getNombre() %></td>
+
+		<%for (Materia m : materias.getLista()){%>			
+			<td><strong><a href="NotaEdit?accion=listarMateria&dni=<%=a.getDni()%>&materia=<%=m.getMateria()%>"><i class="glyphicon glyphicon-pencil"></i><%= m.getMateria()%></a></strong></td>
+		<%}%>	
+		
 	</tr>
-<%			 
-	}		 
-%>	
+<%}%>	
 </table>
 <br>
-<p>(*) S/C = Sin Calificación</p>
 <br>
-<form action="nota_lista_alum.jsp" method="post">
-<input type="submit" value="Volver">
+<form action="menu_notas.jsp" method="post">
+<input type="hidden" name="volver" value="volver">
+<button type="submit" class="btn btn-primary"  value="Seleccionar otro grado"><i class="glyphicon glyphicon-pushpin"></i> Seleccionar otro grado</button>
 </form>
-<%
-	} else {
-		response.sendRedirect("login.jsp");
-	}
-%>
+</div>
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+	<script src="js/jquery-1.7.2.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+
+	<!-- menú superior -->	
+	<script src="js/menu_user.js"></script> 
+	
 </body>
 </html>

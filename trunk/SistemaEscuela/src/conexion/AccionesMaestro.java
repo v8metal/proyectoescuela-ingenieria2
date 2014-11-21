@@ -181,6 +181,57 @@ public class AccionesMaestro {
 		return lista;
 	}
 	
+	public static int getAñoMaestro(String tipo, int dni) throws Exception{
+		
+		int año = 0;
+		
+		try{
+			
+			Statement stm = Conexion.conectar().createStatement();
+								
+			ResultSet rs = stm.executeQuery("SELECT "+ tipo +"(AÑO) AS AÑO FROM MAESTROS_GRADO WHERE DNI_MAESTRO_TIT = " + dni);
+							
+			while(rs.next()){
+				año = rs.getInt("AÑO");				
+			}
+			
+			stm.close();
+			rs.close();
+			Conexion.desconectar();
+		}catch(SQLException sqle){
+			System.out.println("ERROR SQL!!!");
+		}
+		
+		return año;
+	}
+	
+	public static Grados getGradosAño(int dni, int año) throws Exception{
+
+		Grados grados = new Grados();
+		
+		try{
+			Statement stm = Conexion.conectar().createStatement();
+									
+			ResultSet rs = stm.executeQuery("SELECT GB.GRADO, GB.TURNO, G.IND_EVALUACION, G.IND_BIM, G.SALON, MG.AÑO, MG.DNI_MAESTRO_TIT, MG.DNI_MAESTRO_PAR FROM MAESTROS_GRADO MG INNER JOIN GRADOS G ON G.GRADO = MG.GRADO AND G.TURNO = MG.TURNO INNER JOIN GRADOS_BASE GB ON GB.GRADO = G.GRADO AND GB.TURNO = G.TURNO WHERE MG.DNI_MAESTRO_TIT = "+ dni +" AND MG.AÑO = " + año + " ORDER BY GB.ORDEN");
+			
+			Grado g = null;
+			
+			while(rs.next()){
+				g = new Grado(rs.getString("GRADO"), rs.getString("TURNO"), rs.getInt("IND_EVALUACION"), rs.getBoolean("IND_BIM"), rs.getString("SALON"), rs.getInt("AÑO"), rs.getInt("DNI_MAESTRO_TIT"),rs.getInt("DNI_MAESTRO_PAR"));
+				grados.agregarGrado(g);
+			}
+			
+			stm.close();
+			rs.close();
+			Conexion.desconectar();
+			
+		}catch(SQLException sqle){
+			System.out.println(sqle);
+		}
+		return grados;
+	}
+	
+	
 	public static void main(String[] args) {	// getAll(), getOne(), insertOne(), updateOne() y deleteOne()  probadas correctamente
 		
 		try {

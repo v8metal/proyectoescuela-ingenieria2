@@ -73,7 +73,7 @@
                   <li><a href="EntrevistaList"><i class="glyphicon glyphicon-list"></i> Listado</a></li>
                 </ul>
               </li>
-              <li><a href="nota_menu.jsp">Notas</a></li>
+              <li><a href="menu_notas.jsp">Notas</a></li>
   <!--             
                <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cuenta <span class="caret"></span></a>
