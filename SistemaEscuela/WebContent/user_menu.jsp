@@ -58,7 +58,7 @@
                 </ul>
               </li>
               
-              <li <%if(modulo.equals("notas")){%> class=active <%}%>><a href="nota_menu.jsp">Notas</a></li>
+              <li <%if(modulo.equals("notas")){%> class=active <%}%>><a href="menu_notas.jsp">Notas</a></li>
   <!--             
                <li <%if(modulo.equals("cuenta")){%> class=active <%}%> class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cuenta <span class="caret"></span></a>
