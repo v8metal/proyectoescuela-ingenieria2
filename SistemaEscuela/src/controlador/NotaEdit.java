@@ -1,6 +1,7 @@
 package controlador;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,9 +15,11 @@ import conexion.AccionesGrado;
 import conexion.AccionesMaestro;
 import conexion.AccionesNota;
 import conexion.AccionesUsuario;
+import datos.Alumno;
 import datos.Alumnos;
 import datos.Grado;
 import datos.Grados;
+import datos.Informe;
 import datos.MateriasGrado;
 import datos.Nota;
 
@@ -54,6 +57,8 @@ public class NotaEdit extends HttpServlet {
 			accion = (String) request.getAttribute("accion");
 		}
 		
+		//System.out.println("NotaEdit GET, Accion= " + accion);
+		
 		switch(accion){			
 
 		case "solicitarGrados":
@@ -88,7 +93,7 @@ public class NotaEdit extends HttpServlet {
 			
 		case "listarGrado":
 			
-			if (AccionesUsuario.validarAcceso(tipo, "nota_lista_mat.jsp") != 1){							
+			if (AccionesUsuario.validarAcceso(tipo, "nota_lista_alum.jsp") != 1){							
 				response.sendRedirect("Login");						
 			}
 			
@@ -111,8 +116,8 @@ public class NotaEdit extends HttpServlet {
 					response.sendRedirect("Login");						
 				}
 				
-				sesion.setAttribute("grado_notas", AccionesGrado.getOne(grado, turno));
-			
+				g = AccionesGrado.getOne(grado, turno);
+							
 			}else{
 				
 				 g = (Grado) sesion.getAttribute("grado_notas");
@@ -122,7 +127,8 @@ public class NotaEdit extends HttpServlet {
 				
 			}			
 			
-						
+			String redirect = "/nota_lista_alum.jsp";
+			
 			try {
 					
 				if (AccionesUsuario.validarAcceso(tipo, "AccionesAlumno") != 1){							
@@ -130,18 +136,151 @@ public class NotaEdit extends HttpServlet {
 				}
 				
 				Alumnos alumnos = AccionesAlumno.getAllByGradoTurnoYAño(grado, turno, año);
-				MateriasGrado materias = AccionesGrado.getMateriasByGradoTurnoYAño(grado, turno, año);
 				
-				System.out.println("cant Materias= " + materias.getLista().size());
+				if (g.getEvaluacion() == 0){									
+					redirect = "/nota_lista_inf.jsp";
+				}
 				
 				sesion.setAttribute("alumnos_notas", alumnos);
-				sesion.setAttribute("materias_notas", materias);
+				sesion.setAttribute("grado_notas", g);				
 				
 			} catch (Exception e) {				
 				e.printStackTrace();
 			}
 			
+			dispatcher = getServletContext().getRequestDispatcher(redirect);
+			dispatcher.forward(request, response);
+			
+			break;
+			
+		case "listarMaterias":
+			
+			if (AccionesUsuario.validarAcceso(tipo, "nota_lista_mat.jsp") != 1){							
+				response.sendRedirect("Login");						
+			}
+			
+			año = (Integer) sesion.getAttribute("añoNotas");			
+			dni = Integer.parseInt(request.getParameter("dni_nota"));
+			
+			g = (Grado) sesion.getAttribute("grado_notas");
+			
+			if (AccionesUsuario.validarAcceso(tipo, "AccionesGrado") != 1){							
+				response.sendRedirect("Login");						
+			}
+			
+			MateriasGrado materias = AccionesGrado.getMateriasByGradoTurnoYAño(g.getGrado(), g.getTurno(), año);			
+			sesion.setAttribute("materias_notas", materias);
+			
+			if (AccionesUsuario.validarAcceso(tipo, "AccionesAlumno") != 1){							
+				response.sendRedirect("Login");						
+			}
+			
+			Alumno alumno = null;
+			
+			try {
+				
+				alumno = AccionesAlumno.getOneAlumno(dni);
+				sesion.setAttribute("alumno_notas", alumno);
+				
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}			
+			
 			dispatcher = getServletContext().getRequestDispatcher("/nota_lista_mat.jsp");
+			dispatcher.forward(request, response);
+			
+			break;
+			
+		case "editarNota":
+			
+			if (AccionesUsuario.validarAcceso(tipo, "nota_edit.jsp") != 1){							
+				response.sendRedirect("Login");						
+			}
+			
+			año = (Integer) sesion.getAttribute("añoNotas");			
+			dni = Integer.parseInt(request.getParameter("dni_nota"));
+			String materia = request.getParameter("materia");
+			String periodo = request.getParameter("periodo");
+			
+			g = (Grado) sesion.getAttribute("grado_notas");
+			
+			Nota nota;
+			
+			try {
+				
+				nota = new Nota(g.getGrado(), g.getTurno(), año, dni, materia, periodo, AccionesNota.getCalific(año, dni, materia, periodo));
+				
+				sesion.setAttribute("nota_edit", nota);
+			
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+						
+			dispatcher = getServletContext().getRequestDispatcher("/nota_edit.jsp");
+			dispatcher.forward(request, response);
+			
+			break;
+			
+		case "editarInforme":
+			
+			if (AccionesUsuario.validarAcceso(tipo, "informe_edit.jsp") != 1){							
+				response.sendRedirect("Login");						
+			}
+			
+			año  = (Integer) sesion.getAttribute("añoNotas");			
+			dni = Integer.parseInt(request.getParameter("dni_inf"));
+			int numero = Integer.parseInt(request.getParameter("informe"));
+			g = (Grado) sesion.getAttribute("grado_notas");
+						
+			try {
+				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesAlumno") != 1){							
+					response.sendRedirect("Login");						
+				}
+				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesNota") != 1){							
+					response.sendRedirect("Login");						
+				}
+				
+				alumno = AccionesAlumno.getOne(dni);
+				Informe inf = AccionesNota.getInforme(año, dni);
+				
+				String informe = null;
+				
+				switch(numero){
+					
+					case 1:
+						
+						informe = inf.getMarzo();
+						
+						break;
+						
+					case 2:
+						
+						informe = inf.getMitad();
+						break;
+						
+					case 3:
+						
+						informe = inf.getFin();
+						break;
+						
+				}
+				
+				if (informe != null){
+					request.setAttribute("informe", informe);
+				}
+				
+				sesion.setAttribute("numero_inf", numero);
+				sesion.setAttribute("alumno_inf", alumno);				
+				
+			} catch (Exception e) {				
+				e.printStackTrace();
+			}
+			
+			dispatcher = getServletContext().getRequestDispatcher("/informe_edit.jsp");
 			dispatcher.forward(request, response);
 			
 			break;
@@ -152,45 +291,119 @@ public class NotaEdit extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		HttpSession sesion = request.getSession();
 		
-		try {
+		int tipo = (Integer) sesion.getAttribute("tipoUsuario");						
+		if (AccionesUsuario.validarAcceso(tipo, "NotaEdit") != 1){							
+			response.sendRedirect("Login");						
+		}
+		
+		String accion = "";
+		
+		if (request.getParameter("do") != null){
+			accion = (String) request.getParameter("do");
+		}else{
+			accion = (String) request.getAttribute("accion");
+		}
+		
+		int año = (Integer) sesion.getAttribute("añoNotas"); //año seleccionado en el menú
+		Grado grado = (Grado) sesion.getAttribute("grado_notas");
+		
+		//System.out.println("NotaEdit POST, Accion= " + accion);
+		
+		switch(accion){			
+		
+		case "editarNota":
 			
-			// recupero los atributos para modificar la nota
-			
-			String grado  = (String)sesion.getAttribute("grado");
-			String turno = (String)sesion.getAttribute("turno");
-			int año = Integer.parseInt((String)sesion.getAttribute("año_sys"));
-			int dni = Integer.parseInt((String)sesion.getAttribute("dni_alum"));
-			int cod_materia = (Integer)sesion.getAttribute("cod_materia");
-			String periodo = (String)sesion.getAttribute("periodo");
-			
-			int calific = Integer.parseInt(request.getParameter("calific"));
-	/*		
-			response.setContentType("text/html");
-		    PrintWriter out= response.getWriter();
-		    out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2//EN\">"
-		            + "<HTML>" + "<HEAD>"
-		            + " <TITLE>" + "PROBANDO" + "</TITLE>"
-		            + "</HEAD>"  + "<BODY>"
-		            + "calific = " + calific
-		    		); 					            					          					       		
-			out.println("</BODY>" + "</HTML>");
-		    out.close();				
-			*/
-			
-			if (AccionesNota.estaCargada(grado, turno, año, dni, cod_materia, periodo)) {
-				AccionesNota.updateOne(grado, turno, año, dni, cod_materia, periodo, calific);
-			} else {
-				Nota n = new Nota(grado, turno, año, dni, cod_materia, periodo, calific);
-				AccionesNota.insertOne(n);
+			if (AccionesUsuario.validarAcceso(tipo, "AccionesNota") != 1){							
+				response.sendRedirect("Login");						
 			}
 			
-			response.sendRedirect("nota_lista_mat.jsp");
+			if (AccionesUsuario.validarAcceso(tipo, "nota_lista_mat.jsp") != 1){							
+				response.sendRedirect("Login");						
+			}
+			
+			Nota nota = (Nota) sesion.getAttribute("nota_edit");
+			String calific = request.getParameter("calificacion");
+			
+			nota.setCalific(calific);
+			
+			try {
+				
+				if(AccionesNota.estaCargada(nota)){
 					
-		} catch (Exception e) {
-			e.printStackTrace();
-		}				
+					AccionesNota.updateNota(nota);
+					
+				}else{
+					
+					AccionesNota.insertNota(nota);
+				}
+				
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/nota_lista_mat.jsp");
+			dispatcher.forward(request, response);
+			
+			break;
+			
+		case "altaInforme":
+		case "modificarInforme":
+			
+			if (AccionesUsuario.validarAcceso(tipo, "nota_lista_inf.jsp") != 1){							
+				response.sendRedirect("Login");						
+			}
+			
+			String informe = request.getParameter("desc_informe");
+			int numero = (Integer) sesion.getAttribute("numero_inf"); //número de informe (1,2,3)
+			Alumno alumno = (Alumno) sesion.getAttribute("alumno_inf");
+			
+			Informe inf = null;
+			
+			switch(numero){
+			
+			case 1:				
+				inf = new Informe(grado.getGrado(), grado.getTurno(), año, alumno.getDni(),informe, "", "");
+				break;
+			case 2:				
+				inf = new Informe(grado.getGrado(), grado.getTurno(), año, alumno.getDni(), "", informe, "");
+				break;
+			case 3:				
+				inf = new Informe(grado.getGrado(), grado.getTurno(), año, alumno.getDni(), "", "", informe);
+				break;
+			}
+			
+			try {
+				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesNota") != 1){							
+					response.sendRedirect("Login");						
+				}
+				
+				if (accion.equals("altaInforme")){	
+					
+					AccionesNota.insertInforme(inf);
+				}else{
+					
+					AccionesNota.updateInforme(inf, numero);
+				}
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} catch (Exception e) {					
+					e.printStackTrace();
+				}
+								
+			dispatcher = getServletContext().getRequestDispatcher("/nota_lista_inf.jsp");
+			dispatcher.forward(request, response);
+			
+			break;			
+			
+		}
+		
 	}
 
 }
