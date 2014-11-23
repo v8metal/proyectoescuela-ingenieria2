@@ -72,7 +72,10 @@ public class AlumnoList extends HttpServlet {
 					response.sendRedirect("Login");						
 				}
 				
-				Grados grados = AccionesGrado.getAñoGradosCuota(año);
+				//Grados grados = AccionesGrado.getAñoGradosCuota(año);
+				Grados grados = AccionesGrado.getAll();
+				
+				sesion.setAttribute("grados_alta", grados);
 				
 				request.setAttribute("gradosAlumno", grados);				
 				request.setAttribute("añoAlumno", año);

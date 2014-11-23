@@ -70,6 +70,14 @@
  <div class="alert alert-info" role="alert">
      <strong>Atención!</strong> <%=rta%>
  </div>
+ 
+ <%if(año == AccionesAlumno.getAñoAlumnos("MAX")){%>
+  <br>
+ <a href="alumno_edit.jsp">Alta de Alumno</a>
+<br>
+<br>
+<%}%>
+ 
 <%		
 		} else {
 %> 	
@@ -172,15 +180,16 @@
 <strong><a href="certificado_list.jsp"><%= "VER CERTIFICADOS DE " + titulo.toUpperCase() %></a></strong>
 <br>
 <br>
+<%
+}	
+%>
+
 <div class="form-group">
 <form action="menu_alumnos.jsp" method="post">
 <input type="hidden" name="volver" value="volver">
 <button type="submit" class="btn btn-primary" value="Volver"><i class="glyphicon glyphicon-share-alt"></i> Volver</button>
 </form>
 </div>
-<%
-}	
-%>
 </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->

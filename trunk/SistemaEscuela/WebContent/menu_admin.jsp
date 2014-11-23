@@ -52,7 +52,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Alumnos <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="menu_alumnos.jsp"><i class="glyphicon glyphicon-list"></i> Listado</a></li>
-                  <li><a href="alumno_edit.jsp"><i class="glyphicon glyphicon-edit"></i> Nuevo alumno</a></li>          
+                  <li><a href="alumno_edit.jsp?do=nuevo"><i class="glyphicon glyphicon-edit"></i> Nuevo alumno</a></li>          
                   <li class="divider"></li>                  
                   <li><a href="alumnoInactivo?do=listar"><i class="glyphicon glyphicon-list-alt"></i> Registro de bajas</a></li>
                 </ul>
