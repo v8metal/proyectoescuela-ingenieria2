@@ -326,10 +326,17 @@ public class AlumnoEdit extends HttpServlet {
 				String fecha_insc = request.getParameter("fecha_ing_alum");				
 				fecha_insc = fecha_insc.substring(6,10) +"-"+ fecha_insc.substring(3,5) +"-"+ fecha_insc.substring(0,2);
 			
+				String string = "";
+				String[] parts;
+				String grado="", turno="";
 				
 				//GRADO Y TURNO AL QUE VA A INGRESAR Y AÑO ESCOLAR
-				String grado = request.getParameter("grado");
-				String turno = request.getParameter("turno");
+				string = request.getParameter("grado_turno");				
+				parts = string.split(" - ");				
+				grado = parts[0];
+				turno = parts[1];
+				
+				//String turno = request.getParameter("turno");
 				String año_ing = request.getParameter("año_ing");				
 				
 				//insert tutor
@@ -358,10 +365,18 @@ public class AlumnoEdit extends HttpServlet {
 				
 				//en caso de modificar el grado/turno
 				
-				if (request.getParameter("grado") != null){
+				if (request.getParameter("grado_turno") != null){
 					
-					String grado = request.getParameter("grado");
-					String turno = request.getParameter("turno");
+					String string = "";
+					String[] parts;
+					String grado="", turno="";
+					
+					//GRADO Y TURNO AL QUE VA A INGRESAR Y AÑO ESCOLAR
+					string = request.getParameter("grado_turno");				
+					parts = string.split(" - ");				
+					grado = parts[0];
+					turno = parts[1];
+					
 					String año_ing = request.getParameter("año_ing");
 			
 					if (request.getParameter("reingreso") != null){//reingreso						

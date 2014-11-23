@@ -1,6 +1,7 @@
 <%@page import="datos.*"%>
 <%@page import="conexion.AccionesUsuario"%>
 <%@page import="conexion.AccionesAlumno"%>
+<%@page import="conexion.AccionesGrado"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -35,14 +36,33 @@
 		response.sendRedirect("Login");						
 	}	
 	
-	
 	//Datos del grado cuando se accede desde el listado por grado
 	String grado = null;
 	String turno = null;
 	Integer año = null;
+	Grados grados = null;
+	
 	grado = (String) session.getAttribute("grado_alta");
 	turno = (String) session.getAttribute("turno_alta");
-	año = (Integer) session.getAttribute("añoAlta");	
+	grados = (Grados) session.getAttribute("grados_alta");
+	
+	if(session.getAttribute("añoAlta") != null){
+		año = (Integer) session.getAttribute("añoAlta");
+	}
+	
+	String nuevo = "";
+	
+	if (request.getParameter("do") != null){
+		nuevo = request.getParameter("do");
+	}
+	
+	if(nuevo.equals("nuevo")){ //cuando se accede directamente a nuevo
+		session.removeAttribute("grado_alta");
+		session.removeAttribute("turno_alta");
+		session.removeAttribute("grados_alta");
+		año = AccionesAlumno.getAñoAlumnos("MAX");
+		grados = AccionesGrado.getAll();
+	}
 	//Datos del grado cuando se accede desde el listado por grado
 	
 	//se remueven los atributos para que no queden colgados
@@ -82,7 +102,7 @@
 		session.setAttribute("alumno", alumno);
 	}
 	
-		
+	//para la carga de un hermano
 	if(alumno == null && session.getAttribute("tutor") != null){
 	
 		ind = 1; //para cargar los datos de apellido, direccion, telefono
@@ -98,54 +118,9 @@
 		session.removeAttribute("alumno");
 		
 	}
-	//para la carga de un hermano
-	
-	// necesito las variables como globales para que lleguen hasta el select
-	int dia_nac_alum = 0;
-	String mes_nac_alum = "";
-	int año_nac_alum= 0;
-	
-	// verifico qe se alla pasado un alumno (caso modificar)
-	if (alumno != null) {
-		//recupero la fecha
-		String fecha_nac_alum = alumno.getFecha_nac();
-		//separo la fecha (1990-01-01) por el "-"" y almaceno el año, mes y dia en un array
-		String[] nac_alum = fecha_nac_alum.split ("-");
-		//obtengo el dia, mes y año respectivamente
-		dia_nac_alum = Integer.parseInt(nac_alum[nac_alum.length - 1]);
-		mes_nac_alum = nac_alum[nac_alum.length - 2];
-		año_nac_alum = Integer.parseInt(nac_alum[nac_alum.length - 3]);	
-	}
-	
-	// lo mismo con el tutor y la madre
-	int dia_nac_tutor = 0;
-	String mes_nac_tutor = "";
-	int año_nac_tutor = 0;
-	
-	if (tutor != null) {
-		String fecha_nac_tutor = tutor.getFecha_nac();
-		String[] nac_tutor = fecha_nac_tutor.split ("-");
-		dia_nac_tutor = Integer.parseInt(nac_tutor[nac_tutor.length - 1]);
-		mes_nac_tutor = nac_tutor[nac_tutor.length - 2];
-		año_nac_tutor = Integer.parseInt(nac_tutor[nac_tutor.length - 3]);
-	}
-	
-	int dia_nac_madre = 0;
-	String mes_nac_madre = "";
-	int año_nac_madre = 0;
-	
-	if (madre != null) {
-		String fecha_nac_madre = madre.getFecha_nac();
-		String[] nac_madre = fecha_nac_madre.split ("-");
-		dia_nac_madre = Integer.parseInt(nac_madre[nac_madre.length - 1]);
-		mes_nac_madre = nac_madre[nac_madre.length - 2];
-		año_nac_madre = Integer.parseInt(nac_madre[nac_madre.length - 3]);
-	}	
-	
+		
 	//recupero de la sesion la fecha del sistema
 	int año_sys = Integer.parseInt((String)session.getAttribute("año_sys"));
-	String mes_sys = (String)session.getAttribute("mes_sys");
-	int dia_sys = Integer.parseInt((String)session.getAttribute("dia_sys"));
 	
 	String reingreso = null;
 	reingreso = (String) session.getAttribute("reingreso");
@@ -153,15 +128,23 @@
 	String cabecera = "";
 	int ind_reingreso = 0;
 	
-	if(ind != null){ 
+	//if(ind != null){ 
+	if(ind != null){
 
+		if(ind != 1){
+			
+		
 		if(reingreso == null){
 			cabecera = "Edición de Alumno";
 		}else{
 			ind_reingreso = 1;
 			cabecera = "Reingreso de Alumno";
 
-		}	
+		}
+		
+		}else{
+			cabecera = "Alta de Alumno";
+		}
 
 	}else{
 
@@ -180,6 +163,7 @@
 <input name="fecha2" id="fecha2" type="hidden" value="<%=alumno!=null?tutor.getFecha_nac() : "0"%>">
 <input name="fecha3" id="fecha3" type="hidden" value="<%=alumno!=null?madre.getFecha_nac() : "0"%>">
 <input name="fecha4" id="fecha4" type="hidden" value="<%=fecha_ing!=null?fecha_ing: "0"%>">
+
 <%if(ind_reingreso == 1){
 	session.removeAttribute("reingreso");%>
 <input type="hidden" name="reingreso" value="reingreso">
@@ -620,40 +604,19 @@
  	</tr>
 	<tr>
 		<td>
-			<label for="input">Grado:</label>
+			<label for="input">Grado/Turno</label>
 		</td>
 		<td>					
 		<%if((grado != null && alumno == null) || (alumno != null && dias > 7 && ind == 0 && ind_reingreso != 1)){%>
-				<input readonly type="text" class="form-control" name="grado" value="<%=grado%>">
+				<input readonly type="text" class="form-control" name="grado_turno" value="<%=grado + " - " + turno%>">
 		<%}else{%>		
-				<select name="grado" class="form-control">
-					<option value="Sala 4">Sala 4</option>
-					<option value="Sala 5">Sala 5</option>
-					<option value="1° Grado">1° Grado</option>
-					<option value="2° Grado">2° Grado</option>
-					<option value="3° Grado">3° Grado</option>
-					<option value="4° Grado">4° Grado</option>
-					<option value="5° Grado">5° Grado</option>
-					<option value="6° Grado">6° Grado</option>
-					<option value="7° Grado">7° Grado</option>
-				</select>
-		<%}%>					
-		</td>
-	<tr>	
-		<td>
-			<label for="input">Turno:</label>
-		</td>
-		<td>				
-		<%if((grado != null && alumno == null) || (alumno != null && dias > 7 && ind == 0 && ind_reingreso != 1)){%>
-				<input readonly type="text" class="form-control" name="turno" value="<%=turno%>">
-		<%}else{%>		
-				<select name="turno" class="form-control">
-					<option value="MAÑANA">Mañana</option>
-					<option value="TARDE">Tarde</option>
-				</select>
+				<select name="grado_turno" class="form-control">				
+				<%for (Grado g : grados.getLista()){ %>
+			 	<option value="<%=g.getGrado() + " - " + g.getTurno()%>"><%=g.getGrado() + " - " + g.getTurno()%></option>			   
+				<%}%>
 		<%}%>			
-		</td>		
-	</tr>		
+		</select>					
+		</td>	
 	<tr>
 		<td>
 			<label for="input">Ingreso Escolar: </label>
@@ -700,7 +663,12 @@ String volver = "AlumnoList";
 if (ind_reingreso == 1){
 	volver  = "alumnoInactivo?do=listar";	
 }
-if (año != null || hermano != null || ind_reingreso == 1){%>
+
+if (!nuevo.equals("nuevo")){
+	
+	if (año != null || hermano != null || ind_reingreso == 1){
+
+%>
 <div class="form-group">
 <form action="<%=volver%>" method="post">
 <input type="hidden" name="accion" value="listarAlumnos">
@@ -708,6 +676,7 @@ if (año != null || hermano != null || ind_reingreso == 1){%>
 </form>
 </div>
 </div>
+<%}%>
 <%}%>
 	<!-- Bootstrap core JavaScript
     ================================================== -->
