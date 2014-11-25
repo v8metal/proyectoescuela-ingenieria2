@@ -45,17 +45,27 @@
 </div>
 
 <table class="table table-hover table-bordered">
-	<tr>
+	<thead>
+	<tr class="active">
 		<th><center>Alumno</center></th>
 		<th colspan="3"><center>Informes</center></th>			
 	</tr>	
+	<tr class="active">
+		<th>&nbsp;</th>
+		<th><center>Marzo</center></th>
+		<th><center>Mitad de año</center></th>
+		<th><center>Fin de año</center></th>
+	</tr>
+	</thead>
 <% for (Alumno a : alumnos.getLista()){%>
+	<tbody>
 	<tr>	
 		<td><%=a.getApellido() + ", " + a.getNombre() %></td>
-		<td><center><strong><a href="NotaEdit?accion=editarInforme&dni_inf=<%=a.getDni()%>&informe=<%=1%>"><i class="glyphicon glyphicon-pencil"></i>Marzo</a></strong></center></td>
-		<td><center><strong><a href="NotaEdit?accion=editarInforme&dni_inf=<%=a.getDni()%>&informe=<%=2%>"><i class="glyphicon glyphicon-pencil"></i>Mitad de Año</a></strong></center></td>
-		<td><center><strong><a href="NotaEdit?accion=editarInforme&dni_inf=<%=a.getDni()%>&informe=<%=3%>"><i class="glyphicon glyphicon-pencil"></i>Fin de Año</a></strong></center></td>
+		<td><center><strong><a href="NotaEdit?accion=editarInforme&dni_inf=<%=a.getDni()%>&informe=<%=1%>"><i class="glyphicon glyphicon-pencil"></i> Editar</a></strong></center></td>
+		<td><center><strong><a href="NotaEdit?accion=editarInforme&dni_inf=<%=a.getDni()%>&informe=<%=2%>"><i class="glyphicon glyphicon-pencil"></i> Editar</a></strong></center></td>
+		<td><center><strong><a href="NotaEdit?accion=editarInforme&dni_inf=<%=a.getDni()%>&informe=<%=3%>"><i class="glyphicon glyphicon-pencil"></i> Editar</a></strong></center></td>
 	</tr>
+	</tbody>
 <%}%>	
 </table>
 <br>
