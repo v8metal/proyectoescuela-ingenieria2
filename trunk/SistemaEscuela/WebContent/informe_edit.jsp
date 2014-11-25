@@ -51,7 +51,7 @@
 		break;
 	}
 	
-	titulo = titulo + " Informe - Año " + año + " - " + alumno.getApellido() + ", " + alumno.getNombre();
+	titulo = titulo + " Informe - Año " + año;
 	
 	String accion = "altaInforme";
 	
@@ -66,7 +66,10 @@
  
 <div class="page-header">
 	<h1><%=titulo%></h1>
-</div> 
+</div>
+
+<h3><%=alumno.getApellido() + ", " + alumno.getNombre()%></h3>
+<br> 
 
 <div class="form-group">
 
@@ -81,7 +84,6 @@
         </td>
     </tr>
 </table>
-<br>
 <br>
 
 <button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>

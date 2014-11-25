@@ -95,7 +95,7 @@
 <br>
 <form action="nota_lista_alum.jsp" method="post">
 <input type="hidden" name="volver" value="volver">
-<button type="submit" class="btn btn-primary"  value="Volver al listado"><i class="glyphicon glyphicon-pushpin"></i>Volver al listado</button>
+<button type="submit" class="btn btn-primary"  value="Volver al listado"><i class="glyphicon glyphicon-share-alt"></i> Volver al listado</button>
 </form>
 </div>
     <!-- Bootstrap core JavaScript
