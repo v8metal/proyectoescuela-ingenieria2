@@ -115,7 +115,7 @@
 	<br>
 	<br>
 	
-	<p><strong><a href="pagos_dia.jsp">Ver Total de Pagos por día</a></strong></p>
+<!-- <p><strong><a href="pagos_dia.jsp">Ver Total de Pagos por día</a></strong></p>  -->	
 	
 	<%if(añoCuota == null){ %>
 
@@ -126,8 +126,10 @@
 	</form>
 	</div>
  -->
- 
-	<%}else{ %>	
+ 	 
+	<%}else{ %>
+	
+	<p><strong><a href="pagos_dia.jsp">Ver Total de Pagos por día</a></strong></p> 	
 	
 	<br>
 	<br>
