@@ -1,6 +1,7 @@
 <%@page import="datos.Maestro"%>
 <%@page import="datos.Maestros"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMaestro"%>
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -30,6 +31,10 @@
 		Maestro maestro = (Maestro)session.getAttribute("maestro");
 		String nombre = maestro.getNombre();
 		String apellido = maestro.getApellido();
+		
+		int dni = (Integer) session.getAttribute("dni_maestro");
+		int min = AccionesMaestro.getAñoMaestro("MIN", dni);
+		int max = AccionesMaestro.getAñoMaestro("MAX", dni);
 		
 %>
 
@@ -69,10 +74,8 @@
                         <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnAcept"><i class="glyphicon glyphicon-search"></i> Buscar</button>
                     </span>
                     <select class="form-control" name="año_sancion_selected" autofocus>
-  						 <%  			
-							int año = (Integer)session.getAttribute("añoc");
-  							for(int i=año; i>año-20;i--){					 
- 						 %>	
+  						 <%for(int i=max; i >= min;i--){%>
+  						 	
  						  <option value="<%=i %>"><%=i %></option>		 	
    						<%
 							}			

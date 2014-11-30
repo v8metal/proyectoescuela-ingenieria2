@@ -4,6 +4,7 @@
 <%@page import="datos.Citaciones"%>
 <%@page import="conexion.AccionesAlumno"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMaestro"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -32,6 +33,10 @@
 		Maestro maestro = (Maestro)session.getAttribute("maestro");
 		String nombre = maestro.getNombre();
 		String apellido = maestro.getApellido();
+		
+		int añoc = (Integer) session.getAttribute("año_citacion");
+		int dni = (Integer) session.getAttribute("dni_maestro");		
+		int max = AccionesMaestro.getAñoMaestro("MAX", dni);
 %>
 
 <div class="container">
@@ -72,6 +77,11 @@ if (citaciones.getLista().isEmpty()){
 		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
      	<strong>Atención!</strong> No hay citaciones para el año seleccionado. <a href="citaciones_select.jsp" class="alert-link">Volver a selección de año</a>
     </div>
+    <%if (añoc == max){%>
+    <br>    
+	<strong><a href="CitacionEdit?do=alta"><i class="glyphicon glyphicon-edit"></i> Nueva Citación</a></strong>
+	<br>
+	<%}%>
 <%	
 }else{
 %>
@@ -120,9 +130,11 @@ if (citaciones.getLista().isEmpty()){
 	}
  %>
 </table>
+<%if (añoc == max){%>
 <br>
 	<strong><a href="CitacionEdit?do=alta"><i class="glyphicon glyphicon-edit"></i> Nueva Citación</a></strong>
 <br>
+<%}%>
 <br>
 <br>
 <form action="<%=volver%>" method="<%=method%>">
