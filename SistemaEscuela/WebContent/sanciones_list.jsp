@@ -4,6 +4,7 @@
 <%@page import="datos.Sanciones"%>
 <%@page import="conexion.AccionesAlumno"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMaestro"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -32,6 +33,10 @@
 		Maestro maestro = (Maestro)session.getAttribute("maestro");
 		String nombre = maestro.getNombre();
 		String apellido = maestro.getApellido();
+		
+		int añoc = (Integer) session.getAttribute("año_sancion");
+		int dni = (Integer) session.getAttribute("dni_maestro");		
+		int max = AccionesMaestro.getAñoMaestro("MAX", dni);
 %>
 
 <div class="container">
@@ -72,6 +77,12 @@ if (sanciones.getLista().isEmpty()){
 		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
      	<strong>Atención!</strong> No hay sanciones para el año seleccionado. <a href="SancionEdit?do=alta" class="alert-link">Agregar nueva Sanción</a>
     </div>
+    
+   <%if (añoc == max){%>
+   <br>
+	<strong><a href="SancionEdit?do=alta"><i class="glyphicon glyphicon-edit"></i> Nueva Sanción</a></strong>
+   <br>
+   <%}%>
 <%	
 }else{
 %>
@@ -120,10 +131,12 @@ if (sanciones.getLista().isEmpty()){
 	}
  %>
 </table>
+<%if (añoc == max){%>
 <br>
 	<strong><a href="SancionEdit?do=alta"><i class="glyphicon glyphicon-edit"></i> Nueva Sanción</a></strong>
 <br>
 <br>
+<%}%>
 <br>
 <form action="<%=volver%>" method="<%=method%>">
 <div class="form-group">

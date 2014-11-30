@@ -102,7 +102,11 @@ public class AccionesTardanza {
 			Tardanza t;
 			while(rs.next()){
 				t = new Tardanza(rs.getInt("DNI"),rs.getString("FECHA"),rs.getString("OBSERVACIONES"),rs.getString("TIPO"),rs.getString("INDICADOR"));
-				tardanzas.agregarTardanza(t);
+				
+				if (!t.getTipo().equals("T")){
+					tardanzas.agregarTardanza(t);
+				}
+				
 			}
 			stm.close();
 			rs.close();

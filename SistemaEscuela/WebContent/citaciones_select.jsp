@@ -2,6 +2,7 @@
 <%@page import="datos.Maestro"%>
 <%@page import="datos.Maestros"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMaestro"%>
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -50,9 +51,9 @@
 <h1>Citaciones - Selección de año</h1>
 </div>
 <%
-	int cod_maestro = (Integer) session.getAttribute("cod_maestro");	
-	int año_actual = Calendar.getInstance().get(Calendar.YEAR);
-	int año_inicio = año_actual - 30;
+	int dni = (Integer) session.getAttribute("dni_maestro");
+	int min = AccionesMaestro.getAñoMaestro("MIN", dni);
+	int max = AccionesMaestro.getAñoMaestro("MAX", dni);	
 %>
 
 <label class="control-label" for="input">Seleccionar año:</label>
@@ -70,7 +71,7 @@
                     <select class="form-control" name="año_sancion_selected" autofocus>
   						 <%  			
 							int año = (Integer)session.getAttribute("añoc");
-  							for(int i=año; i>año-20;i--){					 
+  							for(int i=max; i >= min;i--){					 
  						 %>	
  						  <option value="<%=i %>"><%=i %></option>		 	
    						<%
