@@ -57,7 +57,7 @@ import datos.Maestro;
 		if (acceso.equals("primero")){
 			//Primer acceso. Se obtiene el parametro 'año_sancion_selected' y se setea el atributo 'año_sancion'		
 				año = Integer.valueOf(request.getParameter("año_sancion_selected"));
-				sesion.setAttribute("año_citacion", año);
+				sesion.setAttribute("año_citacion", año);				
 		}else{			
 			//Segundo acceso. Se utiliza el atributo 'año_citacion', seteado previamente en el primer acceso			
 			
@@ -78,8 +78,8 @@ import datos.Maestro;
 			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 		}	
 		
-		sesion.setAttribute("citaciones_list", AccionesCitacion.getAll(año, maestro.getDni()));		
-		
+		sesion.setAttribute("citaciones_list", AccionesCitacion.getAll(año, maestro.getDni()));
+						
 		// modulo de seguridad
 		if (AccionesUsuario.validarAcceso(tipo, "citaciones_list.jsp") != 1){							
 			response.sendRedirect("Login"); //redirecciona al login, sin acceso						

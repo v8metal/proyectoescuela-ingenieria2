@@ -1,4 +1,5 @@
 <%@page import="datos.Citacion"%>
+<%@page import="datos.Citaciones"%>
 <%@page import="datos.Maestro"%>
 <%@page import="datos.Alumno"%>
 <%@page import="datos.Alumnos"%>
@@ -47,6 +48,9 @@
 		//update de sancion
 		Citacion c = (Citacion) session.getAttribute("citacion_edit");
 		//update de sancion
+		
+		Citaciones citaciones = (Citaciones) session.getAttribute("citaciones_list");
+		session.removeAttribute("citaciones_list");
 		
 		String error = "";
 		
@@ -193,16 +197,12 @@ if (c == null){
 <br>
 <br>
 <%}%>
-<%
-String volver = "menu_user.jsp";
-if (c != null){
-	volver = "citaciones_list.jsp";
-}
-%>
+<%if (citaciones != null){%>
 <div class="form-group">
-<form action="<%=volver%>" method="post">
+<form action="CitacionList" method="post">
 <button type="submit" class="btn btn-primary"  value="Volver"><i class="glyphicon glyphicon-share-alt"></i> Volver</button>
 </form>
+<%}%>
 </div>
 </div>
 	<!-- Bootstrap core JavaScript

@@ -161,7 +161,7 @@ if (alumnos.getLista().size() == 0){%>
 	      			}%>	      	
 	     			</select>
 	     		</div>
-	     	<td>
+	     	</td>
 	    </tr>
 	    <%}else{%>
 	    <tr>
@@ -296,13 +296,13 @@ if (alumnos.getLista().size() == 0){%>
 <div class="form-group">
 <form action="PlanPagoList" method="get">
 	<input name="codplan" type="hidden" value="<%=plan.getCod_plan()%>">
-	<input id="accion" name="accion" type="hidden">	
+	<input id="accion" value="borrarPlanPago" name="accion" type="hidden">
 	<table>
 	<tr>
 	<td>		
-		<button id="listar" type="submit" class="btn btn-primary"  value="Listar Pagos realizados" name="btnSave" onClick="accion1()">Listar Pagos realizados</button>	
+		<button id="listar" type="submit" class="btn btn-primary"  value="Listar Pagos realizados" name="btnSave" onclick="accion1()">Listar Pagos realizados</button>		 	
 	<td>		
-		<button id="borrar" type="submit" class="btn btn-primary"  value="Borrar Plan de Pagos"  name="btnSave" onclick="accion2()">Borrar Plan de Pagos</button>	
+		<button id="borrar" type="submit" class="btn btn-primary"  value="Borrar Plan de Pagos"  name="btnSave" onclick="return confirm('Esta seguro que desea modificar?');">Borrar Plan de Pagos</button>		 
 	</td>
 	</tr>
 	</table>	
@@ -341,13 +341,6 @@ if (alumnos.getLista().size() == 0){%>
 		var accion = document.getElementById('accion');	
 		accion.value = "listarPagosPlan"; 
 	
-	}
-
-	function accion2() {
-		var accion = document.getElementById('accion');	
-		accion.value = "borrarPlanPago"; 
-	
-		return confirm("Esta seguro que desea modificar?");
 	}
 </script>
 </body>
