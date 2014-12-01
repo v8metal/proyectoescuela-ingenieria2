@@ -356,7 +356,7 @@ public class AccionesAlumno {
 				tmp = new Alumno(rs.getInt("dni"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("domicilio"), rs.getString("telefono"), rs.getString("fecha_nac"), rs.getString("lugar_nac"), rs.getInt("dni_tutor"), rs.getInt("dni_madre"), rs.getInt("cant_her_may"), rs.getInt("cant_her_men"), rs.getString("iglesia"), rs.getString("esc"), rs.getBoolean("ind_grupo"), rs.getBoolean("ind_subsidio"));
 				i = rs.getInt("MAESTRODNI");
 								
-				if (!(tmp.isInd_subsidio() || i == 0)){
+				if (!(tmp.isInd_subsidio() || i != 0)){ //SI EL ALUMNO NO TIENE SUBSIDIO Y NO ES HIJO DE MAESTRO
 					lista.agregarAlumno(tmp);
 				}
 			}
@@ -412,7 +412,7 @@ public class AccionesAlumno {
 		String gradoact = "",  turnoact= "";
 		
 		//obtengo maestros del grado promocional, para el año+1
-		System.out.println("SELECT GRADO, TURNO FROM ALUMNOS_GRADO WHERE DNI = " + dni + " AND AÑO = " + (año+1));
+		//System.out.println("SELECT GRADO, TURNO FROM ALUMNOS_GRADO WHERE DNI = " + dni + " AND AÑO = " + (año+1));
 		
 		ResultSet rs = stmt.executeQuery("SELECT GRADO, TURNO FROM ALUMNOS_GRADO WHERE DNI = " + dni + " AND AÑO = " + (año+1));
 	
