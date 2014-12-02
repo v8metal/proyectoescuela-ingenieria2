@@ -28,7 +28,6 @@
 		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 	}
 %>
-
 <div class="container">
 
   <div id="divmenu">
@@ -36,12 +35,6 @@
   </div>
 
 <%
-		
-	String error = "";
-	if (session.getAttribute("error") != null) {
-		error = (String)session.getAttribute("error");
-		session.setAttribute("error", "");
-	}
 		
 	MateriasGrado mat_grado = new MateriasGrado();
 		
@@ -69,33 +62,24 @@ if(mat_grado.getLista().isEmpty()){
 <div class="page-header">
 	<h2>Listado de Materias</h2>
 </div>
-<% 
-			if (!error.equals("")) {
-%>
-<%=error%>
-<br>
-<br>
-<%
-			}
-%>
 <table class="table table-hover table-bordered">
-	<thead>
+	<!--<thead> -->
 	<tr class="active">
 		<th>
 			<label for="input">Materia</label>
 		</th>		
 		<th>&nbsp;</th>
 	</tr>
-	</thead>
+	<!--</thead> -->
 <%	
 	for (Materia m : mat_grado.getLista()) {	
 %>
-	<tbody>
+	<!-- <tbody> -->
 	<tr>
 		<td><%= m.getMateria() %></td>	
 		<td><strong><a href="MateriaGradoList?do=desasignar&materia=<%=m.getMateria()%>" onclick="return confirm('Esta seguro que desea desasignar?');"> Desasignar</a></strong></td>
 	</tr>
-	</tbody>
+	<!--</tbody> -->
 	
 <%
 	}
@@ -104,8 +88,8 @@ if(mat_grado.getLista().isEmpty()){
 <%}%>
 <br>
 <%
-if ((materias.getLista().size() - mat_grado.getLista().size()) == 0){
-}else{
+if ((materias.getLista().size() - mat_grado.getLista().size()) != 0){
+//}else{
 	
 %>
 <div class="form-group">
@@ -141,11 +125,25 @@ if ((materias.getLista().size() - mat_grado.getLista().size()) == 0){
 </div>
 <%}%>
 <br>
+<!-- MENSAJE DE ERROR -->
+ <%	String error = "";
+	
+	if (session.getAttribute("error") != null) {
+		error = (String)session.getAttribute("error");
+		session.setAttribute("error", null);		
+	
+ %>
+   <div class="bs-example">
+    	 <div class="alert alert-danger fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <strong><i class="glyphicon glyphicon-remove"></i> Ups!</strong> <%= error %>
+     	 </div>
+  </div>
+ <% } %> 
 <div class="form-group">
 <form action="GradoList" method="get">
 <button type="submit" class="btn btn-primary"  value="Volver al Listado"><i class="glyphicon glyphicon-share-alt"></i> Volver al Listado</button>
 </form>
-</div>
 </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
