@@ -4,6 +4,7 @@
 <%@page import="datos.Grados"%>
 <%@page import="conexion.AccionesCuota"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesAlumno"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -51,6 +52,9 @@
 		
 		
 	}
+	
+	int min = AccionesAlumno.getAñoAlumnos("MIN");
+	int max = AccionesAlumno.getAñoAlumnos("MAX");
 %>
 	<div class="page-header">  	  
 		<h1>Menú de Tardanzas</h1>		
@@ -72,11 +76,10 @@
                 	        <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnAcept"><i class="glyphicon glyphicon-search"></i> Buscar</button>
                	    	 </span>
                  	   <select class="form-control" name="año_tardanza" autofocus>
-  							 <%  			
-								int año = (Integer)session.getAttribute("añoc");
-  								for(int i=año; i>año-20;i--){					 
- 							 %>	
- 							  <option value="<%=i %>"><%=i %></option>		 	
+  							 <%
+  							int año = (Integer)session.getAttribute("añoc");
+  							 for(int i=max; i>=min;i--){%>	
+ 							   <option <%if(i==año){%> selected <%}else{%><%}%>value="<%=i %>"><%=i %></option>		 	
    							<%
 								}			
 							 %>   			 		

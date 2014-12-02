@@ -5,6 +5,7 @@
 <%@page import="datos.Grados"%>
 <%@page import="conexion.AccionesTardanza"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMaestro"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -55,6 +56,10 @@
 		
 		
 	}
+
+	int dni = (Integer) session.getAttribute("dni_maestro");
+	int min = AccionesMaestro.getAñoMaestro("MIN", dni);
+	int max = AccionesMaestro.getAñoMaestro("MAX", dni);
 	
 %>
 
@@ -89,11 +94,8 @@
 	    <td><label for="input">Seleccionar año</label></td>	    
 	    <td>
 	    <div class="col-xs-5">
-	    	<select class="form-control" name="año_asistencia" autofocus>
-	      		<%
-	      		    int año = (Integer)session.getAttribute("añoc");
-	      			for(int i=año; i>año-20;i--){
-	      		%>	
+	    	<select class="form-control" name="año_asistencia" autofocus>	      		
+	      		 <%for(int i=max; i >= min;i--){%>	      			
 	      	  <option value="<%=i %>"><%=i %></option>
 	      		<%
 	      			}
@@ -168,10 +170,7 @@
                 	        <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnAcept"><i class="glyphicon glyphicon-search"></i> Buscar</button>
                	    	 </span>
                  	   <select class="form-control" name="año_asistencia" autofocus>
-  							 <%  			
-								int año = (Integer)session.getAttribute("añoc");
-  								for(int i=año; i>año-20;i--){					 
- 							 %>	
+  							 <%for(int i=max; i >= min;i--){%> 							 	
  							  <option value="<%=i %>"><%=i %></option>		 	
    							<%
 								}			
