@@ -110,8 +110,8 @@ public class CuotaList extends HttpServlet {
 			String[] parts;
 			String grado="", turno="";
 			
-			if(request.getParameter("anio") != null){
-				año = Integer.parseInt(request.getParameter("anio"));
+			if(request.getParameter("año_cuotas") != null){
+				año = Integer.parseInt(request.getParameter("año_cuotas"));
 				string = request.getParameter("grado_anio");				
 				parts = string.split(" - ");				
 				grado = parts[0];

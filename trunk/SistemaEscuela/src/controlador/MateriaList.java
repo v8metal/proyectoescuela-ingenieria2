@@ -42,7 +42,7 @@ public class MateriaList extends HttpServlet {
 			response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 		}
 		
-		sesion.removeAttribute("error");
+		//sesion.removeAttribute("error");
 		
 		try {
 

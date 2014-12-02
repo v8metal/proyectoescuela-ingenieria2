@@ -4,6 +4,7 @@
 <%@page import="datos.Grados"%>
 <%@page import="conexion.AccionesCuota"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesAlumno"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -52,96 +53,114 @@
 		
 		session.removeAttribute("añoMenuCuota");
 		session.removeAttribute("gradosMenuCuota");
-	}	
+	}
+	
+	int min = AccionesAlumno.getAñoAlumnos("MIN");
+	int max = AccionesAlumno.getAñoAlumnos("MAX");
 %>
 	<div class="page-header">  	  
 		<h1>Menú Cobro de Cuotas</h1>		
     </div>
     
-    
-	<form class="form-horizontal" action="CuotaList" method="get" role="form">
-		<div class="form-group">
+    <div class="form-group">
+	<form class="form-horizontal" action="CuotaList" method="get" role="form">		
 	<%if(añoCuota == null){ %>
-		
-		 <label class="control-label col-sm-2" for="input">Seleccionar año:</label>
-		  <div class="col-xs-2">          
-	    	<select class="form-control" name="año_cuotas" autofocus>
-	      		<%
-	      		    int año = (Integer)session.getAttribute("añoc");
-	      			for(int i=año; i>año-20;i--){
-	      		%>	
-	      	  <option value="<%=i %>"><%=i %></option>
-	      		<%
-	      			}
-	      		%>
-	        </select>
-		  </div>
-		 </div> 
-	     	<input type="hidden" name="accion" value="solicitarGrados">
+		 <input type="hidden" name="accion" value="solicitarGrados">
+		 
+		 <label class="control-label" for="input">Seleccionar año:</label>		 	     
+	     <br>
+		 <br>
+	      <div class="row">
+         	   <div class="col-xs-3">
+            	    <div class="input-group">
+            	         <span class="input-group-btn">
+                	        <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnAcept"><i class="glyphicon glyphicon-search"></i> Buscar</button>
+               	    	 </span>
+                 	   <select class="form-control" name="año_cuotas" autofocus>
+  							 <%  			
+								int año = (Integer)session.getAttribute("añoc");
+  							  
+  								for(int i=max; i>=min;i--){
+  							%> 							  	 
+ 							  <option <%if(i==año){%> selected <%}else{%><%}%>value="<%=i %>"><%=i %></option>		 	
+   							<%
+   								}							 		
+							 %>   			 		
+ 					 	</select>					
+               		</div>
+           	 	</div>
+      	 </div>	   	  
+	     	
 	     	<br>
 
 	<%}else{ %>
 
 		<label for="input">Seleccionar año:</label>    
+			    <div class="row">
+         	   <div class="col-xs-3">
+            	    <div class="input-group">
+            	         <span class="input-group-btn">
+                	        <button type="button" disabled="disabled" class="btn btn-primary"  value="Aceptar" name="btnAcept"><i class="glyphicon glyphicon-search"></i> Buscar</button>
+               	    	 </span>
+ 					 		<input class="form-control" type="text" size=4 readonly name="año_cuotas" value="<%=añoCuota%>"> 			
+               		</div>
+           	 	</div>
+      	 </div>	     	
 
-	     	<input class="form-control" type="text" size=4 readonly name="anio" value="<%=añoCuota%>">
+	  <%if (grados.getLista().isEmpty()) { %>	
+	  	
+	  	<br>
 
-
-	  <%if (grados.getLista().isEmpty()) { %>
-	
-		<label for="input">Seleccionar grado-turno:</label>
-		<label for="input">No hay grados para el año seleccionado</label>
+    	 <div class="alert alert-info fade in" role="alert">
+	     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	     	 <strong>Atención!</strong> No hay grados para el año seleccionado. <a href="menu_cuotas.jsp" class="alert-link">Seleccionar otro año</a>
+  	 	 </div>  	
 
 	  <%}else{%>
-
-	     <label for="input">Seleccionar grado-turno:</label>
-	    
-	      	<select class="form-control" name="grado_anio" autofocus>
-	      	<%for (Grado g : grados.getLista()) { %>	            
-	            <option value="<%=g.getGrado() + " - " + g.getTurno()%>"><%=g.getGrado() + " - " + g.getTurno()%></option>            
-	          
-	      	<%}%>
-	      	</select>
-	   <%}%>
-	<%}%>	    	      
-	<br>
-	     	<input type="hidden" name="accion" value="listarGrado">
-	  
-			<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave">Aceptar</button>
-			<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave">Cancelar</button>
-			
-	</form>
-	
-	<br>
-	<br>
-	
-<!-- <p><strong><a href="pagos_dia.jsp">Ver Total de Pagos por día</a></strong></p>  -->	
-	
-	<%if(añoCuota == null){ %>
-
-<!-- 		
-	<div class="form-group">
-	<form action="menu_admin.jsp">
-	<button type="submit" class="btn btn-primary"  value="Volver al Menú Principal">Volver al Menú Principal</button>
-	</form>
+	     
+		 <br>
+		 <input type="hidden" name="accion" value="listarGrado">		 
+      	 <label class="control-label" for="input">Seleccionar grado-turno:</label>
+ 		 <br>
+		 <br>
+		 
+		  	<div class="row">
+         	   <div class="col-xs-3">
+            	    <div class="input-group">
+            	         <span class="input-group-btn">
+                	        <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnAcept"><i class="glyphicon glyphicon-search"></i> Buscar</button>
+               	         </span>
+                 	   <select class="form-control" name="grado_anio" autofocus>
+  							 <%  			
+  								for (Grado g : grados.getLista()) { 				 
+ 							 %>	
+ 							  <option value="<%=g.getGrado() + " - " + g.getTurno()%>"><%=g.getGrado() + " - " + g.getTurno()%></option>		 	
+   							<%
+								}			
+							 %>   			 		
+ 					 	</select>					
+               		</div>
+           	 	</div>
+      	 </div>
+      	     	      
+		<br>	    	  	
+	  	</form>
+	  	 
+		<br>
+		 <form action="menu_cuotas.jsp">
+		 	<div class="form-group">
+				<button type="submit" class="btn btn-primary"  value="Seleccionar otro año" name="btnAcept"><i class="glyphicon glyphicon-pushpin"></i> Seleccionar otro año</button>
+			</div>
+		 </form>	
+		   <%}%>
+	<%}%> 
+  	
 	</div>
- -->
- 	 
-	<%}else{ %>
-	
-	<p><strong><a href="pagos_dia.jsp">Ver Total de Pagos por día</a></strong></p> 	
-	
 	<br>
-	<br>
-	<br>
-	<br>
-		
-				
-	<form action="menu_cuotas.jsp">
-		<div class="form-group">
-			<button type="submit" class="btn btn-primary"  value="Seleccionar otro año"><i class="glyphicon glyphicon-pushpin"></i> Seleccionar otro año</button>
-		</div>
-	</form>
+	<br>	
+	<%if(añoCuota != null){ %>
+
+	<p><strong><a href="pagos_dia.jsp">Ver Total de Pagos por día</a></strong></p>
 	
 	<%}%>
 </div>

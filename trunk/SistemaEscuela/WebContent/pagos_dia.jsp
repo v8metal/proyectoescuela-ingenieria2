@@ -4,6 +4,7 @@
 <%@page import="datos.Grados"%>
 <%@page import="conexion.AccionesUsuario"%>
 <%@page import="conexion.AccionesCuota"%>
+<%@page import="conexion.AccionesAlumno"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -62,6 +63,9 @@
     	fecha = (String) request.getAttribute("fecha_dia");
     }
     
+    int min = AccionesAlumno.getAñoAlumnos("MIN");
+	int max = AccionesAlumno.getAñoAlumnos("MAX");
+    
 %>
 
 	<div class="page-header">  	  
@@ -73,6 +77,8 @@
 	<form action="CuotaList" method="get">
 	
 	<input name="fecha" id="fecha" type="hidden" value="<%=fecha!=null?fecha:"0"%>">
+	<input name="min" id="min" type="hidden" value="<%=min%>">
+	<input name="max" id="max" type="hidden" value="<%=max%>">
 	
 	<table class="table table-hover table-bordered">	
 		<tr>
@@ -159,8 +165,7 @@
 </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-	<script src="js/jquery-1.7.2.min.js"></script>
+    <!-- Placed at the end of the document so the pages load faster -->	
 	<script src="js/bootstrap.min.js"></script>
 
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
@@ -171,6 +176,6 @@
 	
 	<script src="js/jquery-1.10.2.js"></script>
 	<script src="js/jquery-ui.js"></script>
-	<script src="js/tardanzas.js"></script> <!-- DatePic para tardanzas -->	
+	<script src="js/pagosdia.js"></script> <!-- DatePic para tardanzas -->	
 </body>
 </html>
