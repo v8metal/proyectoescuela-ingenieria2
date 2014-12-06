@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesMaestro;
+import conexion.AccionesMensaje;
 import conexion.AccionesUsuario;
 import datos.*;
 
@@ -33,7 +34,7 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//doPost(request, response);
 		HttpSession sesion = request.getSession();		
-		sesion.setAttribute("error", "Usted no posee acceso a este componente");
+		sesion.setAttribute("mensaje",AccionesMensaje.getOne(10));
 		response.sendRedirect("login.jsp");
 	}
 
@@ -92,7 +93,7 @@ public class Login extends HttpServlet {
 					
 					if (m.getEstado() == 0){
 						
-						sesion.setAttribute("error", "El usuario está inhabilitado");
+						sesion.setAttribute("mensaje",AccionesMensaje.getOne(11));
 						response.sendRedirect("login.jsp"); 
 					
 					}else{					
@@ -114,14 +115,14 @@ public class Login extends HttpServlet {
 				}
 								
 				} else {
-					sesion.setAttribute("error", "Nombre de usuario y/o contraseña no válidos");
+					sesion.setAttribute("mensaje",AccionesMensaje.getOne(12));
 					response.sendRedirect("login.jsp");
 				
 				}
 			 
 			 // else obsoleto, con el atributo "required" en el imput text no se puede enviar un form sin el campo completado	
 			} else {
-				sesion.setAttribute("error", "Debe completar el usuario y la contraseña para poder ingresar");
+				sesion.setAttribute("mensaje",AccionesMensaje.getOne(13));
 				response.sendRedirect("login.jsp");
 			}
 			

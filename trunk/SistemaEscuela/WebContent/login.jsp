@@ -1,3 +1,4 @@
+<%@page import="datos.Mensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -69,23 +70,22 @@
     </div>
 <br>
 <br>    
- <!-- MENSAJE DE ERROR -->
- <%	String error = "";
-	
-	if (session.getAttribute("error") != null) {
-		error = (String)session.getAttribute("error");
-		session.setAttribute("error", null);		
-	
+ <!-- MENSAJE -->
+ <%	
+	Mensaje mensaje = null;
+	if (session.getAttribute("mensaje") != null) {
+		mensaje = (Mensaje) session.getAttribute("mensaje");
+		session.setAttribute("mensaje", null);
  %>
+ <br>
    <div class="bs-example">
-    	 <div class="alert alert-danger fade in" role="alert">
-     	 	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 	<strong><i class="glyphicon glyphicon-remove"></i> Ups!</strong> <%= error %>
-  	  	</div>
-  </div><!-- /example -->
- 	
- <% } %>   
-    
+    	 <div class="alert <%=mensaje.getTipo()%> fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <%= mensaje.getMensaje()%>
+  	  </div>
+  </div>
+<br>
+ <%}%>    
 </div>
 	<!-- Bootstrap core JavaScript
     ================================================== -->

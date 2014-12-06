@@ -1,4 +1,5 @@
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@page import="datos.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -29,16 +30,7 @@
 		
 	String nombre = "";
 	String apellido = "";
-	
-//	if (session.getAttribute("dni_maestro") != null ){		
-//		Maestro maestro = (Maestro)session.getAttribute("maestro");
-//		nombre = maestro.getNombre();
-//		apellido = maestro.getApellido();
 
-//		user
-//	} else {
-//		admin
-//	}
 %>
 
   <div id="divmenu">
@@ -87,48 +79,27 @@
 
  
 <br>
-<button type="submit" class="btn btn-primary"  value="Guardar" onclick="return confirm('¿Está seguro que desea editar?');"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
-<button type="reset" class="btn btn-primary"  value="Cancelar" onclick="return confirm('¿Está seguro que desea cancelar?');"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
+<button type="submit" class="btn btn-primary"  onclick=<%=AccionesMensaje.getOne(2).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+<button type="reset" class="btn btn-primary"   onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Cancelar</button>
 </form>
 </div>
 <br>
-<!-- MENSAJE DE WARNING -->
-<%	
-	String error = "";
-	if (session.getAttribute("error") != null) {
-		error = (String)session.getAttribute("error");
-		session.setAttribute("error", null);
- %>
- <br>
-   <div class="bs-example">
-    	 <div class="alert alert-warning fade in" role="alert">
-     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong><i class="glyphicon glyphicon-warning-sign"></i> Cuidado!</strong> <%= error %>
-  	  </div>
-  </div><!-- /example -->
-<br>
- <%		
-	}
- %>
- 
- <!-- MENSAJE DE EXITO -->
+ <!-- MENSAJE -->
  <%	
-	String success = "";
-	if (session.getAttribute("success") != null) {
-		success = (String)session.getAttribute("success");
-		session.setAttribute("success", null);
+	Mensaje mensaje = null;
+	if (session.getAttribute("mensaje") != null) {
+		mensaje = (Mensaje) session.getAttribute("mensaje");
+		session.setAttribute("mensaje", null);
  %>
  <br>
    <div class="bs-example">
-    	 <div class="alert alert-success fade in" role="alert">
+    	 <div class="alert <%=mensaje.getTipo()%> fade in" role="alert">
      	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong><i class="glyphicon glyphicon-ok"></i> Bien Hecho!</strong> <%= success %>
+     	 <%= mensaje.getMensaje()%>
   	  </div>
-  </div><!-- /example -->
+  </div>
 <br>
- <%		
-	}
- %>
+ <%}%>
 </div>
 	<!-- Bootstrap core JavaScript
     ================================================== -->
