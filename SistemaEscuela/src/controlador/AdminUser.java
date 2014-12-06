@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import conexion.AccionesUsuario;
+import conexion.AccionesMensaje;
 
 /**
  * Servlet implementation class for Servlet: AdminUser
@@ -84,7 +85,7 @@ import conexion.AccionesUsuario;
 						try {
 					
 						AccionesUsuario.updatePass(usuario,contraseña_nueva);
-						sesion.setAttribute("success", "Contraseña actualizada correctamente");
+						sesion.setAttribute("mensaje",AccionesMensaje.getOne(8));
 						
 						
 						} catch (Exception e) {
@@ -94,7 +95,7 @@ import conexion.AccionesUsuario;
 				
 					}else{
 						
-						sesion.setAttribute("error", "Error al loguearse, contraseña inválida");
+						sesion.setAttribute("mensaje",AccionesMensaje.getOne(4));
 						
 					}
 				
@@ -102,11 +103,11 @@ import conexion.AccionesUsuario;
 				}else {	
 						if (dni == 0){
 							
-							sesion.setAttribute("error", "Error al loguearse, contraseña inválida");
+							sesion.setAttribute("mensaje",AccionesMensaje.getOne(4));
 							
 						}else{
-							
-							sesion.setAttribute("error", "La confirmación no coincide con la nueva contraseña");
+														
+							sesion.setAttribute("mensaje",AccionesMensaje.getOne(5));
 						}
 						
 				}				
@@ -114,7 +115,8 @@ import conexion.AccionesUsuario;
 				response.sendRedirect("admin_pass.jsp");
 				
 			} else {
-				sesion.setAttribute("error", "Debe completar los campos para continuar");
+				
+				sesion.setAttribute("mensaje",AccionesMensaje.getOne(6));
 				response.sendRedirect("admin_pass.jsp");
 			}
 			
@@ -153,8 +155,8 @@ import conexion.AccionesUsuario;
 						try {
 					
 						AccionesUsuario.updateUser(usuario, usuario_nuevo_r);
-						sesion.setAttribute("success", "Usuario actualizado correctamente");
 						
+						sesion.setAttribute("mensaje",AccionesMensaje.getOne(9));						
 						sesion.setAttribute("user", usuario_nuevo_r);						
 
 						
@@ -164,18 +166,18 @@ import conexion.AccionesUsuario;
 				
 					}else{
 					
-						sesion.setAttribute("error", "Error al loguearse, contraseña inválida");
+						sesion.setAttribute("mensaje",AccionesMensaje.getOne(4));
 						
 					}
 					
 				}else {	
 						if (dni == 0){
 							
-							sesion.setAttribute("error", "Error al loguearse, contraseña inválida");
+							sesion.setAttribute("mensaje",AccionesMensaje.getOne(4));
 							
 						}else{
 							
-							sesion.setAttribute("error", "La confirmación no coincide con el nuevo usuario");
+							sesion.setAttribute("mensaje",AccionesMensaje.getOne(7));
 						}
 						
 				}				
@@ -183,7 +185,8 @@ import conexion.AccionesUsuario;
 				response.sendRedirect("admin_user.jsp");
 				
 			} else {
-				sesion.setAttribute("error", "Debe completar los campos para continuar");
+
+				sesion.setAttribute("mensaje",AccionesMensaje.getOne(6));
 				response.sendRedirect("admin_user.jsp");
 			}	
 	
