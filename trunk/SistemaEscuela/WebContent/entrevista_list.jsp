@@ -31,17 +31,9 @@
 	Entrevistas entrevistas = (Entrevistas)session.getAttribute("entrevistas");
 	
 	String nombre = "";
-	String apellido = "";
+	String apellido = "";	
 	
-//	if (session.getAttribute("dni_maestro") != null ){		
-//	Maestro maestro = (Maestro)session.getAttribute("maestro");
-//	nombre = maestro.getNombre();
-//	apellido = maestro.getApellido();
-
-//	user
-//} else {
-//	admin
-//}
+	Integer dni_maestro = (Integer) session.getAttribute("dni_maestro");
 %>
 
   <div id="divmenu">
@@ -72,7 +64,7 @@ if (entrevistas.getLista().isEmpty()){
 		<th>Hora</th>
 		<th>Maestro</th>
 		<th>Nombre Alumno</th>
-	<%if(session.getAttribute("dni_maestro") != null){%>		
+	<%if(dni_maestro != null){%>		
 		<th>Descripción</th>
 	<%}%>
 		<th>&nbsp;</th>
@@ -132,7 +124,11 @@ if (entrevistas.getLista().isEmpty()){
     <script src="js/ie10-viewport-bug-workaround.js"></script>
 
 	<!-- menú superior -->
+	<%if(dni_maestro == null){%>
 	<script src="js/menu_admin.js"></script>
-	<script src="js/menu_user.js"></script> 
+	<%}%>
+	<%if(dni_maestro != null){%>
+	<script src="js/menu_user.js"></script>
+	<%}%> 
 </body>
 </html>
