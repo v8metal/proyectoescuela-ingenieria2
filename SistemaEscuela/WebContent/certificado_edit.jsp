@@ -1,5 +1,6 @@
 <%@page import="datos.*"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -78,7 +79,9 @@
 	</tbody>
 </table>
 <br>
-<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+<button type="submit" class="btn btn-primary"  onclick=<%=AccionesMensaje.getOne(2).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+<button type="reset" class="btn btn-primary"   onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Cancelar</button>
+
 </form>
 <br>
 <br>

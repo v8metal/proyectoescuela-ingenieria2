@@ -2,8 +2,10 @@
 <%@page import="datos.Maestros"%>
 <%@page import="datos.Grado"%>
 <%@page import="datos.Grados"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesGrado"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -243,25 +245,18 @@ if (grado != null){
 	</tr>
 </table>
 
-<%
-	String mensaje= "return confirm('¿Está seguro que desea realizar el alta?');"; 
-	  
-	if (grado != null){
-			
-		mensaje = "return confirm('¿Está seguro que desea editar?');"; 
-	}
-		 
-%>
-	<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="<%=mensaje%>"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
-	<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('¿Está seguro que desea cancelar?');"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>	
+	<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+	<button type="reset" class="btn btn-primary"   onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Cancelar</button>
+		
 </form>
 </div>
 <br>
 <%if (año == 0 && grado != null){%>
 <!-- MENSAJE DE WARNING -->
-	<div class="alert alert-warning" role="alert">
+	<%Mensaje m = AccionesMensaje.getOne(28);%>
+	<div class="alert <%=m.getTipo() %>" role="alert">
 	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <strong><i class="glyphicon glyphicon-warning-sign"></i> Cuidado!</strong> No hay alumnos asignados. <a href="GradoEdit?do=baja" class="alert-link"> Borrar grado <i class="glyphicon glyphicon-trash"></i></a>
+      <%=m.getMensaje()%>
     </div>
 <br>
 <%}%>
@@ -282,12 +277,5 @@ if (grado != null){
     <script src="js/ie10-viewport-bug-workaround.js"></script>
 
 	<!-- menú superior -->
-	<script src="js/menu_admin.js"></script> 
-	
-    <script language = "JavaScript">
-		function pru(){
-		p=document.anio_grado.selectedIndex;
-		alert(p);
-		}	
-	</script>
+	<script src="js/menu_admin.js"></script>	
 </html>

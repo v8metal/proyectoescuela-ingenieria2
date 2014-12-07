@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesMaestro;
+import conexion.AccionesMensaje;
 import conexion.AccionesUsuario;
 import datos.Maestro;
 import datos.CustomException;
@@ -130,7 +131,7 @@ public class MaestroEdit extends HttpServlet {
 					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 				}
 				
-				AccionesMaestro.deleteOne(dni.intValue());				
+				AccionesMaestro.deleteOne(dni.intValue());
 				response.sendRedirect(request.getContextPath() + "/maestroList");
 				
 				break;
@@ -138,8 +139,8 @@ public class MaestroEdit extends HttpServlet {
 			}		
 
 		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
-			e.printStackTrace();
-			sesion.setAttribute("error", "Error al intentar borrar " + maestro.getNombre() + " " + maestro.getApellido() + ". Ya esta asignado/a a un curso.");
+			
+			sesion.setAttribute("mensaje", AccionesMensaje.getOne(33));
 			
 			if (AccionesUsuario.validarAcceso(type, "MaestroList") != 1){							
 				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
@@ -148,18 +149,17 @@ public class MaestroEdit extends HttpServlet {
 			response.sendRedirect("maestroList");
 		
 		} catch (CustomException e) {
-			e.printStackTrace();
-			sesion.setAttribute("error", "Error en la baja de " + maestro.getNombre() + " " + maestro.getApellido() + ". Ya está asignado/a a un grado para el año en curso.");
+			
+			sesion.setAttribute("mensaje", AccionesMensaje.getOne(34));			
 			
 			if (AccionesUsuario.validarAcceso(type, "MaestroList") != 1){							
 				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 			}
 			
 			response.sendRedirect("maestroList");
+		
 		} catch (Exception e) {
 			e.printStackTrace();
-
-			sesion.setAttribute("error", e);
 			
 			if (AccionesUsuario.validarAcceso(type, "maestro_edit.jsp") != 1){							
 				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
@@ -215,6 +215,8 @@ public class MaestroEdit extends HttpServlet {
 				}
 				
 				AccionesMaestro.updateOne(maestro);
+			
+				sesion.setAttribute("mensaje", AccionesMensaje.getOne(18));
 				
 				break;
 			}
@@ -226,6 +228,7 @@ public class MaestroEdit extends HttpServlet {
 			//redirect to the maestro list servlet 
 			response.sendRedirect(request.getContextPath() + "/maestroList");	
 			
+		/*	
 		} catch (java.lang.NumberFormatException e) {
 			e.printStackTrace();
 			sesion.setAttribute("error", "Se ha producido un error. Debe completar todos los campos. Exception: " + e.toString());
@@ -236,25 +239,27 @@ public class MaestroEdit extends HttpServlet {
 			
 			response.sendRedirect("maestro_edit.jsp");
 			
+		*/
+			
 		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
 			
 			if (AccionesUsuario.validarAcceso(type, "maestro_edit.jsp") != 1){							
 				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 			}
 			
-			sesion.setAttribute("error", "Error al insertar, ya se ingreso esta persona");			
+			sesion.setAttribute("mensaje", AccionesMensaje.getOne(35));			
 			response.sendRedirect("maestro_edit.jsp");	
 		
 		} catch (Exception e) {
 
-			sesion.setAttribute("error", e);
+			//sesion.setAttribute("error", e);
 			
 			if (AccionesUsuario.validarAcceso(type, "maestro_edit.jsp") != 1){							
 				response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 			}
 			
-			response.sendRedirect("maestro_edit.jsp");
-		}
+			response.sendRedirect("maestro_edit.jsp");		
+		}		
 	}
 
 }

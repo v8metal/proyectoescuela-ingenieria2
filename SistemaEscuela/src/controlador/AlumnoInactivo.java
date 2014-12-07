@@ -11,10 +11,12 @@ import javax.servlet.http.HttpSession;
 
 import conexion.AccionesAlumno;
 import conexion.AccionesEstado;
+import conexion.AccionesGrado;
 import conexion.AccionesPadre;
 import conexion.AccionesUsuario;
 import datos.Alumno;
 import datos.EstadoAlumnos;
+import datos.Grados;
 import datos.Padre;
 
 /**
@@ -58,14 +60,6 @@ public class AlumnoInactivo extends HttpServlet {
 				
 			} else if (accion.equals("activar")) {
 				
-				//recupero de la sesion la fecha del sistema
-				/*
-				String año_sys = (String)sesion.getAttribute("año_sys");
-				String mes_sys = (String)sesion.getAttribute("mes_sys");
-				String dia_sys = (String)sesion.getAttribute("dia_sys");
-				String fecha_sys = año_sys + "-" + mes_sys + "-" + dia_sys;
-				*/
-				
 				int dni_alum = Integer.parseInt(request.getParameter("dni_alum"));
 				Alumno alumno = AccionesAlumno.getOne(dni_alum);
 				Padre tutor = AccionesPadre.getOne(alumno.getDni_tutor());								
@@ -76,6 +70,9 @@ public class AlumnoInactivo extends HttpServlet {
 				request.setAttribute("tutor", tutor);				
 				request.setAttribute("madre", madre);
 				sesion.setAttribute("reingreso", "reingreso");
+				
+				Grados grados = AccionesGrado.getAll();				
+				sesion.setAttribute("grados_alta", grados);
 				
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/alumno_edit.jsp");				
 				dispatcher.forward(request, response);

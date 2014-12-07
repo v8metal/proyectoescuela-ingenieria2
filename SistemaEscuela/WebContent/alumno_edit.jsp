@@ -2,6 +2,7 @@
 <%@page import="conexion.AccionesUsuario"%>
 <%@page import="conexion.AccionesAlumno"%>
 <%@page import="conexion.AccionesGrado"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -168,24 +169,6 @@
 	session.removeAttribute("reingreso");%>
 <input type="hidden" name="reingreso" value="reingreso">
 <%}%>
-
- <!-- MENSAJE DE ERROR -->
- <%	String error = "";
-	
-	if (session.getAttribute("error") != null) {
-		error = (String)session.getAttribute("error");
-		session.setAttribute("error", null);		
-	
- %>
-   <div class="bs-example">
-    	 <div class="alert alert-danger fade in" role="alert">
-     	 	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 	<strong><i class="glyphicon glyphicon-remove"></i> Ups!</strong> <%= error %>
-  	  	</div>
-  </div><!-- /example -->
- 	
- <% } %>   
- 
 <h2>Datos personales:</h2>
 <table>
 	<tr>
@@ -646,9 +629,9 @@
 <%
 }				
 %>
+<button type="submit" id=guardar title="<%=mensaje%>" class="btn btn-primary"  onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+<button type="reset" class="btn btn-primary"   onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Cancelar</button>
 
-<button id=guardar title="<%=mensaje%>" type="submit" class="btn btn-primary" value="Guardar"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
-<button type="reset" class="btn btn-primary" value="Cancelar"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
 </form>
 </div>
 <br>
@@ -678,6 +661,22 @@ if (!nuevo.equals("nuevo")){
 </div>
 <%}%>
 <%}%>
+ <!-- MENSAJE -->
+ <%	
+	Mensaje mensaje1 = null;
+	if (session.getAttribute("mensaje") != null) {
+		mensaje1 = (Mensaje) session.getAttribute("mensaje");
+		session.setAttribute("mensaje", null);
+ %>
+ <br>
+   <div class="bs-example">
+    	 <div class="alert <%=mensaje1.getTipo()%> fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <%= mensaje1.getMensaje()%>
+  	  </div>
+  </div>
+<br>
+ <%}%>  
 	<!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

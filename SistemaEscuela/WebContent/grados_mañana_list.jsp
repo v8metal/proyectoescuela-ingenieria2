@@ -1,9 +1,11 @@
-	<%@page import="datos.Grado"%>
+<%@page import="datos.Grado"%>
 <%@page import="datos.Grados"%>
 <%@page import="datos.Maestro"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesMaestro"%>
 <%@page import="conexion.AccionesGrado"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding ="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -46,11 +48,14 @@
 if (grados.getListaTM().isEmpty()){
 %> 
 <br>
-  	<!-- MENSAJE ATENCION -->
-	<div class="alert alert-info" role="alert">
-		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	<strong><i class="glyphicon glyphicon-exclamation-sign"></i> Atención!</strong> No hay grados para el turno mañana. <a href="GradoEdit?do=alta" class="alert-link">Ingresar nuevo grado</a>
-    </div>	
+  	<%Mensaje m = AccionesMensaje.getOne(26);%>
+	<!-- MENSAJE INFORMATIVO -->
+     <div class="bs-example">
+    	<div class="alert <%=m.getTipo()%> fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <%=m.getMensaje()%>
+  	  	</div>
+  	</div>
 <%}else{%>
 <table class="table table-hover table-bordered">
 	<thead>
@@ -123,21 +128,36 @@ if (grados.getListaTM().isEmpty()){
 		}	
 %>
 </table>
- <%}%>	
+ <%}%>
+  <!-- MENSAJE -->
+ <%	
+	Mensaje mensaje = null;
+	if (session.getAttribute("mensaje") != null) {
+		mensaje = (Mensaje) session.getAttribute("mensaje");
+		session.setAttribute("mensaje", null);
+ %> 
+   <br>
+   <div class="bs-example">
+    	 <div class="alert <%=mensaje.getTipo()%> fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <%= mensaje.getMensaje()%>
+  	  </div>
+  </div>
+ <%}%>
 <% if (!gradosp.getLista().isEmpty() && !grados.getListaTM().isEmpty()){ %>
 <br>
     <p><strong><a href="GradoEdit?do=alta"><i class="glyphicon glyphicon-edit"></i> Nuevo Grado</a></strong></p>
 <%}else if (gradosp.getLista().isEmpty() && !grados.getListaTM().isEmpty() ){%>
 <br>
+	<%Mensaje m1 = AccionesMensaje.getOne(27);%>
 	<!-- MENSAJE INFORMATIVO -->
-   <div class="bs-example">
-    	<div class="alert alert-info fade in" role="alert">
+     <div class="bs-example">
+    	<div class="alert <%=m1.getTipo()%> fade in" role="alert">
      	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Atención!</strong> No quedan grados para dar de alta
+     	 <%=m1.getMensaje()%>
   	  	</div>
-  </div><!-- /example -->
+  	</div>
 <%}%>
-<br>
 <br>
 </div>
     <!-- Bootstrap core JavaScript

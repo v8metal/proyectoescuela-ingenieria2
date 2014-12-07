@@ -3,7 +3,9 @@
 <%@page import="datos.EstadoAlumno"%>
 <%@page import="datos.Alumno"%>
 <%@page import="datos.Alumnos"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -18,12 +20,6 @@
 	if (AccionesUsuario.validarAcceso(tipo, "alumno_list.jsp") != 1){							
 		response.sendRedirect("Login");						
 	}		
-	
-	String error = "";
-	if (session.getAttribute("error") != null) {
-		error = (String)session.getAttribute("error");
-		session.setAttribute("error", "");
-	}
 	
 	String titulo = (String) session.getAttribute("titulo_alumno");
 		
@@ -127,7 +123,7 @@
 		<td><input type="checkbox" name="ind_grupo" disabled <%= a.isInd_grupo() ? "checked" : "" %>/></td>
 		<td><input type="checkbox" name="ind_sub" disabled <%= a.isInd_subsidio() ? "checked" : "" %>/></td>
 		<%if (ea.isActivo()){%><td>ACTIVO</td><%} else {%><td><strong><a href="alumnoInactivo?do=listar">INACTIVO</a></strong></td><%}%>	
-		<td><strong><a href="certificadoEdit?do=modificar&dni=<%= a.getDni() %>"><i class="glyphicon glyphicon-pencil"></i> Editar</a></strong></td>		
+		<td><strong><a href="certificadoEdit?do=modificar&dni=<%= a.getDni() %>"><i class="glyphicon glyphicon-eye-open"></i> Ver</a></strong></td>		
 		<% 	
 		  if (ea.isActivo()){ //verifica si el alumno está activo
 				
@@ -141,12 +137,12 @@
 		  <%}
 			if (menor){%> <!--esta en condiciones de repetir o promocionar-->
 			
-				<td><strong><a name="delete-link" href="alumnoEdit?do=baja&dni_alum=<%= a.getDni() %>" onclick="return confirm('Esta seguro que desea dar de baja');"><i class="glyphicon glyphicon-arrow-down"></i> BAJA</a></strong></td>
+				<td><strong><a name="delete-link" href="alumnoEdit?do=baja&dni_alum=<%= a.getDni() %>" onclick=<%=AccionesMensaje.getOne(22).getMensaje()%>><i class="glyphicon glyphicon-arrow-down"></i> BAJA</a></strong></td>
 			
 				<%if(!grado.equals("7° Grado")){%>							
-					<td><strong><a href="AlumnoEdit?do=promocion&dni_alum=<%=a.getDni()%>" onclick="return confirm('Esta seguro que desea promocionar');">PROMOCIÓN</a></strong></td>											
+					<td><strong><a href="AlumnoEdit?do=promocion&dni_alum=<%=a.getDni()%>" onclick=<%=AccionesMensaje.getOne(23).getMensaje()%>>PROMOCION</a></strong></td>											
 			   <%}%>
-					<td><strong><a href="AlumnoEdit?do=repeticion&dni_alum=<%=a.getDni()%>" onclick="return confirm('Esta seguro que desea repetir año');">REPETICIÓN</a></strong></td>
+					<td><strong><a href="AlumnoEdit?do=repeticion&dni_alum=<%=a.getDni()%>" onclick=<%=AccionesMensaje.getOne(24).getMensaje()%>>REPETICION</a></strong></td>
 			<%}
 			if (mayor){%>			    
 				<td>PROMOCIONADO</td>
@@ -159,18 +155,22 @@
 			}
  %>
 </table>
-<% 
-			if (!error.equals("")) {
-%>
 <br>
+ <!-- MENSAJE -->
+ <%	
+	Mensaje mensaje = null;
+	if (session.getAttribute("mensaje") != null) {
+		mensaje = (Mensaje) session.getAttribute("mensaje");
+		session.setAttribute("mensaje", null);
+ %> 
+   <div class="bs-example">
+    	 <div class="alert <%=mensaje.getTipo()%> fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <%= mensaje.getMensaje()%>
+  	  </div>
+  </div>
 <br>
-<%=error%>
-<br>
-<br>
-<%
-			}
-%> 
-<br>
+ <%}%>  
 <%if(año == AccionesAlumno.getAñoAlumnos("MAX")){%>
  <a href="alumno_edit.jsp">Alta de Alumno</a>
 <br>

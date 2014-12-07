@@ -1,5 +1,6 @@
 <%@page import="conexion.AccionesAlumno"%>
 <%@page import="datos.Alumno"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="datos.EstadoAlumno"%>
 <%@page import="datos.EstadoAlumnos"%>
 <%@page import="java.util.*"%>
@@ -18,11 +19,6 @@
 		response.sendRedirect("Login");						
 	}	
 		
-	String error = "";
-	if (session.getAttribute("error") != null) {
-		error = (String)session.getAttribute("error");
-		session.setAttribute("error", "");
-	}
 %>
 <title>Alumnos - Registro de bajas</title>
 
@@ -62,17 +58,7 @@
 <div class="page-header">
 	<h1>Registro de bajas</h1>
 </div>	
-<% 
-			if (!error.equals("")) {
-%>
-<div class="alert alert-danger" role="alert">
-        <strong>Ups!</strong> <%=error%>
-</div>
-<br>
-<br>
-<%
-			}
-%> 	
+	
 <table class="table table-hover table-bordered">
 	<thead>
 	<tr class="active">
@@ -99,6 +85,22 @@
  %>
 </table>
 <%}%>
+ <!-- MENSAJE -->
+ <%	
+	Mensaje mensaje = null;
+	if (session.getAttribute("mensaje") != null) {
+		mensaje = (Mensaje) session.getAttribute("mensaje");
+		session.setAttribute("mensaje", null);
+ %>
+ <br>
+   	<div class="bs-example">
+    	 <div class="alert <%=mensaje.getTipo()%> fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <%= mensaje.getMensaje()%>
+  	  </div>
+  </div>
+<br>
+ <%}%>  
 </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->

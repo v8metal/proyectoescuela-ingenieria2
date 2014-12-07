@@ -1,6 +1,8 @@
 <%@page import="datos.Maestro"%>
 <%@page import="datos.Maestros"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -74,8 +76,8 @@ if (maestros.getLista().size() == 0){
 		<td><%= m.getDomicilio() %></td>
 		<td><%= m.getTelefono() %></td>		
 		<td><strong><a href="maestroEdit?accion=modificar&dni=<%= m.getDni() %>"><i class="glyphicon glyphicon-pencil"></i> Editar</a></strong></td>		
-		<td><strong><a href="maestroEdit?accion=baja&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea dar de baja?');"><i class="glyphicon glyphicon-arrow-down"></i> Dar de baja</a></strong></td>		
-		<td><strong><a href="maestroEdit?accion=borrar&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea borrar?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>		
+		<td><strong><a href="maestroEdit?accion=baja&dni=<%= m.getDni() %>" onclick=<%=AccionesMensaje.getOne(22).getMensaje()%>><i class="glyphicon glyphicon-arrow-down"></i> Dar de baja</a></strong></td>		
+		<td><strong><a href="maestroEdit?accion=borrar&dni=<%= m.getDni() %>" onclick=<%=AccionesMensaje.getOne(32).getMensaje()%>><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>		
 	</tr>
 	<tbody>
 <%
@@ -88,27 +90,27 @@ if (maestros.getLista().size() == 0){
 <br>	
  <%}%>
  
-<%if(maestros_inac.getLista().size() != 0){%>
-
+<%if(maestros_inac.getLista().size() != 0){	
+	Mensaje m = AccionesMensaje.getOne(31);
+%>
   <!-- MENSAJE INFORMATIVO -->
-	<div class="alert alert-info" role="alert">
+	<div class="alert <%=m.getTipo()%>" role="alert">
 	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Atención!</strong> Se encuentran maestros en estado inactivo. <a href="MaestroList?tipo=inactivos" class="alert-link">Ver listado <i class="glyphicon glyphicon-list-alt"></i></a>
+      <%=m.getMensaje()%>
     </div>
 <%}%>
 <br>
-<!-- MENSAJE DE ERROR -->
- <%	String error = "";
-	
-	if (session.getAttribute("error") != null) {
-		error = (String)session.getAttribute("error");
-		session.setAttribute("error", null);		
+<!-- MENSAJE -->
+ <%	Mensaje mensaje = null;	
+	if (session.getAttribute("mensaje") != null) {
+		mensaje = (Mensaje) session.getAttribute("mensaje");
+		session.setAttribute("mensaje", null);		
 	
  %>
    <div class="bs-example">
-    	 <div class="alert alert-danger fade in" role="alert">
+    	 <div class="alert <%=mensaje.getTipo()%> fade in" role="alert">
      	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong><i class="glyphicon glyphicon-remove"></i> Ups!</strong> <%= error %>
+     	 <%=mensaje.getMensaje()%>
   	  </div>
   </div><!-- /example -->
  	

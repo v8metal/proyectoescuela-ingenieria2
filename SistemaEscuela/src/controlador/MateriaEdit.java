@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesMateria;
+import conexion.AccionesMensaje;
 import conexion.AccionesUsuario;
 import datos.CustomException;
 import datos.Materia;
@@ -129,8 +130,8 @@ public class MateriaEdit extends HttpServlet {
 	
 		
 		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
-			e.printStackTrace();
-			sesion.setAttribute("error", "Error al intentar borrar " + mat + ". Ya esta asignada a un curso");
+			
+			sesion.setAttribute("mensaje", AccionesMensaje.getOne(39));
 			
 			// modulo de seguridad
 			if (AccionesUsuario.validarAcceso(tipo, "MateriaList") != 1){							
@@ -140,8 +141,8 @@ public class MateriaEdit extends HttpServlet {
 			response.sendRedirect("materiaList?from=materiaEdit");
 			
 		} catch (CustomException e) {
-			e.printStackTrace();
-			sesion.setAttribute("error", "Error en la baja " + mat + ". Ya está asignada a un grado para el año en curso");
+			
+			sesion.setAttribute("mensaje", AccionesMensaje.getOne(40));		
 			
 			// modulo de seguridad
 			if (AccionesUsuario.validarAcceso(tipo, "MateriaList") != 1){							
@@ -205,7 +206,7 @@ public class MateriaEdit extends HttpServlet {
 			
 		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
 			
-			sesion.setAttribute("error", "Error al insertar, la materia ya existe");	
+			sesion.setAttribute("mensaje", AccionesMensaje.getOne(41));				
 			
 			// modulo de seguridad
 			if (AccionesUsuario.validarAcceso(tipo, "materia_edit.jsp") != 1){							
