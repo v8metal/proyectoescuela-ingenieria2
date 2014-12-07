@@ -10,8 +10,10 @@ import javax.servlet.http.HttpSession;
 
 
 
+
 import conexion.AccionesAlumno;
 import conexion.AccionesCertificado;
+import conexion.AccionesMensaje;
 import conexion.AccionesUsuario;
 import datos.*;
 
@@ -179,7 +181,9 @@ public class CertificadoEdit extends HttpServlet {
 				//	modifico la lista de certificados a partir del dni del alumno obtenido y los valores actualizados de los certificados
 				AccionesCertificado.updateOne(a.getDni(), ind_salud.booleanValue(), ind_bucal.booleanValue(), ind_dni.booleanValue(), ind_auditivo.booleanValue(), 
 												ind_visual.booleanValue(), ind_vacunas.booleanValue(), año);
-			
+				
+				sesion.setAttribute("mensaje",AccionesMensaje.getOne(18));
+				
 				response.sendRedirect("alumno_list.jsp");
 			
 				break;

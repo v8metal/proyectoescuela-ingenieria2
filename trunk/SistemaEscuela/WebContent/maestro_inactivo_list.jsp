@@ -1,6 +1,8 @@
 <%@page import="datos.Maestro"%>
 <%@page import="datos.Maestros"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -20,8 +22,8 @@
 
 <%
 	int tipo = (Integer) session.getAttribute("tipoUsuario");						
-	if (AccionesUsuario.validarAcceso(tipo, "menu_admin.jsp") != 1){							
-		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+	if (AccionesUsuario.validarAcceso(tipo, "maestro_inactivo_list.jsp") != 1){							
+		response.sendRedirect("Login");						
 	}
 %>
 
@@ -35,28 +37,16 @@
   <div class="page-header"> 
 	<h1>Registro de bajas</h1>
   </div>
-<%		
-		Maestros maestros = (Maestros)session.getAttribute("maestros");
-		
-		String error = "";
-		if (session.getAttribute("error") != null) {
-			error = (String)session.getAttribute("error");
-			session.setAttribute("error", "");
-		}
- 
-			if (!error.equals("")) {
-%>
-<%=error%>
+<% Maestros maestros = (Maestros)session.getAttribute("maestros"); %>
 <br>
 <br>
-<%
-			}
-if (maestros.getLista().size() == 0){
+<%if (maestros.getLista().size() == 0){
+	Mensaje m = AccionesMensaje.getOne(36);
 %>
 <br>	
 <!-- MENSAJE INFORMATIVO -->
-<div class="alert alert-info" role="alert">
-    <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Atención!</strong> No hay maestros inactivos. <a href="maestroList" class="alert-link"><i class="glyphicon glyphicon-share-alt"></i> Volver al listado principal </a>
+<div class="alert <%=m.getTipo()%>" role="alert">
+    <%=m.getMensaje()%>
 </div>
 <br>
 <%}else{%>
@@ -80,8 +70,8 @@ if (maestros.getLista().size() == 0){
 		<td><%= m.getDni() %></td>
 		<td><%= m.getDomicilio() %></td>
 		<td><%= m.getTelefono() %></td>		
-		<td><strong><a href="maestroEdit?accion=activar&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea activar?');"><i class="glyphicon glyphicon-arrow-up"></i> Dar de alta</a></strong></td>
-		<td><strong><a name="delete-link" href="maestroEdit?accion=borrar&dni=<%= m.getDni() %>" onclick="return confirm('Esta seguro que desea borrar?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
+		<td><strong><a href="maestroEdit?accion=activar&dni=<%= m.getDni() %>" onclick=<%=AccionesMensaje.getOne(37).getMensaje()%>><i class="glyphicon glyphicon-arrow-up"></i> Dar de alta</a></strong></td>
+		<td><strong><a name="delete-link" href="maestroEdit?accion=borrar&dni=<%= m.getDni() %>" onclick=<%=AccionesMensaje.getOne(32).getMensaje()%>><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
 	</tr>
 	<tbody>
 <%

@@ -14,6 +14,7 @@ import conexion.AccionesAlumno;
 import conexion.AccionesCertificado;
 import conexion.AccionesEstado;
 import conexion.AccionesGrado;
+import conexion.AccionesMensaje;
 import conexion.AccionesPadre;
 import conexion.AccionesUsuario;
 import datos.Alumno;
@@ -139,6 +140,8 @@ public class AlumnoEdit extends HttpServlet {
 				AccionesEstado.desactivarAlumno(dni_alum, fecha_sys);				
 				
 				request.setAttribute("accion","listarAlumnos");
+				sesion.setAttribute("mensaje",AccionesMensaje.getOne(19));
+				
 				dispatcher = getServletContext().getRequestDispatcher("/AlumnoList");
 				dispatcher.forward(request, response);
 				
@@ -157,6 +160,8 @@ public class AlumnoEdit extends HttpServlet {
 				AccionesAlumno.promGrado(dni_alum, año);
 				
 				request.setAttribute("accion","listarAlumnos");
+				sesion.setAttribute("mensaje",AccionesMensaje.getOne(20));
+				
 				dispatcher = getServletContext().getRequestDispatcher("/AlumnoList");
 				dispatcher.forward(request, response);
 				
@@ -175,6 +180,7 @@ public class AlumnoEdit extends HttpServlet {
 				AccionesAlumno.repetirGrado(dni_alum, año);
 			
 				request.setAttribute("accion","listarAlumnos");
+				sesion.setAttribute("mensaje",AccionesMensaje.getOne(21));
 				dispatcher = getServletContext().getRequestDispatcher("/AlumnoList");
 				dispatcher.forward(request, response);
 			
@@ -183,16 +189,17 @@ public class AlumnoEdit extends HttpServlet {
 			} 
 			
 		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
-			e.printStackTrace();
-			sesion.setAttribute("error", "Se ha producido un error. No se puede activar y dar de baja a un alumno el mismo dia." + "<br><br>" + "Exception:" + "<br>" + e.toString());
+			
+			sesion.setAttribute("mensaje",AccionesMensaje.getOne(14));
 			response.sendRedirect("alumno_list.jsp");
 			
 		} catch (Exception e) {
+			
 			e.printStackTrace();
-
-			sesion.setAttribute("error", e.toString());
-			response.sendRedirect("alumno_edit.jsp");
-		}  
+			//sesion.setAttribute("error", e.toString());
+			//response.sendRedirect("alumno_edit.jsp");
+		} 
+		
 	}
 
 	/**
@@ -360,7 +367,9 @@ public class AlumnoEdit extends HttpServlet {
 				sesion.setAttribute("grado", grado);
 				sesion.setAttribute("turno", turno);
 				sesion.setAttribute("año", Integer.parseInt(año_ing));
-										
+				
+				sesion.setAttribute("mensaje",AccionesMensaje.getOne(15)); //alta correcta
+				
 			} else {	//Si ya estan los datos del alumno, que lo modifique
 				
 				//en caso de modificar el grado/turno
@@ -394,8 +403,11 @@ public class AlumnoEdit extends HttpServlet {
 						
 						redirect = "/alumnoInactivo?do=listar";
 						
+						sesion.setAttribute("mensaje",AccionesMensaje.getOne(16)); //reingreso correcto
+						
 					}else{ //Actualización de grado/turno
 						AccionesAlumno.updateAlumnoGrado(dni_alum, año, grado, turno);
+						sesion.setAttribute("mensaje",AccionesMensaje.getOne(17)); //modificación correcta
 					}
 					
 				}
@@ -411,6 +423,8 @@ public class AlumnoEdit extends HttpServlet {
 				AccionesAlumno.updateOne(dni_alum, nombre_alum, apellido_alum, domicilio_alum, telefono_alum,
 						fecha_nac_alum, lugar_nac_alum, dni_tutor, dni_madre, cant_her_may, cant_her_men,
 						iglesia, esc, año, ind_grupo.equals("si"), ind_subsidio.equals("si"));
+				
+				sesion.setAttribute("mensaje",AccionesMensaje.getOne(18)); //modificación correcta
 			}   
 			
 			request.setAttribute("accion","listarAlumnos");
@@ -418,8 +432,7 @@ public class AlumnoEdit extends HttpServlet {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(redirect);
 			dispatcher.forward(request, response);
 			
-		} catch (java.lang.NumberFormatException e) {
-			
+		/*			
 			if (AccionesUsuario.validarAcceso(tipo, "alumno_edit.jsp") != 1){							
 				response.sendRedirect("Login");						
 			}	
@@ -439,16 +452,16 @@ public class AlumnoEdit extends HttpServlet {
 			sesion.setAttribute("error", "Se ha producido un error. Debe completar los campos \"Escolaridad\", \"Grupo Familiar\" y \"Subsidio\". Exception: " + e.toString());
 				
 			response.sendRedirect("alumno_edit.jsp");
-			
+		*/	
 		} catch (Exception e) {
 			
-			if (AccionesUsuario.validarAcceso(tipo, "alumno_edit.jsp") != 1){							
-				response.sendRedirect("Login");						
-			}
+			//if (AccionesUsuario.validarAcceso(tipo, "alumno_edit.jsp") != 1){							
+			//	response.sendRedirect("Login");						
+			//}
 			
 			e.printStackTrace();
-			sesion.setAttribute("error", e.toString());
-			response.sendRedirect("alumno_edit.jsp");
+			//sesion.setAttribute("error", e.toString());
+			//response.sendRedirect("alumno_edit.jsp");
 		}
 			
 	}

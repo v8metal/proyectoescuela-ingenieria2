@@ -1,6 +1,8 @@
 <%@page import="datos.Materia"%>
 <%@page import="datos.Materias"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -40,13 +42,14 @@
 		Materias materiasbaja = (Materias)session.getAttribute("materiasbaja");		
 %>
 
-<%if (materias.getLista().isEmpty()){ %>
-
+<%if (materias.getLista().isEmpty()){ 
+	Mensaje m = AccionesMensaje.getOne(29);
+%>
 <br>
  <!-- MENSAJE DE WARNING -->
-	<div class="alert alert-warning" role="alert">
+	<div class="alert <%=m.getTipo()%>" role="alert">
 	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <strong><i class="glyphicon glyphicon-warning-sign"></i> Cuidado!</strong> No hay materias asignadas. <a href="materiaEdit?do=alta" class="alert-link">Agregar materia <i class="glyphicon glyphicon-edit"></i></a>
+      <%=m.getMensaje()%> <a href="materiaEdit?do=alta" class="alert-link">Agregar materia <i class="glyphicon glyphicon-edit"></i></a>
     </div>	
     
 <%}else{%>
@@ -65,8 +68,8 @@
 	<tbody>
 	<tr>
 		<td><%= m.getMateria() %></td>
-		<td><strong><a href="materiaEdit?do=baja&materia=<%= m.getMateria() %>" onclick="return confirm('Esta seguro que desea dar de baja?');"><i class="glyphicon glyphicon-ban-circle"></i> Volver inactiva</a></strong></td>		
-		<td><strong><a href="materiaEdit?do=borrar&materia=<%= m.getMateria() %>"  onclick="return confirm('Esta seguro que desea borrar?');" ><i class="glyphicon glyphicon-trash"></i> Borrar Materia</a></strong></td>
+		<td><strong><a href="materiaEdit?do=baja&materia=<%= m.getMateria() %>" onclick=<%=AccionesMensaje.getOne(22).getMensaje()%>><i class="glyphicon glyphicon-ban-circle"></i> Volver inactiva</a></strong></td>		
+		<td><strong><a href="materiaEdit?do=borrar&materia=<%= m.getMateria() %>" onclick=<%=AccionesMensaje.getOne(32).getMensaje()%>><i class="glyphicon glyphicon-trash"></i> Borrar Materia</a></strong></td>
 	</tr>
 	<tbody>	
 <%
@@ -79,28 +82,30 @@
 <br>
 <br>
 <%}
-if(materiasbaja.getLista().size() != 0){%>
+if(materiasbaja.getLista().size() != 0){
+  Mensaje m = AccionesMensaje.getOne(38);
+ %>
   <!-- MENSAJE INFORMATIVO -->
-	<div class="alert alert-info" role="alert">
+	<div class="alert <%=m.getTipo()%>" role="alert">
 	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Atención!</strong> Se encuentran materias en estado inactivo. <a href="materiaList?from=materia_inactiva_list" class="alert-link">Ver listado <i class="glyphicon glyphicon-list-alt"></i></a>
+      <%=m.getMensaje()%><a href="materiaList?from=materia_inactiva_list" class="alert-link">Ver listado <i class="glyphicon glyphicon-list-alt"></i></a>
     </div> 
 <br>
 <%}%>
 <!-- MENSAJE DE ERROR -->
- <%	String error = "";
-	
-	if (session.getAttribute("error") != null) {
-		error = (String)session.getAttribute("error");
-		session.setAttribute("error", null);		
+ <%	Mensaje mensaje = null;
+ 
+	if (session.getAttribute("mensaje") != null) {
+		mensaje = (Mensaje) session.getAttribute("mensaje");
+		session.setAttribute("mensaje", null);		
 	
  %>
    <div class="bs-example">
-    	 <div class="alert alert-danger fade in" role="alert">
+    	 <div class="alert <%=mensaje.getTipo()%> fade in" role="alert">
      	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong><i class="glyphicon glyphicon-remove"></i> Ups!</strong> <%= error %>
+     	 <%=mensaje.getMensaje()%>
   	  </div>
-  </div><!-- /example -->
+  </div>
  <% } %>
 </div>
     <!-- Bootstrap core JavaScript

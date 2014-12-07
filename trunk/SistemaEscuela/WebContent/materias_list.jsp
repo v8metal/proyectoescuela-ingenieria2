@@ -1,8 +1,10 @@
 <%@page import="datos.Grado"%>
 <%@page import="datos.Materia"%>
 <%@page import="datos.Materias"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="datos.MateriasGrado"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -53,9 +55,10 @@
 if(mat_grado.getLista().isEmpty()){
 %>
 <!-- MENSAJE DE INFORMATIVO -->
-	<div class="alert alert-info" role="alert">
+<%Mensaje m = AccionesMensaje.getOne(29);%>
+	<div class="alert <%=m.getTipo()%>" role="alert">
 	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <strong> Atención!</strong> No hay materias asignadas
+      <%=m.getMensaje()%>
     </div>	
 	
 <%}else{%>
@@ -120,26 +123,25 @@ if ((materias.getLista().size() - mat_grado.getLista().size()) != 0){
 	</tr>
 </table>
 <br>
-<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea Asignar?');" >Asignar Materia</button>
+<!-- MENSAJE -->
+ <%	Mensaje mensaje;	
+	if (session.getAttribute("mensaje") != null) {
+		mensaje = (Mensaje) session.getAttribute("mensaje");
+		session.setAttribute("mensaje", null);
+ %>
+   <div class="bs-example">
+    	 <div class="alert <%=mensaje.getTipo()%> fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <%=mensaje.getMensaje()%>
+     	 </div>
+  </div>
+  <br>
+ <%}%>
+<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick=<%=AccionesMensaje.getOne(1).getMensaje()%> >Asignar Materia</button>
 </form>
 </div>
 <%}%>
-<br>
-<!-- MENSAJE DE ERROR -->
- <%	String error = "";
-	
-	if (session.getAttribute("error") != null) {
-		error = (String)session.getAttribute("error");
-		session.setAttribute("error", null);		
-	
- %>
-   <div class="bs-example">
-    	 <div class="alert alert-danger fade in" role="alert">
-     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong><i class="glyphicon glyphicon-remove"></i> Ups!</strong> <%= error %>
-     	 </div>
-  </div>
- <% } %> 
+<br> 
 <div class="form-group">
 <form action="GradoList" method="get">
 <button type="submit" class="btn btn-primary"  value="Volver al Listado"><i class="glyphicon glyphicon-share-alt"></i> Volver al Listado</button>

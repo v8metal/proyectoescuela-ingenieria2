@@ -13,6 +13,7 @@ import datos.Grado;
 import datos.Grados; //alta de grados
 import conexion.AccionesEstado;
 import conexion.AccionesGrado;
+import conexion.AccionesMensaje;
 import conexion.AccionesUsuario;
 import datos.Maestro;
 import datos.Maestros;
@@ -137,6 +138,8 @@ import conexion.AccionesMaestro;
 
 			AccionesGrado.deleteOne(g);
 			
+			sesion.setAttribute("mensaje",AccionesMensaje.getOne(19));
+			
 			response.sendRedirect(request.getContextPath() + "/GradoList");
 			
 			break;
@@ -204,7 +207,9 @@ import conexion.AccionesMaestro;
 				AccionesGrado.insertMaestroGrado(grado_prom, turno, año+1, titular, paralelo);
 			}				
 				
-				
+			
+			sesion.setAttribute("mensaje",AccionesMensaje.getOne(20));
+			
 			response.sendRedirect(request.getContextPath() + "/GradoList");
 				
 			break;
@@ -269,6 +274,8 @@ import conexion.AccionesMaestro;
 				Grado g = new Grado(grado, turno, evaluacion, bimestral.equals("si"), salon);
 				AccionesGrado.insertOne(g);
 				
+				sesion.setAttribute("mensaje",AccionesMensaje.getOne(15));				
+				
 				break;
 				
 			case "update":
@@ -305,6 +312,8 @@ import conexion.AccionesMaestro;
 				break;
 				
 			}
+			
+			sesion.setAttribute("mensaje",AccionesMensaje.getOne(18));
 					
 			response.sendRedirect(request.getContextPath() + "/GradoList");		
 			

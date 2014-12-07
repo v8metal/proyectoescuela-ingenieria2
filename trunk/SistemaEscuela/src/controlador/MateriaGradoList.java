@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import conexion.AccionesGrado;
 import conexion.AccionesMateria;
+import conexion.AccionesMensaje;
 import conexion.AccionesUsuario;
 import datos.Grado;
 import datos.MateriasGrado;
@@ -114,8 +115,7 @@ import datos.MateriasGrado;
 			dispatcher.forward(request, response);
 			
 		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
-			//e.printStackTrace();
-			sesion.setAttribute("error", "<br><br>"+ "La materia no se puede desasignar, tiene notas cargadas"+"<br><br>");
+			sesion.setAttribute("mensaje", AccionesMensaje.getOne(30));
 			response.sendRedirect("materias_list.jsp");	
 		
 		} catch (Exception e) {

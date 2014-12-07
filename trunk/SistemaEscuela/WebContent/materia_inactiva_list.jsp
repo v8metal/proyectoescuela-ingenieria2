@@ -1,6 +1,7 @@
 <%@page import="datos.Materia"%>
 <%@page import="datos.Materias"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -32,36 +33,12 @@
   	<!-- sirve para visualizar el menú superior -->
   </div> 
   
-<%		
-		String error = "";
-		if (session.getAttribute("error") != null) {
-			error = (String)session.getAttribute("error");
-			session.setAttribute("error", "");
-		}
-		
-		Materias materias = (Materias)session.getAttribute("materiasbaja");
-%>
+<%Materias materias = (Materias)session.getAttribute("materiasbaja");%>
   <div class="page-header">  
 	<h1>Listado de Materias Inactivas</h1>
   </div>
-<% 
-			if (!error.equals("")) {
-%>
-<%=error%>
 <br>
 <br>
-<%
-			}
-
-if (materias.getLista().isEmpty()){ %>
-
-<br>	
-<!--  MENSAJE INFORMATIVO -->
-<div class="alert alert-info" role="alert">
-    <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Atención!</strong> No hay materias en estado de baja. <a href="materiaList?from=menu_admin" class="alert-link"><i class="glyphicon glyphicon-share-alt"></i> Volver al listado principal</a>
-</div>
-	
-<%}else{%>
 <table class="table table-hover table-bordered">
 	<thead>
 	<tr class="active">
@@ -75,7 +52,7 @@ if (materias.getLista().isEmpty()){ %>
 	<tbody>
 	<tr>
 		<td><%= m.getMateria() %></td>
-		<td><strong><a href="materiaEdit?do=activar&materia=<%= m.getMateria() %>" onclick="return confirm('¿Está seguro que desea activar la materia?');"><i class="glyphicon glyphicon-ok"></i> Activar Materia</a></strong></td>	
+		<td><strong><a href="materiaEdit?do=activar&materia=<%= m.getMateria() %>" onclick=<%=AccionesMensaje.getOne(37).getMensaje()%>><i class="glyphicon glyphicon-ok"></i> Activar Materia</a></strong></td>	
 	</tr>
 	<tbody>
 <%
@@ -89,7 +66,6 @@ if (materias.getLista().isEmpty()){ %>
 <button type="submit" class="btn btn-primary"  value="Volver al listado principal"><i class="glyphicon glyphicon-share-alt"></i> Volver al listado principal</button>
 </form>
 </div>
-<%}%>
 </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
