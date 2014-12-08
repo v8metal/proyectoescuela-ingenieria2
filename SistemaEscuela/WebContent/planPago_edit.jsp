@@ -286,7 +286,7 @@ if (alumnos.getLista().size() == 0){%>
 		<%if (plan != null) { %>
 			<button type="submit" class="btn btn-primary"  value="Modificar" name="btnSave" onclick=<%=AccionesMensaje.getOne(2).getMensaje()%>>Modificar</button>	
 		<%}else{%>
-			<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>>Realizar alta</button>
+			<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>><i class="glyphicon glyphicon-ok"></i> Realizar alta</button>
 		<%}%>
 			
 	<br>
@@ -315,7 +315,7 @@ if (alumnos.getLista().size() == 0){%>
 <div class="form-group">
 <form action="CuotaList">
 <input name="accion" type="hidden" value="listarGrado">
-<button type="submit" class="btn btn-primary"  value="Volver al listado de Cuotas">Volver al listado de Cuotas</button>
+<button type="submit" class="btn btn-primary"  value="Volver al listado de Cuotas"><i class="glyphicon glyphicon-share-alt"></i> Volver al listado de Cuotas</button>
 </form>
 </div>
 

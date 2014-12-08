@@ -91,7 +91,8 @@
   <br>
 <%}%>
  <br>
-<strong><a href="materiaList?from=menu_admin" class="alert-link"><i class="glyphicon glyphicon-share-alt"></i> Volver al listado</a></strong>
+<strong><a href="materiaList?from=menu_admin" class="alert-link"><i class="glyphicon glyphicon-share-alt"></i> Volver</a></strong>
+
 </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->

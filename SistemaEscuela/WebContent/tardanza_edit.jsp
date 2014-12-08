@@ -87,7 +87,7 @@
 	<%}%>	
 		 <table class="table table-hover table-bordered">
 		    <tr>
-				<th><label for="input">Fecha:</label></th>			
+				<th><label for="input">Fecha</label></th>			
 				<td>
 				<div class="col-xs-2">
 					<input class="form-control" type="text" id="datepicker" required autofocus name="fecha_tardanza">
@@ -96,7 +96,7 @@
 		  	</tr>
 		  	<tr>
 		  		<%if(tardanza == null){%>
-		  		<th><label for="input">Alumno:</label></th>
+		  		<th><label for="input">Alumno</label></th>
 		  		<td>
 		  		<div class="col-xs-5">
 		  			<select name="alumno_tardanza" class="form-control" required>   
@@ -109,7 +109,7 @@
 		 		<%}%>	 		
 		 	</tr>
 		 	<tr>
-		        <th><label for="input">Observaciones:</label></th>
+		        <th><label for="input">Observaciones</label></th>
          		<td>
          			<div class="col-xs-10">
          			<textarea class="form-control" cols="40" rows="4" name="observaciones" placeholder="Descripción"><%=tardanza!=null?tardanza.getObservaciones():"" %></textarea>
@@ -118,7 +118,7 @@
          	</tr>
 		  </table>		  
 		  <button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
-		  <button type="reset" class="btn btn-primary"   onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Cancelar</button> 
+		  <button type="reset" class="btn btn-primary"   onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-remove"></i> Cancelar</button> 
 		  </form>
 		  </div>
 		  <br>
@@ -141,7 +141,7 @@
 		 <div class="form-group">
 			<form action="TardanzaList" method="get">
 				<input type="hidden" name="accion" value="listarTardanzas">
-				<button type="submit" class="btn btn-primary"  value="Volver al Listado de Tardanzas"><i class="glyphicon glyphicon-share-alt"></i> Volver al Listado de Tardanzas</button>
+				<button type="submit" class="btn btn-primary"  value="Volver al Listado de Tardanzas"><i class="glyphicon glyphicon-share-alt"></i> Volver</button>
 			</form>
 		</div>
 </div>

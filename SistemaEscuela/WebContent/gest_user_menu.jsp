@@ -59,8 +59,8 @@ if (usuarios.getLista().isEmpty()) {
 	<thead>
 	<tr class="active">		
 		<th>Maestro</th>
-		<th>Usuario</th>
-		<th>Contraseña</th>
+<!-- 		<th>Usuario</th>	 -->
+<!--		<th>Contraseña</th>	 -->
 		<th>&nbsp;</th>
 	</tr>
 	<thead>
@@ -73,8 +73,8 @@ if (usuarios.getLista().isEmpty()) {
 	<tbody>
 	<tr>		
 		<td><%= m.getApellido() + ", " + m.getNombre() %></td>
-		<td><%= u.getUsuario() %></td>
-		<td><%= u.getContraseña() %></td>
+<!--		<td><%= u.getUsuario() %></td>		-->
+<!--		<td><%= u.getContraseña() %></td>		-->
 		<td><strong><a name="delete-link" href="registroUser?do=baja&dni=<%= u.getDni() %>" onclick=<%=AccionesMensaje.getOne(32).getMensaje()%>><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
 	</tr>
 	</tbody>
