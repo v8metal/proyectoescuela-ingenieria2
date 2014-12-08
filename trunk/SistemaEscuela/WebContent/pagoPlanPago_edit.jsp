@@ -6,6 +6,7 @@
 <%@page import="conexion.AccionesUsuario"%>
 <%@page import="conexion.AccionesAlumno"%>
 <%@page import="conexion.AccionesPlanPago"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -53,77 +54,38 @@
 <%
 	Alumno a =  AccionesAlumno.getOne(plan.getDni());
 		
-	//if (plan != null){
+	String mesini = "";
 		
-		String mesini = "";
+	if(plan.getPeriodoini() == 3) mesini="Marzo";
+	if(plan.getPeriodoini() == 4) mesini="Abril";
+	if(plan.getPeriodoini() == 5) mesini="Mayo";
+	if(plan.getPeriodoini() == 6) mesini="Junio";
+	if(plan.getPeriodoini() == 7) mesini="Julio";
+	if(plan.getPeriodoini() == 8) mesini="Agosto";
+	if(plan.getPeriodoini() == 9) mesini="Septiembre";
+	if(plan.getPeriodoini() == 10) mesini="Octubre";
+	if(plan.getPeriodoini() == 11) mesini="Noviembre";
+	if(plan.getPeriodoini() == 12) mesini="Diciembre";	
+	if(plan.getPeriodoini() == 13) mesini="Inscripción";
 		
-		if(plan.getPeriodoini() == 3) mesini="Marzo";
-		if(plan.getPeriodoini() == 4) mesini="Abril";
-		if(plan.getPeriodoini() == 5) mesini="Mayo";
-		if(plan.getPeriodoini() == 6) mesini="Junio";
-		if(plan.getPeriodoini() == 7) mesini="Julio";
-		if(plan.getPeriodoini() == 8) mesini="Agosto";
-		if(plan.getPeriodoini() == 9) mesini="Septiembre";
-		if(plan.getPeriodoini() == 10) mesini="Octubre";
-		if(plan.getPeriodoini() == 11) mesini="Noviembre";
-		if(plan.getPeriodoini() == 12) mesini="Diciembre";	
-		if(plan.getPeriodoini() == 13) mesini="Inscripción";
-		
-		String mesfin = "";
+	String mesfin = "";
 	
-		if(plan.getPeriodofin() == 3) mesfin="Marzo";
-		if(plan.getPeriodofin() == 4) mesfin="Abril";
-		if(plan.getPeriodofin() == 5) mesfin="Mayo";
-		if(plan.getPeriodofin() == 6) mesfin="Junio";
-		if(plan.getPeriodofin() == 7) mesfin="Julio";
-		if(plan.getPeriodofin() == 8) mesfin="Agosto";
-		if(plan.getPeriodofin() == 9) mesfin="Septiembre";
-		if(plan.getPeriodofin() == 10) mesfin="Octubre";
-		if(plan.getPeriodofin() == 11) mesfin="Noviembre";
-		if(plan.getPeriodofin() == 12) mesfin="Diciembre";	
-		if(plan.getPeriodofin() == 13) mesfin="Inscripción";
+	if(plan.getPeriodofin() == 3) mesfin="Marzo";
+	if(plan.getPeriodofin() == 4) mesfin="Abril";
+	if(plan.getPeriodofin() == 5) mesfin="Mayo";
+	if(plan.getPeriodofin() == 6) mesfin="Junio";
+	if(plan.getPeriodofin() == 7) mesfin="Julio";
+	if(plan.getPeriodofin() == 8) mesfin="Agosto";
+	if(plan.getPeriodofin() == 9) mesfin="Septiembre";
+	if(plan.getPeriodofin() == 10) mesfin="Octubre";
+	if(plan.getPeriodofin() == 11) mesfin="Noviembre";
+	if(plan.getPeriodofin() == 12) mesfin="Diciembre";	
+	if(plan.getPeriodofin() == 13) mesfin="Inscripción";
 	%>
 <div class="page-header">  
 	<h2><%= "Plan de pagos - "+ a.getNombre() + " " + a.getApellido()  + " - De " + mesini + " " + plan.getAñoini() + " a "  + mesfin + " " + plan.getAñofin()%></h2>
 </div>
-<%
-	/*
-	int dia_pp = 0;
-	String mes_pp = "";
-	int año_pp = 0;
-	*/
-	
-	/*
-	if (ppp != null) {
-		//recupero la fecha
-		String fecha_pago = ppp.getFecha() ;
-		//separo la fecha (1990-01-01) por el "-"" y almaceno el año, mes y dia en un array
-		String[] fecha_ent = fecha_pago.split ("-");
-		//obtengo el dia, mes y año respectivamente
-		dia_pp = Integer.parseInt(fecha_ent[fecha_ent.length - 1]);
-		mes_pp = fecha_ent[fecha_ent.length - 2];
-		año_pp= Integer.parseInt(fecha_ent[fecha_ent.length - 3]);
-		
-	}else{	
-	//Alta de pago	
-	   	dia_pp = Integer.valueOf((String)session.getAttribute("dia_sys"));
-		
-	   	mes_pp = (String) session.getAttribute("mes_sys");
-	   	
-	   	//System.out.println("mes_ppp= " + mes_ppp);
-	   	//System.out.println("mes_pp.substring(0,1)= " + mes_pp.substring(0,1));	   	
-	   	
-	   	if (!mes_pp.substring(0,1).equals("1")){		
-	   		mes_pp = "0" + mes_pp;	   	
-	   	}
-	   	
-	   	año_pp = Integer.valueOf((String)session.getAttribute("año_sys"));
-	 //Alta de pago
-	 */
-	//}	
-	
-	//System.out.println("mes= " + mes_ppp);
-   	%>
+
    	<div class="form-group">
 	<form action="PlanPagoList" method="get">
 	<input name="fecha" id="fecha" type="hidden" value="<%=ppp!=null?ppp.getFecha():"0"%>">
@@ -145,7 +107,7 @@
 			<th>Pago</th>
 			<td>
 				<div class="col-xs-5">
-				<input type="text" class="form-control" placeholder="Importe" name="pagopp" value="<%=ppp!=null?ppp.getPago(): ""%>">
+				<input type="text" class="form-control" required placeholder="Importe" name="pagopp" value="<%=ppp!=null?ppp.getPago(): ""%>">
 				</div>
 			</td>
 		</tr>
@@ -163,10 +125,10 @@
 	<br>
 	<br>
 	<%if (ppp != null) { %>	
-	<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea modificar?');">Realizar modificación</button>
+	<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick=<%=AccionesMensaje.getOne(2).getMensaje()%>>Realizar modificación</button>
 	<input type="hidden" name="cod_pago" value="<%= ppp.getCod_pago()%>">	
 	<%}else{%>
-	<button type="submit" class="btn btn-primary"  value="Realizar Alta" name="btnSave" onclick="return confirm('Esta seguro que desea modificar?');">Realizar Alta</button>
+	<button type="submit" class="btn btn-primary"  value="Realizar Alta" name="btnSave" onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>>Realizar Alta</button>
 	<%}%>	
 	</form>
 	</div>

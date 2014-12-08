@@ -1,7 +1,9 @@
 <%@page import="datos.Entrevista"%>
 <%@page import="datos.Maestro"%>
 <%@page import="datos.Maestros"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -30,16 +32,6 @@
 	
 	String nombre = "";
 	String apellido = "";
-	
-//	if (session.getAttribute("dni_maestro") != null ){		
-//	Maestro maestro = (Maestro)session.getAttribute("maestro");
-//	nombre = maestro.getNombre();
-//	apellido = maestro.getApellido();
-
-//	user
-//} else {
-//	admin
-//}
 %>
 
   <div id="divmenu">
@@ -80,10 +72,8 @@
 			    			    
 			    </table>
 			    
-			    
-			    <button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
-				<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
-				
+			     <button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+				<button type="reset" class="btn btn-primary"   onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Cancelar</button>				
 			  
 			  </form>
 			  
@@ -96,42 +86,18 @@
 				<form action="EntrevistaList" method="post">
 				<button type="submit" class="btn btn-primary"  value="Volver al Listado"><i class="glyphicon glyphicon-share-alt"></i> Volver al Listado</button>
 				</form>
-			</div>
-			 		    
-			   <script type="text/javascript">
-			 var form = document.getElementById("formEditar");
-			 function validarEditar(){
-				var nombre_alum =form.nombre_alum.value;
-				var desc = form.desc.value;
-				 
-				 if(nombre_alum=='' || desc==''){
-					 alert("Debe completar todos los campos");
-					 return false;
-				 }else{
-					 return true;
-				 }
-			 }
-				</script> 
-				<% 
+			</div>			 	 
+	<% 
 		}else{
 			
 			Entrevista entrevista = (Entrevista) session.getAttribute("entrevista_edit");
 		  	
-			String error = "";
-			
-			if (session.getAttribute("error") != null) {
-				//System.out.println("error != null");
-				error = (String) session.getAttribute("error");
-				System.out.println(error);
-				session.setAttribute("error", "");
-			}
-		   
-		  	//Maestros maestros = null;
+			//Maestros maestros = null;
 		  	Maestros maestros = new Maestros();
 		  	
-			int dia_entrevista = 0;
+			//int dia_entrevista = 0;
 			String mes_entrevista = "";
-			int año_entrevista = 0;
+			//int año_entrevista = 0;
 					
 			// verifico qe se alla pasado un alumno (caso moficar)
 			if (entrevista != null) {
@@ -140,16 +106,16 @@
 				//separo la fecha (1990-01-01) por el "-"" y almaceno el año, mes y dia en un array
 				String[] fecha_ent = fecha_entrevista.split ("-");
 				//obtengo el dia, mes y año respectivamente
-				dia_entrevista = Integer.parseInt(fecha_ent[fecha_ent.length - 1]);
+				//dia_entrevista = Integer.parseInt(fecha_ent[fecha_ent.length - 1]);
 				mes_entrevista = fecha_ent[fecha_ent.length - 2];
-				año_entrevista = Integer.parseInt(fecha_ent[fecha_ent.length - 3]);
+				//año_entrevista = Integer.parseInt(fecha_ent[fecha_ent.length - 3]);
 			}else{	
 			//Alta de entrevista		
 				//if (request.getAttribute("maestros_ent_alta") != null){
 					maestros = (Maestros) session.getAttribute("maestros_ent_alta");	
 				//}
 			
-		    	dia_entrevista = Integer.valueOf((String)session.getAttribute("dia_sys"));
+		    	//dia_entrevista = Integer.valueOf((String)session.getAttribute("dia_sys"));
 		    	int mes= Integer.parseInt((String) session.getAttribute("mes_sys"));
 		    	if (mes < 10){
 		    		mes_entrevista = "0" + mes;	
@@ -158,7 +124,7 @@
 		    	}
 		    		
 		    	//mes_entrevista = "0" + (String) session.getAttribute("mes_sys");
-		    	año_entrevista = Integer.valueOf((String)session.getAttribute("año_sys"));
+		    	//año_entrevista = Integer.valueOf((String)session.getAttribute("año_sys"));
 		  //Alta de entrevista  
 			}	
 		  %>
@@ -201,25 +167,45 @@
 				<div class="col-xs-2">
 				<select name="hora_entrevista" class="form-control">
 					 <option value="08:00:00" <%=entrevista!=null && entrevista.getHora().equals("08:00:00") ? "selected" : ""%>>08:00</option>
+					 <option value="08:15:00" <%=entrevista!=null && entrevista.getHora().equals("08:15:00") ? "selected" : ""%>>08:15</option>
 		  			 <option value="08:30:00" <%=entrevista!=null && entrevista.getHora().equals("08:30:00") ? "selected" : ""%>>08:30</option>
+		  			 <option value="08:45:00" <%=entrevista!=null && entrevista.getHora().equals("08:45:00") ? "selected" : ""%>>08:45</option>
 		  			 <option value="09:00:00" <%=entrevista!=null && entrevista.getHora().equals("09:00:00") ? "selected" : ""%>>09:00</option>
+		  			 <option value="09:15:00" <%=entrevista!=null && entrevista.getHora().equals("09:15:00") ? "selected" : ""%>>09:15</option>
 		  			 <option value="09:30:00" <%=entrevista!=null && entrevista.getHora().equals("09:30:00") ? "selected" : ""%>>09:30</option>
+		  			 <option value="09:45:00" <%=entrevista!=null && entrevista.getHora().equals("09:45:00") ? "selected" : ""%>>09:45</option>
 		  			 <option value="10:00:00" <%=entrevista!=null && entrevista.getHora().equals("10:00:00") ? "selected" : ""%>>10:00</option>
+		  			 <option value="10:15:00" <%=entrevista!=null && entrevista.getHora().equals("10:15:00") ? "selected" : ""%>>10:15</option>
 		  			 <option value="10:30:00" <%=entrevista!=null && entrevista.getHora().equals("10:30:00") ? "selected" : ""%>>10:30</option>
+		  			 <option value="10:45:00" <%=entrevista!=null && entrevista.getHora().equals("10:45:00") ? "selected" : ""%>>10:45</option>
 		  			 <option value="11:00:00" <%=entrevista!=null && entrevista.getHora().equals("11:00:00") ? "selected" : ""%>>11:00</option>
+		  			 <option value="11:15:00" <%=entrevista!=null && entrevista.getHora().equals("11:15:00") ? "selected" : ""%>>11:15</option>
 		  			 <option value="11:30:00" <%=entrevista!=null && entrevista.getHora().equals("11:30:00") ? "selected" : ""%>>11:30</option>
+		  			 <option value="11:45:00" <%=entrevista!=null && entrevista.getHora().equals("11:45:00") ? "selected" : ""%>>11:45</option>
 		  			 <option value="12:00:00" <%=entrevista!=null && entrevista.getHora().equals("12:00:00") ? "selected" : ""%>>12:00</option>
+		  			 <option value="12:15:00" <%=entrevista!=null && entrevista.getHora().equals("12:15:00") ? "selected" : ""%>>12:15</option>
 		  			 <option value="12:30:00" <%=entrevista!=null && entrevista.getHora().equals("12:30:00") ? "selected" : ""%>>12:30</option>
+		  			 <option value="12:45:00" <%=entrevista!=null && entrevista.getHora().equals("12:45:00") ? "selected" : ""%>>12:45</option>
 		  			 <option value="13:00:00" <%=entrevista!=null && entrevista.getHora().equals("13:00:00") ? "selected" : ""%>>13:00</option>
+		  			 <option value="13:15:00" <%=entrevista!=null && entrevista.getHora().equals("13:15:00") ? "selected" : ""%>>13:15</option>
 		  			 <option value="13:30:00" <%=entrevista!=null && entrevista.getHora().equals("13:30:00") ? "selected" : ""%>>13:30</option>
+		  			 <option value="13:45:00" <%=entrevista!=null && entrevista.getHora().equals("13:45:00") ? "selected" : ""%>>13:45</option>
 		  			 <option value="14:00:00" <%=entrevista!=null && entrevista.getHora().equals("14:00:00") ? "selected" : ""%>>14:00</option>
+		  			 <option value="14:15:00" <%=entrevista!=null && entrevista.getHora().equals("14:15:00") ? "selected" : ""%>>14:15</option>
 		  			 <option value="14:30:00" <%=entrevista!=null && entrevista.getHora().equals("14:30:00") ? "selected" : ""%>>14:30</option>
+		  			 <option value="14:45:00" <%=entrevista!=null && entrevista.getHora().equals("14:45:00") ? "selected" : ""%>>14:45</option>
 		  			 <option value="15:00:00" <%=entrevista!=null && entrevista.getHora().equals("15:00:00") ? "selected" : ""%>>15:00</option>
+		  			 <option value="15:15:00" <%=entrevista!=null && entrevista.getHora().equals("15:15:00") ? "selected" : ""%>>15:15</option>
 		  			 <option value="15:30:00" <%=entrevista!=null && entrevista.getHora().equals("15:30:00") ? "selected" : ""%>>15:30</option>
+		  			 <option value="15:45:00" <%=entrevista!=null && entrevista.getHora().equals("15:45:00") ? "selected" : ""%>>15:45</option>
 		  			 <option value="16:00:00" <%=entrevista!=null && entrevista.getHora().equals("16:00:00") ? "selected" : ""%>>16:00</option>
+		  			 <option value="16:15:00" <%=entrevista!=null && entrevista.getHora().equals("16:15:00") ? "selected" : ""%>>16:15</option>
 		  			 <option value="16:30:00" <%=entrevista!=null && entrevista.getHora().equals("16:30:00") ? "selected" : ""%>>16:30</option>
+		  			 <option value="16:45:00" <%=entrevista!=null && entrevista.getHora().equals("16:45:00") ? "selected" : ""%>>16:45</option>
 		  			 <option value="17:00:00" <%=entrevista!=null && entrevista.getHora().equals("17:00:00") ? "selected" : ""%>>17:00</option>
-		  			 <option value="17:30:00" <%=entrevista!=null && entrevista.getHora().equals("17:30:00") ? "selected" : ""%>>17:30</option>  			 
+		  			 <option value="17:15:00" <%=entrevista!=null && entrevista.getHora().equals("17:15:00") ? "selected" : ""%>>17:15</option>
+		  			 <option value="17:30:00" <%=entrevista!=null && entrevista.getHora().equals("17:30:00") ? "selected" : ""%>>17:30</option>
+		  			 <option value="17:45:00" <%=entrevista!=null && entrevista.getHora().equals("17:45:00") ? "selected" : ""%>>17:45</option>  			 
 		  		</select>  
 		  		</div>			 
 				</td>
@@ -251,40 +237,32 @@
 		<%}%>
 		</table>
 		<br>
-				<%
-		String mensaje= "return confirm('Esta seguro que desea realizar el alta?');"; 
-		  
-		if (entrevista != null){
 			
-			mensaje = "return confirm('Esta seguro que desea modificar?');"; 
-		}
-		 
-		%>
-	
-		<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="<%=mensaje%>"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
-		<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
+		<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+		<button type="reset" class="btn btn-primary"   onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Cancelar</button>
 		
 		</form>
 		</div>		
-		<br>
-		<%if (!error.equals("")) {%>
-		
+		<%
+		Mensaje mensaje = null;			
+		if (session.getAttribute("mensaje") != null) {				
+			mensaje = (Mensaje) session.getAttribute("mensaje");
+			session.setAttribute("mensaje", null);				   
+		%>
 		<!-- MENSAJE DE WARNING -->
-		 <div class="alert alert-warning fade in" role="alert">
-     		 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 	 <strong><i class="glyphicon glyphicon-warning-sign"></i> Cuidado!</strong> <%= error %>
-  	  	 </div>
-
 		<br>
-		<%}%>		
+		<div class="alert <%=mensaje.getTipo()%> fade in" role="alert">
+     		 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 	 <%=mensaje.getMensaje()%>
+  	  	</div>
+  	  	 <%}%>
+		<br>			
 		<div class="form-group">
 		<form action="EntrevistaList" method="post">
 		<button type="submit" class="btn btn-primary"  value="Volver al Listado"><i class="glyphicon glyphicon-share-alt"></i> Volver al Listado</button>
 		</form>
 		</div>
-		<% 
-		}
-		%>
+		<%}%>
 </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->

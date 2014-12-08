@@ -6,9 +6,11 @@
 <%@page import="datos.PlanPago"%>
 <%@page import="datos.PagoPlanPago"%>
 <%@page import="datos.PagosPlanPago"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesUsuario"%>
 <%@page import="conexion.AccionesCuota"%>
 <%@page import="conexion.AccionesAlumno"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -16,7 +18,7 @@
 <% 
 	int tipo = (Integer) session.getAttribute("tipoUsuario");						
 	if (AccionesUsuario.validarAcceso(tipo, "pagosPlanPago_list.jsp") != 1){							
-		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		response.sendRedirect("Login");						
 	}
 	
    PagosPlanPago pp = (PagosPlanPago) request.getAttribute("pagospp");
@@ -76,8 +78,16 @@
 	</div>
 	<h3><%= mesini + " " + plan.getAñoini() + " - "  + mesfin + " " + plan.getAñofin() %> </h3>
 	<br>
-	<% if (pp.getLista().isEmpty()) { %>
-	<a href="pagoPlanPago_edit.jsp"> No hay pagos para el mes, agregar pagos</a>
+	<% if (pp.getLista().isEmpty()) { 
+		
+		Mensaje m = AccionesMensaje.getOne(47);
+	%>
+		<div class="bs-example">
+    	<div class="alert <%=m.getTipo()%>" role="alert">
+    	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <%=m.getMensaje()%><a href="pagoPlanPago_edit.jsp" class="alert-link"> Agregar pagos</a>
+    	</div>
+    </div>	
 	<%}else{%>	
 	  <table class="table table-hover table-bordered">
 	  <thead>
@@ -105,7 +115,7 @@
 	    <td><%="$" + p.getPago()%></td>
 	    <td><%= p.getObservaciones() %></td>
 	    <td><strong><a href="PlanPagoList?accion=modificarPagopp&&cod_pago=<%=p.getCod_pago() %>"><i class="glyphicon glyphicon-pencil"></i> Editar </a></strong></td>	  
-	    <td><strong><a href="PlanPagoList?accion=borrarPagopp&&cod_pago=<%=p.getCod_pago()%>" onclick="return confirm('Esta seguro que desea borrar?');"><i class="glyphicon glyphicon-trash"></i> Borrar </a></strong></td>	    
+	    <td><strong><a href="PlanPagoList?accion=borrarPagopp&&cod_pago=<%=p.getCod_pago()%>" onclick=<%=AccionesMensaje.getOne(32).getMensaje()%>><i class="glyphicon glyphicon-trash"></i> Borrar </a></strong></td>	    
 	  </tr>  
 	  </tbody>
 	  <%}%>

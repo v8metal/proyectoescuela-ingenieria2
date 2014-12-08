@@ -56,18 +56,17 @@ public class AccionesTardanza {
 	
 		
 	public static int modificarTardanza(Tardanza t, String fecha) throws Exception{
-		int i=0;
-		try{
-			Statement stm = Conexion.conectar().createStatement();
+		
+		int i=0;		
+		
+		Statement stm = Conexion.conectar().createStatement();
 			
-			//System.out.println("UPDATE TARDANZAS SET FECHA='"+ fecha + "', OBSERVACIONES='"+t.getObservaciones() +"' WHERE TIPO = 'T' AND DNI='"+ t.getDni() +"' AND FECHA='" + t.getFecha() +"'");
+		//System.out.println("UPDATE TARDANZAS SET FECHA='"+ fecha + "', OBSERVACIONES='"+t.getObservaciones() +"' WHERE TIPO = 'T' AND DNI='"+ t.getDni() +"' AND FECHA='" + t.getFecha() +"'");			
+		i = stm.executeUpdate("UPDATE TARDANZAS SET FECHA='"+ fecha + "',OBSERVACIONES='"+t.getObservaciones() +"' WHERE TIPO = 'T' AND DNI='"+ t.getDni() +"' AND FECHA='" + t.getFecha() +"'");
+		
+		stm.close();
+		Conexion.desconectar();		
 			
-			i = stm.executeUpdate("UPDATE TARDANZAS SET FECHA='"+ fecha + "',OBSERVACIONES='"+t.getObservaciones() +"' WHERE TIPO = 'T' AND DNI='"+ t.getDni() +"' AND FECHA='" + t.getFecha() +"'");
-			stm.close();
-			Conexion.desconectar();
-		}catch(SQLException sqle){
-			System.out.println(sqle);
-		}
 		return i;
 	}
 	

@@ -1,5 +1,6 @@
 <%@page import="datos.PrecioInscrip"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -69,7 +70,7 @@
           <th>Precio:</th>          
           <td>
           <div class="col-xs-3">
-          	<input type="text" class="form-control" placeholder="Precio Regular" name="regular" value="<%=precio!=null?precio.getPrecio():"" %>">
+          	<input type="text" class="form-control" required placeholder="Precio Regular" name="regular" value="<%=precio!=null?precio.getPrecio():"" %>">
 		   </div>          	
           </td>
           
@@ -79,14 +80,13 @@
           <th>Recargo:</th>
           <td>
           <div class="col-xs-3">
-          <input type="text" class="form-control" placeholder="Recargo" name="recargo" value="<%=precio!=null?precio.getRecargo():""%>">
+          <input type="text" class="form-control" required placeholder="Recargo" name="recargo" value="<%=precio!=null?precio.getRecargo():""%>">
           </div>
           </td>
         </tr>        
       </table>      
-      <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');">Aceptar</button>
-      <button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');">Cancelar</button>         
-      <input type="hidden" name="error" value="ERROR!!!">
+      <button type="submit" class="btn btn-primary" onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+	  <button type="reset" class="btn btn-primary"  onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Cancelar</button>
     </form>
     </div>    
     <br>
@@ -95,14 +95,7 @@
 		 <form action="PrecioList" method="get">
 			<button type="submit" class="btn btn-primary"  value="Volver al Menú de Precios">Volver al Menú de Precios</button>
 		</form>
-	</div>	 
-  <%String error = (String)session.getAttribute("error");
-    if(error!=null){ %>
-    	<center><h3><%=error %></h3></center>
-    	 <% 
-    	 session.setAttribute("error", null);
-    }
-    %>    
+	</div>    
 </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -114,37 +107,9 @@
     <script src="js/ie10-viewport-bug-workaround.js"></script>
 
 	<!-- menú superior -->
-	<script src="js/menu_admin.js"></script> 
-	
+	<script src="js/menu_admin.js"></script>	
 	<script src="js/jquery-1.10.2.js"></script>
 	<script src="js/jquery-ui.js"></script>
 	<script src="js/entrevista.js"></script> <!-- DatePic para entrevistas -->
-	
-	<script type="text/javascript">
- 		var form = document.getElementById("formPrecio");
- 
- 		function validarPrecio(){
-			 var año = form.año_inscrip.value;
-			 var mes = form.mes_inscrip.value;
-			 var dia = form.dia_inscrip.value;
-			 var regular = form.regular.value;	 
-			 var recargo = form.recargo.value;
-	 
-			 if(año=='' || mes=='' || dia=='' || regular=='' || recargo==''){
-				 alert("Debe completar todos los campos");
-				 return false;
-			 }
-			 else if(isNaN(regular)){
-				 alert('Debe ingresar sólo números');
-				 return false;
-	 		}
-			 else if(isNaN(recargo)){
-				 alert('Debe ingresar sólo números');
-				 return false;	
-			 }else{
-				 return true;
-			 }
-		}
-	</script>
 </body>
 </html>

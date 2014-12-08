@@ -175,87 +175,23 @@ public class AccionesUsuario {
 		return i;
 	}
 	
-	/*	
-	public static int getCodigo(String apellido, String nombres){
+	public static boolean checkUsuario(String usuario) throws SQLException, Exception {
 		
-		int cod = -1;
-		
-		try {
-			
-			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT COD_MAEST FROM MAESTROS WHERE APELLIDO = '" + apellido + "' AND NOMBRE = '" + nombres + "'");
-			
-			while (rs.next()) {
-				cod = rs.getInt("cod_maest");
-			}
-	
-			stmt.close();
-			Conexion.desconectar();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	
-		return cod;
-	}		*/
-
-/*	
-	public static boolean esUsuario(String usuario, String contraseña) {
 		boolean b = false;
-		try {
-			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM USUARIOS WHERE USUARIO = '" + usuario + "' AND CONTRASEÑA = '" + contraseña + "'");
+		
+		Statement stmt = Conexion.conectar().createStatement();		
+		ResultSet rs = stmt.executeQuery("SELECT COUNT(1) AS COUNT FROM USUARIOS WHERE USUARIO = '" + usuario + "'");
 			
-			while (rs.next()) {
-				b = true;
-			}
-			stmt.close();
-			Conexion.desconectar();
-		} catch (Exception e) {
-			e.printStackTrace();
+		while (rs.next()) {
+			if (rs.getInt("COUNT") == 1) b = true;				
 		}
+			
+		stmt.close();
+		Conexion.desconectar();
+		
 		return b;
 	}
-	
-	public static boolean esAdministrador(String usuario, String contraseña) {
-		boolean b = false;
-		try {
-			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM USUARIOS WHERE USUARIO = '" + usuario + "' AND CONTRASEÑA = '" + contraseña + "' AND COD_MAEST IS NULL");
-			
-			while (rs.next()) {
-				b = true;
-			}
-			stmt.close();
-			Conexion.desconectar();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return b;
-	}
-	
-	public static int getCodMaestroByUsername(String username) throws SQLException, Exception {
-		int codigo = 0;
-		int i = 0;
-		
-			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT COD_MAEST FROM USUARIOS WHERE USUARIO = '" + username + "'");
-		
-			while (rs.next()) {
-				codigo = rs.getInt("cod_maest");
-				i = 1;
-			}
-		
-			if (i == 0) {
-				throw new SQLException();
-			}
-			stmt.close();
-			Conexion.desconectar();
 
-		return codigo;
-		
-	}
-*/
 	public static void main(String[] args) {
 //		Integer i = validarUsuario("goonza", "nob");
 //		System.out.println(i);

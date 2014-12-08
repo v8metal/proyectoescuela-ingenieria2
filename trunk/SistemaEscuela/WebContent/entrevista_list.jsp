@@ -1,8 +1,10 @@
 <%@page import="datos.Entrevista"%>
 <%@page import="datos.Entrevistas"%>
 <%@page import="datos.Maestro"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesMaestro"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -47,12 +49,12 @@ if (entrevistas.getLista().isEmpty()){
 <h1>Listado de Entrevistas</h1>
 </div>
 <br>
-		<!-- MENSAJE INFORMATIVO -->
-    	 <div class="alert alert-info fade in" role="alert">
-	     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	     	 <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Atención!</strong> No hay entrevistas cargadas. <%if(session.getAttribute("dni_maestro") == null){%><a href="EntrevistaEdit?do=alta" class="alert-link"> Nueva Entrevista <i class="glyphicon glyphicon-edit"></i></a><%}%>
-  	 	 </div>
-
+<!-- MENSAJE INFORMATIVO -->
+<% Mensaje m = AccionesMensaje.getOne(44);%>
+  	 <div class="alert <%=m.getTipo()%> fade in" role="alert">
+     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 <%=m.getMensaje()%> <%if(session.getAttribute("dni_maestro") == null){%><a href="EntrevistaEdit?do=alta" class="alert-link"> Nueva Entrevista <i class="glyphicon glyphicon-edit"></i></a><%}%>
+ 	 </div>
 <%}else{%> 
 <div class="page-header">
 <h1>Listado de Entrevistas</h1>
@@ -93,7 +95,7 @@ if (entrevistas.getLista().isEmpty()){
 		<td><%= e.getDescripcion() %></td>
 	<%}%>				
 		<td><strong><a href="EntrevistaEdit?do=modificar&fecha=<%=e.getFecha()%>&nombre=<%=e.getNombre()%>&hora=<%=e.getHora()%>"><i class="glyphicon glyphicon-pencil"></i> Editar</a></strong></td>		
-		<td><strong><a href="EntrevistaEdit?do=borrar&fecha=<%=e.getFecha()%>&nombre=<%=e.getNombre()%>&hora=<%=e.getHora()%>"  onclick="return confirm('¿Está seguro que desea borrar la entrevista?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>				
+		<td><strong><a href="EntrevistaEdit?do=borrar&fecha=<%=e.getFecha()%>&nombre=<%=e.getNombre()%>&hora=<%=e.getHora()%>"  onclick=<%=AccionesMensaje.getOne(32).getMensaje()%>><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>				
 	</tr>
 	</tbody>
 <%

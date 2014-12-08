@@ -1,10 +1,12 @@
 <%@page import="datos.Maestro_Grado"%>
 <%@page import="datos.Maestros_Grados"%>
 <%@page import="datos.Tardanza"%>
-<%@page import="conexion.AccionesAlumno"%>
-<%@page import="conexion.AccionesUsuario"%>
 <%@page import="datos.Alumno"%>
 <%@page import="datos.Alumnos"%>
+<%@page import="datos.Mensaje"%>
+<%@page import="conexion.AccionesAlumno"%>
+<%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -34,11 +36,20 @@
 <%
 	int tipo = (Integer) session.getAttribute("tipoUsuario");						
 	if (AccionesUsuario.validarAcceso(tipo, "tardanza_edit.jsp") != 1){							
-		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		response.sendRedirect("Login");						
 	}
 %>
 <%
-	Tardanza tardanza = (Tardanza) request.getAttribute("tardanza");
+	Tardanza tardanza = null;
+	
+	if (request.getAttribute("tardanza") != null){
+		tardanza = (Tardanza) request.getAttribute("tardanza");
+		session.setAttribute("tardanza", tardanza);		
+	}else if(session.getAttribute("tardanza") != null){		
+		tardanza = (Tardanza) session.getAttribute("tardanza");
+		session.removeAttribute("tardanza");		
+	}
+	 
 	Alumnos alumnos = (Alumnos) session.getAttribute("alumnosAltaTardanza");
 	
 	int dia_tardanza = 0;
@@ -89,9 +100,7 @@
 		  		<td>
 		  		<div class="col-xs-5">
 		  			<select name="alumno_tardanza" class="form-control" required>   
-		  			<%
-					for (Alumno a : alumnos.getLista()){		 		
-		 			%>
+		  			<%for (Alumno a : alumnos.getLista()){%>
 		 			<option class="form-control" value=<%=a.getDni() %>><%= a.getNombre() + " " + a.getApellido() %></option>
 		 			<%} %>		 		
 		 			</select>
@@ -107,31 +116,27 @@
          			</div>
          		</td>
          	</tr>
-		  </table>
-		  
-		 		<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('¿Está seguro que desea guardar?');"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
-		  		<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('¿Está seguro que desea cancelar?');"><i class="glyphicon glyphicon-remove"></i> Cancelar</button> 
+		  </table>		  
+		  <button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+		  <button type="reset" class="btn btn-primary"   onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Cancelar</button> 
 		  </form>
 		  </div>
 		  <br>
 		  
 		  <!-- MENSAJE DE ERROR -->
-		   <%	String error = "";
+		   <%	Mensaje mensaje = null;
 	
-			if (session.getAttribute("error") != null) {
-				error = (String)session.getAttribute("error");
-				session.setAttribute("error", null);		
-	
+			if (session.getAttribute("mensaje") != null) {
+				mensaje = (Mensaje)session.getAttribute("mensaje");
+				session.setAttribute("mensaje", null);	
  			%>
 		  <div class="bs-example">
-    	 	<div class="alert alert-danger fade in" role="alert">
+    	 	<div class="alert <%=mensaje.getTipo()%> fade in" role="alert">
      	 		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     			<strong><i class="glyphicon glyphicon-remove"></i> Ups!</strong> <%= error %>
+     			<%=mensaje.getMensaje()%>
   	 		 </div>
-  		  </div><!-- /example -->
-  		  
-  		   <% } %>   
-  		  
+  		  </div>  		  
+  		   <%}%>  		  
 		  <br>
 		 <div class="form-group">
 			<form action="TardanzaList" method="get">
