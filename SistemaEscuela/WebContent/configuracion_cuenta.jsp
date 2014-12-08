@@ -26,6 +26,8 @@
 	if (AccionesUsuario.validarAcceso(tipo, "admin_pass.jsp") != 1){			//MODIFICAR A configuracion_cuenta.jsp					
 		response.sendRedirect("Login");						
 	}
+	
+	Integer dni_maestro = (Integer) session.getAttribute("dni_maestro");
 %>		
 
   <div id="divmenu">
@@ -49,7 +51,7 @@
 	String nombre = "";
 	String apellido = "";
 	
-	if (session.getAttribute("dni_maestro") != null ){		
+	if (dni_maestro != null ){		
 		Maestro maestro = (Maestro)session.getAttribute("maestro");
 		nombre = maestro.getNombre();
 		apellido = maestro.getApellido();
@@ -103,43 +105,6 @@
 </form>
 </div>
 <br>
-<!-- MENSAJE DE ERROR -->
-<%	
-	String error = "";
-	if (session.getAttribute("error") != null) {
-		error = (String)session.getAttribute("error");
-		session.setAttribute("error", null);
- %>
- <br>
-   <div class="bs-example">
-    	 <div class="alert alert-warning fade in" role="alert">
-     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong>Cuidado!</strong> <%= error %>
-  	  </div>
-  </div><!-- /example -->
-<br>
- <%		
-	}
- %>
- 
- <!-- MENSAJE DE EXITO -->
- <%	
-	String success = "";
-	if (session.getAttribute("success") != null) {
-		success = (String)session.getAttribute("success");
-		session.setAttribute("success", null);
- %>
- <br>
-   <div class="bs-example">
-    	 <div class="alert alert-success fade in" role="alert">
-     	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong>Bien Hecho!</strong> <%= success %>
-  	  </div>
-  </div><!-- /example -->
-<br>
- <%		
-	}
- %>
 </div>
 	<!-- Bootstrap core JavaScript
     ================================================== -->
@@ -151,7 +116,11 @@
     <script src="js/ie10-viewport-bug-workaround.js"></script>
 
 	<!-- menú superior -->
+	<%if(dni_maestro == null){%>
 	<script src="js/menu_admin.js"></script>
-	<script src="js/menu_user.js"></script> 
+	<%}%>
+	<%if(dni_maestro != null){%>
+	<script src="js/menu_user.js"></script>
+	<%}%> 
 </body>
 </html>
