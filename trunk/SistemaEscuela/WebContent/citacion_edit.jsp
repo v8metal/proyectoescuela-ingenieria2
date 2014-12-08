@@ -3,8 +3,10 @@
 <%@page import="datos.Maestro"%>
 <%@page import="datos.Alumno"%>
 <%@page import="datos.Alumnos"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesAlumno"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -50,16 +52,8 @@
 		//update de sancion
 		
 		Citaciones citaciones = (Citaciones) session.getAttribute("citaciones_list");
-		session.removeAttribute("citaciones_list");
-		
-		String error = "";
-		
-		if (session.getAttribute("error") != null) {
-			error = (String)session.getAttribute("error");
-			System.out.println(error);
-			session.setAttribute("error", "");
-		}
-		
+		//session.removeAttribute("citaciones_list");
+
 		//alta de sancion		
 		boolean empty = false;
 		
@@ -80,16 +74,18 @@
 </div>
 <h3><%="Citación para " + a.getNombre() + " " + a.getApellido()%></h3>
 <br>	
-<%}else if (alumnos.getLista().isEmpty() & error.equals("")){
+<%}else if (alumnos.getLista().isEmpty()){
 	empty = true;
 %>
 <div class="page-header"> 	
 <h1>Alta de Citación</h1>
 </div> 
 <br>
-<div class="alert alert-info" role="alert">
-    <strong>Atención!</strong> No hay alumnos cargados para el año en curso
-</div>
+<% Mensaje m = AccionesMensaje.getOne(53); %>
+	<div class="alert <%=m.getTipo()%>" role="alert">
+		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	<%=m.getMensaje()%>
+    </div>
 <%}else{%>
 <div class="page-header"> 	
 <h1>Alta de Citación</h1>
@@ -137,26 +133,46 @@ if (c == null){
 		<td>
 		<div class="col-xs-2">
 		<select name="hora_citacion" class="form-control">
-			 <option value="08:00:00" <%=c !=null && c.getHora().equals("08:00:00") ? "selected" : ""%>>08:00</option>
-  			 <option value="08:30:00" <%=c !=null && c.getHora().equals("08:30:00") ? "selected" : ""%>>08:30</option>
-  			 <option value="09:00:00" <%=c !=null && c.getHora().equals("09:00:00") ? "selected" : ""%>>09:00</option>
-  			 <option value="09:30:00" <%=c !=null && c.getHora().equals("09:30:00") ? "selected" : ""%>>09:30</option>
-  			 <option value="10:00:00" <%=c !=null && c.getHora().equals("10:00:00") ? "selected" : ""%>>10:00</option>
-  			 <option value="10:30:00" <%=c !=null && c.getHora().equals("10:30:00") ? "selected" : ""%>>10:30</option>
-  			 <option value="11:00:00" <%=c !=null && c.getHora().equals("11:00:00") ? "selected" : ""%>>11:00</option>
-  			 <option value="11:30:00" <%=c !=null && c.getHora().equals("11:30:00") ? "selected" : ""%>>11:30</option>
-  			 <option value="12:00:00" <%=c !=null && c.getHora().equals("12:00:00") ? "selected" : ""%>>12:00</option>
-  			 <option value="12:30:00" <%=c !=null && c.getHora().equals("12:30:00") ? "selected" : ""%>>12:30</option>
-  			 <option value="13:00:00" <%=c !=null && c.getHora().equals("13:00:00") ? "selected" : ""%>>13:00</option>
-  			 <option value="13:30:00" <%=c !=null && c.getHora().equals("13:30:00") ? "selected" : ""%>>13:30</option>
-  			 <option value="14:00:00" <%=c !=null && c.getHora().equals("14:00:00") ? "selected" : ""%>>14:00</option>
-  			 <option value="14:30:00" <%=c !=null && c.getHora().equals("14:30:00") ? "selected" : ""%>>14:30</option>
-  			 <option value="15:00:00" <%=c !=null && c.getHora().equals("15:00:00") ? "selected" : ""%>>15:00</option>
-  			 <option value="15:30:00" <%=c !=null && c.getHora().equals("15:30:00") ? "selected" : ""%>>15:30</option>
-  			 <option value="16:00:00" <%=c !=null && c.getHora().equals("16:00:00") ? "selected" : ""%>>16:00</option>
-  			 <option value="16:30:00" <%=c !=null && c.getHora().equals("16:30:00") ? "selected" : ""%>>16:30</option>
-  			 <option value="17:00:00" <%=c !=null && c.getHora().equals("17:00:00") ? "selected" : ""%>>17:00</option>
-  			 <option value="17:30:00" <%=c !=null && c.getHora().equals("17:30:00") ? "selected" : ""%>>17:30</option>  			 
+				<option value="08:00:00" <%=c!=null && c.getHora().equals("08:00:00") ? "selected" : ""%>>08:00</option>
+				<option value="08:15:00" <%=c!=null && c.getHora().equals("08:15:00") ? "selected" : ""%>>08:15</option>
+		  		<option value="08:30:00" <%=c!=null && c.getHora().equals("08:30:00") ? "selected" : ""%>>08:30</option>
+		  		<option value="08:45:00" <%=c!=null && c.getHora().equals("08:45:00") ? "selected" : ""%>>08:45</option>
+		  		<option value="09:00:00" <%=c!=null && c.getHora().equals("09:00:00") ? "selected" : ""%>>09:00</option>
+		  		<option value="09:15:00" <%=c!=null && c.getHora().equals("09:15:00") ? "selected" : ""%>>09:15</option>
+		  		<option value="09:30:00" <%=c!=null && c.getHora().equals("09:30:00") ? "selected" : ""%>>09:30</option>
+		  		<option value="09:45:00" <%=c!=null && c.getHora().equals("09:45:00") ? "selected" : ""%>>09:45</option>
+		  		<option value="10:00:00" <%=c!=null && c.getHora().equals("10:00:00") ? "selected" : ""%>>10:00</option>
+		  		<option value="10:15:00" <%=c!=null && c.getHora().equals("10:15:00") ? "selected" : ""%>>10:15</option>
+		  		<option value="10:30:00" <%=c!=null && c.getHora().equals("10:30:00") ? "selected" : ""%>>10:30</option>
+		  		<option value="10:45:00" <%=c!=null && c.getHora().equals("10:45:00") ? "selected" : ""%>>10:45</option>
+		  		<option value="11:00:00" <%=c!=null && c.getHora().equals("11:00:00") ? "selected" : ""%>>11:00</option>
+		  		<option value="11:15:00" <%=c!=null && c.getHora().equals("11:15:00") ? "selected" : ""%>>11:15</option>
+		  		<option value="11:30:00" <%=c!=null && c.getHora().equals("11:30:00") ? "selected" : ""%>>11:30</option>
+		  		<option value="11:45:00" <%=c!=null && c.getHora().equals("11:45:00") ? "selected" : ""%>>11:45</option>
+		  		<option value="12:00:00" <%=c!=null && c.getHora().equals("12:00:00") ? "selected" : ""%>>12:00</option>
+		  		<option value="12:15:00" <%=c!=null && c.getHora().equals("12:15:00") ? "selected" : ""%>>12:15</option>
+		  		<option value="12:30:00" <%=c!=null && c.getHora().equals("12:30:00") ? "selected" : ""%>>12:30</option>
+		  		<option value="12:45:00" <%=c!=null && c.getHora().equals("12:45:00") ? "selected" : ""%>>12:45</option>
+		  		<option value="13:00:00" <%=c!=null && c.getHora().equals("13:00:00") ? "selected" : ""%>>13:00</option>
+		  		<option value="13:15:00" <%=c!=null && c.getHora().equals("13:15:00") ? "selected" : ""%>>13:15</option>
+		  		<option value="13:30:00" <%=c!=null && c.getHora().equals("13:30:00") ? "selected" : ""%>>13:30</option>
+		  		<option value="13:45:00" <%=c!=null && c.getHora().equals("13:45:00") ? "selected" : ""%>>13:45</option>
+		  		<option value="14:00:00" <%=c!=null && c.getHora().equals("14:00:00") ? "selected" : ""%>>14:00</option>
+		  		<option value="14:15:00" <%=c!=null && c.getHora().equals("14:15:00") ? "selected" : ""%>>14:15</option>
+		  		<option value="14:30:00" <%=c!=null && c.getHora().equals("14:30:00") ? "selected" : ""%>>14:30</option>
+		  		<option value="14:45:00" <%=c!=null && c.getHora().equals("14:45:00") ? "selected" : ""%>>14:45</option>
+		  		<option value="15:00:00" <%=c!=null && c.getHora().equals("15:00:00") ? "selected" : ""%>>15:00</option>
+		  		<option value="15:15:00" <%=c!=null && c.getHora().equals("15:15:00") ? "selected" : ""%>>15:15</option>
+		  		<option value="15:30:00" <%=c!=null && c.getHora().equals("15:30:00") ? "selected" : ""%>>15:30</option>
+		  		<option value="15:45:00" <%=c!=null && c.getHora().equals("15:45:00") ? "selected" : ""%>>15:45</option>
+		  		<option value="16:00:00" <%=c!=null && c.getHora().equals("16:00:00") ? "selected" : ""%>>16:00</option>
+		  		<option value="16:15:00" <%=c!=null && c.getHora().equals("16:15:00") ? "selected" : ""%>>16:15</option>
+		  		<option value="16:30:00" <%=c!=null && c.getHora().equals("16:30:00") ? "selected" : ""%>>16:30</option>
+		  		<option value="16:45:00" <%=c!=null && c.getHora().equals("16:45:00") ? "selected" : ""%>>16:45</option>
+		  		<option value="17:00:00" <%=c!=null && c.getHora().equals("17:00:00") ? "selected" : ""%>>17:00</option>
+		  		<option value="17:15:00" <%=c!=null && c.getHora().equals("17:15:00") ? "selected" : ""%>>17:15</option>
+		  		<option value="17:30:00" <%=c!=null && c.getHora().equals("17:30:00") ? "selected" : ""%>>17:30</option>
+		  		<option value="17:45:00" <%=c!=null && c.getHora().equals("17:45:00") ? "selected" : ""%>>17:45</option>  			 
   		</select>  
   		</div>			 
 		</td>		
@@ -171,30 +187,24 @@ if (c == null){
 	</tr>
 </table>
 <br>
-	<!-- MENSAJE DE CONFIRMACION -->
-	<%
-		String mensaje= "return confirm('Esta seguro que desea realizar el alta?');"; 
-		  
-//		if (citacion != null){			//ARREGLAR
-			
-			mensaje = "return confirm('Esta seguro que desea modificar?');"; 
-//		}
-		 
-		%>
-<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="<%=mensaje%>"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
-<button type="reset" class="btn btn-primary"  value="Cancelar"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
+<button type="submit" class="btn btn-primary" onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+<button type="reset" class="btn btn-primary"  onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
 <%}%>
 </form>
 </div>
 <br>
-<%if (!error.equals("")) {%>
+<%	Mensaje mensaje = null;
+	
+	if (session.getAttribute("mensaje") != null) {
+		mensaje = (Mensaje)session.getAttribute("mensaje");
+		session.setAttribute("mensaje", null);	
+%>
 	<div class="bs-example">
-    	 <div class="alert alert-warning fade in" role="alert">
+    	 <div class="alert <%=mensaje.getTipo()%> fade in" role="alert">
      	 	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 	<strong>Cuidado!</strong> <%=error%>
+     	 	<%=mensaje.getMensaje()%>
   	  	</div>
- 	 </div><!-- /example -->
-<br>
+ 	 </div>
 <br>
 <%}%>
 <%if (citaciones != null){%>

@@ -1,8 +1,9 @@
+<%@page import="datos.*"%>
 <%@page import="conexion.AccionesMateria"%>
 <%@page import="conexion.AccionesNota"%>
 <%@page import="conexion.AccionesAlumno"%>
 <%@page import="conexion.AccionesUsuario"%>
-<%@page import="datos.*"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -86,8 +87,8 @@
 </table>
 <br>
 
-<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
-<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('Esta seguro que desea cancelar?');"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
+<button type="submit" class="btn btn-primary" onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+<button type="reset" class="btn btn-primary"  onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
 
 </form>
 </div>

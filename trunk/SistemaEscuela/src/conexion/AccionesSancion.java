@@ -15,7 +15,7 @@ public class AccionesSancion {
 		Sanciones lista = new Sanciones();
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT S.DNI, AG.GRADO, AG.TURNO, S.FECHA, S.HORA, S.MOTIVO FROM SANCIONES AS S INNER JOIN ALUMNOS_GRADO AS AG ON (AG.DNI = S.DNI AND AG.AÑO = "+ año + ") INNER JOIN MAESTROS_GRADO AS MG ON (MG.GRADO = AG.GRADO AND MG.TURNO = AG.TURNO) WHERE S.FECHA BETWEEN '"+ año +"-01-01' AND '" + año + "-12-31' AND (MG.DNI_MAESTRO_TIT = " + DNI_MAESTRO + " OR MG.DNI_MAESTRO_PAR = " + DNI_MAESTRO + ")" );			
+			ResultSet rs = stmt.executeQuery("SELECT DISTINCT S.DNI, AG.GRADO, AG.TURNO, S.FECHA, S.HORA, S.MOTIVO FROM SANCIONES AS S INNER JOIN ALUMNOS_GRADO AS AG ON (AG.DNI = S.DNI AND AG.AÑO = "+ año + ") INNER JOIN MAESTROS_GRADO AS MG ON (MG.GRADO = AG.GRADO AND MG.TURNO = AG.TURNO) WHERE S.FECHA BETWEEN '"+ año +"-01-01' AND '" + año + "-12-31' AND (MG.DNI_MAESTRO_TIT = " + DNI_MAESTRO + " OR MG.DNI_MAESTRO_PAR = " + DNI_MAESTRO + ")" );			
 			Sancion tmp;
 			
 			while (rs.next()) {
@@ -51,7 +51,7 @@ public class AccionesSancion {
 		Alumnos lista = new Alumnos();
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT A.* FROM MAESTROS_GRADO MG INNER JOIN ALUMNOS_GRADO AG ON(AG.GRADO = MG.GRADO AND AG.TURNO = MG.TURNO) INNER JOIN ALUMNOS A ON (A.DNI = AG.DNI) WHERE AG.AÑO = " + año + " AND (MG.DNI_MAESTRO_TIT = " + DNI_MAESTRO + " OR MG.DNI_MAESTRO_PAR = " + DNI_MAESTRO+ ")");
+			ResultSet rs = stmt.executeQuery("SELECT DISTINCT A.* FROM MAESTROS_GRADO MG INNER JOIN ALUMNOS_GRADO AG ON(AG.GRADO = MG.GRADO AND AG.TURNO = MG.TURNO) INNER JOIN ALUMNOS A ON (A.DNI = AG.DNI) WHERE AG.AÑO = " + año + " AND (MG.DNI_MAESTRO_TIT = " + DNI_MAESTRO + " OR MG.DNI_MAESTRO_PAR = " + DNI_MAESTRO+ ")");
 			Alumno tmp;
 			
 			while (rs.next()) {

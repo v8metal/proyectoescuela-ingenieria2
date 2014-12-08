@@ -1,6 +1,7 @@
 package controlador;
 
 import java.io.IOException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesCitacion;
+import conexion.AccionesMensaje;
 import conexion.AccionesUsuario;
 import datos.Citacion;
 import datos.Maestro;
@@ -152,7 +154,7 @@ import datos.Maestro;
 				response.sendRedirect("CitacionList");
 				
 			} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
-				sesion.setAttribute("error", "Ya existe una citacion para el mismo dia y horario");
+				sesion.setAttribute("mensaje", AccionesMensaje.getOne(54));
 				
 				if (AccionesUsuario.validarAcceso(tipo, "citacion_edit.jsp") != 1){							
 					response.sendRedirect("Login");						
@@ -161,7 +163,8 @@ import datos.Maestro;
 				response.sendRedirect("citacion_edit.jsp");			
 				
 			} catch (Exception e) {				
-				sesion.setAttribute("error", e);
+				
+				//sesion.setAttribute("error", e);
 				
 				if (AccionesUsuario.validarAcceso(tipo, "citacion_edit.jsp") != 1){							
 					response.sendRedirect("Login");						
@@ -187,7 +190,8 @@ import datos.Maestro;
 				response.sendRedirect("CitacionList");
 			
 			} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
-				sesion.setAttribute("error", "Ya existe una citacion para el mismo dia y horario");
+				
+				sesion.setAttribute("mensaje", AccionesMensaje.getOne(54));
 				
 				if (AccionesUsuario.validarAcceso(tipo, "citacion_edit.jsp") != 1){							
 					response.sendRedirect("Login");						
@@ -195,7 +199,8 @@ import datos.Maestro;
 				
 				response.sendRedirect("citacion_edit.jsp");			
 			} catch (Exception e) {				
-				sesion.setAttribute("error", e);
+				
+				//sesion.setAttribute("error", e);
 								
 				if (AccionesUsuario.validarAcceso(tipo, "citacion_edit.jsp") != 1){							
 					response.sendRedirect("Login");						

@@ -2,10 +2,11 @@
 <%@page import="datos.Maestro_Grado"%>
 <%@page import="datos.Maestros_Grados"%>
 <%@page import="datos.Tardanza"%>
-<%@page import="conexion.AccionesAlumno"%>
 <%@page import="datos.Alumno"%>
 <%@page import="datos.Alumnos"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
+<%@page import="conexion.AccionesAlumno"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -25,9 +26,11 @@
 
 <%
 	int tipo = (Integer) session.getAttribute("tipoUsuario");						
+	
 	if (AccionesUsuario.validarAcceso(tipo, "asistencia_edit.jsp") != 1){							
 		response.sendRedirect("Login");
 	}
+	
 	Maestro maestro = (Maestro)session.getAttribute("maestro");
 	String nombre = maestro.getNombre();
 	String apellido = maestro.getApellido();
@@ -105,8 +108,8 @@
 		    </tr> 
 		  </table>
 		  
-		  		  <button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('¿Está seguro que desea guardar?');"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
-		          <button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave" onclick="return confirm('¿Está seguro que desea cancelar?');"><i class="glyphicon glyphicon-remove"></i> Cancelar</button> 
+		  <button type="submit" class="btn btn-primary" onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+		  <button type="reset" class="btn btn-primary"  onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-remove"></i> Cancelar</button> 
 		          
 		  </form>
 		  </div>

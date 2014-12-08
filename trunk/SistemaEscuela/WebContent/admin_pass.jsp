@@ -80,7 +80,7 @@
  
 <br>
 <button type="submit" class="btn btn-primary"  onclick=<%=AccionesMensaje.getOne(2).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
-<button type="reset" class="btn btn-primary"   onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Cancelar</button>
+<button type="reset" class="btn btn-primary"   onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
 </form>
 </div>
 <br>

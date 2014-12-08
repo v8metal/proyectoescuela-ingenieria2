@@ -1,12 +1,14 @@
 package controlador;
 
 import java.io.IOException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import conexion.AccionesMensaje;
 import conexion.AccionesSancion;
 import conexion.AccionesUsuario;
 import datos.Maestro;
@@ -171,7 +173,7 @@ import datos.Sancion;
 				response.sendRedirect("SancionList");
 				
 			} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
-				sesion.setAttribute("error", "Ya existe una sanción para el mismo dia y horario");
+				sesion.setAttribute("mensaje", AccionesMensaje.getOne(56));
 				
 				// modulo de seguridad
 				if (AccionesUsuario.validarAcceso(tipo, "sancion_edit.jsp") != 1){							
@@ -181,7 +183,7 @@ import datos.Sancion;
 				response.sendRedirect("sancion_edit.jsp");				
 				
 			} catch (Exception e) {				
-				sesion.setAttribute("error", e);
+				//sesion.setAttribute("error", e);
 				
 				// modulo de seguridad
 				if (AccionesUsuario.validarAcceso(tipo, "sancion_edit.jsp") != 1){							
@@ -217,7 +219,7 @@ import datos.Sancion;
 				response.sendRedirect("SancionList");
 				
 			} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
-				sesion.setAttribute("error", "Ya existe una sanción para el mismo dia y horario");
+				sesion.setAttribute("mensaje", AccionesMensaje.getOne(56));
 				
 				// modulo de seguridad
 				if (AccionesUsuario.validarAcceso(tipo, "sancion_edit.jsp") != 1){							
@@ -227,8 +229,7 @@ import datos.Sancion;
 				response.sendRedirect("sancion_edit.jsp");
 				
 			} catch (Exception e) {				
-				sesion.setAttribute("error", e);
-				
+				//sesion.setAttribute("error", e);				
 				// modulo de seguridad
 				if (AccionesUsuario.validarAcceso(tipo, "sancion_edit.jsp") != 1){							
 					response.sendRedirect("Login"); //redirecciona al login, sin acceso						

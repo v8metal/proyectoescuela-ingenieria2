@@ -41,10 +41,12 @@
 <br>
 <%
 	if (o.getLista().isEmpty()) {
+		
+		Mensaje m = AccionesMensaje.getOne(57);
 %>
- 		<div class="alert alert-info fade in" role="alert">
+ 		<div class="alert <%=m.getTipo()%> fade in" role="alert">
      	 	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 	<strong>Atención!</strong> No hay observaciones cargadas
+     	 	<%=m.getMensaje()%>
   	  	</div>
 <%
 	} else {
@@ -84,7 +86,7 @@
 <br>
 <br>
 <button type="submit" class="btn btn-primary"  onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
-<button type="reset" class="btn btn-primary"   onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Cancelar</button>
+<button type="reset" class="btn btn-primary"   onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
 </form>
 <br>
 <br>

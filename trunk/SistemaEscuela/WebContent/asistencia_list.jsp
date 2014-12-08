@@ -6,6 +6,7 @@
 <%@page import="conexion.AccionesAlumno"%>
 <%@page import="conexion.AccionesTardanza"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -44,18 +45,7 @@
   <div id="divmenu">
   	<!-- sirve para visualizar el menú superior -->
   </div>
-<%
-	if (tardanzas.getTardanzas().isEmpty()){
-%>
-<div class="page-header">
-<h1>Listado de Asistencias</h1>
-</div>
-<br>
-<div class="alert alert-info fade in" role="alert">
-	   <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	   <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Atención!</strong> No hay Asistencias cargadas el día <%=fechaDisplay%>. <a href="menu_asistencias.jsp" class="alert-link">Seleccionar otro grado/fecha <i class="glyphicon glyphicon-pushpin"></i></a>
-</div> 
-<%}else{%> 
+
 <div class="page-header">
 <h1>Listado de Asistencias</h1>
 </div>
@@ -88,7 +78,7 @@
 		<td><%= t.getObservaciones() %></td>	
 		<td><strong><a href="AsistenciaEdit?do=<%=accion%>&&dni=<%=t.getDni()%>&&fecha=<%=fecha%>"><i class="glyphicon glyphicon-pencil"></i> <%=accion%></a></strong></td>
 		<%if (t.getTipo().equals("A")){%>		
-		<td><strong><a href="AsistenciaEdit?do=borrar&&dni=<%=t.getDni()%>&&fecha=<%=fecha%>>" onclick="return confirm('¿Está seguro que desea borrar la asistencia?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
+		<td><strong><a href="AsistenciaEdit?do=borrar&&dni=<%=t.getDni()%>&&fecha=<%=fecha%>>" onclick=<%=AccionesMensaje.getOne(32).getMensaje()%>><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
 		<%}else{%>
 		<td></td>
 		<%}%>
@@ -107,11 +97,6 @@
 	   	<button type="submit" class="btn btn-primary"  value="Seleccionar otro grado/fecha"><i class="glyphicon glyphicon-pushpin"></i> Seleccionar otro grado/fecha</button> 
 	   </form>
 	</div>
-	
-<%
-	}
- %>
-
 </div>
 	<!-- Bootstrap core JavaScript
     ================================================== -->

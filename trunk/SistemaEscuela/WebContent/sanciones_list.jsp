@@ -2,9 +2,11 @@
 <%@page import="datos.Maestro"%>
 <%@page import="datos.Sancion"%>
 <%@page import="datos.Sanciones"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesAlumno"%>
 <%@page import="conexion.AccionesUsuario"%>
 <%@page import="conexion.AccionesMaestro"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -72,10 +74,11 @@ if (sanciones.getLista().isEmpty()){
 <h1>Sanciones</h1>
 </div>
 <br>
+<% Mensaje m = AccionesMensaje.getOne(55); %>
 <!-- MENSAJE ATENCION -->
-	<div class="alert alert-info" role="alert">
+	<div class="alert <%=m.getTipo()%>" role="alert">
 		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	<strong>Atención!</strong> No hay sanciones para el año seleccionado. <a href="SancionEdit?do=alta" class="alert-link">Agregar nueva Sanción</a>
+     	<%=m.getMensaje()%> <a href="SancionEdit?do=alta" class="alert-link">Agregar nueva Sanción</a>
     </div>
     
    <%if (añoc == max){%>
@@ -124,7 +127,7 @@ if (sanciones.getLista().isEmpty()){
 		<td><%= s.getHora().substring(0,5) %></td>
 		<td><%= s.getMotivo() %></td>		
 		<td><strong><a href="SancionEdit?do=modificar&dni_sancion=<%=s.getDni()%>&fecha_sancion=<%=s.getFecha()%>&hora_sancion=<%=s.getHora()%>&exit=<%=exit%>"><i class="glyphicon glyphicon-pencil"></i> Editar</a></strong></td>
-		<td><strong><a href="SancionEdit?do=baja&dni_sancion=<%=s.getDni()%>&fecha_sancion=<%=s.getFecha()%>&hora_sancion=<%=s.getHora()%>&exit=<%=exit%>" onclick="return confirm('Esta seguro que desea borrar?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
+		<td><strong><a href="SancionEdit?do=baja&dni_sancion=<%=s.getDni()%>&fecha_sancion=<%=s.getFecha()%>&hora_sancion=<%=s.getHora()%>&exit=<%=exit%>" onclick=<%=AccionesMensaje.getOne(32).getMensaje()%>><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
 	</tr>
 	</tbody>
 <%

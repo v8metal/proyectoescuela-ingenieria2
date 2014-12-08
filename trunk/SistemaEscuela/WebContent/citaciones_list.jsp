@@ -2,9 +2,11 @@
 <%@page import="datos.Maestro"%>
 <%@page import="datos.Citacion"%>
 <%@page import="datos.Citaciones"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesAlumno"%>
 <%@page import="conexion.AccionesUsuario"%>
 <%@page import="conexion.AccionesMaestro"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -73,9 +75,11 @@ if (citaciones.getLista().isEmpty()){
 </div>
 <br>
 <!-- MENSAJE ATENCION -->
-	<div class="alert alert-info" role="alert">
+<% Mensaje m = AccionesMensaje.getOne(52); %>
+
+	<div class="alert <%=m.getTipo()%>" role="alert">
 		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	<strong>Atención!</strong> No hay citaciones para el año seleccionado. <a href="citaciones_select.jsp" class="alert-link">Volver a selección de año</a>
+     	<%=m.getMensaje()%> <a href="citaciones_select.jsp" class="alert-link">Volver a selección de año</a>
     </div>
     <%if (añoc == max){%>
     <br>    
@@ -123,7 +127,7 @@ if (citaciones.getLista().isEmpty()){
 		<td><%= c.getHora().substring(0,5) %></td>
 		<td><%= c.getDescripcion() %></td>						
 		<td><strong><a href="CitacionEdit?do=modificar&dni_citacion=<%=c.getDni()%>&fecha_citacion=<%=c.getFecha()%>&hora_citacion=<%=c.getHora()%>&exit=<%=exit%>"><i class="glyphicon glyphicon-pencil"></i> Editar</a></strong></td>
-		<td><strong><a href="CitacionEdit?do=baja&dni_citacion=<%=c.getDni()%>&fecha_citacion=<%=c.getFecha()%>&hora_citacion=<%=c.getHora()%>&exit=<%=exit%>" onclick="return confirm('Esta seguro que desea borrar?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
+		<td><strong><a href="CitacionEdit?do=baja&dni_citacion=<%=c.getDni()%>&fecha_citacion=<%=c.getFecha()%>&hora_citacion=<%=c.getHora()%>&exit=<%=exit%>" onclick=<%=AccionesMensaje.getOne(32).getMensaje()%>><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
 	</tr>
 	</tbody>
 <%
