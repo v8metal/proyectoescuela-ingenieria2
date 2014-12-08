@@ -1,8 +1,10 @@
 <%@page import="datos.Cuota"%>
 <%@page import="datos.Cuotas"%>
 <%@page import="datos.Alumno"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesAlumno"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -87,7 +89,7 @@
 			<td>PAGO</td>
 			<td>
 				<div class="col-xs-5">
-				<input type="text" class="form-control" placeholder="importe" name="pago" value="<%=cuota!=null?cuota.getPago(): ""%>">
+				<input type="text" class="form-control" required placeholder="importe" name="pago" value="<%=cuota!=null?cuota.getPago(): ""%>">
 				</div>				
 			</td>
 		</tr>
@@ -105,9 +107,9 @@
 	<br>
 	<br>
 	<%if (cuota != null) { %>	
-	<button type="submit" class="btn btn-primary"  value="Realizar modificación">Realizar modificación</button>	
+	<button type="submit" class="btn btn-primary"  value="Realizar modificación" onclick=<%=AccionesMensaje.getOne(2).getMensaje()%>>Realizar modificación</button>	
 	<%}else{%>	
-	<button type="submit" class="btn btn-primary"  value="Realizar alta">Realizar alta</button>
+	<button type="submit" class="btn btn-primary"  value="Realizar alta" onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>>Realizar alta</button>
 	<%}%>	
 	</form>
 </div>

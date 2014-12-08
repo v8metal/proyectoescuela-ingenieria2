@@ -6,6 +6,7 @@
 <%@page import="conexion.AccionesUsuario"%>
 <%@page import="conexion.AccionesAlumno"%>
 <%@page import="conexion.AccionesPlanPago"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
@@ -283,9 +284,9 @@ if (alumnos.getLista().size() == 0){%>
 
 		
 		<%if (plan != null) { %>
-			<button type="submit" class="btn btn-primary"  value="Modificar" name="btnSave" onclick="return confirm('Esta seguro que desea modificar?');">Modificar</button>	
+			<button type="submit" class="btn btn-primary"  value="Modificar" name="btnSave" onclick=<%=AccionesMensaje.getOne(2).getMensaje()%>>Modificar</button>	
 		<%}else{%>
-			<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea guardar?');">Realizar alta</button>
+			<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>>Realizar alta</button>
 		<%}%>
 			
 	<br>

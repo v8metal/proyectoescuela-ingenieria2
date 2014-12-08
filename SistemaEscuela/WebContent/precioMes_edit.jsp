@@ -1,5 +1,6 @@
 <%@page import="datos.PrecioMes"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -82,7 +83,7 @@
             	<input type="text" class="form-control" readonly value="<%=precio!=null?meses[precio.getMes()]:meses[2]%>" name="mes">
             </div>	
           <%}else{ %>
-          	<div class="col-xs-2">
+          	<div class="col-xs-3">
             	<input type="text" class="form-control" readonly value="<%=precio!=null?meses[precio.getMes()-1]:meses[2]%>" name="mes">
             </div>	
           <%} %>
@@ -90,39 +91,38 @@
         <tr>
           <th>Precio Regular:</th>
           <td>
-          	<div class="col-xs-2">
-          		<input type="text" class="form-control" placeholder="Precio Regular" name="regular" value="<%=precio!=null?precio.getRegular():"" %>">
+          	<div class="col-xs-3">
+          		<input type="text" class="form-control" required placeholder="Precio Regular" name="regular" value="<%=precio!=null?precio.getRegular():"" %>">
          	</div>
           </td>
         </tr>
         <tr>
           <th>Precio de Grupo:</th>
           <td>
-          	<div class="col-xs-2">
-          		<input type="text" class="form-control" placeholder="Precio Grupo" name="grupo" value="<%=precio!=null?precio.getGrupo():""%>">
+          	<div class="col-xs-3">
+          		<input type="text" class="form-control" required placeholder="Precio Grupo" name="grupo" value="<%=precio!=null?precio.getGrupo():""%>">
           	</div>
           </td>
         </tr>
         <tr>
           <th>Precios de Hijos:</th>
           <td>
-          	<div class="col-xs-2">
-          		<input type="text" class="form-control" placeholder="Precio Hijos" name="hijos" value="<%=precio!=null?precio.getHijos():""%>">
+          	<div class="col-xs-3">
+          		<input type="text" class="form-control" required placeholder="Precio Hijos" name="hijos" value="<%=precio!=null?precio.getHijos():""%>">
          	</div>
           </td>
         </tr>
         <tr>
           <th>Recargo:</th>
           <td>
-          	<div class="col-xs-2">
-          		<input type="text" class="form-control" placeholder="Recargo Mensual" name="recargo" value="<%=precio!=null?precio.getRecargo():""%>">
+          	<div class="col-xs-3">
+          		<input type="text" class="form-control" required placeholder="Recargo Mensual" name="recargo" value="<%=precio!=null?precio.getRecargo():""%>">
        		</div>
        	  </td>	
         </tr>        
       </table>
-      	<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('¿Está seguro que desea guardar?');"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>         	 
-        <button type="reset" class="btn btn-primary"   value="Cancelar" name="btnSave" onclick="return confirm('¿Está seguro que desea cancelar?');"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
-        <input type="hidden" name="error" value="ERROR!!!">
+      <button type="submit" class="btn btn-primary"  onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+	  <button type="reset" class="btn btn-primary"   onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Cancelar</button>	      
     </form>
     </div>
     <br>
@@ -130,15 +130,7 @@
 		<form action="PrecioList" method="get">
 		<button type="submit" class="btn btn-primary"  value="Volver al Menú de precios"><i class="glyphicon glyphicon-share-alt"></i> Volver al Menú de precios</button>
 		</form>
-	</div>
-  <%String error = (String)session.getAttribute("error");
-    if(error!=null){
-    	 %>
-    	<h3><%=error %></h3>
-    	 <% 
-    	 session.setAttribute("error", null);
-    }
-    %>     
+	</div>    
 </div>
 	<!-- Bootstrap core JavaScript
     ================================================== -->
@@ -151,41 +143,5 @@
 
 	<!-- menú superior -->
 	<script src="js/menu_admin.js"></script>
-	
-	<script type="text/javascript">
-	 var form = document.getElementById("formPrecio");
- 	 function validarPrecio(){
-	// var año = form.año.value;
-	 var mes = form.mes.value;
-	 var regular = form.regular.value;
-	 var grupo = form.grupo.value;
-	 var hijos=form.hijos.value;
-	 var recargo = form.recargo.value;
-	 
-	 if(año=='' || mes=='' || regular=='' || grupo=='' || hijos=='' || recargo==''){
-		 alert("Debe completar todos los campos");
-		 return false;
-	 }
-	 
-	 else if(isNaN(regular)){
-		 alert('Debe ingresar sólo números');
-		 return false;
-	 }
-	 else if(isNaN(grupo)){
-		 alert('Debe ingresar sólo números');
-		 return false;
-		 }
-	 else if(isNaN(hijos)){
-		 alert('Debe ingresar sólo números');
-		 return false;
-	 }
-	 else if(isNaN(recargo)){
-		 alert('Debe ingresar sólo números');
-		 return false;
-	 }else{
-		 return true;
-	 }
-	 }
-	</script>
 </body>
 </html>

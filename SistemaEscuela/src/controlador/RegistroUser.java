@@ -1,12 +1,14 @@
 package controlador;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import conexion.AccionesMensaje;
 import conexion.AccionesUsuario;
 
 /**
@@ -80,34 +82,30 @@ public class RegistroUser extends HttpServlet {
 			String contraseña = request.getParameter("contraseña");
 			String contraseña_conf = request.getParameter("contraseña_conf");
 			
-			if (!usuario.equals("") && !contraseña.equals("") && !contraseña_conf.equals("")) {
+			if (contraseña.equals(contraseña_conf)) {
 				
+				if(AccionesUsuario.checkUsuario(usuario)){
 					
-					if (contraseña.equals(contraseña_conf)) {
-						
-					AccionesUsuario.registrar(dni, usuario, contraseña_conf);	
-						
-				} else {
-					sesion.setAttribute("error", "Error al confirmar contraseña");
+					sesion.setAttribute("mensaje", AccionesMensaje.getOne(51));
 					response.sendRedirect("registro_user.jsp");
-				}
-				
-			} else {
-				sesion.setAttribute("error", "Debe completar todos los campos para registrarse");
-				response.sendRedirect("registro_user.jsp");
-			}
-			
-			if (AccionesUsuario.validarAcceso(tipo, "UsuarioList") != 1){							
-				response.sendRedirect("Login");						
-			}
-			
-			response.sendRedirect("UsuarioList");
 					
-		} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
-			e.printStackTrace();
-			
-			sesion.setAttribute("error", "El usuario ingresado ya ha sido utilizado");
-			response.sendRedirect("registro_user.jsp");
+				}else{
+					
+					if (AccionesUsuario.validarAcceso(tipo, "UsuarioList") != 1){							
+						response.sendRedirect("Login");						
+					}
+					
+					AccionesUsuario.registrar(dni, usuario, contraseña_conf);
+					response.sendRedirect("UsuarioList");
+				}				
+						
+			} else {
+				
+				sesion.setAttribute("mensaje", AccionesMensaje.getOne(5));
+				response.sendRedirect("registro_user.jsp");
+				
+			}		
+					
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

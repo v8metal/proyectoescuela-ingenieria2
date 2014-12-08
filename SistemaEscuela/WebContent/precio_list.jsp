@@ -2,7 +2,9 @@
 <%@page import="datos.PreciosMes"%>
 <%@page import="datos.PrecioInscrip"%>
 <%@page import="datos.PreciosInscrip"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -39,8 +41,16 @@
 	<h1>Precios de Cuotas - <%=año%></h1>		
   </div>    
   
-<% if (preciosMes == null || (preciosMes.getPrecios().size() == 0)){ %>
-<a href="PrecioEdit?accion=altaMes">No hay precios asignados, dar de alta</a>
+<% if (preciosMes == null || (preciosMes.getPrecios().size() == 0)){
+	
+		Mensaje m = AccionesMensaje.getOne(46);
+%>
+
+		<!-- MENSAJE INFORMATIVO -->
+    	 <div class="alert <%=m.getTipo()%> fade in" role="alert">
+     	 	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	 	<%=m.getMensaje()%> <a href="PrecioEdit?accion=altaMes" class="alert-link">Dar de alta</a>
+  	  	 </div>
 <%}else{%>
   <table class="table table-hover">
   		  <thead>
@@ -106,11 +116,15 @@
 	<div class="page-header">  	  
 		<h1>Precios de Inscripciones - <%=año%></h1>		
     </div>   	
-<% if (preciosInscrip == null || (preciosInscrip.getPrecios().size() == 0)){ %>
+<% if (preciosInscrip == null || (preciosInscrip.getPrecios().size() == 0)){ 
+	
+		Mensaje m = AccionesMensaje.getOne(46);
+%>
+
 		<!-- MENSAJE INFORMATIVO -->
-    	 <div class="alert alert-info fade in" role="alert">
+    	 <div class="alert <%=m.getTipo()%> fade in" role="alert">
      	 	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 	<strong>Atención!</strong> No hay precios asignados. <a href="PrecioEdit?accion=altaInscrip" class="alert-link">Dar de alta</a>
+     	 	<%=m.getMensaje()%> <a href="PrecioEdit?accion=altaInscrip" class="alert-link">Dar de alta</a>
   	  	 </div>
 <%}else{%>  
   <table class="table table-hover">
@@ -134,7 +148,7 @@
             	  <td><%=precioI.getPrecio() %></td>
             	  <td><%=precioI.getRecargo() %></td>            	  
             	  <td><strong><a href="PrecioEdit?accion=modificarInscrip&&año=<%=precioI.getAño()%>"><i class="glyphicon glyphicon-pencil"></i> Editar</a></strong></td>
-            	  <td><strong><a href="PrecioEdit?accion=bajaInscrip&&año=<%=precioI.getAño() %>" onclick="return confirm('Esta seguro que desea borrar?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
+            	  <td><strong><a href="PrecioEdit?accion=bajaInscrip&&año=<%=precioI.getAño() %>" onclick=<%=AccionesMensaje.getOne(22).getMensaje()%>><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
             	</tr>
             </tbody>	
            <%}%>            	         

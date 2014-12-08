@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conexion.AccionesAlumno;
+import conexion.AccionesMensaje;
 import conexion.AccionesTardanza;
 import conexion.AccionesUsuario;
 import datos.Alumnos;
@@ -49,7 +50,7 @@ public class TardanzaEdit extends HttpServlet {
 			case "alta":
 				
 				if (AccionesUsuario.validarAcceso(tipo, "tardanza_edit.jsp") != 1){							
-					response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+					response.sendRedirect("Login");						
 				}
 				
 				int año = (Integer) sesion.getAttribute("añoTardanza");
@@ -58,7 +59,7 @@ public class TardanzaEdit extends HttpServlet {
 				try {
 					
 					if (AccionesUsuario.validarAcceso(tipo, "AccionesAlumno") != 1){							
-						response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+						response.sendRedirect("Login");						
 					}
 					
 					Alumnos alumnos = AccionesAlumno.getAllByGradoTurnoYAño(grado.getGrado(), grado.getTurno(), año);
@@ -179,8 +180,10 @@ public class TardanzaEdit extends HttpServlet {
 					dispatcher.forward(request, response);				
 				
 				} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
-					sesion.setAttribute("error", "Ya existe una tardanza para el alumno en el mismo dia");
-					response.sendRedirect("tardanza_edit.jsp");		
+					
+					sesion.setAttribute("mensaje",AccionesMensaje.getOne(43));
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/tardanza_edit.jsp");
+					dispatcher.forward(request, response);		
 					
 				} catch (Exception e) {				
 					e.printStackTrace();
@@ -195,25 +198,27 @@ public class TardanzaEdit extends HttpServlet {
 					response.sendRedirect("Login");						
 				}
 				
+				if (AccionesUsuario.validarAcceso(tipo, "AccionesTardanza") != 1){							
+					response.sendRedirect("Login");						
+				}
+					
+				Tardanza t = new Tardanza(dni, fecha, obs, "T", "");
+				
 				try {
 					
-					if (AccionesUsuario.validarAcceso(tipo, "AccionesTardanza") != 1){							
-						response.sendRedirect("Login");						
-					}
-					
-					Tardanza t = new Tardanza(dni, fecha, obs, "T", "");
-					
 					AccionesTardanza.modificarTardanza(t, fecha_update);												
-					
+														
 					request.setAttribute("accion","listarTardanzas");
 					
 					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/TardanzaList");
 					dispatcher.forward(request, response);				
 				
 				} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
-					sesion.setAttribute("error", "<br>"+ "Ya existe una tardanza para el alumno, en el mismo dia"+"<br>");
-					response.sendRedirect("tardanza_edit.jsp");		
-					
+										
+					sesion.setAttribute("mensaje",AccionesMensaje.getOne(43));
+					RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/tardanza_edit.jsp");
+					dispatcher.forward(request, response);		
+										
 				} catch (Exception e) {				
 					e.printStackTrace();
 				}

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import datos.Entrevista;
 import conexion.AccionesEntrevista;
 import conexion.AccionesMaestro;
+import conexion.AccionesMensaje;
 import conexion.AccionesUsuario;
 
 /**
@@ -170,7 +171,7 @@ import conexion.AccionesUsuario;
 					}
 					
 					e.printStackTrace();
-					sesion.setAttribute("error", e);										
+					//sesion.setAttribute("error", e);										
 					response.sendRedirect("entrevista_edit.jsp");
 				}  
 		}		
@@ -251,11 +252,11 @@ import conexion.AccionesUsuario;
 						response.sendRedirect("EntrevistaList");
 						
 					} catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
-						sesion.setAttribute("error", "Ya existe una entrevista para el mismo dia y horario");
+						sesion.setAttribute("mensaje", AccionesMensaje.getOne(45));
 						response.sendRedirect("entrevista_edit.jsp");		
 					
 					} catch (Exception e) {				
-						sesion.setAttribute("error", e);
+						//sesion.setAttribute("error", e);
 						response.sendRedirect("entrevista_edit.jsp");
 					}
 					
@@ -283,7 +284,7 @@ import conexion.AccionesUsuario;
 							response.sendRedirect("Login"); //redirecciona al login, sin acceso						
 						}
 						
-						sesion.setAttribute("error", "Ya existe una entrevista para el mismo dia y horario");
+						sesion.setAttribute("mensaje", AccionesMensaje.getOne(45));
 						response.sendRedirect("entrevista_edit.jsp");
 						
 					} catch (Exception e) {

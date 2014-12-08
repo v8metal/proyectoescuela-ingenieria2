@@ -1,9 +1,11 @@
 <%@page import="datos.Alumno"%>
 <%@page import="datos.Tardanza"%>
 <%@page import="datos.Tardanzas"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesAlumno"%>
 <%@page import="conexion.AccionesTardanza"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -29,7 +31,7 @@
 <%
 	int tipo = (Integer) session.getAttribute("tipoUsuario");						
 	if (AccionesUsuario.validarAcceso(tipo, "tardanza_list.jsp") != 1){							
-		response.sendRedirect("Login"); //redirecciona al login, sin acceso						
+		response.sendRedirect("Login");						
 	}
 	
 	int año_tardanza= (Integer) session.getAttribute("añoTardanza");
@@ -43,12 +45,12 @@
 <h1>Listado de Tardanzas</h1>
 </div>
 <br>
-
+<% Mensaje m = AccionesMensaje.getOne(42); %>
 <!-- MENSAJE INFORMATIVO -->
    <div class="bs-example">
-    	 <div class="alert alert-info fade in" role="alert">
+    	 <div class="alert <%=m.getTipo()%> fade in" role="alert">
      	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Atención!</strong> No hay tandanzas cargadas. <a href="TardanzaEdit?do=alta" class="alert-link">Agregar tardanza <i class="glyphicon glyphicon-edit"></i></a>
+     	 <%=m.getMensaje()%> <a href="TardanzaEdit?do=alta" class="alert-link">Agregar tardanza <i class="glyphicon glyphicon-edit"></i></a>
   	  </div>
   </div><!-- /example -->
   
@@ -84,7 +86,7 @@
 		<td><%= dia +"/" + mes + "/" + año %></td>
 		<td><%= t.getObservaciones() %></td>				
 		<td><strong><a href="TardanzaEdit?do=modificar&&dni=<%=t.getDni()%>&&fecha=<%=t.getFecha()%>"><i class="glyphicon glyphicon-pencil"></i> Editar</a></strong></td>		
-		<td><strong><a href="TardanzaEdit?do=borrar&&dni=<%=t.getDni()%>&&fecha=<%=t.getFecha()%>>" onclick="return confirm('Esta seguro que desea borrar la tardanza?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>				
+		<td><strong><a href="TardanzaEdit?do=borrar&&dni=<%=t.getDni()%>&&fecha=<%=t.getFecha()%>>" onclick=<%=AccionesMensaje.getOne(32).getMensaje()%>><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>				
 	</tr>
 	</tbody>
 <%

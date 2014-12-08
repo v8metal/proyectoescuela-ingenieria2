@@ -1,9 +1,11 @@
-<%@page import="conexion.AccionesMaestro"%>
-<%@page import="conexion.AccionesUsuario"%>
 <%@page import="datos.Usuario"%>
 <%@page import="datos.Maestro"%>
 <%@page import="datos.Maestros"%>
 <%@page import="datos.Usuarios"%>
+<%@page import="datos.Mensaje"%>
+<%@page import="conexion.AccionesMaestro"%>
+<%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -40,13 +42,15 @@
 	<h1>Listado de usuarios registrados</h1>
 </div>
 <%  
-		if (usuarios.getLista().isEmpty()) {
+if (usuarios.getLista().isEmpty()) {
+	
+	Mensaje m = AccionesMensaje.getOne(48);
 %>
 <br>
 <!-- MENSAJE DE WARNING -->
-	<div class="alert alert-warning" role="alert">
+	<div class="alert <%=m.getTipo() %>" role="alert">
 	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <strong>Cuidado!</strong> No hay usuarios registrados. <a href="registro_user.jsp?" class="alert-link">Registrar nuevo usuario</a>
+      <%=m.getMensaje() %><a href="registro_user.jsp?" class="alert-link">Registrar nuevo usuario</a>
     </div>
 <%
 		} else {
@@ -71,7 +75,7 @@
 		<td><%= m.getApellido() + ", " + m.getNombre() %></td>
 		<td><%= u.getUsuario() %></td>
 		<td><%= u.getContraseña() %></td>
-		<td><strong><a name="delete-link" href="registroUser?do=baja&dni=<%= u.getDni() %>" onclick="return confirm('¿Está seguro que desea borrar?');"><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
+		<td><strong><a name="delete-link" href="registroUser?do=baja&dni=<%= u.getDni() %>" onclick=<%=AccionesMensaje.getOne(32).getMensaje()%>><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
 	</tr>
 	</tbody>
 <%
@@ -82,20 +86,24 @@
 		}
 %>
 <br>
-<%if ( (!usuarios.getLista().isEmpty()) && (usuarios.getLista().size() < maestros.getLista().size()) ) { //aca agregar a futuro los maestros activos%> 
+<%if ( (!usuarios.getLista().isEmpty()) && (usuarios.getLista().size() < maestros.getLista().size()) ) { //aca agregar a futuro los maestros activos
+		
+	Mensaje m = AccionesMensaje.getOne(49);
+%> 
   <!-- MENSAJE DE WARNING -->
-	<div class="alert alert-warning" role="alert">
+	<div class="alert <%=m.getTipo()%> role="alert">
 	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <strong><i class="glyphicon glyphicon-warning-sign"></i> Cuidado!</strong> No todos los maestros están registrados. <a href="registro_user.jsp?" class="alert-link"> Registrar nuevo usuario <i class="glyphicon glyphicon-edit"></i></a>
+      <%=m.getMensaje()%> <a href="registro_user.jsp?" class="alert-link"> Registrar nuevo usuario <i class="glyphicon glyphicon-edit"></i></a>
     </div>
-<%}else if ((usuarios.getLista().size() >= maestros.getLista().size()))
+<%}else if ((usuarios.getLista().size() >= maestros.getLista().size())){
 
-		{%>
+		Mensaje m = AccionesMensaje.getOne(50);
+	%>
  		 <!-- MENSAJE DE EXITO -->
   		 <div class="bs-example">
-    			 <div class="alert alert-success fade in" role="alert">
+    			 <div class="alert <%=m.getTipo()%> fade in" role="alert">
      			 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     			 <strong><i class="glyphicon glyphicon-ok"></i> Bien Hecho!</strong> Todos los maestros están registrados
+     			 <%=m.getMensaje()%>
   	  		</div>
   		</div><!-- /example -->
 <%}%>

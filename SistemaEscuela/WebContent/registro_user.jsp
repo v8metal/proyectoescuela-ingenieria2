@@ -1,6 +1,7 @@
+<%@page import="datos.*"%>
 <%@page import="conexion.AccionesUsuario"%>
 <%@page import="conexion.AccionesMaestro"%>
-<%@page import="datos.*"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -99,28 +100,26 @@
     </tr>	
 </table>
 <br>
-<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="return confirm('Esta seguro que desea realizar el alta?');"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
-<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnCancel" onclick="return confirm('Esta seguro que desea borrar los campos?');"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
+<button type="submit" class="btn btn-primary"  onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+<button type="reset" class="btn btn-primary"   onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Cancelar</button>
 </form>
 </div>
 <!-- MENSAJE DE ERROR -->
 <%	
-	String error = "";
-	if (session.getAttribute("error") != null) {
-		error = (String)session.getAttribute("error");
-		session.setAttribute("error", null);
+	Mensaje mensaje = null;
+	if (session.getAttribute("mensaje") != null) {
+		mensaje = (Mensaje) session.getAttribute("mensaje");
+		session.setAttribute("mensaje", null);
  %>
  <br>
    <div class="bs-example">
-    	 <div class="alert alert-warning fade in" role="alert">
+    	 <div class="alert <%=mensaje.getTipo()%> fade in" role="alert">
      	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <strong>Cuidado!</strong> <%= error %>
+     	 <%=mensaje.getMensaje()%>
   	  </div>
-  </div><!-- /example -->
+  </div>
 <br>
- <%		
-	}
- %>
+<%}%>
 <br>
 <br>
 	<form action="gest_user_menu.jsp" method="post">
