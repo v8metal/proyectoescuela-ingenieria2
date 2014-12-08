@@ -1,5 +1,6 @@
 <%@page import="datos.Materia"%>
 <%@page import="datos.Materias"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesUsuario"%>
 <%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -33,12 +34,23 @@
   	<!-- sirve para visualizar el menú superior -->
   </div> 
   
-<%Materias materias = (Materias)session.getAttribute("materiasbaja");%>
-  <div class="page-header">  
+   <div class="page-header">  
 	<h1>Listado de Materias Inactivas</h1>
   </div>
+  
+<%Materias materias = (Materias)session.getAttribute("materiasbaja");%>
+
+<%if (materias.getLista().size() == 0){
+	Mensaje m = AccionesMensaje.getOne(58);
+%>
+<br>	
+<!-- MENSAJE INFORMATIVO -->
+<div class="alert <%=m.getTipo()%>" role="alert">
+    <%=m.getMensaje()%>
+</div>
 <br>
-<br>
+<%}else{%>
+
 <table class="table table-hover table-bordered">
 	<thead>
 	<tr class="active">
@@ -66,6 +78,7 @@
 <button type="submit" class="btn btn-primary"  value="Volver al listado principal"><i class="glyphicon glyphicon-share-alt"></i> Volver al listado principal</button>
 </form>
 </div>
+<%}%>
 </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->

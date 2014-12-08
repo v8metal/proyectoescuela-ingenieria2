@@ -33,13 +33,12 @@
   	<!-- sirve para visualizar el menú superior -->
   </div>
   
-  
   <div class="page-header"> 
 	<h1>Registro de bajas</h1>
   </div>
+  
 <% Maestros maestros = (Maestros)session.getAttribute("maestros"); %>
-<br>
-<br>
+
 <%if (maestros.getLista().size() == 0){
 	Mensaje m = AccionesMensaje.getOne(36);
 %>

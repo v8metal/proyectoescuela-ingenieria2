@@ -150,7 +150,11 @@
   </div><!-- /example -->
 <br> 	
  <% } %>
-<strong><a href="maestroList" class="alert-link"><i class="glyphicon glyphicon-share-alt"></i> Volver al listado</a></strong>
+
+<form action="maestroList" method="post">
+<button type="submit" class="btn btn-primary"  value="Volver"><i class="glyphicon glyphicon-share-alt"></i> Volver</button>
+</form>
+
 </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->

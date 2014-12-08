@@ -69,7 +69,7 @@
 	<tr>
 		<td><%= m.getMateria() %></td>
 		<td><strong><a href="materiaEdit?do=baja&materia=<%= m.getMateria() %>" onclick=<%=AccionesMensaje.getOne(22).getMensaje()%>><i class="glyphicon glyphicon-ban-circle"></i> Volver inactiva</a></strong></td>		
-		<td><strong><a href="materiaEdit?do=borrar&materia=<%= m.getMateria() %>" onclick=<%=AccionesMensaje.getOne(32).getMensaje()%>><i class="glyphicon glyphicon-trash"></i> Borrar Materia</a></strong></td>
+		<td><strong><a href="materiaEdit?do=borrar&materia=<%= m.getMateria() %>" onclick=<%=AccionesMensaje.getOne(32).getMensaje()%>><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
 	</tr>
 	<tbody>	
 <%

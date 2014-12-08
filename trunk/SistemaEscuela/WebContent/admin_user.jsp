@@ -82,7 +82,7 @@
 <br>
 <div class="form-group">
 <form action="configuracion_cuenta.jsp" method="get">
-<button type="submit" class="btn btn-primary"  value="Volver a configuración"><i class="glyphicon glyphicon-share-alt"></i>Volver a configuración</button>
+<button type="submit" class="btn btn-primary"  value="Volver a configuración"><i class="glyphicon glyphicon-share-alt"></i> Volver</button>
 </form>
 </div>
 <br>

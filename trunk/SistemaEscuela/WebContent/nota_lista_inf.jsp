@@ -47,11 +47,10 @@
 <table class="table table-hover table-bordered">
 	<thead>
 	<tr class="active">
-		<th><center>Alumno</center></th>
+		<th rowspan="2"><center>Alumno</center></th>
 		<th colspan="3"><center>Informes</center></th>			
 	</tr>	
 	<tr class="active">
-		<th>&nbsp;</th>
 		<th><center>Marzo</center></th>
 		<th><center>Mitad de año</center></th>
 		<th><center>Fin de año</center></th>
@@ -70,6 +69,7 @@
 </table>
 <br>
 <br>
+
 <form action="menu_notas.jsp" method="post">
 <input type="hidden" name="volver" value="volver">
 <button type="submit" class="btn btn-primary"  value="Seleccionar otro grado"><i class="glyphicon glyphicon-pushpin"></i> Seleccionar otro grado</button>

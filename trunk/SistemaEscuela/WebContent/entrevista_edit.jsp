@@ -154,7 +154,7 @@
 		
 		<table id="TablaEntrevistas" class="table table-hover table-bordered">
 			<tr>
-			<td><label for="input">Fecha:</label></td>			
+			<td><label for="input">Fecha</label></td>			
 				<td>
 				<div class="col-xs-2">
 					<input class="form-control" type="text" id="datepicker" required autofocus name="fecha_entrevista">
