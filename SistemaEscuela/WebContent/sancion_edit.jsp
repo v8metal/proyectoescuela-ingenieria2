@@ -2,8 +2,10 @@
 <%@page import="datos.Maestro"%>
 <%@page import="datos.Alumno"%>
 <%@page import="datos.Alumnos"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesAlumno"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -46,14 +48,6 @@
 <%
 		Sancion s = (Sancion) session.getAttribute("sancion_edit");
 		
-		String error = "";
-		
-		if (session.getAttribute("error") != null) {
-			error = (String)session.getAttribute("error");
-			System.out.println(error);
-			session.setAttribute("error", "");
-		}
-	
 		Alumno alumno = null;
 		Alumnos alumnos = new Alumnos();
 		Boolean empty = false;
@@ -71,7 +65,7 @@
 </div>
 <h3><%="Sanción para " + alumno.getNombre() + " " + alumno.getApellido()%></h3>
 <br>
-<%}else if (alumnos.getLista().isEmpty() & error.equals("")){
+<%}else if (alumnos.getLista().isEmpty()){
 	empty = true;
 %>
 <div class="page-header">
@@ -128,26 +122,46 @@ if (empty == false){
 		<td>
 		<div class="col-xs-2">
 		<select name="hora_sancion" class="form-control">
-			 <option value="08:00:00" <%=s != null && s.getHora().equals("08:00:00") ? "selected" : ""%>>08:00</option>
-  			 <option value="08:30:00" <%=s != null && s.getHora().equals("08:30:00") ? "selected" : ""%>>08:30</option>
-  			 <option value="09:00:00" <%=s != null && s.getHora().equals("09:00:00") ? "selected" : ""%>>09:00</option>
-  			 <option value="09:30:00" <%=s != null && s.getHora().equals("09:30:00") ? "selected" : ""%>>09:30</option>
-  			 <option value="10:00:00" <%=s != null && s.getHora().equals("10:00:00") ? "selected" : ""%>>10:00</option>
-  			 <option value="10:30:00" <%=s != null && s.getHora().equals("10:30:00") ? "selected" : ""%>>10:30</option>
-  			 <option value="11:00:00" <%=s != null && s.getHora().equals("11:00:00") ? "selected" : ""%>>11:00</option>
-  			 <option value="11:30:00" <%=s != null && s.getHora().equals("11:30:00") ? "selected" : ""%>>11:30</option>
-  			 <option value="12:00:00" <%=s != null && s.getHora().equals("12:00:00") ? "selected" : ""%>>12:00</option>
-  			 <option value="12:30:00" <%=s != null && s.getHora().equals("12:30:00") ? "selected" : ""%>>12:30</option>
-  			 <option value="13:00:00" <%=s != null && s.getHora().equals("13:00:00") ? "selected" : ""%>>13:00</option>
-  			 <option value="13:30:00" <%=s != null && s.getHora().equals("13:30:00") ? "selected" : ""%>>13:30</option>
-  			 <option value="14:00:00" <%=s != null && s.getHora().equals("14:00:00") ? "selected" : ""%>>14:00</option>
-  			 <option value="14:30:00" <%=s != null && s.getHora().equals("14:30:00") ? "selected" : ""%>>14:30</option>
-  			 <option value="15:00:00" <%=s != null && s.getHora().equals("15:00:00") ? "selected" : ""%>>15:00</option>
-  			 <option value="15:30:00" <%=s != null && s.getHora().equals("15:30:00") ? "selected" : ""%>>15:30</option>
-  			 <option value="16:00:00" <%=s != null && s.getHora().equals("16:00:00") ? "selected" : ""%>>16:00</option>
-  			 <option value="16:30:00" <%=s != null && s.getHora().equals("16:30:00") ? "selected" : ""%>>16:30</option>
-  			 <option value="17:00:00" <%=s != null && s.getHora().equals("17:00:00") ? "selected" : ""%>>17:00</option>
-  			 <option value="17:30:00" <%=s != null && s.getHora().equals("17:30:00") ? "selected" : ""%>>17:30</option>  			 
+			 	<option value="08:00:00" <%=s!=null && s.getHora().equals("08:00:00") ? "selected" : ""%>>08:00</option>
+				<option value="08:15:00" <%=s!=null && s.getHora().equals("08:15:00") ? "selected" : ""%>>08:15</option>
+		  		<option value="08:30:00" <%=s!=null && s.getHora().equals("08:30:00") ? "selected" : ""%>>08:30</option>
+		  		<option value="08:45:00" <%=s!=null && s.getHora().equals("08:45:00") ? "selected" : ""%>>08:45</option>
+		  		<option value="09:00:00" <%=s!=null && s.getHora().equals("09:00:00") ? "selected" : ""%>>09:00</option>
+		  		<option value="09:15:00" <%=s!=null && s.getHora().equals("09:15:00") ? "selected" : ""%>>09:15</option>
+		  		<option value="09:30:00" <%=s!=null && s.getHora().equals("09:30:00") ? "selected" : ""%>>09:30</option>
+		  		<option value="09:45:00" <%=s!=null && s.getHora().equals("09:45:00") ? "selected" : ""%>>09:45</option>
+		  		<option value="10:00:00" <%=s!=null && s.getHora().equals("10:00:00") ? "selected" : ""%>>10:00</option>
+		  		<option value="10:15:00" <%=s!=null && s.getHora().equals("10:15:00") ? "selected" : ""%>>10:15</option>
+		  		<option value="10:30:00" <%=s!=null && s.getHora().equals("10:30:00") ? "selected" : ""%>>10:30</option>
+		  		<option value="10:45:00" <%=s!=null && s.getHora().equals("10:45:00") ? "selected" : ""%>>10:45</option>
+		  		<option value="11:00:00" <%=s!=null && s.getHora().equals("11:00:00") ? "selected" : ""%>>11:00</option>
+		  		<option value="11:15:00" <%=s!=null && s.getHora().equals("11:15:00") ? "selected" : ""%>>11:15</option>
+		  		<option value="11:30:00" <%=s!=null && s.getHora().equals("11:30:00") ? "selected" : ""%>>11:30</option>
+		  		<option value="11:45:00" <%=s!=null && s.getHora().equals("11:45:00") ? "selected" : ""%>>11:45</option>
+		  		<option value="12:00:00" <%=s!=null && s.getHora().equals("12:00:00") ? "selected" : ""%>>12:00</option>
+		  		<option value="12:15:00" <%=s!=null && s.getHora().equals("12:15:00") ? "selected" : ""%>>12:15</option>
+		  		<option value="12:30:00" <%=s!=null && s.getHora().equals("12:30:00") ? "selected" : ""%>>12:30</option>
+		  		<option value="12:45:00" <%=s!=null && s.getHora().equals("12:45:00") ? "selected" : ""%>>12:45</option>
+		  		<option value="13:00:00" <%=s!=null && s.getHora().equals("13:00:00") ? "selected" : ""%>>13:00</option>
+		  		<option value="13:15:00" <%=s!=null && s.getHora().equals("13:15:00") ? "selected" : ""%>>13:15</option>
+		  		<option value="13:30:00" <%=s!=null && s.getHora().equals("13:30:00") ? "selected" : ""%>>13:30</option>
+		  		<option value="13:45:00" <%=s!=null && s.getHora().equals("13:45:00") ? "selected" : ""%>>13:45</option>
+		  		<option value="14:00:00" <%=s!=null && s.getHora().equals("14:00:00") ? "selected" : ""%>>14:00</option>
+		  		<option value="14:15:00" <%=s!=null && s.getHora().equals("14:15:00") ? "selected" : ""%>>14:15</option>
+		  		<option value="14:30:00" <%=s!=null && s.getHora().equals("14:30:00") ? "selected" : ""%>>14:30</option>
+		  		<option value="14:45:00" <%=s!=null && s.getHora().equals("14:45:00") ? "selected" : ""%>>14:45</option>
+		  		<option value="15:00:00" <%=s!=null && s.getHora().equals("15:00:00") ? "selected" : ""%>>15:00</option>
+		  		<option value="15:15:00" <%=s!=null && s.getHora().equals("15:15:00") ? "selected" : ""%>>15:15</option>
+		  		<option value="15:30:00" <%=s!=null && s.getHora().equals("15:30:00") ? "selected" : ""%>>15:30</option>
+		  		<option value="15:45:00" <%=s!=null && s.getHora().equals("15:45:00") ? "selected" : ""%>>15:45</option>
+		  		<option value="16:00:00" <%=s!=null && s.getHora().equals("16:00:00") ? "selected" : ""%>>16:00</option>
+		  		<option value="16:15:00" <%=s!=null && s.getHora().equals("16:15:00") ? "selected" : ""%>>16:15</option>
+		  		<option value="16:30:00" <%=s!=null && s.getHora().equals("16:30:00") ? "selected" : ""%>>16:30</option>
+		  		<option value="16:45:00" <%=s!=null && s.getHora().equals("16:45:00") ? "selected" : ""%>>16:45</option>
+		  		<option value="17:00:00" <%=s!=null && s.getHora().equals("17:00:00") ? "selected" : ""%>>17:00</option>
+		  		<option value="17:15:00" <%=s!=null && s.getHora().equals("17:15:00") ? "selected" : ""%>>17:15</option>
+		  		<option value="17:30:00" <%=s!=null && s.getHora().equals("17:30:00") ? "selected" : ""%>>17:30</option>
+		  		<option value="17:45:00" <%=s!=null && s.getHora().equals("17:45:00") ? "selected" : ""%>>17:45</option>    			 
   		</select>  	
   		</div>		 
 		</td>			
@@ -162,30 +176,24 @@ if (empty == false){
 	</tr>
 </table>
 <br>
-	<!-- MENSAJE DE CONFIRMACION -->
-	<%
-		String mensaje= "return confirm('Esta seguro que desea realizar el alta?');"; 
-		  
-//		if (sancion != null){			//ARREGLAR
-			
-			mensaje = "return confirm('Esta seguro que desea modificar?');"; 
-//		}
-		 
-		%>
-<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave" onclick="<%=mensaje%>">Guardar</button>
-<button type="reset" class="btn btn-primary"  value="Cancelar">Cancelar</button>
+<button type="submit" class="btn btn-primary" onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+<button type="reset" class="btn btn-primary"  onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Cancelar</button>
 <%}%>
 </form>
 </div>
 <br>
-<%if (!error.equals("")) {%>
-	 <div class="bs-example">
-    	 <div class="alert alert-warning fade in" role="alert">
+<%	Mensaje mensaje = null;
+	
+	if (session.getAttribute("mensaje") != null) {
+		mensaje = (Mensaje)session.getAttribute("mensaje");
+		session.setAttribute("mensaje", null);	
+%>
+	<div class="bs-example">
+    	 <div class="alert <%=mensaje.getTipo()%> fade in" role="alert">
      	 	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 	<strong>Cuidado!</strong> <%=error%>
+     	 	<%=mensaje.getMensaje()%>
   	  	</div>
- 	 </div><!-- /example -->
-<br>
+ 	 </div>
 <br>
 <%}%>
 <%

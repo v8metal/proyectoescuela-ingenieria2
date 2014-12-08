@@ -17,10 +17,13 @@ public class AccionesCitacion {
 	}
 	
 	public static Citaciones getAll(int año, int DNI_MAESTRO) {
+		
 		Citaciones lista = new Citaciones();
+		
 		try {
 			Statement stmt = Conexion.conectar().createStatement();			
-			ResultSet rs = stmt.executeQuery("SELECT C.DNI, AG.GRADO, AG.TURNO, C.FECHA, C.HORA, C.DESCRIP FROM CITACIONES AS C INNER JOIN ALUMNOS_GRADO AS AG ON (AG.DNI = C.DNI AND AG.AÑO = " + año + ") INNER JOIN MAESTROS_GRADO AS MG ON (MG.GRADO = AG.GRADO AND MG.TURNO = AG.TURNO) WHERE C.FECHA BETWEEN '" + año + "-01-01' AND '"+ año + "-12-31' AND (MG.DNI_MAESTRO_TIT = " + DNI_MAESTRO + " OR MG.DNI_MAESTRO_PAR = " + DNI_MAESTRO + ")" );			
+			
+			ResultSet rs = stmt.executeQuery("SELECT DISTINCT C.DNI, AG.GRADO, AG.TURNO, C.FECHA, C.HORA, C.DESCRIP FROM CITACIONES AS C INNER JOIN ALUMNOS_GRADO AS AG ON (AG.DNI = C.DNI AND AG.AÑO = " + año + ") INNER JOIN MAESTROS_GRADO AS MG ON (MG.GRADO = AG.GRADO AND MG.TURNO = AG.TURNO) WHERE C.FECHA BETWEEN '" + año + "-01-01' AND '"+ año + "-12-31' AND (MG.DNI_MAESTRO_TIT = " + DNI_MAESTRO + " OR MG.DNI_MAESTRO_PAR = " + DNI_MAESTRO + ")" );			
 			Citacion tmp;
 			
 			while (rs.next()) {
@@ -56,7 +59,7 @@ public class AccionesCitacion {
 		Alumnos lista = new Alumnos();
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT A.* FROM MAESTROS_GRADO MG INNER JOIN ALUMNOS_GRADO AG ON(AG.GRADO = MG.GRADO AND AG.TURNO = MG.TURNO) INNER JOIN ALUMNOS A ON (A.DNI = AG.DNI) WHERE AG.AÑO = " + año + " AND (MG.DNI_MAESTRO_TIT = " + DNI_MAESTRO + " OR MG.DNI_MAESTRO_PAR = " + DNI_MAESTRO+ ")");
+			ResultSet rs = stmt.executeQuery("SELECT DISTINCT A.* FROM MAESTROS_GRADO MG INNER JOIN ALUMNOS_GRADO AG ON(AG.GRADO = MG.GRADO AND AG.TURNO = MG.TURNO) INNER JOIN ALUMNOS A ON (A.DNI = AG.DNI) WHERE AG.AÑO = " + año + " AND (MG.DNI_MAESTRO_TIT = " + DNI_MAESTRO + " OR MG.DNI_MAESTRO_PAR = " + DNI_MAESTRO+ ")");
 			Alumno tmp;
 			
 			while (rs.next()) {
