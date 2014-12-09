@@ -233,14 +233,19 @@ public class AlumnoEdit extends HttpServlet {
 			
 			int año = 0;
 			
+			String año_ing = request.getParameter("año_ing");					
+			sesion.setAttribute("año_ing", Integer.parseInt(año_ing));
+			
 			if (sesion.getAttribute("añoAlumno") != null){
 				año = (Integer) sesion.getAttribute("añoAlumno");	//año desde menu_alumno	
 			}else{				
-				año = AccionesAlumno.getAñoAlumnos("MAX");	//año para nuevo alumno directo
 				
-				if(año == 0){
-					año = (Integer) sesion.getAttribute("año"); //año de sistema
-				}	
+				//año = AccionesAlumno.getAñoAlumnos("MAX");	//año para nuevo alumno directo
+				
+				//if(año == 0){
+					//año = (Integer) sesion.getAttribute("año"); //año de sistema
+				//}
+				año = Integer.parseInt(año_ing);
 			}
 				
 			int dni_alum = Integer.parseInt((String)request.getParameter("dni_alum"));
@@ -344,7 +349,7 @@ public class AlumnoEdit extends HttpServlet {
 				turno = parts[1];
 				
 				//String turno = request.getParameter("turno");
-				String año_ing = request.getParameter("año_ing");				
+				//String año_ing = request.getParameter("año_ing");				
 				
 				//insert tutor
 				if (!AccionesPadre.esPadre(dni_tutor)) {	//Si no esta en el sistema los datos del tutor lo inserta. Si ya estan sus datos no hace nada.
@@ -386,7 +391,8 @@ public class AlumnoEdit extends HttpServlet {
 					grado = parts[0];
 					turno = parts[1];
 					
-					String año_ing = request.getParameter("año_ing");
+					//String año_ing = request.getParameter("año_ing");					
+					//sesion.setAttribute("año_ing", año_ing);
 			
 					if (request.getParameter("reingreso") != null){//reingreso						
 						

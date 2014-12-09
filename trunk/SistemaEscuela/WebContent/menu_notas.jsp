@@ -2,9 +2,11 @@
 <%@page import="datos.Cuotas"%>
 <%@page import="datos.Grado"%>
 <%@page import="datos.Grados"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesCuota"%>
 <%@page import="conexion.AccionesUsuario"%>
 <%@page import="conexion.AccionesMaestro"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -63,6 +65,16 @@
 		<h1>Menú de Notas</h1>		
     </div>
  
+  <%if(max == 0) {     
+    	
+		Mensaje m = AccionesMensaje.getOne(60);%>
+	<div class="alert <%=m.getTipo() %>" role="alert">
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <%=m.getMensaje()%>
+    </div>
+        
+    <%}else{ %>
+    
  	<form action="NotaEdit" method="get">
     <input type="hidden" name="accion" value="<%=añoNotas!=null?"listarGrado":"solicitarGrados"%>">
     	
@@ -137,7 +149,8 @@
 		  		<button type="submit" class="btn btn-primary"  value="Seleccionar otro año"><i class="glyphicon glyphicon-pushpin"></i> Seleccionar otro año</button> 
 		  	</div> 
 	</form>	   
-	<%}%>	 
+	<%}%>
+<%}%>	 
 </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->

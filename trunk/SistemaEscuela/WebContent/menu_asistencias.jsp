@@ -3,9 +3,11 @@
 <%@page import="datos.Tardanza"%>
 <%@page import="datos.Grado"%>
 <%@page import="datos.Grados"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesTardanza"%>
 <%@page import="conexion.AccionesUsuario"%>
 <%@page import="conexion.AccionesMaestro"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -71,8 +73,17 @@
 		<h1>Menú de Asistencias</h1>		
     </div>
     
-    <div class="form-group">
- 
+    <%if(max == 0) {     
+    	
+		Mensaje m = AccionesMensaje.getOne(60);%>
+	<div class="alert <%=m.getTipo() %>" role="alert">
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <%=m.getMensaje()%>
+    </div>
+        
+    <%}else{ %>
+    
+    <div class="form-group"> 
 	<form action="AsistenciaList" method="get">
 
 	<input name="año" id="año" type="hidden" value="<%=añoAsistencia%>">
@@ -83,78 +94,6 @@
 	    <input name="fecha" id="fecha" type="hidden" value="0">
 		<input type="hidden" name="accion" value="listarAsistencias">
 	<%}%>
-
- <!-- 
- 		SELECTOR VIEJO CON TABLAS
- 		
-	<table class="table table-hover table-bordered">
-	
-	<%if(añoAsistencia == null){ %>
-	  <tr>
-	    <td><label for="input">Seleccionar año</label></td>	    
-	    <td>
-	    <div class="col-xs-5">
-	    	<select class="form-control" name="año_asistencia" autofocus>	      		
-	      		 <%for(int i=max; i >= min;i--){%>	      			
-	      	  <option value="<%=i %>"><%=i %></option>
-	      		<%
-	      			}
-	      		%>
-	        </select>
-	      </div>
-	     </td>         	     
-	     <td>
-	     	<input type="hidden" name="accion" value="solicitarGrados">
-	     </td> 	     
-	  </tr>
-	<%}else{ %>
-	  <tr>
-	    <td><label for="input">Año Seleccionado</label></td>	    
-	     <td>
-	     	<div class="col-xs-2">
-	     	<input class="form-control" type="text" size=4 readonly name="anio" value="<%=añoAsistencia%>">
-	     	</div>
-	     </td> 
-	  </tr>
-	
-	  <%if (grados.getLista().isEmpty()) { %>
-	  <tr>	  	
-	  	<td><label for="input">Seleccionar grado-turno</label></td>
-	  	<td><label for="input">No hay grados para el año seleccionado</label></td>	  	
-	  </tr>	  
-	  <%}else{%>
-	  <tr>
-	      <td><label for="input">Seleccionar grado-turno</label></td>
-	      <td>
-	        <div class="col-xs-5">
-	      	<select class="form-control" name="grado_anio" autofocus>
-	      	<%for (Grado g : grados.getLista()) { %>	            
-	            <option value="<%=g.getGrado() + " - " + g.getTurno()%>"><%=g.getGrado() + " - " + g.getTurno()%></option>            
-	          
-	      	<%}%>
-	      	</select>
-	      	</div>
-	      </td>
-	    </tr>
-	    <tr>
-			<th>
-				<label for="input">Fecha:</label>
-			</th>			
-			<td>
-				<div class="col-xs-2">
-					<input class="form-control" type="text" id="datepicker" required name="fecha_asistencia">
-				</div>
-			</td>			
-	    </tr>
-	   <%}%>
-	<%}%>   
-	        
-	  </table>  	
-		<button type="submit" class="btn btn-primary"  value="Guardar" name="btnSave">Aceptar</button>
-		<button type="reset" class="btn btn-primary"  value="Cancelar" name="btnSave">Cancelar</button>		
- </form>
- --> 
-  
 
  	<%if(añoAsistencia == null){ %>
 
@@ -276,6 +215,7 @@
 		</div>
 	</form>	
  -->		
+<%}%>
 <%}%>
 </div>
 	<!-- Bootstrap core JavaScript

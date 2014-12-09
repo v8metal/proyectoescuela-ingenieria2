@@ -140,6 +140,17 @@
 		</div>
 		<%}%>
 		
+		
+		<%if(entrevista == null && maestros.getLista().isEmpty()) {     
+    	
+			Mensaje m = AccionesMensaje.getOne(61);%>
+			<div class="alert <%=m.getTipo() %>" role="alert">
+	  		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      		<%=m.getMensaje()%> <a href="maestroEdit?accion=alta" class="alert-link"> Nuevo Maestro <i class="glyphicon glyphicon-edit"></i></a>
+    		</div>
+        
+    	<%}else{ %>
+		
 		<div class="form-group">
 		
 		<form action="EntrevistaEdit" method="post">
@@ -263,6 +274,7 @@
 		</form>
 		</div>
 		<%}%>
+<%}%>
 </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->

@@ -2,9 +2,11 @@
 <%@page import="datos.Cuotas"%>
 <%@page import="datos.Grado"%>
 <%@page import="datos.Grados"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesCuota"%>
 <%@page import="conexion.AccionesUsuario"%>
 <%@page import="conexion.AccionesAlumno"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -60,6 +62,16 @@
 		<h1>Menú de Tardanzas</h1>		
     </div>
  
+     <%if(max == 0) {     
+    	
+		Mensaje m = AccionesMensaje.getOne(60);%>
+	<div class="alert <%=m.getTipo() %>" role="alert">
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <%=m.getMensaje()%> <a href="alumno_edit.jsp?do=nuevo" class="alert-link"> Nuevo Alumno <i class="glyphicon glyphicon-edit"></i></a>
+    </div>
+        
+    <%}else{ %>
+    
  	<form action="TardanzaList" method="get">
  
  	<%if(añoTardanza == null){ %>
@@ -158,7 +170,8 @@
 		  
 		  
 	   <%}%>
-	<%}%>	 
+	<%}%>
+<%}%>	 
 </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->

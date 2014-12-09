@@ -102,7 +102,12 @@ public class AlumnoList extends HttpServlet {
 			String grado="", turno="";
 			
 			
-			año = (Integer) sesion.getAttribute("añoAlumno");
+			if (sesion.getAttribute("añoAlumno") == null){
+				año = (Integer) sesion.getAttribute("año_ing"); 
+				sesion.setAttribute("añoAlumno", año);
+			}else{
+				año = (Integer) sesion.getAttribute("añoAlumno");				
+			}
 			
 			Grado g = null;
 			
@@ -224,7 +229,12 @@ public class AlumnoList extends HttpServlet {
 			String grado="", turno="";
 			
 			
-			año = (Integer) sesion.getAttribute("añoAlumno");
+			if (sesion.getAttribute("añoAlumno") == null){
+				año = (Integer) sesion.getAttribute("año_ing"); 
+				sesion.setAttribute("añoAlumno", año);
+			}else{
+				año = (Integer) sesion.getAttribute("añoAlumno");				
+			}
 			
 			Grado g = null;
 			

@@ -3,9 +3,11 @@
 <%@page import="datos.Tardanza"%>
 <%@page import="datos.Grado"%>
 <%@page import="datos.Grados"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesTardanza"%>
 <%@page import="conexion.AccionesUsuario"%>
 <%@page import="conexion.AccionesAlumno"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -55,6 +57,9 @@
 		
 	}
 	
+	int max = AccionesAlumno.getAñoAlumnos("MAX");
+	int min = AccionesAlumno.getAñoAlumnos("MIN");
+	
 %>
 
 <div class="container">  
@@ -67,8 +72,17 @@
 		<h1>Menú de Alumnos</h1>		
     </div>
     
-    <div class="form-group">
- 
+    <%if(max == 0) {     
+    	
+		Mensaje m = AccionesMensaje.getOne(60);%>
+	<div class="alert <%=m.getTipo() %>" role="alert">
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <%=m.getMensaje()%> <a href="alumno_edit.jsp?do=nuevo" class="alert-link"> Nuevo Alumno <i class="glyphicon glyphicon-edit"></i></a>
+    </div>
+        
+    <%}else{ %>
+    
+    <div class="form-group"> 
 	<form action="AlumnoList" method="get">
 
 	<input name="año" id="año" type="hidden" value="<%=añoAlumno%>">
@@ -96,7 +110,7 @@
   							 <%  			
 								int año = (Integer)session.getAttribute("añoc");
   							  
-  								for(int i= AccionesAlumno.getAñoAlumnos("MAX"); i>=AccionesAlumno.getAñoAlumnos("MIN");i--){
+  								for(int i= max; i>= min ;i--){
   							%> 							  	 
  							  <option <%if(i==año){%> selected <%}else{%><%}%>value="<%=i %>"><%=i %></option>		 	
    							<%
@@ -188,6 +202,8 @@
 		</div>
 	</form>	
  -->		
+<%}%>
+
 <%}%>
 </div>
     <!-- Bootstrap core JavaScript

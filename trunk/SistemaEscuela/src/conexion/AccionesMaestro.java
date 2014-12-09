@@ -69,7 +69,7 @@ public class AccionesMaestro {
 		Maestros lista = new Maestros();
 		try {
 			Statement stmt = Conexion.conectar().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM MAESTROS WHERE ESTADO = 0 ORDER BY APELLIDO");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM MAESTROS WHERE DNI <> 1 AND ESTADO = 0 ORDER BY APELLIDO");
 			Maestro tmp;
 			
 			while (rs.next()) {
