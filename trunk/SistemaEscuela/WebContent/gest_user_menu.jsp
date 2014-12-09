@@ -50,7 +50,7 @@ if (usuarios.getLista().isEmpty()) {
 <!-- MENSAJE DE WARNING -->
 	<div class="alert <%=m.getTipo() %>" role="alert">
 	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <%=m.getMensaje() %><a href="registro_user.jsp?" class="alert-link">Registrar nuevo usuario</a>
+      <%=m.getMensaje() %> <%if(!maestros.getLista().isEmpty()){%><a href="registro_user.jsp?" class="alert-link"> Registrar nuevo usuario <i class="glyphicon glyphicon-edit"></i></a><%}%>
     </div>
 <%
 		} else {
@@ -59,7 +59,7 @@ if (usuarios.getLista().isEmpty()) {
 	<thead>
 	<tr class="active">		
 		<th>Maestro</th>
-<!-- 		<th>Usuario</th>	 -->
+ 		<th>Usuario</th>	 
 <!--		<th>Contraseña</th>	 -->
 		<th>&nbsp;</th>
 	</tr>
@@ -73,7 +73,7 @@ if (usuarios.getLista().isEmpty()) {
 	<tbody>
 	<tr>		
 		<td><%= m.getApellido() + ", " + m.getNombre() %></td>
-<!--		<td><%= u.getUsuario() %></td>		-->
+		<td><%= u.getUsuario() %></td>		
 <!--		<td><%= u.getContraseña() %></td>		-->
 		<td><strong><a name="delete-link" href="registroUser?do=baja&dni=<%= u.getDni() %>" onclick=<%=AccionesMensaje.getOne(32).getMensaje()%>><i class="glyphicon glyphicon-trash"></i> Borrar</a></strong></td>
 	</tr>
@@ -93,9 +93,9 @@ if (usuarios.getLista().isEmpty()) {
   <!-- MENSAJE DE WARNING -->
 	<div class="alert <%=m.getTipo()%> role="alert">
 	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <%=m.getMensaje()%> <a href="registro_user.jsp?" class="alert-link"> Registrar nuevo usuario <i class="glyphicon glyphicon-edit"></i></a>
+      <%=m.getMensaje() %><a href="registro_user.jsp?" class="alert-link">Registrar nuevo usuario</a>
     </div>
-<%}else if ((usuarios.getLista().size() >= maestros.getLista().size())){
+<%}else if ((usuarios.getLista().size() >= maestros.getLista().size()) && !maestros.getLista().isEmpty()){
 
 		Mensaje m = AccionesMensaje.getOne(50);
 	%>
