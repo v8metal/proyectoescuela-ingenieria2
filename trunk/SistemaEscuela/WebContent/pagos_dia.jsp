@@ -172,7 +172,7 @@
     <script src="js/ie10-viewport-bug-workaround.js"></script>
 
 	<!-- menú superior -->
-	<script src="js/menu_admin.js"></script> 
+	<script src="js/menu_admin.js"></script>  
 	
 	<script src="js/jquery-1.10.2.js"></script>
 	<script src="js/jquery-ui.js"></script>
