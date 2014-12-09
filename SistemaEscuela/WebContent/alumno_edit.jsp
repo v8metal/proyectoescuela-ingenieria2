@@ -57,11 +57,16 @@
 		nuevo = request.getParameter("do");
 	}
 	
+	//recupero de la sesion la fecha del sistema
+	int año_sys = Integer.parseInt((String)session.getAttribute("año_sys"));
+	
 	if(nuevo.equals("nuevo")){ //cuando se accede directamente a nuevo
 		session.removeAttribute("grado_alta");
 		session.removeAttribute("turno_alta");
 		session.removeAttribute("grados_alta");
 		año = AccionesAlumno.getAñoAlumnos("MAX");
+		
+		//if (año == 0) año = año_sys;
 		grados = AccionesGrado.getAll();
 	}
 	//Datos del grado cuando se accede desde el listado por grado
@@ -120,9 +125,7 @@
 		
 	}
 		
-	//recupero de la sesion la fecha del sistema
-	int año_sys = Integer.parseInt((String)session.getAttribute("año_sys"));
-	
+
 	String reingreso = null;
 	reingreso = (String) session.getAttribute("reingreso");
 	
@@ -157,6 +160,14 @@
 <div class="page-header"> 
 <h1>Ficha identificatoria del alumno - <%=cabecera%></h1>
 </div>
+
+<%if(grados.getLista().isEmpty()){
+	Mensaje m = AccionesMensaje.getOne(62);%>
+	<div class="alert <%=m.getTipo() %>" role="alert">
+  	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+  	<%=m.getMensaje()%>
+</div>
+<%}%>
 
 <div class="form-group">  
 <form action="alumnoEdit" method="post" class="alumno-alta">
@@ -576,6 +587,8 @@
 		if (alumno==null || ind==1 || (alumno!=null && dias <= 7) || ind_reingreso == 1) {		
 		
 %>
+
+<%if(!grados.getLista().isEmpty()){%>
 <table>	
 	<tr>
 		<td>
@@ -605,14 +618,21 @@
 			<label for="input">Ingreso Escolar: </label>
 		</td>
 		<td>			
-		<%if(año != null && ind_reingreso == 0){%>
+		<%if(año != null && ind_reingreso == 0 && !nuevo.equals("nuevo")){%>
 				<input readonly type="text" class="form-control" name="año_ing" value="<%=año%>">
 		<%}else{%>
 				<select name="año_ing" class="form-control">
 			 <%
+			  
 			  int año_max = AccionesAlumno.getAñoAlumnos("MAX");
-			  if (año_max == año_sys); año_max = año_max + 1;
+			  			  
+			  if (año_max == 0){
+				 año_max =  año_sys + 1;
+			  }		  
+			  
+			  if (año_max == año_sys); año_max = año_max + 1;			  
 			  if (año_max > año_sys); año_max = año_max - 1;
+			  			 
 			 	for (int i = año_max; i >= (año_max-1); i--){
  			 %>
 				 <option <%=año_max==i ? "selected" : ""%>><%=i%></option>
@@ -626,11 +646,12 @@
 </table>
 <br>
 <br>
-<%
-}				
-%>
+<%}%>
+<%}%>
+<%if(!grados.getLista().isEmpty()){%>
 <button type="submit" id=guardar title="<%=mensaje%>" class="btn btn-primary"  onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
 <button type="reset" class="btn btn-primary"   onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
+<%}%>
 
 </form>
 </div>

@@ -1,8 +1,10 @@
 <%@page import="datos.Maestro"%>
 <%@page import="datos.Maestro"%>
 <%@page import="datos.Maestros"%>
+<%@page import="datos.Mensaje"%>
 <%@page import="conexion.AccionesUsuario"%>
 <%@page import="conexion.AccionesMaestro"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -56,6 +58,15 @@
 	int max = AccionesMaestro.getAñoMaestro("MAX", dni);	
 %>
 
+    <%if(max == 0) {     
+    	
+		Mensaje m = AccionesMensaje.getOne(60);%>
+	<div class="alert <%=m.getTipo() %>" role="alert">
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <%=m.getMensaje()%>
+    </div>
+        
+    <%}else{ %>
 <label class="control-label" for="input">Seleccionar año:</label>
 
 <br>
@@ -83,7 +94,7 @@
         </div>
         <input type="hidden" name="acceso" value="primero">
     </form>
-    
+ <%}%>
 </div>
 	<!-- Bootstrap core JavaScript
     ================================================== -->
