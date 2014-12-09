@@ -91,7 +91,9 @@
   <br>
 <%}%>
  <br>
-<strong><a href="materiaList?from=menu_admin" class="alert-link"><i class="glyphicon glyphicon-share-alt"></i> Volver</a></strong>
+<form action="materiaList?do=menu_admin" method="post">
+<button type="submit" class="btn btn-primary"  value="Volver"><i class="glyphicon glyphicon-share-alt"></i> Volver</button>
+</form>
 
 </div>
     <!-- Bootstrap core JavaScript

@@ -49,6 +49,10 @@ public class MateriaList extends HttpServlet {
 			String from = request.getParameter("from"); 	// nombre de la pagina que llamo al servlet 	
 			if (from == null) {	
 				from = 	"otro_lado";
+				
+				if (request.getParameter("do") != null){
+					from = request.getParameter("do");
+				}
 			}
 			
 			if (from.equals("menu_admin") || from.equals("materiaEdit") || from.equals("materia_list") || from.equals("materia_inactiva_list")){

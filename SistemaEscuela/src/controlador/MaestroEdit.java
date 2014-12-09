@@ -108,7 +108,8 @@ public class MaestroEdit extends HttpServlet {
 				}
 				
 				
-				response.sendRedirect(request.getContextPath() + "/maestroList?tipo=inactivos");
+				//response.sendRedirect(request.getContextPath() + "/maestroList?tipo=inactivos");
+				response.sendRedirect(request.getContextPath() + "/maestroList");
 				
 				break;
 				
