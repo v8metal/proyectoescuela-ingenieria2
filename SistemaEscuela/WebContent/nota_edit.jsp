@@ -29,9 +29,6 @@
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="style/bootstrap.min.css">
 
-<script src="js/jquery-1.7.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-
 </head>
 <body>
 <div class="container">
