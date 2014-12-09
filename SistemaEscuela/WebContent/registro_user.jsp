@@ -124,7 +124,7 @@
 <br>
 	<form action="gest_user_menu.jsp" method="post">
 		<div class="form-group">
-			<button type="submit" class="btn btn-primary"  value="Volver al Listado"><i class="glyphicon glyphicon-share-alt"></i> Volver al Listado</button>
+			<button type="submit" class="btn btn-primary"  value="Volver al Listado"><i class="glyphicon glyphicon-share-alt"></i> Volver</button>
 		</div>
 	</form>
 </div>
