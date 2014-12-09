@@ -75,7 +75,7 @@
 <% Mensaje m = AccionesMensaje.getOne(53); %>
 	<div class="alert <%=m.getTipo()%>" role="alert">
 		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	<%=m.getMensaje()%>
+     	<%=m.getMensaje()%> <a href="sanciones_select.jsp" class="alert-link"><i class="glyphicon glyphicon-share-alt"></i> Volver a selección de año</a>
     </div>
 <%}else{%>
 <div class="page-header">
@@ -197,7 +197,7 @@ if (empty == false){
   	  	</div>
  	 </div>
 <br>
-<%}%>
+
 <%
 String volver =  "menu_user.jsp";
 if (s != null){	
@@ -209,6 +209,9 @@ if (s != null){
 <button type="submit" class="btn btn-primary"  value="Volver">Volver</button>
 </form>
 </div>
+
+<%}%>
+
 </div>
 	<!-- Bootstrap core JavaScript
     ================================================== -->
