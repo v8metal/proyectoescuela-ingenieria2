@@ -72,9 +72,11 @@
 <h1>Alta de Sanción</h1>
 </div>
 <br>
-<div class="alert alert-info" role="alert">
-    <strong>Atención!</strong> No hay alumnos cargados para el año
-</div>
+<% Mensaje m = AccionesMensaje.getOne(53); %>
+	<div class="alert <%=m.getTipo()%>" role="alert">
+		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+     	<%=m.getMensaje()%>
+    </div>
 <%}else{%>
 <div class="page-header">
 <h1>Alta de Sanción</h1>

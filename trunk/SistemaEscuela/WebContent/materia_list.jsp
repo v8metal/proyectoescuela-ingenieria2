@@ -49,7 +49,7 @@
  <!-- MENSAJE DE WARNING -->
 	<div class="alert <%=m.getTipo()%>" role="alert">
 	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <%=m.getMensaje()%> <a href="materiaEdit?do=alta" class="alert-link">Agregar materia <i class="glyphicon glyphicon-edit"></i></a>
+      <%=m.getMensaje()%> <a href="materiaEdit?do=alta" class="alert-link"> Nueva materia <i class="glyphicon glyphicon-edit"></i></a>
     </div>	
     
 <%}else{%>
