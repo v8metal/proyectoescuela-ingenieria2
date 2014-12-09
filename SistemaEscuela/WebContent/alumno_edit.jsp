@@ -631,7 +631,7 @@
 			  }		  
 			  
 			  if (año_max == año_sys); año_max = año_max + 1;			  
-			  if (año_max > año_sys); año_max = año_max - 1;
+			  //if (año_max > año_sys); año_max = año_max - 1;
 			  			 
 			 	for (int i = año_max; i >= (año_max-1); i--){
  			 %>
