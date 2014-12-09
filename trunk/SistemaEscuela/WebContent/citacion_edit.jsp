@@ -84,7 +84,7 @@
 <% Mensaje m = AccionesMensaje.getOne(53); %>
 	<div class="alert <%=m.getTipo()%>" role="alert">
 		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	<%=m.getMensaje()%>
+     	<%=m.getMensaje()%> <a href="citaciones_select.jsp" class="alert-link"><i class="glyphicon glyphicon-share-alt"></i> Volver a selección de año</a>
     </div>
 <%}else{%>
 <div class="page-header"> 	
@@ -189,9 +189,18 @@ if (c == null){
 <br>
 <button type="submit" class="btn btn-primary" onclick=<%=AccionesMensaje.getOne(1).getMensaje()%>><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
 <button type="reset" class="btn btn-primary"  onclick=<%=AccionesMensaje.getOne(3).getMensaje()%>><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
-<%}%>
 </form>
 </div>
+
+<%if (citaciones != null){%>
+<div class="form-group">
+<form action="CitacionList" method="post">
+<button type="submit" class="btn btn-primary"  value="Volver"><i class="glyphicon glyphicon-share-alt"></i> Volver</button>
+</form>
+</div>
+<%}%>
+
+<%}%>
 <br>
 <%	Mensaje mensaje = null;
 	
@@ -207,13 +216,7 @@ if (c == null){
  	 </div>
 <br>
 <%}%>
-<%if (citaciones != null){%>
-<div class="form-group">
-<form action="CitacionList" method="post">
-<button type="submit" class="btn btn-primary"  value="Volver"><i class="glyphicon glyphicon-share-alt"></i> Volver</button>
-</form>
-<%}%>
-</div>
+
 </div>
 	<!-- Bootstrap core JavaScript
     ================================================== -->

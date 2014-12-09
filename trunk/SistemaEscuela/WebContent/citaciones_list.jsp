@@ -81,11 +81,13 @@ if (citaciones.getLista().isEmpty()){
 		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
      	<%=m.getMensaje()%> <a href="citaciones_select.jsp" class="alert-link"><i class="glyphicon glyphicon-share-alt"></i> Volver a selección de año</a>
     </div>
+<!--   
     <%if (añoc == max){%>
     <br>    
 	<strong><a href="CitacionEdit?do=alta"><i class="glyphicon glyphicon-edit"></i> Nueva Citación</a></strong>
 	<br>
 	<%}%>
+ -->  	
 <%	
 }else{
 %>
