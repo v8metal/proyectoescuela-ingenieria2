@@ -39,6 +39,11 @@
   	<!-- sirve para visualizar el menú superior -->
   </div>
 
+
+  <div class="page-header"> 
+	<h1><%=titulo%></h1>
+	</div>	
+	
 <%
 		Alumnos alumnos = (Alumnos)session.getAttribute("alumnos_alumno");
 		
@@ -54,33 +59,16 @@
 		
 		
 		if (alumnos.getLista().isEmpty()){
-						
-			String rta = "No hay alumnos cargados en " + grado + ", turno " + turno.toLowerCase() + ", año " + año;
-			
+	
 %>
 
 <br>
-<br>
-<br>
-
- <div class="alert alert-info" role="alert">
-     <strong>Atención!</strong> <%=rta%>
- </div>
- 
- <%if(año == AccionesAlumno.getAñoAlumnos("MAX")){%>
-  <br>
- <a href="alumno_edit.jsp">Alta de Alumno</a>
-<br>
-<br>
-<%}%>
- 
-<%		
-		} else {
-%> 	
-
-  <div class="page-header"> 
-	<h1><%=titulo%></h1>
-	</div>	
+	<%Mensaje m = AccionesMensaje.getOne(53);%>
+	<div class="alert <%=m.getTipo() %>" role="alert">
+  	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+  	<%=m.getMensaje()%>  <%if(año == AccionesAlumno.getAñoAlumnos("MAX")){%><a href="alumno_edit.jsp" class="alert-link"> Alta de Alumno <i class="glyphicon glyphicon-edit"></i></a> <%}%>
+ 	</div>
+<%}else {%> 	
 
 <br>
 
@@ -123,7 +111,7 @@
 		<td><input type="checkbox" name="ind_grupo" disabled <%= a.isInd_grupo() ? "checked" : "" %>/></td>
 		<td><input type="checkbox" name="ind_sub" disabled <%= a.isInd_subsidio() ? "checked" : "" %>/></td>
 		<%if (ea.isActivo()){%><td>ACTIVO</td><%} else {%><td><strong><a href="alumnoInactivo?do=listar">INACTIVO</a></strong></td><%}%>	
-		<td><strong><a href="certificadoEdit?do=modificar&dni=<%= a.getDni() %>"><i class="glyphicon glyphicon-eye-open"></i> Ver</a></strong></td>		
+		<td><strong><a href="certificadoEdit?do=modificar&dni=<%= a.getDni() %>"><i class="glyphicon glyphicon-pencil"></i> Editar</a></strong></td>		
 		<% 	
 		  if (ea.isActivo()){ //verifica si el alumno está activo
 				
@@ -172,7 +160,7 @@
 <br>
  <%}%>  
 <%if(año == AccionesAlumno.getAñoAlumnos("MAX")){%>
- <a href="alumno_edit.jsp">Alta de Alumno</a>
+ <strong><a href="alumno_edit.jsp"><i class="glyphicon glyphicon-edit"></i> Alta de Alumno </a></strong>
 <br>
 <br>
 <%}%>

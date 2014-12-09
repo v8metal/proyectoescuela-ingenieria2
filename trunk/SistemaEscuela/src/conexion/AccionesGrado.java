@@ -395,7 +395,7 @@ public static int getCurrentYear(Grado g) {
 	stmt.executeUpdate("INSERT INTO ALUMNOS_GRADO VALUES ('"+ grado + "','"+ turno + "'," + año +", " + dni + ")");
 	
 	//se insertan los mismos subsidios que el año en curso para el siguiente año
-	stmt.executeUpdate("INSERT INTO ALUMNOS_SUBSIDIO SELECT AÑO+1, DNI, IND_GRUPO, IND_SUBSIDIO FROM ALUMNOS_SUBSIDIO WHERE DNI = " + dni + " AND AÑO = " + año);
+	stmt.executeUpdate("INSERT INTO ALUMNOS_SUBSIDIO SELECT AÑO+1, DNI, IND_GRUPO, IND_SUBSIDIO FROM ALUMNOS_SUBSIDIO WHERE DNI = " + dni + " AND AÑO = " + (año-1));
 	
 	AccionesCertificado.insertOne(dni, año);	
 		
