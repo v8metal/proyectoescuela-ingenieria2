@@ -626,9 +626,7 @@
 			  
 			  int año_max = AccionesAlumno.getAñoAlumnos("MAX");
 			  			  
-			  if (año_max == 0){
-				 año_max =  año_sys + 1;
-			  }		  
+			  if (año_max == 0); año_max =  año_sys; //+ 1;			  
 			  
 			  if (año_max == año_sys); año_max = año_max + 1;			  
 			  //if (año_max > año_sys); año_max = año_max - 1;
