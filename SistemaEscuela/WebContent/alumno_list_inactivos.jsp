@@ -5,6 +5,7 @@
 <%@page import="datos.EstadoAlumnos"%>
 <%@page import="java.util.*"%>
 <%@page import="conexion.AccionesUsuario"%>
+<%@page import="conexion.AccionesMensaje"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -47,9 +48,10 @@
 </div>
 
 <br>
+<% Mensaje m = AccionesMensaje.getOne(59); %>
 <div class="alert alert-info" role="alert">
    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-   <strong><i class="glyphicon glyphicon-exclamation-sign"></i> Atención!</strong> No hay alumnos inactivos
+   <%=m.getMensaje()%>
 </div>
 
 <%		

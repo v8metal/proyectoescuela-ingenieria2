@@ -45,7 +45,7 @@
 <br>	
 <!-- MENSAJE INFORMATIVO -->
 <div class="alert <%=m.getTipo()%>" role="alert">
-    <%=m.getMensaje()%>
+    <%=m.getMensaje()%> <a href="maestroList" class="alert-link"><i class="glyphicon glyphicon-share-alt"></i> Volver al listado principal </a>
 </div>
 <br>
 <%}else{%>

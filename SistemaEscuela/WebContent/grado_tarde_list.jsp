@@ -53,7 +53,7 @@ if (grados.getListaTT().isEmpty()){
      <div class="bs-example">
     	<div class="alert <%=m.getTipo()%> fade in" role="alert">
      	 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	 <%=m.getMensaje()%>
+     	 <%=m.getMensaje()%> <a href="GradoEdit?do=alta" class="alert-link"> Nuevo grado <i class="glyphicon glyphicon-edit"></i></a>
   	  	</div>
   	</div>		
 <%}else{%>

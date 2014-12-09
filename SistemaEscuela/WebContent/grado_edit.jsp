@@ -256,7 +256,7 @@ if (grado != null){
 	<%Mensaje m = AccionesMensaje.getOne(28);%>
 	<div class="alert <%=m.getTipo() %>" role="alert">
 	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <%=m.getMensaje()%>
+      <%=m.getMensaje()%> <a href="GradoEdit?do=baja" class="alert-link"> Borrar grado <i class="glyphicon glyphicon-trash"></i></a>
     </div>
 <br>
 <%}%>

@@ -49,7 +49,7 @@ if (maestros.getLista().size() == 0){
  <!-- MENSAJE DE WARNING -->
 	<div class="alert alert-warning" role="alert">
 	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <strong><i class="glyphicon glyphicon-warning-sign"></i> Cuidado!</strong> No hay maestros activos. <a href="maestroEdit?accion=alta" class="alert-link">Agregar maestro</a>
+      <strong><i class="glyphicon glyphicon-warning-sign"></i> Cuidado!</strong> No hay maestros activos. <a href="maestroEdit?accion=alta" class="alert-link"> Nuevo maestro <i class="glyphicon glyphicon-edit"></i></a>
     </div>	
 	
 <%}else{%>
@@ -96,7 +96,7 @@ if (maestros.getLista().size() == 0){
   <!-- MENSAJE INFORMATIVO -->
 	<div class="alert <%=m.getTipo()%>" role="alert">
 	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <%=m.getMensaje()%>
+      <%=m.getMensaje()%> <a href="MaestroList?tipo=inactivos" class="alert-link">Ver listado <i class="glyphicon glyphicon-list-alt"></i></a>
     </div>
 <%}%>
 <br>

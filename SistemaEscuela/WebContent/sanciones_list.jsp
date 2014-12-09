@@ -78,7 +78,7 @@ if (sanciones.getLista().isEmpty()){
 <!-- MENSAJE ATENCION -->
 	<div class="alert <%=m.getTipo()%>" role="alert">
 		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-     	<%=m.getMensaje()%> <a href="SancionEdit?do=alta" class="alert-link">Agregar nueva Sanción</a>
+     	<%=m.getMensaje()%> <a href="sanciones_select.jsp" class="alert-link"><i class="glyphicon glyphicon-share-alt"></i> Volver a selección de año</a>
     </div>
     
    <%if (añoc == max){%>
