@@ -128,8 +128,8 @@
 			<td></td>
 			<td>
 			<div class="col-xs-5">
-			    <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnSave">Aceptar</button>
-				<button type="reset" class="btn btn-primary"  value="Reset" name="btnSave">Cancelar</button>		
+			    <button type="submit" class="btn btn-primary"  value="Aceptar" name="btnSave"><i class="glyphicon glyphicon-floppy-disk"></i> Aceptar</button>
+				<button type="reset" class="btn btn-primary"  value="Reset" name="btnSave"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>		
 	            <input type="hidden" name="accion" value="pagosDia">
 	         </div>
 	        </td>	        
@@ -145,7 +145,7 @@
 	<td> 
 		<div class="form-group"> 
 		   <form action="menu_cuotas.jsp">		   
-		   <button type="submit" class="btn btn-primary"  value="Volver al Menú anterior">Volver al Menú anterior</button> 
+		   <button type="submit" class="btn btn-primary"  value="Volver al Menú anterior"><i class="glyphicon glyphicon-share-alt"></i> Volver al Menú anterior</button> 
 		   </form>
 		</div>
 	</td>	
@@ -155,7 +155,7 @@
 	<td> 
 		<div class="form-group"> 
 		   <form action="pagos_dia.jsp">		   
-		   <button type="submit" class="btn btn-primary"  value="Seleccionar otro dia">Seleccionar otro dia</button> 
+		   <button type="submit" class="btn btn-primary"  value="Seleccionar otro dia"> Seleccionar otro dia <i class="glyphicon glyphicon-pushpin"></i></button> 
 		   </form>
 		</div>
 	</td>

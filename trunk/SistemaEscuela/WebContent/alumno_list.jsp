@@ -180,6 +180,7 @@
 <strong><a href="certificado_list.jsp"><%= "VER CERTIFICADOS DE " + titulo.toUpperCase() %></a></strong>
 <br>
 <br>
+<br>
 <%
 }	
 %>
